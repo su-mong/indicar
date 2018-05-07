@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.iindicar.indicar.b2_community.boardDetail.BoardDetailViewModel"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_board_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                style="@style/imageButtonCustomStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/comment_start_shadow"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_comment_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:background="@color/colorLightGrey"/>
+
+            <LinearLayout
+                android:id="@+id/comment_box"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:background="@drawable/comment_box">
+
+                <ImageButton
+                    style="@style/commentButtonCustomStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/button_comment"/>
+
+                <EditText
+                    style="@style/textViewBoardInfoStyle"
+                    android:id="@+id/comment_text"
+                    android:padding="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="댓글을 입력하세요."
+                    android:text="@{viewModel.commentWrite}"
+                    android:background="@android:color/transparent"/>
+
+                <ImageButton
+                    android:id="@+id/button_comment_submit"
+                    style="@style/commentButtonCustomStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:onClick="@{(v) -> viewModel.onCommentSubmitClick(v)}"
+                    android:src="@drawable/button_comment_submit"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</layout>

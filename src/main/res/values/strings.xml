@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Indicar Tuning</string>
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="facebook_app_id">1228514043878949</string>
+  <string name="fb_login_protocol_scheme">fb1228514043878949</string>
+  <string name="kakao_app_key">be2b15c91901a83730e1cc907a1ab965</string>
+  <string name="title_activity_loading">LoadingActivity</string>
+
+  <string name="server_not_available">http request failure 서버 응답없음 ---------------</string>
+  <string name="data_not_available">response data not available 데이터 처리 오류 ---------------</string>
+  <string name="photo_from_storage_not_available">photo from storage not available 저장소에서 사진 불러오기 오류 ---------------</string>
+</resources>

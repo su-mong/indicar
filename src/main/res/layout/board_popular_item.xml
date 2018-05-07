@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="item"
+            type="com.iindicar.indicar.data.vo.BoardDetailVO"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+
+            <ImageView
+                android:id="@+id/image_main"
+                style="@style/popularImageCustomStyle"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:imageUrl="@{item.mainImageUrl}"/>
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/popularTextFrame"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:gravity="right">
+
+                <TextView
+                    android:textColor="@color/colorWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="italic"
+                    android:textAlignment="gravity"
+                    android:text="Writer."/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        style="@style/imageButtonCustomStyle"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_vertical"
+                        app:circleImageUrl="@{item.userProfileUrl}"/>
+
+                    <TextView
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/colorWhite"
+                        android:id="@+id/text_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textAlignment="gravity"
+                        android:textSize="15sp"
+                        android:text="@{item.userName}"/>
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_margin="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:contentPaddingLeft="3dp"
+                    app:contentPaddingRight="3dp"
+                    app:cardBackgroundColor="#ebe1df"
+                    app:cardUseCompatPadding="false"
+                    app:cardElevation="0dp"
+                    app:cardMaxElevation="0dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardPreventCornerOverlap="false">
+
+                    <TextView
+                        android:layout_margin="3dp"
+                        android:textColor="@color/colorFont"
+                        android:id="@+id/text_board_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textSize="9sp"
+                        app:boardName="@{item.boardType}"/>
+
+                </android.support.v7.widget.CardView>
+
+                <TextView
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/text_board_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:singleLine="false"
+                    android:textAlignment="gravity"
+                    android:text="@{item.boardTitle}"/>
+
+                <TextView
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/text_board_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:singleLine="false"
+                    android:maxWidth="200dp"
+                    android:textAlignment="gravity"
+                    android:maxLines="2"
+                    android:text="@{item.boardContent}"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/icon_like"
+                        android:padding="3dp"/>
+
+                    <TextView
+                        android:layout_margin="5dp"
+                        android:id="@+id/text_like"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginRight="10dp"
+                        android:minWidth="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="gravity"
+                        android:text="@{item.likeCount}"
+                        android:textSize="13sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_comment"
+                        android:adjustViewBounds="true"
+                        android:padding="3dp"/>
+
+                    <TextView
+                        android:layout_margin="5dp"
+                        android:textColor="@color/colorWhite"
+                        android:id="@+id/text_comment"
+                        android:textAlignment="gravity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:text="@{item.commentCount}"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>

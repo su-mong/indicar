@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/answers/answers.iml" filepath="$PROJECT_DIR$/answers/answers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/beta/beta.iml" filepath="$PROJECT_DIR$/beta/beta.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crashlytics/crashlytics.iml" filepath="$PROJECT_DIR$/crashlytics/crashlytics.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crashlytics-wrapper/crashlytics-wrapper.iml" filepath="$PROJECT_DIR$/crashlytics-wrapper/crashlytics-wrapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fabric/fabric.iml" filepath="$PROJECT_DIR$/fabric/fabric.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fabric-init/fabric-init.iml" filepath="$PROJECT_DIR$/fabric-init/fabric-init.iml" />
+      <module fileurl="file://$PROJECT_DIR$/indicar_unity.iml" filepath="$PROJECT_DIR$/indicar_unity.iml" />
+    </modules>
+  </component>
+</project>

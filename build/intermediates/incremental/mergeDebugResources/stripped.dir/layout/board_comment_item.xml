@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+                                                        
+
+    
+                                                                                     
+           
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:cardUseCompatPadding="false"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        app:cardCornerRadius="0dp"
+        app:cardPreventCornerOverlap="false" android:tag="layout/board_comment_item_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                style="@style/imageButtonCustomStyle"
+                android:id="@+id/image_user_profile"
+                android:padding="10dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:tag="binding_1"                       />
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        style="@style/textViewCommentInfoStyle"
+                        android:id="@+id/text_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorFont"
+                        android:tag="binding_2"           />
+
+                    <TextView
+                        style="@style/textViewCommentInfoStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/colorFont"
+                        android:text="│"/>
+
+                    <TextView
+                        style="@style/textViewCommentInfoStyle"
+                        android:id="@+id/text_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorFontLight"
+                        android:tag="binding_3"        />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/textViewCommentContentStyle"
+                    android:id="@+id/text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:textColor="@color/colorFont"
+                    android:tag="binding_4"          />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+         

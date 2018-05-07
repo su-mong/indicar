@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.github.Commit451:Teleprinter-1.0.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Teleprinter-1.0.2.aar/c8bff440e1686ecd489d8c9d5b89dd7e/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/Teleprinter-1.0.2.aar/c8bff440e1686ecd489d8c9d5b89dd7e/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.Commit451/Teleprinter/1.0.2/ebeed3cc7969f699166fdaf969fe54e4dd96a31c/Teleprinter-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

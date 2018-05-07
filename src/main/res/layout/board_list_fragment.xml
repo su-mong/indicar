@@ -1,0 +1,63 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.iindicar.indicar.b2_community.boardList.BoardListViewModel"/>
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryBackground">
+
+        <!--app:onRefreshListener="@{viewModel::onRefresh}"-->
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshing="@{viewModel.isDataLoading}"
+            app:onRefreshListener="@{() -> viewModel.onRefresh(recyclerViewBoardContainer)}">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_board_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none"
+                    android:background="@color/colorPrimaryBackground"
+                    app:binding="@{viewModel}"/>
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <ImageButton
+            style="@style/imageButtonCustomStyle"
+            android:id="@+id/button_fast_up"
+            android:layout_margin="10dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/btn_hide_up"
+            android:visibility="@{viewModel.isPageUpScrolling &amp;&amp; !viewModel.isDataLoading ? View.VISIBLE : View.GONE}"/>
+
+        <ImageButton
+            style="@style/imageButtonCustomStyle"
+            android:id="@+id/button_board_write"
+            android:layout_margin="26dp"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/btn_write_board"
+            android:visibility="@{viewModel.isScrolling || viewModel.isVerticalScrolling ? View.GONE : View.VISIBLE}"/>
+
+    </RelativeLayout>
+</layout>

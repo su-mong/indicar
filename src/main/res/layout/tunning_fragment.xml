@@ -1,0 +1,64 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.iindicar.indicar.b1_tunning.NoticeViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryBackground">
+
+        <ImageButton
+            android:id="@+id/btnT_toTuning2"
+            style="@style/imageButtonCustomStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_gototuning2"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                style="@style/textViewBoardInfoStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="공지사항"/>
+
+            <ImageButton
+                style="@style/imageButtonCustomStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_action_refresh"
+                android:onClick="@{(v) -> viewModel.onRefresh(noticeContainer)}"/>
+
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshing="@{viewModel.isDataLoading}"
+            app:onRefreshListener="@{() -> viewModel.onRefresh(noticeContainer)}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/notice_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:background="@color/colorPrimaryBackground"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</layout>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="activity"
+            type="com.iindicar.indicar.b4_account.TraceActivity"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="21">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            app:scale_base_width="1440"
+            app:scale_base_height="416">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/title_trace"
+                app:scale_top="0"
+                app:scale_left="0"
+                app:scale_height="416"
+                app:scale_width="1440"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_like2"
+                android:background="@drawable/btna_like"
+                app:scale_top="30"
+                app:scale_left="1160"
+                app:scale_height="74"
+                app:scale_width="200"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_writing2"
+                android:background="@drawable/btna_writing"
+                app:scale_top="171"
+                app:scale_left="1160"
+                app:scale_height="74"
+                app:scale_width="200"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_comment2"
+                android:background="@drawable/btna_comment"
+                app:scale_top="312"
+                app:scale_left="1160"
+                app:scale_height="74"
+                app:scale_width="200"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivA_likeOn"
+                app:scale_top="30"
+                app:scale_left="1120"
+                app:scale_height="25"
+                app:scale_width="25"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivA_writingOn"
+                app:scale_top="171"
+                app:scale_left="1120"
+                app:scale_height="25"
+                app:scale_width="25"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivA_commentOn"
+                app:scale_top="312"
+                app:scale_left="1120"
+                app:scale_height="25"
+                app:scale_width="25"/>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="17"
+            android:id="@+id/view_pager_trace"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </LinearLayout>
+
+</layout>

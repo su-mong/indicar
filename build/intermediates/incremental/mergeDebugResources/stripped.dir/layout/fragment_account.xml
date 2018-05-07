@@ -1,0 +1,171 @@
+
+                                                        
+    
+                                          
+                 
+                           
+                                                                    
+           
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/back_account" android:tag="layout/fragment_account_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="55dp"
+            android:src="@drawable/account_title"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="20dp"/>
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginTop="22dp"
+            app:scale_base_width="1440"
+            app:scale_base_height="306">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/account_subtp"
+                app:scale_left="80"
+                app:scale_top="0"
+                app:scale_width="368"
+                app:scale_height="45"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ivA_profileImage"
+                app:scale_left="80"
+                app:scale_top="85"
+                app:scale_width="216"
+                app:scale_height="216"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_gotoProfile"
+                android:background="@drawable/account_setting"
+                app:scale_left="245"
+                app:scale_top="193"
+                app:scale_width="108"
+                app:scale_height="108"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvA_name"
+                android:textColor="#ffffff"
+                app:scale_left="376"
+                app:scale_top="88"
+                app:scale_width="1064"
+                app:scale_height="100"
+                app:scale_textsize="85"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvA_email"
+                android:textColor="#ffffff"
+                app:scale_left="376"
+                app:scale_top="193"
+                app:scale_width="1064"
+                app:scale_height="70"
+                app:scale_textsize="50"/>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="30dp"
+            app:scale_base_width="1440"
+            app:scale_base_height="1025">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/account_subtc"
+                app:scale_left="80"
+                app:scale_top="0"
+                app:scale_width="368"
+                app:scale_height="45"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/account_subtt"
+                app:scale_left="781"
+                app:scale_top="0"
+                app:scale_width="368"
+                app:scale_height="45"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_basket"
+                android:background="@drawable/account_shop"
+                app:scale_left="80"
+                app:scale_top="78"
+                app:scale_width="376"
+                app:scale_height="104"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_howtouse"
+                android:background="@drawable/account_howtouse"
+                app:scale_left="80"
+                app:scale_top="334"
+                app:scale_width="376"
+                app:scale_height="104"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_alliance"
+                android:background="@drawable/account_alliance"
+                app:scale_left="80"
+                app:scale_top="590"
+                app:scale_width="376"
+                app:scale_height="104"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_logout"
+                android:background="@drawable/account_logout"
+                app:scale_left="80"
+                app:scale_top="846"
+                app:scale_width="376"
+                app:scale_height="104"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_like"
+                android:background="@drawable/account_like"
+                app:scale_left="781"
+                app:scale_top="78"
+                app:scale_width="376"
+                app:scale_height="104"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_writing"
+                android:background="@drawable/account_mywrite"
+                app:scale_left="781"
+                app:scale_top="334"
+                app:scale_width="376"
+                app:scale_height="104"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_comment"
+                android:background="@drawable/account_mycomment"
+                app:scale_left="781"
+                app:scale_top="590"
+                app:scale_width="376"
+                app:scale_height="104"/>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+    </LinearLayout>
+         

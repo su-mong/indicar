@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="activity"
+            type="com.iindicar.indicar.b4_account.ProfileActivity"/>
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:id="@+id/slProfile"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:scale_base_height="991"
+            app:scale_base_width="1440">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_profile"
+                app:scale_height="406"
+                app:scale_left="0"
+                app:scale_top="0"
+                app:scale_width="1440" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back_profile2"
+                app:scale_height="538"
+                app:scale_left="40"
+                app:scale_top="443"
+                app:scale_width="1360" />
+
+            <ImageView
+                android:id="@+id/ivA_profileImage2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_height="272"
+                app:scale_left="584"
+                app:scale_top="270"
+                app:scale_width="272" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:scale_height="170"
+                app:scale_left="80"
+                app:scale_top="542"
+                app:scale_width="1380">
+
+                <EditText
+                    android:id="@+id/etA_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/btnA_modify1"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
+                    android:layout_toRightOf="@+id/etA_nickname"
+                    android:background="@drawable/btn_write" />
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btna_modifyoff"
+                app:scale_height="80"
+                app:scale_left="1280"
+                app:scale_top="680"
+                app:scale_width="80" />
+
+            <EditText
+                android:id="@+id/etA_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:lines="1"
+                android:singleLine="true"
+                android:text="주소 없음"
+                android:textColor="#999999"
+                app:scale_height="165"
+                app:scale_left="80"
+                app:scale_textsize="60"
+                app:scale_top="802"
+                app:scale_width="1280" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btna_modifyoff"
+                app:scale_height="80"
+                app:scale_left="1280"
+                app:scale_top="842"
+                app:scale_width="80" />
+
+            <EditText
+                android:id="@+id/etA_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:lines="1"
+                android:singleLine="true"
+                android:textColor="#999999"
+                app:scale_height="160"
+                app:scale_left="80"
+                app:scale_textsize="60"
+                app:scale_top="660"
+                app:scale_width="1280" />
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:layout_width="match_parent"
+            android:layout_height="325dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/slProfile"
+            android:layout_marginTop="10dp"
+            app:scale_base_height="1192"
+            app:scale_base_width="974">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_eventAlarm"
+                android:background="@drawable/btna_eventalarmon"
+                app:scale_left="40"
+                app:scale_top="0"
+                app:scale_width="670"
+                app:scale_height="417"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_otherAlarm"
+                android:background="@drawable/btna_otheralarmoff"
+                app:scale_left="730"
+                app:scale_top="0"
+                app:scale_width="670"
+                app:scale_height="417" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_clause"
+                android:background="@drawable/btna_clause"
+                app:scale_left="40"
+                app:scale_top="470"
+                app:scale_width="1360"
+                app:scale_height="100"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_opinion"
+                android:background="@drawable/btna_opinion"
+                app:scale_left="40"
+                app:scale_top="600"
+                app:scale_width="1360"
+                app:scale_height="100"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_deleteAccount"
+                android:background="@drawable/btna_deleteaccount"
+                app:scale_left="40"
+                app:scale_top="750"
+                app:scale_width="675"
+                app:scale_height="224"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnA_logout2"
+                android:background="@drawable/btna_logout2"
+                app:scale_left="725"
+                app:scale_top="750"
+                app:scale_width="675"
+                app:scale_height="224"/>
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:id="@+id/pbA_Loading"/>
+
+
+    </RelativeLayout>
+</layout>

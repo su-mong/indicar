@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+                                                        
+    
+                                          
+                 
+                           
+                                                      
+           
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingBottom="5dp"
+        android:background="@color/colorActionBar" android:tag="layout/action_bar_layout_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageButton
+            style="@style/imageButtonCustomStyle"
+            android:id="@+id/button_left"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:tag="binding_1"                                                     
+                                                  />
+
+        <ImageView
+            style="@style/imageButtonCustomStyle"
+            android:id="@+id/image_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:tag="binding_2"                 />
+
+        <ImageView
+            style="@style/imageButtonCustomStyle"
+            android:paddingRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/logo_indicar"/>
+
+    </RelativeLayout>
+
+         

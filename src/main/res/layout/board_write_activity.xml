@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.iindicar.indicar.b2_community.boardWrite.BoardWriteViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- intro 페이지 일때 visible -->
+        <include
+            android:id="@+id/intro"
+            layout="@layout/board_write_intro_layout"
+            bind:viewModel="@{viewModel}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="@{viewModel.isIntroPage ? View.VISIBLE : View.GONE}"/>
+
+        <!-- deatil 페이지 일때 visible -->
+        <include
+            android:id="@+id/detail"
+            layout="@layout/board_write_detail_layout"
+            bind:viewModel="@{viewModel}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="@{viewModel.isIntroPage ? View.GONE : View.VISIBLE}"/>
+
+        <!-- intro 페이지 일때 visible -->
+        <ImageButton
+            style="@style/imageButtonCustomStyle"
+            android:id="@+id/button_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_next"
+            android:onClick="@{(v) -> viewModel.onNextButtonClicked()}"
+            android:visibility="@{viewModel.isIntroPage ? View.VISIBLE : View.GONE}"/>
+
+        <!-- deatil 페이지 일때 visible -->
+        <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.isIntroPage ? View.GONE : View.VISIBLE}">
+
+            <ImageButton
+                style="@style/imageButtonCustomStyle"
+                android:id="@+id/button_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{(v) -> viewModel.onCancelButtonClicked()}"
+                android:src="@drawable/btn_quit"/>
+
+            <ImageButton
+                style="@style/imageButtonCustomStyle"
+                android:id="@+id/button_submit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{(v) -> viewModel.onSubmitButtonClicked()}"
+                android:src="@drawable/btn_upload_board"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

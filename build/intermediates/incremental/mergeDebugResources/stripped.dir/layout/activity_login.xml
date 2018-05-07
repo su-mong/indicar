@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+                                                                   
+    
+                 
+                           
+                                                               
+           
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/back_login"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:tag="layout/activity_login_0" xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:layout_width="200dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="350dp"
+            android:layout_centerHorizontal="true"
+            app:scale_base_width="728"
+            app:scale_base_height="602">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnLoginKakao"
+                android:background="@drawable/btn_kakaologin_light"
+                app:scale_left="0"
+                app:scale_top="0"
+                app:scale_width="728"
+                app:scale_height="182"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnLoginGoogle"
+                android:background="@drawable/btn_googlelogin_light"
+                app:scale_left="0"
+                app:scale_top="210"
+                app:scale_width="728"
+                app:scale_height="182"/>
+            <com.facebook.login.widget.LoginButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnLoginFacebook"
+                app:scale_left="0"
+                app:scale_top="420"
+                app:scale_width="728"
+                app:scale_height="182"/>
+
+
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pbLogin"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+         

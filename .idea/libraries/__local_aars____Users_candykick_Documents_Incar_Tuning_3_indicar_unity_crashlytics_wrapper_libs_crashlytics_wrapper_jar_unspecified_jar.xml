@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="__local_aars__:/Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics-wrapper/libs/crashlytics-wrapper.jar:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/crashlytics-wrapper/libs/crashlytics-wrapper.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
