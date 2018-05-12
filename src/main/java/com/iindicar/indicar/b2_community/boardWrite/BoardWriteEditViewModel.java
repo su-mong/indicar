@@ -182,7 +182,7 @@ public class BoardWriteEditViewModel {
 
         RequestParams params = new RequestParams();
         params.put("atch_file_id", vo.getFileIndex());
-        params.put("file_cn1", vo.getWriteText());
+        params.put("file_cn", vo.getWriteText());
 
         if(isFileUpdated){ // 사진이 수정 된 경우
             try {
