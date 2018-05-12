@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ObservableInt;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.PopupMenu;
@@ -15,7 +13,6 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Display;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,9 +20,9 @@ import android.widget.Toast;
 
 import com.commit451.teleprinter.Teleprinter;
 import com.iindicar.indicar.BaseActivity;
-import com.iindicar.indicar.R;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
-import com.iindicar.indicar.b2_community.boardWrite.BoardWriteActivity;
+import com.iindicar.indicar.R;
+import com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditActivity;
 import com.iindicar.indicar.data.vo.BoardCommentVO;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
@@ -33,12 +30,11 @@ import com.iindicar.indicar.data.vo.UserVO;
 import com.iindicar.indicar.data.vo.WriteBoardVO;
 import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardDetailActivityBinding;
-import com.iindicar.indicar.utils.CustomAlertDialog;
+import com.iindicar.indicar.utils.DialogUtil;
 import com.iindicar.indicar.utils.RecyclerViewDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_UPDATE;
 
@@ -52,7 +48,7 @@ import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_UPDATE;
  *
  */
 
-public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding> implements BoardDetailNavigator{
+public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding> implements BoardDetailNavigator {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -208,9 +204,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     private void initCommentView() {
         commentAdapter = new BoardCommentAdapter(this);
-        commentAdapter.setOnItemLongClickListener(new BaseRecyclerViewAdapter.OnItemLongClickListener() {
+        commentAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemLongClick(View view, int position) {
+            public void onItemClick(View view, int position) {
                 showCommentDialog(position);
             }
         });
@@ -276,22 +272,18 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     }
 
     private void showDeleteDialog() {
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
 
-        CustomAlertDialog dialog = new CustomAlertDialog(this);
-        dialog.setImageId(R.drawable.button_trash)
-                .setTitle("이 게시글을 정말로 삭제하시겠습니까?")
-                .setSubTitle("Delete this post")
-                .setPositiveButtonListener(new View.OnClickListener() {
+        DialogUtil.showDialog(this,
+                R.drawable.button_trash,
+                "이 게시글을 정말로 삭제하시겠습니까?",
+                "Delete this post",
+                0.9, 0.25,
+                new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         viewModel.deleteBoard();
                     }
-                })
-                .setSize((int) (size.x * 0.9), (int) (size.y * 0.25))
-                .show();
+                });
     }
 
     public void showCommentDialog(final int position){
@@ -335,7 +327,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     @Override
     public void onStartBoardUpdated() {
-        Intent intent = new Intent(getApplicationContext(), BoardWriteActivity.class);
+
+        Intent intent = new Intent(getApplicationContext(), BoardWriteEditActivity.class);
+        Bundle bundle = new Bundle();
 
         WriteBoardVO updateBoard = new WriteBoardVO();
         updateBoard.setUserId(viewModel.loginId);
@@ -344,7 +338,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         updateBoard.setBoardId(viewModel.boardHeader.getBoardId());
         updateBoard.setFileIndex(viewModel.boardHeader.getAtchFileId());
 
-        intent.putExtra("updateBoard", updateBoard);
+        bundle.putParcelable(BoardWriteEditActivity.EXTRA_BOARD_DETAIL, updateBoard);
 
         List<BoardFileVO> boardItems = boardAdapter.getItemList();
         ArrayList<WriteFileVO> updateItems = new ArrayList<>();
@@ -357,21 +351,18 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                 updateItems.add(vo);
             }
         }
-        intent.putParcelableArrayListExtra("updateItems", updateItems);
-        intent.putExtra("isUpdating", true);
+        bundle.putParcelableArrayList(BoardWriteEditActivity.EXTRA_BOARD_FILE_LIST, updateItems);
 
+        intent.putExtra(BoardWriteEditActivity.BUNDLE_EXTRA_BOARD, bundle);
         startActivityForResult(intent, REQUEST_BOARD_UPDATE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode != RESULT_OK){
-            return;
-        }
 
         if(requestCode == REQUEST_BOARD_UPDATE){
-            if(data != null) {
+            if(resultCode == BoardWriteEditActivity.RESULT_UPDATE_SUCCESS){
                 boardAdapter.clearItems();
                 commentAdapter.clearItems();
                 viewModel.onRefreshBoard();

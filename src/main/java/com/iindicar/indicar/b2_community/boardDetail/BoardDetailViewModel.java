@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.iindicar.indicar.BaseViewModel;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardCommentDao;
 import com.iindicar.indicar.data.dao.BoardDao;
@@ -19,24 +16,10 @@ import com.iindicar.indicar.data.vo.BoardCommentVO;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.data.vo.UserVO;
-import com.iindicar.indicar.utils.HttpClient;
-import com.kakao.usermgmt.response.model.User;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
-
-import cz.msebera.android.httpclient.HttpHost;
-import cz.msebera.android.httpclient.HttpRequest;
-import cz.msebera.android.httpclient.client.ClientProtocolException;
-import cz.msebera.android.httpclient.client.methods.CloseableHttpResponse;
-import cz.msebera.android.httpclient.conn.ClientConnectionManager;
-import cz.msebera.android.httpclient.impl.client.CloseableHttpClient;
-import cz.msebera.android.httpclient.params.HttpParams;
-import cz.msebera.android.httpclient.protocol.HttpContext;
 
 /**
  * Created by yeseul on 2018-04-13.
@@ -63,14 +46,10 @@ public class BoardDetailViewModel {
 
     private boolean isCommentUpdating = false;
 
-    /** true: hide buttons */
     public final ObservableBoolean isKeyboardOpen = new ObservableBoolean(false);
-    /** true: hide buttons, show fastUpButton */
     public final ObservableBoolean isPageUpScrolling = new ObservableBoolean(false);
     public final ObservableBoolean isScrolling = new ObservableBoolean(false);
-    /** true: like button ON */
     public final ObservableBoolean isLikeBoard = new ObservableBoolean();
-    /** bind with edit keyboard */
     public final ObservableField<String> commentWrite = new ObservableField<>();
 
     private static int doneCount = 0;
@@ -303,7 +282,7 @@ public class BoardDetailViewModel {
         return true;
     }
 
-    public void onCommentSubmitClick(View view){
+    public void onCommentSubmitClick(){
         navigator.hideKeyboard();
 
         if(commentWrite.get().equals("")){
@@ -333,15 +312,8 @@ public class BoardDetailViewModel {
             @Override
             public void onDataLoaded(Object data) {
                 commentWrite.set("");
-                Handler handler = new Handler();
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        isCommentUpdating = false;
-                        getCommentList();
-                    }
-                }, 100);
+                isCommentUpdating = false;
+                getCommentList();
             }
             @Override
             public void onDataNotAvailable() {
@@ -363,15 +335,8 @@ public class BoardDetailViewModel {
             @Override
             public void onDataLoaded(Object data) {
                 commentWrite.set("");
-                Handler handler = new Handler();
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        isCommentUpdating = false;
-                        getCommentList();
-                    }
-                }, 100);
+                isCommentUpdating = false;
+                getCommentList();
             }
             @Override
             public void onDataNotAvailable() {

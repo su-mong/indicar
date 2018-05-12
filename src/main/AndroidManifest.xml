@@ -94,8 +94,6 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".b2_community.boardWrite.BoardWriteActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".a1_main.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -107,6 +105,8 @@
         <activity android:name=".b4_account.ProfileActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".b4_account.TraceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".b2_community.boardWrite.BoardWriteEditActivity"
             android:screenOrientation="portrait"/>
 
         <activity

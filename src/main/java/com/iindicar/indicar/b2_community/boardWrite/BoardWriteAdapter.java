@@ -1,32 +1,19 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.graphics.Point;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
-import com.commit451.teleprinter.Teleprinter;
-import com.iindicar.indicar.R;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
+import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardWriteItemBinding;
-import com.iindicar.indicar.utils.CustomAlertDialog;
-import com.iindicar.indicar.utils.IPickPhotoHelper;
-import com.iindicar.indicar.utils.PickPhotoHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,22 +25,21 @@ import java.util.List;
 
 public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, BoardWriteAdapter.BoardWriteViewHolder> {
 
-    private TextChangedListener textChangedListener;
+    private BoardWriteEditViewModel viewModel;
+
     private AlbumButtonClickListener albumButtonClickListener;
     private CameraButtonClickListener cameraButtonClickListener;
     private ImageButtonClickListener imageButtonClickListener;
 
-    public BoardWriteAdapter(Context context) {
+    public BoardWriteAdapter(Context context, BoardWriteEditViewModel viewModel) {
         super(context);
+        this.viewModel = viewModel;
     }
 
-    public BoardWriteAdapter(Context context, List<WriteFileVO> list) {
+    public BoardWriteAdapter(Context context, BoardWriteEditViewModel viewModel, List<WriteFileVO> list) {
         super(context);
+        this.viewModel = viewModel;
         this.itemList = list;
-    }
-
-    public void setTextChangedListener(TextChangedListener textChangedListener) {
-        this.textChangedListener = textChangedListener;
     }
 
     public void setAlbumButtonClickListener(AlbumButtonClickListener albumButtonClickListener) {
@@ -72,8 +58,9 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
     protected void onBindView(final BoardWriteViewHolder holder, int position) {
 
         final int pos = position;
+        final WriteFileVO item = itemList.get(position);
 
-        holder.binding.setItem(itemList.get(position));
+        holder.binding.setItem(item);
 
         // 앨범에서 사진 선택 콜백
         if(albumButtonClickListener != null) {
@@ -106,24 +93,22 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
         }
 
         // 텍스트 입력 콜백
-        if(textChangedListener != null) {
-            holder.binding.textWrite.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        holder.binding.textWrite.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                }
+            }
 
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                }
+            }
 
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    textChangedListener.onTextChanged(editable.toString(), pos);
-                }
-            });
-        }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                item.setWriteText(editable.toString());
+            }
+        });
     }
 
     @Override
@@ -140,11 +125,6 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
         }
-    }
-
-    public interface TextChangedListener {
-
-        void onTextChanged(String text, int position);
     }
 
     public interface CameraButtonClickListener {

@@ -4,9 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -64,6 +62,7 @@ public class ImageUtil {
                         return false;
                     }
                 })
+                .skipMemoryCache(true)
                 .dontAnimate()
                 .into(imageView);
     }

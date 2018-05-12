@@ -66,11 +66,10 @@
                     android:background="@android:color/transparent"/>
 
                 <ImageButton
-                    android:id="@+id/button_comment_submit"
                     style="@style/commentButtonCustomStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="@{(v) -> viewModel.onCommentSubmitClick(v)}"
+                    android:onClick="@{(v) -> viewModel.onCommentSubmitClick()}"
                     android:src="@drawable/button_comment_submit"/>
 
             </LinearLayout>

@@ -12,6 +12,8 @@
     </data>
 
     <FrameLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -72,20 +74,6 @@
                     android:src="@drawable/btn_comment_unclicked"/>
 
             </LinearLayout>
-<!--
-
-            <ImageButton
-                style="@style/imageButtonCustomStyle"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginTop="5dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/button_goto_top"
-                android:onTouch="@{(v, event) -> viewModel.onFashUpClick(v, event, boardContent.recyclerviewBoardContainer)}"
-                android:visibility="@{viewModel.isPageUpScrolling}"/>
--->
-
         </RelativeLayout>
     </FrameLayout>
 </layout>

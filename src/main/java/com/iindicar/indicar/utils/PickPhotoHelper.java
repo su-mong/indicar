@@ -33,11 +33,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
 
-    public static final String TAG =  PickPhotoHelper.class.getSimpleName();
-
-    private static final int PICK_FROM_CAMERA = 1;
-    private static final int CROP_IMAGE = 2;
-    private static final int PICK_FROM_ALBUM = 3;
+    public static final int PICK_FROM_CAMERA = 1;
+    public static final int CROP_IMAGE = 2;
+    public static final int PICK_FROM_ALBUM = 3;
 
     Activity context;
 
@@ -57,16 +55,16 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
     }
 
     @Override
-    public void pickFromAlbum(loadPhotoListCallBack callBack) {
+    public void pickFromAlbum(int maxSelectable, loadPhotoListCallBack callBack) {
         this.albumCallBack = callBack;
-        openPhotoPicker();
+        openPhotoPicker(maxSelectable);
     }
 
-    private void openPhotoPicker(){
+    private void openPhotoPicker(int maxSelectable){
         Matisse.from(context)
                 .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
                 .countable(true)
-                .maxSelectable(15)
+                .maxSelectable(maxSelectable)
                 .theme(R.style.photoPickerTheme)
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 .thumbnailScale(0.85f)

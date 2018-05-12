@@ -1,6 +1,5 @@
 package com.iindicar.indicar.utils;
 
-import android.app.Activity;
 import android.net.Uri;
 
 import java.util.List;
@@ -13,7 +12,7 @@ public interface IPickPhotoHelper<T extends Uri> {
 
     void pickFromCamera(loadPhotoCallBack callBack);
 
-    void pickFromAlbum(loadPhotoListCallBack callBack);
+    void pickFromAlbum(int maxSelectable, loadPhotoListCallBack callBack);
 
     interface loadPhotoCallBack<T> {
 

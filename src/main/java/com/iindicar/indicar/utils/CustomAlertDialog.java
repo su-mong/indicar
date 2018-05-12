@@ -35,8 +35,8 @@ public class CustomAlertDialog extends Dialog {
     private int width = 0;
     private int height = 0;
 
-    private View.OnClickListener positiveButtonListener = null;
-    private View.OnClickListener negativeButtonListener = null;
+    private View.OnClickListener positiveButtonListener;
+    private View.OnClickListener negativeButtonListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,13 @@ public class CustomAlertDialog extends Dialog {
         setContentView(binding.getRoot());
 
         if(positiveButtonListener != null){
-            binding.positiveButton.setOnClickListener(positiveButtonListener);
+            binding.positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    positiveButtonListener.onClick(view);
+                    dismiss();
+                }
+            });
         }
 
         if(negativeButtonListener == null){
@@ -122,4 +128,6 @@ public class CustomAlertDialog extends Dialog {
         this.height = height;
         return this;
     }
+
+
 }

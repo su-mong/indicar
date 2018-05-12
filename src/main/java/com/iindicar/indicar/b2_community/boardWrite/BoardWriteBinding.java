@@ -1,7 +1,6 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
 import android.databinding.BindingAdapter;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,32 +13,6 @@ import com.iindicar.indicar.utils.ImageUtil;
  */
 
 public class BoardWriteBinding {
-
-    @BindingAdapter(value = {"pageChange"})
-    public static void setPageChangeListener(final RecyclerView recyclerView,
-                                             final BoardWriteViewModel viewModel){
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                viewModel.onScrollChanged(recyclerView, newState);
-            }
-        });
-
-        recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
-            @Override
-            public void onChildViewAttachedToWindow(View view) {
-                viewModel.getCurrentItem(recyclerView.getLayoutManager());
-                viewModel.getTotalPage(recyclerView);
-            }
-
-            @Override
-            public void onChildViewDetachedFromWindow(View view) {
-                viewModel.getCurrentItem(recyclerView.getLayoutManager());
-                viewModel.getTotalPage(recyclerView);
-            }
-        });
-    }
 
     @BindingAdapter(value = {"imageVisible"})
     public static void setVisibility(ImageView imageView,

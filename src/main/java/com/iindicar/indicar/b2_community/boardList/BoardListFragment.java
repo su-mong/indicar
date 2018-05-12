@@ -19,7 +19,7 @@ import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity;
-import com.iindicar.indicar.b2_community.boardWrite.BoardWriteActivity;
+import com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditActivity;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.data.vo.UserVO;
@@ -29,7 +29,6 @@ import com.iindicar.indicar.utils.ScrollBottomAction;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.iindicar.indicar.Constant.BoardWrite.NEW;
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
 
 
@@ -37,7 +36,7 @@ import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
  * Created by yeseul on 2018-04-17.
  */
 
-public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> implements BoardListNavigator{
+public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> implements BoardListNavigator {
     private static final String TAG = BoardListFragment.class.getSimpleName();
 
     private int boardTab;
@@ -143,9 +142,9 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    Intent intent = new Intent(getContext(), BoardWriteActivity.class);
-                    intent.putExtra("command", NEW);
-                    getContext().startActivity(intent);
+
+                    Intent intent = new Intent(getContext(), BoardWriteEditActivity.class);
+                    startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.enter_bottom, R.anim.exit_no_anim);
                 }
                 return true;

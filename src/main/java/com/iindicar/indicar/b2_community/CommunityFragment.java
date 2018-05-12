@@ -1,35 +1,21 @@
 package com.iindicar.indicar.b2_community;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
-import android.support.v4.widget.NestedScrollView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.commit451.teleprinter.Teleprinter;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
-import com.iindicar.indicar.b2_community.boardWrite.BoardWriteActivity;
 import com.iindicar.indicar.databinding.CommunityFragmentBinding;
-
-import java.util.Observable;
-
-import static android.view.inputmethod.InputMethodManager.SHOW_FORCED;
-import static com.iindicar.indicar.Constant.BoardWrite.NEW;
 
 public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
 
