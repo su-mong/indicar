@@ -22,9 +22,7 @@
             android:id="@+id/imageview_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:imageUrl="@{item.fileUrl}"
-            app:imageWidth="@{item.fileWidth}"
-            app:imageHeight="@{item.fileHeight}"/>
+            app:imageUrl="@{item.fileUrl}"/>
 
         <LinearLayout
             android:background="@color/colorPrimary"

@@ -51,6 +51,7 @@ public class ImageUtil {
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        // 사진 가로세로 비율에 맞게 이미지뷰 사이즈 조절
                         GlideDrawableImageViewTarget glideTarget = (GlideDrawableImageViewTarget) target;
                         ImageView view = glideTarget.getView();
                         int width = view.getMeasuredWidth();
@@ -62,7 +63,6 @@ public class ImageUtil {
                         return false;
                     }
                 })
-                .skipMemoryCache(true)
                 .dontAnimate()
                 .into(imageView);
     }

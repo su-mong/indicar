@@ -25,9 +25,7 @@
                 android:id="@+id/imageview_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:imageUrl="@{boardItem.fileUrl}"
-                app:imageWidth="@{boardItem.fileWidth}"
-                app:imageHeight="@{boardItem.fileHeight}"/>
+                app:imageUrl="@{boardItem.fileUrl}"/>
 
             <TextView
                 style="@style/textViewBoardContentStyle"
