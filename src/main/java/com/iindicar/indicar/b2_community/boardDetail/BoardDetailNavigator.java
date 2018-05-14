@@ -38,6 +38,4 @@ public interface BoardDetailNavigator {
 
     void onCommentProfileAttached(BoardCommentVO comment, UserVO vo);
 
-    void showTestToast(String message);
-
 }

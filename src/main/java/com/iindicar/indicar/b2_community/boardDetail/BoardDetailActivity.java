@@ -386,7 +386,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     @Override
     public void onItemsAdded(List<BoardFileVO> items) {
-        showTestToast("doneFile" + items.toString());
         boardAdapter.addItems(items);
     }
 
@@ -423,11 +422,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         int position = commentAdapter.getItemList().indexOf(comment);
         comment.setUserProfileUrl(vo.getProfileImageUrl());
         commentAdapter.notifyItemChanged(position);
-    }
-
-    @Override
-    public void showTestToast(String message) {
-        Toast.makeText(this, "" + message, Toast.LENGTH_SHORT).show();
     }
 
 }

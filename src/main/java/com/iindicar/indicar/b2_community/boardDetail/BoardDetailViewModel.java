@@ -27,7 +27,6 @@ import java.util.TreeMap;
  */
 
 public class BoardDetailViewModel {
-    private static final String TAG = BoardDetailViewModel.class.getSimpleName();
 
     public final ObservableBoolean isBoardDataLoading = new ObservableBoolean(true);
     public final ObservableBoolean isCommentDataLoading = new ObservableBoolean(true);
@@ -387,7 +386,7 @@ public class BoardDetailViewModel {
 
             @Override
             public void onDataNotAvailable() {
-                navigator.showTestToast("게시물 삭제 실패");
+
             }
         });
     }
