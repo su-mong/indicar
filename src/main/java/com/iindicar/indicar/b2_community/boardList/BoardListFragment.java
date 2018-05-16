@@ -28,6 +28,7 @@ import com.iindicar.indicar.utils.ScrollBottomAction;
 
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
 
 
@@ -41,6 +42,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     private int boardTab;
     private BoardListViewModel viewModel;
     private BoardListAdapter adapter;
+    private int isUpdate;
 
     public BoardListFragment() {
         this.viewModel = new BoardListViewModel();
@@ -215,16 +217,23 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        isUpdate = 0;
+        if (resultCode != RESULT_OK)
+            return;
 
-        if (resultCode == 2 || resultCode == 3) {
+        if (requestCode == REQUEST_BOARD_DETAIL) { // result from BoardDetailActivity
+            if (data.getBooleanExtra("isUpdated", false))
+                isUpdate=1;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isUpdate == 1) {
             viewModel.onRefresh(binding.recyclerViewBoardContainer);
         }
 
-        if (requestCode == REQUEST_BOARD_DETAIL) { // result from BoardDetailActivity
-            if (data.getBooleanExtra("isUpdated", false)) {
-                viewModel.onRefresh(binding.recyclerViewBoardContainer);
-//            }
-            }
-        }
+
     }
 }

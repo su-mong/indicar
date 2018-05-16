@@ -392,7 +392,7 @@ Log.i("ddff","oncommentsubmit");
         boardDao.deleteData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-                navigator.onFinishActivity();
+                navigator.onDeleteBoard();
             }
 
             @Override

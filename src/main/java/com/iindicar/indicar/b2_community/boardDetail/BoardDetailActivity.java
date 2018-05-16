@@ -58,6 +58,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     private BoardDetailAdapter boardAdapter;
     private BoardCommentAdapter commentAdapter;
+    private boolean isUpdated=false;
 
     private Teleprinter keyboard;
 
@@ -362,20 +363,30 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+Log.d("ddf","writeeditfinish");
+
 
         if(requestCode == REQUEST_BOARD_UPDATE){
             if(resultCode == BoardWriteEditActivity.RESULT_UPDATE_SUCCESS){
+                isUpdated=true;
                 boardAdapter.clearItems();
                 commentAdapter.clearItems();
                 viewModel.onRefreshBoard();
             }
+//            if(resultCode==BoardWriteEditActivity.RESULT_UPLOAD_SUCCESS)
+//                isUpdated=true;
         }
+    }
+
+    public void onDeleteBoard(){
+        isUpdated=true;
+        onFinishActivity();
     }
 
     @Override
     public void onFinishActivity() {
         Intent intent = new Intent();
-        intent.putExtra("isUpdated", true);
+        intent.putExtra("isUpdated", isUpdated);
         setResult(RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
@@ -417,7 +428,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     @Override
     public void onCommentUpdated(List<BoardCommentVO> list) {
         LinearLayout lin_alert_empty=(LinearLayout)findViewById(R.id.lin_alert_reply_empty);
-        lin_alert_empty.setVisibility(View.VISIBLE);
+        lin_alert_empty.setVisibility(View.GONE);
         commentAdapter.updateItems(list);
 Log.d("ddff","comment_updated");
     }

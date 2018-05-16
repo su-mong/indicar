@@ -20,6 +20,8 @@ public interface BoardDetailNavigator {
 
     void onFinishActivity();
 
+    void onDeleteBoard();
+
     void onHeaderAdded(BoardDetailVO header);
 
     void onItemsAdded(List<BoardFileVO> items);

@@ -255,4 +255,10 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
         super.onActivityResult(requestCode, resultCode, data);
         pickPhotoHelper.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("ddff","boardwrtieeditact");
+    }
 }
