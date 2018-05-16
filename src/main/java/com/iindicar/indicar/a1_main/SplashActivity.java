@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.databinding.ObservableInt;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -14,6 +15,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -48,6 +52,13 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_splash);
+        ImageView progress=(ImageView)findViewById(R.id.anim_loading);
+        AnimationDrawable frameAnimation = (AnimationDrawable)progress.getDrawable();
+        frameAnimation.start();
+//        ImageView mImgView = (ImageView) findViewById(R.id.loadin_dot);
+//        final Animation animTransRight = AnimationUtils.loadAnimation(
+//                this,R.anim.loading);
+//        mImgView.startAnimation(animTransRight);
 
         //로딩 이미지 셋팅
         //diskCacheStrategy를 쓰면 gif 로딩이 빨라짐
@@ -63,7 +74,7 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         } else {//로그인 여부 확인
             try {
-                Thread.sleep(1700);
+//                Thread.sleep(3000);
             } catch (Exception e) {}
             try {
                 new versionCheck().execute();

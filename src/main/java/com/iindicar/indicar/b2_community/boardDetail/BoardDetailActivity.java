@@ -448,5 +448,9 @@ Log.d("ddff","empty");
         comment.setUserProfileUrl(vo.getProfileImageUrl());
         commentAdapter.notifyItemChanged(position);
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("ddff",this.getClass().getSimpleName());
+    }
 }

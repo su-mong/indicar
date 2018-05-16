@@ -18,12 +18,10 @@
 
     <!-- Splash Activity 테마 -->
     <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/loadingback</item>
     </style>
 
     <!--New Splash Activity 테마 -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/loading</item>
     </style>
 
     <!-- Photo Picker 테마 -->

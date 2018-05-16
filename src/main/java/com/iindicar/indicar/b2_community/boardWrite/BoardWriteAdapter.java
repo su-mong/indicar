@@ -142,4 +142,6 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
         void onClick(View view, int position);
     }
 
+
+
 }

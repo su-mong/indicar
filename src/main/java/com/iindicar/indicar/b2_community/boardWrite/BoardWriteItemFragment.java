@@ -162,6 +162,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                     @Override
                     public void onClick(View view) {
                         adapter.removeItem(position);
+                        adapter.notifyDataSetChanged();
                         viewModel.totalPage.set(adapter.getItemCount());
                     }
                 });
@@ -247,6 +248,12 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                         adapter.notifyItemChanged(position);
                     }
                 });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("ddff",this.getClass().getSimpleName());
     }
 
 }

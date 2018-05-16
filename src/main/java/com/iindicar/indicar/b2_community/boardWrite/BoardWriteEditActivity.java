@@ -257,8 +257,8 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        Log.d("ddff","boardwrtieeditact");
+        Log.d("ddff",this.getClass().getSimpleName());
     }
 }

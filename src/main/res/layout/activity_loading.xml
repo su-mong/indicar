@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.iindicar.indicar.a1_main.LoadingActivity"
-    android:background="@drawable/loading">
+     >
 
     <ProgressBar
         android:layout_width="wrap_content"
