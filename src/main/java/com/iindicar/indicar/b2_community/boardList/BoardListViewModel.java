@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -129,7 +130,7 @@ public class BoardListViewModel {
     }
 
     private void getImageFile(final List<BoardDetailVO> list) {
-
+Log.d("ddff","getimage");
         for(int i = 0 ; i <  list.size() ; i++){
             final int position = i;
             final BoardDetailVO board = list.get(i);

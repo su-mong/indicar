@@ -1,63 +1,96 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="viewModel"
-            type="com.iindicar.indicar.b1_tunning.NoticeViewModel"/>
+            type="com.iindicar.indicar.b1_tunning.NoticeViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorPrimaryBackground">
+        android:background="@color/colorPrimaryBackground"
+        android:orientation="vertical">
 
         <ImageButton
             android:id="@+id/btnT_toTuning2"
             style="@style/imageButtonCustomStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_gototuning2"/>
+            android:src="@drawable/btn_gototuning2" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:background="#fff"
             android:gravity="center_vertical"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            <TextView
-                style="@style/textViewBoardInfoStyle"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textStyle="bold"
-                android:text="공지사항"/>
+                android:gravity="center">
+
+                <TextView
+                    style="@style/textViewBoardInfoStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="공지사항"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
 
             <ImageButton
                 style="@style/imageButtonCustomStyle"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_action_refresh"
-                android:onClick="@{(v) -> viewModel.onRefresh(noticeContainer)}"/>
+                android:onClick="@{(v) -> viewModel.onRefresh(noticeContainer)}"
+                android:src="@drawable/ic_action_refresh" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#fff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:background="#454545"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1.2" />
         </LinearLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:refreshing="@{viewModel.isDataLoading}"
-            app:onRefreshListener="@{() -> viewModel.onRefresh(noticeContainer)}">
+            app:onRefreshListener="@{() -> viewModel.onRefresh(noticeContainer)}"
+            app:refreshing="@{viewModel.isDataLoading}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/notice_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="none"
-                android:background="@color/colorPrimaryBackground"/>
+                android:background="@color/colorPrimaryBackground"
+                android:scrollbars="none" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>

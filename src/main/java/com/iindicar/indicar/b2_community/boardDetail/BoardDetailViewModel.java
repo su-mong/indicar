@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardCommentDao;
 import com.iindicar.indicar.data.dao.BoardDao;
@@ -193,7 +195,7 @@ public class BoardDetailViewModel {
     }
 
     private void getCommentList() {
-
+Log.d("ddff","getComment");
         isCommentDataLoading.set(true);
 
         RequestParams params = new RequestParams();
@@ -211,6 +213,7 @@ public class BoardDetailViewModel {
 
             @Override
             public void onDataNotAvailable() {
+                navigator.onCommentUpdated_emtpy();
                 isCommentDataLoading.set(false);
             }
         });
@@ -283,15 +286,17 @@ public class BoardDetailViewModel {
 
     public void onCommentSubmitClick(){
         navigator.hideKeyboard();
-
+Log.i("ddff","oncommentsubmit");
         if(commentWrite.get().equals("")){
             return;
         }
 
         if(isCommentUpdating)
             updateComment();
-        else
+        else{
+            Log.i("ddff", "oncommentsubmit2");
             insertComment();
+        }
     }
 
     public void startCommentUpdating(BoardCommentVO vo) {
@@ -323,12 +328,17 @@ public class BoardDetailViewModel {
 
     public void insertComment(){
         RequestParams params = new RequestParams();
-
         params.put("bbs_id", boardHeader.getBoardType());
         params.put("ntt_id", boardHeader.getBoardId());
         params.put("answer", commentWrite.get());
         params.put("writer_nm", loginName);
         params.put("writer_id", loginId);
+
+        Log.d("ddff","bbs_id "+ boardHeader.getBoardType());
+        Log.d("ddff","ntt_id "+ boardHeader.getBoardId());
+        Log.d("ddff","answer "+ commentWrite.get());
+        Log.d("ddff","writer_nm "+ loginName);
+        Log.d("ddff","writer_id "+ loginId);
 
         commentDao.insertData(params, new BaseDao.LoadDataCallBack() {
             @Override

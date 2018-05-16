@@ -13,9 +13,11 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.commit451.teleprinter.Teleprinter;
@@ -414,8 +416,20 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     @Override
     public void onCommentUpdated(List<BoardCommentVO> list) {
+        LinearLayout lin_alert_empty=(LinearLayout)findViewById(R.id.lin_alert_reply_empty);
+        lin_alert_empty.setVisibility(View.GONE);
         commentAdapter.updateItems(list);
+Log.d("ddff","comment_updated");
     }
+
+    @Override
+    public void onCommentUpdated_emtpy() {
+        LinearLayout lin_alert_empty=(LinearLayout)findViewById(R.id.lin_alert_reply_empty);
+        lin_alert_empty.setVisibility(View.VISIBLE);
+Log.d("ddff","empty");
+    }
+
+
 
     @Override
     public void onCommentProfileAttached(BoardCommentVO comment, UserVO vo) {

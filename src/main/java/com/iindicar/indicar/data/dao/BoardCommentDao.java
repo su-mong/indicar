@@ -101,15 +101,17 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
     @Override
     public void insertData(RequestParams params, final LoadDataCallBack callBack){
         final String URL = "/insertComment";
-
+                Log.d("ddff","insert_try"+URL);
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Log.d("ddff","insert_success");
                 callBack.onDataLoaded("success");
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("ddff","insert_fail");
                 callBack.onDataNotAvailable();
             }
         });

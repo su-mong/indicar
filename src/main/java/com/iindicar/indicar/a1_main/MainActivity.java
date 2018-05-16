@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
 
         //키해쉬 받아오기
         try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.indicar.indicar_community", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getPackageManager().getPackageInfo("com.iindicar.indicar", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());

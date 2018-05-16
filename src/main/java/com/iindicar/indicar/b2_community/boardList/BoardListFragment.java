@@ -197,7 +197,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     @Override
     public void onImageAttached(BoardDetailVO board, BoardFileVO vo) {
         int position = adapter.getItemList().indexOf(board);
-        Log.d("BoardListFragment", "imageWidth" + vo.getFileWidth() + "imageHeight" + vo.getFileHeight());
+        Log.d("ddff", "imageWidth" + vo.getFileWidth() + "imageHeight" + vo.getFileHeight());
         adapter.setBoardFile(position, vo);
     }
 

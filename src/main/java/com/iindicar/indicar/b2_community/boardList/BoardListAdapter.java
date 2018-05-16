@@ -30,9 +30,8 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
 
     public static final int BOARD_POPULAR = 0;
     public static final int BOARD_ALL = 1;
-
     private final int BOARD_TYPE;
-
+View view;
     public BoardListAdapter(Context context, List<BoardDetailVO> list, int boardType){
         super(context);
         itemList = list;
@@ -59,7 +58,7 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
         itemList.get(position).setMainImageUrl(vo.getFileUrl());
         itemList.get(position).setMainImageWidth(vo.getFileWidth());
         itemList.get(position).setMainImageHeight(vo.getFileHeight());
-        notifyItemChanged(position);
+//        notifyItemChanged(position);
     }
 
     public void setUserProfile(int position, String url) {
@@ -73,7 +72,7 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
         BoardDetailVO vo = itemList.get(position);
 
         if(holder instanceof BoardPopularViewHolder) {
-
+Log.d("ddff","onBindView");
             ((BoardPopularViewHolder) holder).binding.setItem(vo);
             ((BoardPopularViewHolder) holder).binding.imageMain.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -111,6 +110,7 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == BOARD_POPULAR) {
             View view = LayoutInflater.from(context).inflate(R.layout.board_popular_item, null);
+            Log.d("ddff","view생성");
             return new BoardPopularViewHolder(view);
         } else {
             View view = LayoutInflater.from(context).inflate(R.layout.board_all_item, null);

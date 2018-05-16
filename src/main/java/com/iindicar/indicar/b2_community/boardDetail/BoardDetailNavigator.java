@@ -36,6 +36,8 @@ public interface BoardDetailNavigator {
 
     void onCommentUpdated(List<BoardCommentVO> list);
 
+    void onCommentUpdated_emtpy();
+
     void onCommentProfileAttached(BoardCommentVO comment, UserVO vo);
 
 }
