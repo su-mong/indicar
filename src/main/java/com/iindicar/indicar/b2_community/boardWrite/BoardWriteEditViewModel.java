@@ -3,6 +3,7 @@ package com.iindicar.indicar.b2_community.boardWrite;
 import android.databinding.Observable;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.util.Log;
 import android.view.View;
 
 import com.iindicar.indicar.Constant;

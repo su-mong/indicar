@@ -28,7 +28,6 @@ import com.iindicar.indicar.utils.ScrollBottomAction;
 
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
 
 
@@ -56,13 +55,15 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boardTab = getArguments().getInt("boardTab");
-
+        Log.d("ddff", "boardlistcreated" + boardTab);
         viewModel.boardTab.set(boardTab);
         viewModel.setNavigator(this);
         viewModel.start();
     }
 
-    /** call after view created */
+    /**
+     * call after view created
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -91,7 +92,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
 
         binding.recyclerViewBoardContainer.setAdapter(adapter);
         binding.recyclerViewBoardContainer.setNestedScrollingEnabled(false);
-        ((SimpleItemAnimator)binding.recyclerViewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) binding.recyclerViewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
 
         // bind scroll listener to show/hide buttons
         binding.scrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -104,7 +105,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
 
                 Handler handler = new Handler();
 
-                if(isPageUp){
+                if (isPageUp) {
                     viewModel.isPageUpScrolling.set(true);
                     viewModel.isScrolling.set(true);
                     handler.postDelayed(new Runnable() {
@@ -116,7 +117,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                     }, 1000);
                 }
 
-                if(isPageDown){
+                if (isPageDown) {
                     viewModel.isScrolling.set(true);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -126,7 +127,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                     }, 1000);
                 }
 
-                if(isVerticalScrolling){
+                if (isVerticalScrolling) {
                     viewModel.isVerticalScrolling.set(true);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -141,7 +142,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         binding.buttonBoardWrite.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
                     Intent intent = new Intent(getContext(), BoardWriteEditActivity.class);
                     startActivity(intent);
@@ -154,7 +155,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         binding.buttonFastUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     binding.scrollview.fullScroll(View.FOCUS_UP);
                 }
                 return true;
@@ -179,14 +180,13 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         intent.putExtra("loginId", loginId);
         intent.putExtra("loginName", loginName);
 
-        if(vo.getUserId().equals(loginId)){ // 로그인 유저 정보와 글쓴이 정보 동일
+        if (vo.getUserId().equals(loginId)) { // 로그인 유저 정보와 글쓴이 정보 동일
             intent.putExtra("canUpdate", true);
         } else {
             intent.putExtra("canUpdate", false);
         }
-
         startActivityForResult(intent, REQUEST_BOARD_DETAIL);
-        ((Activity)context).overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
+        ((Activity) context).overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
     }
 
     @Override
@@ -216,15 +216,15 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode != RESULT_OK){
-            return;
+        if (resultCode == 2 || resultCode == 3) {
+            viewModel.onRefresh(binding.recyclerViewBoardContainer);
         }
 
-        if(requestCode == REQUEST_BOARD_DETAIL){ // result from BoardDetailActivity
-            /*if(data.getBooleanExtra("isUpdated", false)) {
+        if (requestCode == REQUEST_BOARD_DETAIL) { // result from BoardDetailActivity
+            if (data.getBooleanExtra("isUpdated", false)) {
                 viewModel.onRefresh(binding.recyclerViewBoardContainer);
-            }*/
+//            }
+            }
         }
     }
-
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -22,6 +23,7 @@ public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
     public final ObservableField<String> textSearch = new ObservableField<>();
     public final ObservableBoolean isSearchBarOpen = new ObservableBoolean(false);
     public final ObservableBoolean showButton = new ObservableBoolean(true);
+
 
     private Teleprinter keyboard;
 
@@ -49,6 +51,7 @@ public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
             public void onTabSelected(TabLayout.Tab tab) {
 
                 binding.viewPagerBoard.setCurrentItem(tab.getPosition());
+                Log.d("ddff","pager_change"+tab.getPosition());
             }
 
             @Override

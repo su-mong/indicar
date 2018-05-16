@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.dao.BaseDao;

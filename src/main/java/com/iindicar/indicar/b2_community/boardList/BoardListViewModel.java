@@ -64,6 +64,7 @@ public class BoardListViewModel {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter != null && adapter instanceof BoardListAdapter){
             ((BoardListAdapter) adapter).clearItems();
+            Log.d("ddff","clear");
         }
         currentPage = 1;
         isListEnd = false;
@@ -80,18 +81,18 @@ public class BoardListViewModel {
     }
 
     public void getBoardList(){
-
         // 마지막 페이지
         if(isListEnd){
             isDataLoading.set(false);
             navigator.showPageEndMessage();
+            Log.d("ddff","isListEnd");
             return;
         }
 
         isDataLoading.set(true);
 
         RequestParams params = new RequestParams();
-
+Log.d("ddff","tabt"+boardTab.get());
         /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
         params.put("bbs_id", "all");
         if (boardTab.get() == BOARD_POPULAR){
@@ -130,7 +131,7 @@ public class BoardListViewModel {
     }
 
     private void getImageFile(final List<BoardDetailVO> list) {
-Log.d("ddff","getimage");
+
         for(int i = 0 ; i <  list.size() ; i++){
             final int position = i;
             final BoardDetailVO board = list.get(i);
@@ -177,5 +178,4 @@ Log.d("ddff","getimage");
             });
         }
     }
-
 }

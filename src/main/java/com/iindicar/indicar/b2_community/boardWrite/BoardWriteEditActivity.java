@@ -10,11 +10,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 
 import com.commit451.teleprinter.Teleprinter;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
+import com.iindicar.indicar.b2_community.boardList.BoardListFragment;
+import com.iindicar.indicar.b2_community.boardList.BoardListViewModel;
 import com.iindicar.indicar.data.vo.WriteBoardVO;
 import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardWriteEditActivityBinding;
@@ -86,14 +89,14 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
         keyboard.addKeyboardToggleListener(new Teleprinter.OnKeyboardToggleListener() {
             @Override
             public void onKeyboardShown(int keyboardSize) {
-                if(FRAG_WRITE_ITEM.equals(currFrag)) {
+                if (FRAG_WRITE_ITEM.equals(currFrag)) {
                     binding.buttonContainer.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onKeyboardClosed() {
-                if(FRAG_WRITE_ITEM.equals(currFrag)) {
+                if (FRAG_WRITE_ITEM.equals(currFrag)) {
                     binding.buttonContainer.setVisibility(View.VISIBLE);
                 }
             }
@@ -104,7 +107,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra(BUNDLE_EXTRA_BOARD);
 
-        if(bundle == null) { // write new board
+        if (bundle == null) { // write new board
             // get login user id, name from sharedPreferences
             SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
             String loginId = prefLogin.getString("_id", "");
@@ -125,7 +128,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
     @Override
     public void changeToWriteItem() {
-        if(viewModel.boardType.get() == null) {
+        if (viewModel.boardType.get() == null) {
             showSnackBar("카테고리를 선택해주세요.");
             return;
         }
@@ -156,7 +159,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     }
 
     private void changeActionbarButton(String tag) {
-        if(FRAG_WRITE_FILTER.equals(tag)){
+        if (FRAG_WRITE_FILTER.equals(tag)) {
             leftImageId.set(R.drawable.ic_action_close);
             actionBarBinding.buttonLeft.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -165,8 +168,8 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
                 }
             });
 
-        } else if(FRAG_WRITE_ITEM.equals(tag)){
-            if(viewModel.isNewBoard) {
+        } else if (FRAG_WRITE_ITEM.equals(tag)) {
+            if (viewModel.isNewBoard) {
                 leftImageId.set(R.drawable.btn_back);
                 actionBarBinding.buttonLeft.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -192,6 +195,8 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
         transaction.commit();
     }
 
+
+
     @Override
     public void onBoardUpdated() {
         setResult(RESULT_UPDATE_SUCCESS);
@@ -201,6 +206,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
     @Override
     public void onBoardUploaded() {
+
         setResult(RESULT_UPLOAD_SUCCESS);
         finish();
         overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
@@ -234,7 +240,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.button_next:
                 changeToWriteItem();
                 break;

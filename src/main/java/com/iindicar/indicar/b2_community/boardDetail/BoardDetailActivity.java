@@ -417,7 +417,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     @Override
     public void onCommentUpdated(List<BoardCommentVO> list) {
         LinearLayout lin_alert_empty=(LinearLayout)findViewById(R.id.lin_alert_reply_empty);
-        lin_alert_empty.setVisibility(View.GONE);
+        lin_alert_empty.setVisibility(View.VISIBLE);
         commentAdapter.updateItems(list);
 Log.d("ddff","comment_updated");
     }

@@ -76,11 +76,7 @@
             android:name=".a1_main.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".b2_community.boardDetail.BoardDetailActivity"
@@ -119,7 +115,11 @@
             android:name=".a1_main.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".utils.KakaoSignupActivity"
