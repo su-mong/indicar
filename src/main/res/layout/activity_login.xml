@@ -37,10 +37,12 @@
                 app:scale_top="210"
                 app:scale_width="728"
                 app:scale_height="182"/>
-            <com.facebook.login.widget.LoginButton
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnLoginFacebook"
+                android:text="FACEBOOK_LOGIN"
+                android:textSize="15dp"
                 app:scale_left="0"
                 app:scale_top="420"
                 app:scale_width="728"
