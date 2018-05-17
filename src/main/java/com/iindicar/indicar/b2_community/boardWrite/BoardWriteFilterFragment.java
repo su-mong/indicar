@@ -1,10 +1,13 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
+import com.iindicar.indicar.b2_community.CarFilterActivity;
 import com.iindicar.indicar.databinding.BoardWriteFilterFragmentBinding;
 
 /**
@@ -29,6 +32,15 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
         super.onActivityCreated(savedInstanceState);
 
         binding.setViewModel(viewModel);
+        binding.buttonSearchCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), CarFilterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
 }
+
+
+

@@ -68,13 +68,16 @@
         </activity>
         <activity
             android:name=".a1_main.SplashActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".b4_account.ProfileSuggest"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".a1_main.MainActivity"
@@ -118,7 +121,7 @@
         <activity
             android:name=".a1_main.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
         <activity

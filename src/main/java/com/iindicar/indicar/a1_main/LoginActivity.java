@@ -152,6 +152,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                 startActivityForResult(intent,9001);
             }
         });
+        
         //페이스북 로그인 버튼
         binding.btnLoginFacebook.setReadPermissions(Arrays.asList("public_profile", "email"));
         binding.btnLoginFacebook.registerCallback(FBcallBackManager, new FacebookCallback<LoginResult>() {
@@ -187,7 +188,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(), "페이스북 로그인 취소", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "페이스북 로그인을 취소하셨습니다.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -250,6 +251,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         else {
             FBcallBackManager.onActivityResult(requestCode, resultCode, data);
             super.onActivityResult(requestCode, resultCode, data);
+
         }
     }
 

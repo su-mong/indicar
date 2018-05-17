@@ -172,7 +172,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         binding.btnAOpinion.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ConstClass.opinion));
+                Intent intent = new Intent(ProfileActivity.this,ProfileSuggest.class);
                 startActivity(intent);
             }
         });
