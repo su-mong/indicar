@@ -127,6 +127,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 if(!dbVersion.equals(dbVersionOnline)) {
                     editor.putString("dbVersion", dbVersionOnline);
+                    editor.commit();
                     new LoadingExe().execute();
                 } else {
                     loginCheck();

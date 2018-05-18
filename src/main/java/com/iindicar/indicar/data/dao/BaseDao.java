@@ -2,12 +2,11 @@ package com.iindicar.indicar.data.dao;
 
 import com.loopj.android.http.RequestParams;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by yeseul on 2018-04-13.
- *
+ * <p>
  * TODO (2018.05.03) interface 파라미터 <T> 체크하기
  */
 
@@ -36,4 +35,5 @@ public interface BaseDao<T> {
 
         void onDataNotAvailable();
     }
+
 }

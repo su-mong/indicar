@@ -91,7 +91,7 @@
                 android:visibility="@{ fragment.isSearchBarOpen ? View.VISIBLE : View.GONE }"/>
 
             <EditText
-                android:id="@+id/text_search"
+                android:id="@+id/edit_text_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

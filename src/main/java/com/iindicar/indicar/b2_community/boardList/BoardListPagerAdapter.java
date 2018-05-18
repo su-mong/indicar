@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.SparseArray;
 
 import com.iindicar.indicar.BaseViewPagerAdapter;
 
@@ -17,13 +18,16 @@ import static com.iindicar.indicar.b2_community.boardList.BoardListAdapter.BOARD
  */
 
 public class BoardListPagerAdapter extends BaseViewPagerAdapter {
-
+    SparseArray<Fragment> registeredFragments = new SparseArray<>();
     private final int TAB_COUNT = 2;
 
     public BoardListPagerAdapter(Context context, FragmentManager fm) {
         super(context, fm);
     }
 
+    public Fragment getRegisteredFragment(int position) {
+        return registeredFragments.get(position);
+    }
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;

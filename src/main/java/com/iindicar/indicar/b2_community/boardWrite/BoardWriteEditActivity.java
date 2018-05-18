@@ -259,6 +259,5 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("ddff",this.getClass().getSimpleName());
     }
 }

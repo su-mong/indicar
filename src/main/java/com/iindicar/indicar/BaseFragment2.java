@@ -6,6 +6,7 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,6 @@ public abstract class BaseFragment2<B extends ViewDataBinding> extends Fragment 
         super.onCreateView(inflater, container, savedInstanceState);
         binding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         context = binding.getRoot().getContext();
-
         return binding.getRoot();
     }
 

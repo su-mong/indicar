@@ -70,13 +70,13 @@ public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
     }
 
     public void showKeyboard(){
-        keyboard.showKeyboard(binding.textSearch);
-        binding.textSearch.requestFocus();
+        keyboard.showKeyboard(binding.editTextSearch);
+        binding.editTextSearch.requestFocus();
     }
 
     public void hideKeyboard(){
         keyboard.hideKeyboard();
-        binding.textSearch.clearFocus();
+        binding.editTextSearch.clearFocus();
     }
 
     /**

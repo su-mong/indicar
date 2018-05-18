@@ -87,7 +87,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-Log.d("ddf","boardDetail");
         Intent intent = getIntent();
         this.canUpdate = intent.getBooleanExtra("canUpdate", false);
 
@@ -98,16 +97,11 @@ Log.d("ddf","boardDetail");
             }
         });
 
-Log.d("ddf","boardDetail2");
         binding.setViewModel(viewModel);
-Log.d("ddf","boardDetail3");
         viewModel.setNavigator(this);
 
-Log.d("ddf","boardDetail4");
         initBoardView();
-Log.d("ddf","boardDetail5");
         initCommentView();
-Log.d("ddf","boardDetail6");
 
         onHeaderAdded((BoardDetailVO) intent.getParcelableExtra("boardVO"));
 
@@ -197,7 +191,6 @@ Log.d("ddf","boardDetail6");
     }
 
     private void initBoardView() {
-        Log.d("ddf","initBoardView");
         boardAdapter = new BoardDetailAdapter(this);
         boardAdapter.setOnMenuClickListener(new BoardDetailAdapter.OnMenuClickListener() {
             @Override
@@ -369,7 +362,6 @@ Log.d("ddf","boardDetail6");
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-Log.d("ddf","writeeditfinish");
 
 
         if(requestCode == REQUEST_BOARD_UPDATE){
@@ -436,14 +428,12 @@ Log.d("ddf","writeeditfinish");
         LinearLayout lin_alert_empty=(LinearLayout)findViewById(R.id.lin_alert_reply_empty);
         lin_alert_empty.setVisibility(View.GONE);
         commentAdapter.updateItems(list);
-Log.d("ddff","comment_updated");
     }
 
     @Override
     public void onCommentUpdated_emtpy() {
         LinearLayout lin_alert_empty=(LinearLayout)findViewById(R.id.lin_alert_reply_empty);
         lin_alert_empty.setVisibility(View.VISIBLE);
-Log.d("ddff","empty");
     }
 
 
@@ -457,6 +447,5 @@ Log.d("ddff","empty");
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("ddff",this.getClass().getSimpleName());
     }
 }

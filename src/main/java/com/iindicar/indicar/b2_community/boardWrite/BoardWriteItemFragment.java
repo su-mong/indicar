@@ -253,7 +253,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("ddff",this.getClass().getSimpleName());
     }
 
 }

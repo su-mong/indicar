@@ -57,10 +57,13 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boardTab = getArguments().getInt("boardTab");
-        Log.d("ddff", "boardlistcreated" + boardTab);
+        Log.d("ddff", "boardlistcreated_Tab " + boardTab+" "+TAG);
         viewModel.boardTab.set(boardTab);
         viewModel.setNavigator(this);
         viewModel.start();
+        if(boardTab==1){
+
+        }
     }
 
     /**
@@ -199,10 +202,13 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     @Override
     public void onImageAttached(BoardDetailVO board, BoardFileVO vo) {
         int position = adapter.getItemList().indexOf(board);
-        Log.d("ddff", "imageWidth" + vo.getFileWidth() + "imageHeight" + vo.getFileHeight());
         adapter.setBoardFile(position, vo);
     }
 
+    @Override
+    public void onSearch(String searchWord) {
+        viewModel.onSearch(binding.recyclerViewBoardContainer,searchWord);
+    }
 
 
     @Override

@@ -59,11 +59,20 @@ public class BoardListViewModel {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter != null && adapter instanceof BoardListAdapter) {
             ((BoardListAdapter) adapter).clearItems();
-            Log.d("ddff", "clear");
         }
         currentPage = 1;
         isListEnd = false;
         getBoardList();
+    }
+
+    public void onSearch(RecyclerView recyclerView,String searchWord) {
+        RecyclerView.Adapter adapter = recyclerView.getAdapter();
+        if (adapter != null && adapter instanceof BoardListAdapter) {
+            ((BoardListAdapter) adapter).clearItems();
+        }
+        currentPage = 1;
+        isListEnd = false;
+        getBoardListOnSearch(searchWord);
     }
 
     public void start() {
@@ -123,6 +132,49 @@ public class BoardListViewModel {
             }
         });
     }
+
+    public void getBoardListOnSearch(String searchWord) {
+        isDataLoading.set(true);
+
+        RequestParams params = new RequestParams();
+        Log.d("ddff", "getBoardListonsearch"+searchWord  );
+        /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
+        params.put("bbs_id", "all");
+        if (boardTab.get() == BOARD_POPULAR) {
+            params.put("searchCnd", "pop");
+        } else {
+            params.put("searchCnd", "");
+        }
+        params.put("pageIndex", String.valueOf(currentPage));
+        params.put("pageUnit", PAGE_UNIT_COUNT);
+
+        boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
+            @Override
+            public void onDataListLoaded(List list) {
+                int size = list.size();
+
+                // end of board list
+                if (size != PAGE_UNIT_COUNT) {
+                    isListEnd = true;
+                }
+
+                currentPage++;
+
+                navigator.onListAdded(list);
+                isDataLoading.set(false);
+
+                // 메인 사진을 받아온다
+                getImageFile(list);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                isDataLoading.set(false);
+                isListEnd = true;
+            }
+        });
+    }
+
 
     private void getImageFile(final List<BoardDetailVO> list) {
 

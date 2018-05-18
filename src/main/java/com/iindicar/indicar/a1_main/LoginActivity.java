@@ -181,13 +181,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                 GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {//AccessToken.getCurrentAccessToken()
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.d("ddf","oncomplete"+response.toString());
                         try {
                             String userId = object.getString("id");
                             name = object.getString("name");
                             profile_img_url = "https://graph.facebook.com/" + userId + "/picture";
 
-                        Log.d("ddf","oncomplete2");
                             if (object.toString().contains("email")) {
                                 email = object.getString("email");
                             } else {
@@ -264,7 +262,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         } else if(FacebookSdk.isFacebookRequestCode(requestCode)){
             super.onActivityResult(requestCode, resultCode, data);
             FBcallBackManager.onActivityResult(requestCode,resultCode,data);
-            Log.d("ddf","fb_login_callback");
             return;
 
         }
