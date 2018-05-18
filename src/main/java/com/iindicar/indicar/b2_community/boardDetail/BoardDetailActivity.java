@@ -87,7 +87,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+Log.d("ddf","boardDetail");
         Intent intent = getIntent();
         this.canUpdate = intent.getBooleanExtra("canUpdate", false);
 
@@ -98,11 +98,16 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
             }
         });
 
+Log.d("ddf","boardDetail2");
         binding.setViewModel(viewModel);
+Log.d("ddf","boardDetail3");
         viewModel.setNavigator(this);
 
+Log.d("ddf","boardDetail4");
         initBoardView();
+Log.d("ddf","boardDetail5");
         initCommentView();
+Log.d("ddf","boardDetail6");
 
         onHeaderAdded((BoardDetailVO) intent.getParcelableExtra("boardVO"));
 
@@ -192,6 +197,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     }
 
     private void initBoardView() {
+        Log.d("ddf","initBoardView");
         boardAdapter = new BoardDetailAdapter(this);
         boardAdapter.setOnMenuClickListener(new BoardDetailAdapter.OnMenuClickListener() {
             @Override

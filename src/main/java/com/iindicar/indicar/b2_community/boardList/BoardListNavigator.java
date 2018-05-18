@@ -18,6 +18,7 @@ public interface BoardListNavigator {
 
     void onImageAttached(BoardDetailVO board, BoardFileVO vo);
 
+
     void onProfileAttached(BoardDetailVO board, UserVO vo);
 
     void onListAdded(List<BoardDetailVO> list);

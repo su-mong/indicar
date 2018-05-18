@@ -113,7 +113,7 @@ public class SplashActivity extends AppCompatActivity {
                 SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefLogin.edit();
 
-                dbVersion = prefLogin.getString("dbVersion","1");
+                dbVersion = prefLogin.getString("dbVersion","0");
                 PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
                 version = Integer.toString(info.versionCode);
 

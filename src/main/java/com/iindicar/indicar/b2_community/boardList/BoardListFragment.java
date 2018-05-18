@@ -203,6 +203,8 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         adapter.setBoardFile(position, vo);
     }
 
+
+
     @Override
     public void onProfileAttached(BoardDetailVO board, UserVO vo) {
         int position = adapter.getItemList().indexOf(board);
