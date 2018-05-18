@@ -47,12 +47,13 @@ public class KakaoSignupActivity extends Activity {
     private EditText etEmail1;
     private EditText etEmail2;
     int screenWidth, screenHeight;
-
+public static Activity kakaoAct;
     String id,login_method, name, profile_img_url, email;
 
     @Override
     protected void onCreate(final Bundle savedInstance) {
         super.onCreate(savedInstance);
+        kakaoAct=this;
         Intent intent = getIntent();
         screenWidth = intent.getIntExtra("screenWidth",1440);
         screenHeight = intent.getIntExtra("screenHeight",2560);

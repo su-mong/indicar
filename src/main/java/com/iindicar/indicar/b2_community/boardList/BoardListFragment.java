@@ -119,7 +119,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                             viewModel.isPageUpScrolling.set(false);
                             viewModel.isScrolling.set(false);
                         }
-                    }, 1000);
+                    }, 500);
                 }
 
                 if (isPageDown) {
@@ -129,7 +129,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                         public void run() {
                             viewModel.isScrolling.set(false);
                         }
-                    }, 1000);
+                    }, 500);
                 }
 
                 if (isVerticalScrolling) {
@@ -139,7 +139,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                         public void run() {
                             viewModel.isVerticalScrolling.set(false);
                         }
-                    }, 1000);
+                    }, 500);
                 }
             }
         });

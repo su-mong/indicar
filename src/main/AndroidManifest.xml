@@ -121,11 +121,15 @@
         <activity
             android:name=".a1_main.LoginActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
         <activity
             android:name=".utils.KakaoSignupActivity"
+            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".b1_tunning.Tuning2Activity"

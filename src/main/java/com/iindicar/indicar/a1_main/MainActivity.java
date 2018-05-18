@@ -10,7 +10,6 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
@@ -23,13 +22,12 @@ import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.b1_tunning.TunningFragment;
 import com.iindicar.indicar.b2_community.CommunityFragment;
-import com.iindicar.indicar.b2_community.boardList.BoardListFragment;
 import com.iindicar.indicar.b3_shopping.ShoppingFragment;
 import com.iindicar.indicar.b4_account.AccountFragment;
 import com.iindicar.indicar.databinding.MainActivityBinding;
+import com.iindicar.indicar.utils.KakaoSignupActivity;
 
 import java.security.MessageDigest;
-import java.util.Observable;
 
 import static com.iindicar.indicar.Constant.ACCOUNT;
 import static com.iindicar.indicar.Constant.COMMUNITY;
@@ -59,7 +57,10 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        if (LoginActivity.LoginAct != null)
+            LoginActivity.LoginAct.finish();
+        if (KakaoSignupActivity.kakaoAct != null)
+            KakaoSignupActivity.kakaoAct.finish();
         //키해쉬 받아오기
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.iindicar.indicar", PackageManager.GET_SIGNATURES);
@@ -74,11 +75,11 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
 
         //푸시알람을 받아오는 부분을 구현한다.
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        if(prefLogin.getInt("EventAlarm",1)==1) {
+        if (prefLogin.getInt("EventAlarm", 1) == 1) {
             FirebaseMessaging.getInstance().subscribeToTopic("Event");
             FirebaseInstanceId.getInstance().getToken();
         }
-        if(prefLogin.getInt("OtherAlarm",0)==1) {
+        if (prefLogin.getInt("OtherAlarm", 0) == 1) {
             FirebaseMessaging.getInstance().subscribeToTopic("Other");
             FirebaseInstanceId.getInstance().getToken();
         }
@@ -88,7 +89,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         changeTab();
     }
 
-    public void setTab(View view){
+    public void setTab(View view) {
         String tag = view.getTag().toString();
         currentTab.set(tag);
         changeTab();
@@ -101,21 +102,21 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
             fragment = new TunningFragment();
             centerImageId.set(R.drawable.logo_tuning);
 
-        } else if (COMMUNITY.get().equals(currentTab.get())){
+        } else if (COMMUNITY.get().equals(currentTab.get())) {
             fragment = new CommunityFragment();
             centerImageId.set(R.drawable.logo_community);
 
-        } else if (SHOPPING.get().equals(currentTab.get())){
+        } else if (SHOPPING.get().equals(currentTab.get())) {
             fragment = new ShoppingFragment();
             centerImageId.set(R.drawable.logo_shopping);
 
-        } else if (ACCOUNT.get().equals(currentTab.get())){
+        } else if (ACCOUNT.get().equals(currentTab.get())) {
             fragment = new AccountFragment();
             centerImageId.set(R.drawable.logo_account);
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.view_pager_main,fragment);
+        fragmentTransaction.replace(R.id.view_pager_main, fragment);
         fragmentTransaction.commit();
 
     }
@@ -128,10 +129,9 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
             super.onBackPressed();
             overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
-        }
-        else {
+        } else {
             backPressTime = tempTime;
-            Toast.makeText(MainActivity.this, "뒤로 버튼을 한 번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "뒤로 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
     }
 }
