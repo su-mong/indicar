@@ -1,6 +1,7 @@
 package com.iindicar.indicar.data.dao;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -37,7 +38,6 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
     @Override
     public void getDataList(RequestParams params, final LoadDataListCallBack callBack){
         final String URL = "/selectBoardArticles";
-Log.d("ddff","getDataList_BoardDao");
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {

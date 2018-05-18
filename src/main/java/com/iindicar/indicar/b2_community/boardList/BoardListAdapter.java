@@ -50,7 +50,6 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
     }
 
     public void setBoardFile(int position, BoardFileVO vo) {
-        Log.d("ddf BoardListAdapter", "position"+position);
         itemList.get(position).setBoardContent(vo.getFileContent());
         itemList.get(position).setMainImageUrl(vo.getFileUrl());
         itemList.get(position).setMainImageWidth(vo.getFileWidth());
@@ -70,7 +69,6 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
         BoardDetailVO vo = itemList.get(position);
 
         if (holder instanceof BoardPopularViewHolder) {
-            Log.d("ddff", "onBindView");
             ((BoardPopularViewHolder) holder).binding.setItem(vo);
             ((BoardPopularViewHolder) holder).binding.imageMain.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -108,7 +106,6 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == BOARD_POPULAR) {
             View view = LayoutInflater.from(context).inflate(R.layout.board_popular_item, null);
-            Log.d("ddff", "view생성");
             return new BoardPopularViewHolder(view);
         } else {
             View view = LayoutInflater.from(context).inflate(R.layout.board_all_item, null);

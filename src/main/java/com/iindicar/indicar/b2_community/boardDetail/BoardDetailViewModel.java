@@ -162,7 +162,6 @@ public class BoardDetailViewModel {
 
         final String[] fileIndexArray = boardHeader.getAtchFileId();
 
-            Log.d("ddf","getFileDataID"+fileIndexArray[0]);
         // 이미지가 없는 게시물
         if(fileIndexArray == null || fileIndexArray.length == 0||fileIndexArray[0].equals("FILE_9")||fileIndexArray[0].equals("FILE_10")){
 
@@ -198,7 +197,6 @@ public class BoardDetailViewModel {
     }
 
     private void getCommentList() {
-Log.d("ddff","getComment");
         isCommentDataLoading.set(true);
 
         RequestParams params = new RequestParams();
@@ -289,7 +287,6 @@ Log.d("ddff","getComment");
 
     public void onCommentSubmitClick(){
         navigator.hideKeyboard();
-Log.i("ddff","oncommentsubmit");
         if(commentWrite.get().equals("")){
             return;
         }
@@ -297,7 +294,6 @@ Log.i("ddff","oncommentsubmit");
         if(isCommentUpdating)
             updateComment();
         else{
-            Log.i("ddff", "oncommentsubmit2");
             insertComment();
         }
     }
@@ -337,11 +333,6 @@ Log.i("ddff","oncommentsubmit");
         params.put("writer_nm", loginName);
         params.put("writer_id", loginId);
 
-        Log.d("ddff","bbs_id "+ boardHeader.getBoardType());
-        Log.d("ddff","ntt_id "+ boardHeader.getBoardId());
-        Log.d("ddff","answer "+ commentWrite.get());
-        Log.d("ddff","writer_nm "+ loginName);
-        Log.d("ddff","writer_id "+ loginId);
 
         commentDao.insertData(params, new BaseDao.LoadDataCallBack() {
             @Override

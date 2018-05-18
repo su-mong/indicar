@@ -23,6 +23,7 @@ import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.b1_tunning.TunningFragment;
 import com.iindicar.indicar.b2_community.CommunityFragment;
+import com.iindicar.indicar.b2_community.boardList.BoardListFragment;
 import com.iindicar.indicar.b3_shopping.ShoppingFragment;
 import com.iindicar.indicar.b4_account.AccountFragment;
 import com.iindicar.indicar.databinding.MainActivityBinding;
@@ -116,6 +117,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.view_pager_main,fragment);
         fragmentTransaction.commit();
+
     }
 
     @Override
