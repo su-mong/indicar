@@ -155,13 +155,13 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                         public void run() {
                             viewModel.isScrolling.set(false);
                         }
-                    }, 1000);
+                    }, 500);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             viewModel.isPageUpScrolling.set(false);
                         }
-                    }, 2000);
+                    }, 500);
                 }
 
                 if(isPageDown){
@@ -171,7 +171,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                         public void run() {
                             viewModel.isScrolling.set(false);
                         }
-                    }, 1000);
+                    }, 500);
                 }
 
             }

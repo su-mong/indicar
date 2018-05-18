@@ -1,9 +1,11 @@
 package com.iindicar.indicar.a1_main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.databinding.DataBindingUtil;
 import android.databinding.ObservableInt;
 import android.graphics.Point;
 import android.os.AsyncTask;
@@ -86,11 +88,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     private EditText etEmail1;
     private EditText etEmail2;
     int screenWidth, screenHeight;
-
+    public static Activity LoginAct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         //hasActionBar.set(false);
 // Initialize SDK before setContentView(Layout ID)
         //앱 설치 후 첫 실행인지를 체크한다.
@@ -108,7 +111,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             editor2.putInt("OtherAlarm", 0);
             editor2.commit();
         }
-
+        LoginAct=this;
         //화면 크기를 구한다.
         WindowManager w = getWindowManager();
         Display d = w.getDefaultDisplay();
@@ -310,8 +313,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         @Override
         public void onSessionOpenFailed(KakaoException e) {
             if (e != null) {
-                Toast.makeText(LoginActivity.this, "카카오톡 로그인 오류: " + e.toString(), Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_login);
+                Toast.makeText(LoginActivity.this, "카카오톡 로그인을 중지합니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = getIntent();
+                
+                finish();
+                startActivity(intent);
             }
         }
     }
