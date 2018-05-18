@@ -162,8 +162,10 @@ public class BoardDetailViewModel {
 
         final String[] fileIndexArray = boardHeader.getAtchFileId();
 
+            Log.d("ddf","getFileDataID"+fileIndexArray[0]);
         // 이미지가 없는 게시물
-        if(fileIndexArray == null || fileIndexArray.length == 0){
+        if(fileIndexArray == null || fileIndexArray.length == 0||fileIndexArray[0].equals("FILE_9")||fileIndexArray[0].equals("FILE_10")){
+
             isBoardDataLoading.set(false);
             return;
         }
