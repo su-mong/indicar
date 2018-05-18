@@ -73,7 +73,7 @@ public class TunningFragment extends BaseFragment<TunningFragmentBinding> implem
             }
         });
         binding.noticeContainer.setAdapter(adapter);
-        binding.noticeContainer.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL));
+        binding.noticeContainer.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         ((SimpleItemAnimator)binding.noticeContainer.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 

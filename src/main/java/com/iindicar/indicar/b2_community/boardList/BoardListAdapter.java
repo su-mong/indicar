@@ -2,6 +2,7 @@ package com.iindicar.indicar.b2_community.boardList;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,13 +50,14 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
     }
 
     public void setBoardFile(int position, BoardFileVO vo) {
-        Log.d("BoardListAdapter", "imageWidth" + vo.getFileWidth() + "imageHeight" + vo.getFileHeight());
+        Log.d("ddf BoardListAdapter", "position"+position);
         itemList.get(position).setBoardContent(vo.getFileContent());
         itemList.get(position).setMainImageUrl(vo.getFileUrl());
         itemList.get(position).setMainImageWidth(vo.getFileWidth());
         itemList.get(position).setMainImageHeight(vo.getFileHeight());
-//        notifyItemChanged(position);
+        notifyItemChanged(position);
     }
+
 
     public void setUserProfile(int position, String url) {
         itemList.get(position).setUserProfileUrl(url);

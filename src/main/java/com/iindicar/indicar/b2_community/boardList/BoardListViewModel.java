@@ -1,14 +1,10 @@
 package com.iindicar.indicar.b2_community.boardList;
 
-import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 
-import com.iindicar.indicar.BaseViewModel;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardDao;
 import com.iindicar.indicar.data.dao.BoardFileDao;
@@ -18,7 +14,6 @@ import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.data.vo.UserVO;
 import com.loopj.android.http.RequestParams;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.iindicar.indicar.Constant.BoardTab.BOARD_POPULAR;
@@ -37,8 +32,8 @@ public class BoardListViewModel {
     public final ObservableInt boardTab = new ObservableInt();
 
     public final ObservableBoolean isPageUpScrolling = new ObservableBoolean(false);
-    public final ObservableBoolean  isScrolling = new ObservableBoolean(false);
-    public final ObservableBoolean  isVerticalScrolling = new ObservableBoolean(false);
+    public final ObservableBoolean isScrolling = new ObservableBoolean(false);
+    public final ObservableBoolean isVerticalScrolling = new ObservableBoolean(false);
 
     private BoardListNavigator navigator;
 
@@ -50,7 +45,7 @@ public class BoardListViewModel {
 
     private int currentPage = 1;
 
-    public BoardListViewModel(){
+    public BoardListViewModel() {
         boardDao = new BoardDao();
         fileDao = new BoardFileDao();
         userDao = new UserDao();
@@ -60,11 +55,11 @@ public class BoardListViewModel {
         this.navigator = navigator;
     }
 
-    public void onRefresh(RecyclerView recyclerView){
+    public void onRefresh(RecyclerView recyclerView) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
-        if (adapter != null && adapter instanceof BoardListAdapter){
+        if (adapter != null && adapter instanceof BoardListAdapter) {
             ((BoardListAdapter) adapter).clearItems();
-            Log.d("ddff","clear");
+            Log.d("ddff", "clear");
         }
         currentPage = 1;
         isListEnd = false;
@@ -75,27 +70,26 @@ public class BoardListViewModel {
         getBoardList();
     }
 
-    public void openBoardDetail(int position){
+    public void openBoardDetail(int position) {
 
         navigator.openBoardDetail(position);
     }
 
-    public void getBoardList(){
+    public void getBoardList() {
         // 마지막 페이지
-        if(isListEnd){
+        if (isListEnd) {
             isDataLoading.set(false);
             navigator.showPageEndMessage();
-            Log.d("ddff","isListEnd");
             return;
         }
 
         isDataLoading.set(true);
 
         RequestParams params = new RequestParams();
-Log.d("ddff","tabt"+boardTab.get());
+        Log.d("ddff", "tabt" + boardTab.get());
         /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
         params.put("bbs_id", "all");
-        if (boardTab.get() == BOARD_POPULAR){
+        if (boardTab.get() == BOARD_POPULAR) {
             params.put("searchCnd", "pop");
         } else {
             params.put("searchCnd", "");
@@ -109,7 +103,7 @@ Log.d("ddff","tabt"+boardTab.get());
                 int size = list.size();
 
                 // end of board list
-                if(size != PAGE_UNIT_COUNT) {
+                if (size != PAGE_UNIT_COUNT) {
                     isListEnd = true;
                 }
 
@@ -132,7 +126,7 @@ Log.d("ddff","tabt"+boardTab.get());
 
     private void getImageFile(final List<BoardDetailVO> list) {
 
-        for(int i = 0 ; i <  list.size() ; i++){
+        for (int i = 0; i < list.size(); i++) {
             final int position = i;
             final BoardDetailVO board = list.get(i);
 
@@ -145,6 +139,7 @@ Log.d("ddff","tabt"+boardTab.get());
                 public void onDataLoaded(Object data) {
                     UserVO vo = (UserVO) data;
                     list.get(position).setUserProfileUrl(vo.getProfileImageUrl());
+
                 }
 
                 @Override
@@ -156,26 +151,28 @@ Log.d("ddff","tabt"+boardTab.get());
             // 메인 사진
             String[] atchFileId = board.getAtchFileId();
 
+            RequestParams params = new RequestParams();
             // 사진이 존재하지 않는 게시물
-            if(atchFileId == null || atchFileId.length == 0){
-                continue;
+            if (atchFileId == null || atchFileId.length == 0) {
+
+            } else {
+                params.put("atch_file_id", atchFileId[0]);
+
+                fileDao.getData(params, new BaseDao.LoadDataCallBack() {
+                    @Override
+                    public void onDataLoaded(Object data) {
+                        BoardFileVO file = (BoardFileVO) data;
+                        navigator.onImageAttached(list.get(position), file);
+                    }
+
+                    @Override
+                    public void onDataNotAvailable() {
+
+                    }
+                });
             }
 
-            RequestParams params = new RequestParams();
-            params.put("atch_file_id", atchFileId[0]);
 
-            fileDao.getData(params, new BaseDao.LoadDataCallBack() {
-                @Override
-                public void onDataLoaded(Object data) {
-                    BoardFileVO file = (BoardFileVO) data;
-                    navigator.onImageAttached(list.get(position), file);
-                }
-
-                @Override
-                public void onDataNotAvailable() {
-
-                }
-            });
         }
     }
 }

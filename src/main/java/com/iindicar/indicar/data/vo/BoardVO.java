@@ -4,6 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.iindicar.indicar.BR;
@@ -130,6 +131,7 @@ public class BoardVO extends BaseObservable implements Parcelable {
     }
 
     public void setMainImageUrl(String mainImageUrl) {
+
         this.mainImageUrl = mainImageUrl;
         notifyPropertyChanged(BR.mainImageUrl);
     }
