@@ -1,10 +1,13 @@
 package com.iindicar.indicar.b2_community;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.databinding.ObservableInt;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +22,12 @@ import com.iindicar.indicar.databinding.CarFilterActivityBinding;
 import com.iindicar.indicar.utils.CarDB;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
 
     FirstAdapter firstAdapter;
-    CarDB carDB; SQLiteDatabase db;
+    CarDB carDB;
+    SQLiteDatabase db;
 
     @Override
     public void onBackPressed() {
@@ -36,7 +39,7 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        carDB = new CarDB(getApplicationContext(),"carDB",null,1);
+        carDB = new CarDB(getApplicationContext(), "carDB", null, 1);
         db = carDB.getReadableDatabase();
         firstAdapter = new FirstAdapter(getApplicationContext());
 
@@ -67,30 +70,15 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
             this.context = context;
 
             String sql = "SELECT specName FROM carDB WHERE level=1";
-            Cursor cursor = db.rawQuery(sql,null);
-            while(cursor.moveToNext()) {
+            Cursor cursor = db.rawQuery(sql, null);
+            while (cursor.moveToNext()) {
                 String tmp = cursor.getString(0);
+                Log.d("ddf first", tmp);
+
                 car1stName.add(tmp);
             }
         }
 
-        @Override
-        public Object getChild(int arg0, int arg1) {
-            return arg1;
-        }
-
-        @Override
-        public long getChildId(int groupPosition, int childPosition) {
-            return childPosition;
-        }
-
-        @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            SecondLevelExpandableListView secondList = new SecondLevelExpandableListView(context);
-            secondList.setAdapter(new SecondAdapter(context, car1stName.get(groupPosition)));
-            secondList.setGroupIndicator(null);
-            return secondList;
-        }
 
         @Override
         public int getChildrenCount(int groupPosition) {
@@ -115,8 +103,8 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             FirstViewHolder viewHolder;
-            if(convertView == null) {
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.item_listview, null);
 
                 viewHolder = new FirstViewHolder();
@@ -124,11 +112,70 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
 
                 convertView.setTag(viewHolder);
             } else {
-                viewHolder = (FirstViewHolder)convertView.getTag();
+                viewHolder = (FirstViewHolder) convertView.getTag();
             }
 
             viewHolder.tvName1.setText(car1stName.get(groupPosition));
             return convertView;
+        }
+
+        @Override
+        public Object getChild(int arg0, int arg1) {
+            return arg1;
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            ArrayList<String> car2ndName = new ArrayList<>();
+            ArrayList<String> car2ndNameTmp = new ArrayList<>();
+            final ArrayList<ArrayList<String>> car3rdName = new ArrayList<>();
+            ArrayList<ArrayList<String>> car3rdNameTmp = new ArrayList<>();
+            String sql2 = "SELECT specName FROM carDB WHERE parentName='" + car1stName.get(groupPosition) + "' AND useChecker=0;";
+            Cursor cursor2 = db.rawQuery(sql2, null);
+            while (cursor2.moveToNext()) {
+                String tmp = cursor2.getString(0);
+                Log.d("ddf secon", tmp);
+                car2ndName.add(tmp);
+                car2ndNameTmp.add(tmp);
+            }
+
+            for (int i = 0; i < car2ndName.size(); i++) {
+                ArrayList<String> tmp3rd = new ArrayList<>();
+                String flagCar = car2ndName.get(i);
+                String sql3 = "SELECT specName FROM carDB WHERE parentName='" + flagCar + "' AND useChecker=0;";
+                Cursor cursor3 = db.rawQuery(sql3, null);
+                while (cursor3.moveToNext()) {
+                    tmp3rd.add(cursor3.getString(0));
+                    Log.d("ddf 3rd", cursor3.getString(0));
+
+                }
+                car3rdName.add(tmp3rd);
+                car3rdNameTmp.add(tmp3rd);
+            }
+
+            SecondLevelExpandableListView secondList = new SecondLevelExpandableListView(context);
+            secondList.setAdapter(new SecondAdapter(context, car2ndName, car3rdName));
+            secondList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v,
+                                            int groupPosition, int childPosition, long id) {
+                    Toast.makeText(
+                            getApplicationContext(), "click " + car3rdName.get(groupPosition).get(childPosition), Toast.LENGTH_SHORT)
+                            .show();
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("car_name", car3rdName.get(groupPosition).get(childPosition));
+                    setResult(13, resultIntent);
+                    return false;
+                }
+            });
+            secondList.setGroupIndicator(null);
+            return secondList;
         }
 
         @Override
@@ -150,47 +197,28 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             //999999 is a size in pixels. ExpandableListView requires a maximum height in order to do measurement calculations.
             heightMeasureSpec = MeasureSpec.makeMeasureSpec(999999, MeasureSpec.AT_MOST);
-            super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
 
     public class SecondAdapter extends BaseExpandableListAdapter {
         private Context context;
-        ArrayList<String> car2ndName = new ArrayList<>();
-        ArrayList<ArrayList<String>> car3rdName = new ArrayList<>();
-        ArrayList<String> car2ndNameTmp = new ArrayList<>();
-        ArrayList<ArrayList<String>> car3rdNameTmp = new ArrayList<>();
+        private ArrayList<String> car2ndName; // header titles
+        // child data in format of header title, child title
+        private ArrayList<ArrayList<String>> car3rdName;
 
         public class SecondViewHolder {
             TextView tvName2;
         }
+
         public class ThirdViewHolder {
             TextView tvName3;
         }
 
-        public SecondAdapter(Context context, String car1stName) {
+        public SecondAdapter(Context context, ArrayList<String> car2ndName, ArrayList<ArrayList<String>> car3rdName) {
             this.context = context;
-
-            String sql2 = "SELECT specName FROM carDB WHERE parentName='"+car1stName+"' AND useChecker=0;";
-            Cursor cursor2 = db.rawQuery(sql2,null);
-            while(cursor2.moveToNext()) {
-                String tmp = cursor2.getString(0);
-                car2ndName.add(tmp);
-                car2ndNameTmp.add(tmp);
-            }
-
-            for(int i=0;i<car2ndName.size();i++) {
-                ArrayList<String> tmp3rd = new ArrayList<>();
-                String flagCar = car2ndName.get(i);
-                String sql3 = "SELECT specName FROM carDB WHERE parentName='"+flagCar+"' AND useChecker=0;";
-                Cursor cursor3 = db.rawQuery(sql3,null);
-                while(cursor3.moveToNext()) {
-                    tmp3rd.add(cursor3.getString(0));
-                }
-
-                car3rdName.add(tmp3rd);
-                car3rdNameTmp.add(tmp3rd);
-            }
+            this.car2ndName = car2ndName;
+            this.car3rdName = car3rdName;
         }
 
         @Override
@@ -212,8 +240,8 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             SecondViewHolder viewHolder;
-            if(convertView == null) {
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.item2nd, null);
 
                 viewHolder = new SecondViewHolder();
@@ -221,7 +249,7 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
 
                 convertView.setTag(viewHolder);
             } else {
-                viewHolder = (SecondViewHolder)convertView.getTag();
+                viewHolder = (SecondViewHolder) convertView.getTag();
             }
 
             viewHolder.tvName2.setText(car2ndName.get(groupPosition));
@@ -241,8 +269,8 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         @Override
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             ThirdViewHolder viewHolder;
-            if(convertView == null) {
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.item3rd, null);
 
                 viewHolder = new ThirdViewHolder();
@@ -250,10 +278,11 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
 
                 convertView.setTag(viewHolder);
             } else {
-                viewHolder = (ThirdViewHolder)convertView.getTag();
+                viewHolder = (ThirdViewHolder) convertView.getTag();
             }
+            final String selected_carname = car3rdName.get(groupPosition).get(childPosition);
+            viewHolder.tvName3.setText(selected_carname);
 
-            viewHolder.tvName3.setText(car3rdName.get(groupPosition).get(childPosition));
             return convertView;
         }
 
@@ -268,7 +297,7 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         }
 
         @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition){
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;
         }
     }
@@ -294,19 +323,19 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
             //맨 처음 데이터가 들어올 때, searchParent에는 데이터가 없으므로 searchParent.get(0)를 하면 nullException이 발생하므로 이를 방지하기 위한 것이다.
             //따라서, searchParent.get(i+1)과 searchResult.get(i)끼리 대응해야 한다.
             searchParent.add("");
+            Log.d("ddf searchtext", searchText);
+            String sql = "SELECT * FROM carDB WHERE specName LIKE \"%" + searchText + "%\" AND level == 3";
+            Cursor cursor = db.rawQuery(sql, null);
 
-            String sql = "SELECT * FROM carDB WHERE specName LIKE \"%"+searchText+"%\" AND level == 3";
-            Cursor cursor = db.rawQuery(sql,null);
-
-            while(cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 String carName = cursor.getString(0);
                 String parentName = cursor.getString(2);
 
-                for(int i=0;i<searchParent.size();i++) {
-                    if(parentName.equals(searchParent.get(i))) {//부모값을 찾았으면
+                for (int i = 0; i < searchParent.size(); i++) {
+                    if (parentName.equals(searchParent.get(i))) {//부모값을 찾았으면
                         searchResult.get(i).add(carName);
                         break;
-                    } else if(i == searchParent.size()) {//searchParent에 해당 parent값이 없으면
+                    } else if (i == searchParent.size()) {//searchParent에 해당 parent값이 없으면
                         searchParent.add(parentName);
                         searchResult.add(new ArrayList<String>());
                         searchResult.get(i).add(carName);
@@ -314,8 +343,8 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
                 }
             }
 
-            if(searchResult.size() == 0) {
-                Toast.makeText(getApplicationContext(),"검색 결과가 없습니다.",Toast.LENGTH_SHORT).show();
+            if (searchResult.size() == 0) {
+                Toast.makeText(getApplicationContext(), "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -333,8 +362,8 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             final searchChildHolder viewHolder;
 
-            if(convertView == null) {
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.item_listview2, null);
 
                 viewHolder = new searchChildHolder();
@@ -345,12 +374,12 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
                 viewHolder = (searchChildHolder) convertView.getTag();
             }
 
-            viewHolder.tvSName2.setText(searchResult.get(groupPosition).get(childPosition+1));
+            viewHolder.tvSName2.setText(searchResult.get(groupPosition).get(childPosition + 1));
 
             viewHolder.tvSName2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(),viewHolder.tvSName2.getText().toString(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), viewHolder.tvSName2.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -358,7 +387,9 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         }
 
         @Override
-        public int getChildrenCount(int groupPosition) { return (searchResult.get(groupPosition).size()-1); }
+        public int getChildrenCount(int groupPosition) {
+            return (searchResult.get(groupPosition).size() - 1);
+        }
 
         @Override
         public Object getGroup(int groupPosition) {
@@ -366,7 +397,9 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         }
 
         @Override
-        public int getGroupCount() { return searchParent.size()-1; }
+        public int getGroupCount() {
+            return searchParent.size() - 1;
+        }
 
         @Override
         public long getGroupId(int groupPosition) {
@@ -377,8 +410,8 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             searchParentHolder viewHolder;
 
-            if(convertView == null) {
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.item_listview, null);
 
                 viewHolder = new searchParentHolder();
@@ -389,7 +422,7 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
                 viewHolder = (searchParentHolder) convertView.getTag();
             }
 
-            viewHolder.tvSName1.setText(searchParent.get(groupPosition+1));
+            viewHolder.tvSName1.setText(searchParent.get(groupPosition + 1));
             return convertView;
         }
 

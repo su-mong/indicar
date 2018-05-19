@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvName2"
         android:textSize="15dp"
+        android:background="#aaa"
         android:textColor="#000000"/>
 
 </android.support.constraint.ConstraintLayout>
