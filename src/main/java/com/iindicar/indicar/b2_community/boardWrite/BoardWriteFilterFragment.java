@@ -3,6 +3,7 @@ package com.iindicar.indicar.b2_community.boardWrite;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.iindicar.indicar.BaseFragment;
@@ -39,6 +40,17 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+                if (resultCode == 13) {
+                    // TODO Extract the data returned from the child Activity.
+                    String returnValue = data.getStringExtra("car_name");
+                    Log.d("ddf returnvalue",returnValue);
+                }
+
     }
 }
 
