@@ -69,7 +69,6 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         viewModel = new BoardWriteEditViewModel();
         viewModel.setNavigator(this);
 

@@ -265,7 +265,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         if (resultCode != RESULT_OK)
             return;
 
-        Log.d("ddf list request", "" + requestCode + " " + resultCode+" "+data.getBooleanExtra("isUpdated", false));
         if (requestCode == REQUEST_BOARD_DETAIL) { // result from BoardDetailActivity
             if (data.getBooleanExtra("isUpdated", false))
                 viewModel.onRefresh(binding.recyclerViewBoardContainer);
