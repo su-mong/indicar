@@ -175,7 +175,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    binding.scrollview.fullScroll(View.FOCUS_UP);
+                    binding.scrollview.scrollTo(0,0);
                 }
                 return true;
             }
