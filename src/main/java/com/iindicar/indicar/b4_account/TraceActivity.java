@@ -34,7 +34,6 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-Log.d("ddf","traceAct");
 
         binding.setActivity(this);
         //viewPager 어댑터 설정

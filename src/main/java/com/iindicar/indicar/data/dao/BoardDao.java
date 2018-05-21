@@ -129,7 +129,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                 }
 
                 // 게시글 등록 정상적으로 처리
-                if (response != null && response.equals("hi")) {
+                if (response != null && response.equals("\"S\"")) {
                     callBack.onDataLoaded("success");
                 } else {
 

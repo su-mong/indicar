@@ -48,7 +48,6 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
                 if (resultCode == 13) {
                     // TODO Extract the data returned from the child Activity.
                     String returnValue = data.getStringExtra("car_name");
-                    Log.d("ddf returnvalue",returnValue);
                 }
 
     }

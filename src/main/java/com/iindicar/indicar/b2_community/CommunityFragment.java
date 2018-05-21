@@ -47,7 +47,6 @@ public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
             public void onTabSelected(TabLayout.Tab tab) {
 
                 binding.viewPagerBoard.setCurrentItem(tab.getPosition());
-                Log.d("ddff","pager_change"+tab.getPosition());
             }
 
             @Override

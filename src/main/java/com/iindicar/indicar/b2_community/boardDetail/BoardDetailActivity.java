@@ -418,8 +418,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                 commentAdapter.clearItems();
                 viewModel.onRefreshBoard();
             }
-//            if(resultCode==BoardWriteEditActivity.RESULT_UPLOAD_SUCCESS)
-//                isUpdated=true;
+
         }
     }
 

@@ -73,7 +73,6 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
             Cursor cursor = db.rawQuery(sql, null);
             while (cursor.moveToNext()) {
                 String tmp = cursor.getString(0);
-                Log.d("ddf first", tmp);
 
                 car1stName.add(tmp);
             }
@@ -139,7 +138,6 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
             Cursor cursor2 = db.rawQuery(sql2, null);
             while (cursor2.moveToNext()) {
                 String tmp = cursor2.getString(0);
-                Log.d("ddf secon", tmp);
                 car2ndName.add(tmp);
                 car2ndNameTmp.add(tmp);
             }
@@ -151,7 +149,6 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
                 Cursor cursor3 = db.rawQuery(sql3, null);
                 while (cursor3.moveToNext()) {
                     tmp3rd.add(cursor3.getString(0));
-                    Log.d("ddf 3rd", cursor3.getString(0));
 
                 }
                 car3rdName.add(tmp3rd);
@@ -323,7 +320,6 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
             //맨 처음 데이터가 들어올 때, searchParent에는 데이터가 없으므로 searchParent.get(0)를 하면 nullException이 발생하므로 이를 방지하기 위한 것이다.
             //따라서, searchParent.get(i+1)과 searchResult.get(i)끼리 대응해야 한다.
             searchParent.add("");
-            Log.d("ddf searchtext", searchText);
             String sql = "SELECT * FROM carDB WHERE specName LIKE \"%" + searchText + "%\" AND level == 3";
             Cursor cursor = db.rawQuery(sql, null);
 
