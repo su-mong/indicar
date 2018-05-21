@@ -73,6 +73,7 @@
         </activity>
         <activity
             android:name=".b4_account.ProfileSuggest"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".a1_main.MainActivity"
@@ -141,6 +142,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".b4_account.ProfileTerm"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".b4_account.TraceActivity"

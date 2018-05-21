@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,10 +14,14 @@ import android.support.v4.view.ScrollingView;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.commit451.teleprinter.Teleprinter;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
@@ -43,6 +50,13 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     private BoardListViewModel viewModel;
     private BoardListAdapter adapter;
     private int isUpdate;
+    private Teleprinter keyboard;
+
+    public final ObservableField<String> textSearch = new ObservableField<>();
+    public final ObservableBoolean isSearchBarOpen = new ObservableBoolean(false);
+    public final ObservableInt tabId = new ObservableInt();
+    public final ObservableBoolean showButton = new ObservableBoolean(true);
+
 
     public BoardListFragment() {
         this.viewModel = new BoardListViewModel();
@@ -57,14 +71,16 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         boardTab = getArguments().getInt("boardTab");
-        Log.d("ddff", "boardlistcreated_Tab " + boardTab+" "+TAG);
+        tabId.set(boardTab);
+
+        Log.d("ddff", "boardlistcreated_Tab " + boardTab + " " + TAG);
         viewModel.boardTab.set(boardTab);
         viewModel.setNavigator(this);
         viewModel.start();
-        if(boardTab==1){
 
-        }
+
     }
+
 
     /**
      * call after view created
@@ -166,6 +182,30 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                 return true;
             }
         });
+
+        if (boardTab == 1)
+            binding.searchBarLayout.setVisibility(View.VISIBLE);
+
+        binding.buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("ddf click_search",binding.editTextSearch.getText().toString());
+                onSearch(binding.editTextSearch.getText().toString());
+            }
+
+
+        });
+
+        binding.editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    binding.buttonSearch.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -207,7 +247,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
 
     @Override
     public void onSearch(String searchWord) {
-        viewModel.onSearch(binding.recyclerViewBoardContainer,searchWord);
+        viewModel.onSearch(binding.recyclerViewBoardContainer, searchWord);
     }
 
 
@@ -231,7 +271,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
 
         if (requestCode == REQUEST_BOARD_DETAIL) { // result from BoardDetailActivity
             if (data.getBooleanExtra("isUpdated", false))
-                isUpdate=1;
+                isUpdate = 1;
         }
     }
 
