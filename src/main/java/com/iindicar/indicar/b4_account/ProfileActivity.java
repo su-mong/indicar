@@ -165,7 +165,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         binding.btnAClause.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ConstClass.clause));
+                Intent intent = new Intent(ProfileActivity.this,ProfileTerm.class);
                 startActivity(intent);
             }
         });

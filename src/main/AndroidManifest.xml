@@ -73,8 +73,7 @@
         </activity>
         <activity
             android:name=".b4_account.ProfileSuggest"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".a1_main.MainActivity"
             android:screenOrientation="portrait"
@@ -83,7 +82,8 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>/>
+            </intent-filter>
+            />
         </activity>
         <activity
             android:name=".b2_community.boardDetail.BoardDetailActivity"
@@ -91,9 +91,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".b2_community.CarFilterActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
 
         </activity>
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
@@ -121,8 +122,8 @@
 
         <activity
             android:name=".a1_main.LoginActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
 
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
@@ -137,6 +138,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".b4_account.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".b4_account.ProfileTerm"
             android:screenOrientation="portrait" />
         <activity
             android:name=".b4_account.TraceActivity"
