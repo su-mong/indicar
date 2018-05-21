@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.iindicar.indicar.R;
+import com.iindicar.indicar.b4_account.ProfileSuggest;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardCommentDao;
 import com.iindicar.indicar.data.dao.BoardDao;
@@ -124,7 +126,7 @@ public class BoardDetailViewModel {
         boardDao.getData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-
+                Log.d("ddf getBoarddata",boardHeader.getBoardContent());
                 boardHeader = ((BoardDetailVO) data);
 
                 getUser();
@@ -252,6 +254,26 @@ public class BoardDetailViewModel {
 
     }
 
+    public void sendReport(String reason){
+        RequestParams params = new RequestParams();
+        params.put("bbs_id", boardHeader.getBoardType());
+        params.put("ntt_id", boardHeader.getBoardId());
+        params.put("writer_id", loginId);
+        params.put("reason",reason);
+
+
+        boardDao.sendReport(params, new BaseDao.LoadDataCallBack() {
+            @Override
+            public void onDataLoaded(Object data) {
+
+            }
+            @Override
+            public void onDataNotAvailable() {
+
+            }
+        });
+    }
+
     /* Data Binding
     *
     * 좋아요 버튼 onClick 메서드
@@ -273,10 +295,10 @@ public class BoardDetailViewModel {
                         boardHeader.setLikeCount(String.valueOf(likeCount - 1));
                     } else {
                         boardHeader.setLikeCount(String.valueOf(likeCount + 1));
-
                     }
                     isLikeBoard.set(!isLikeBoard.get());
                     onRefreshBoard();
+                    navigator.onLikeBoard();
                 }
 
                 @Override

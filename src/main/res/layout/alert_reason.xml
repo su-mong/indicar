@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-<data></data>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="#000000cc">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="0px"
+    android:layout_weight="1"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000000cc"
+        android:layout_height="0px"
+        android:layout_weight="1"
         android:orientation="vertical"
-        android:padding="10dp">
-
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,7 +38,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
-                    android:id="@+id/btn_profile_suggest_x"
+                    android:id="@+id/btn_x"
                     android:layout_gravity="right"
                     android:adjustViewBounds="true"
                     android:src="@drawable/profile_suggest_btn_x" />
@@ -44,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_marginVertical="10dp"
-                android:layout_weight="10"
+                android:layout_weight="3"
                 android:background="#ccc">
 
                 <LinearLayout
@@ -55,7 +61,7 @@
                     android:padding="10dp">
 
                     <EditText
-                        android:id="@+id/edit_profile_suggest"
+                        android:id="@+id/edit_reason"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
@@ -64,7 +70,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/btn_profile_suggest_send"
+                android:id="@+id/btn_send"
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="1"
@@ -76,5 +82,8 @@
         </LinearLayout>
 
     </LinearLayout>
-
-</layout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"/>
+</LinearLayout>

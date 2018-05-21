@@ -1,5 +1,6 @@
 package com.iindicar.indicar.a1_main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.SplashActivityBinding;
@@ -34,6 +37,8 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -82,6 +87,11 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),ConstClass.strServerCheck,Toast.LENGTH_SHORT).show();
             }
         }
+
+
+
+
+
     }
 
     //앱 및 DB 버전 체크

@@ -99,6 +99,11 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
     }
 
     @Override
+    public void sendReport(RequestParams params, LoadDataCallBack callBack) {
+
+    }
+
+    @Override
     public void insertData(RequestParams params, final LoadDataCallBack callBack){
         final String URL = "/insertComment";
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {

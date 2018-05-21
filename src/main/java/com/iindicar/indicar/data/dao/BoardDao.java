@@ -1,28 +1,18 @@
 package com.iindicar.indicar.data.dao;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
-import com.iindicar.indicar.data.vo.UserVO;
 import com.iindicar.indicar.utils.HttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -36,7 +26,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
     private final String TAG = BoardDao.class.getSimpleName();
 
     @Override
-    public void getDataList(RequestParams params, final LoadDataListCallBack callBack){
+    public void getDataList(RequestParams params, final LoadDataListCallBack callBack) {
         final String URL = "/selectBoardArticles";
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -45,7 +35,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
 
                 try {
                     result = new JsonParser().parse(new String(bytes));
-                }catch (Exception e){
+                } catch (Exception e) {
 
                     callBack.onDataNotAvailable();
 
@@ -55,12 +45,12 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                 }
 
                 // 게시물 리스트 존재
-                if (result != null && result.isJsonArray()){
+                if (result != null && result.isJsonArray()) {
                     JsonArray array = result.getAsJsonArray();
 
                     List<BoardDetailVO> boardList = new ArrayList<>();
 
-                    for(int i = 0 ; i < array.size() ; i++) {
+                    for (int i = 0; i < array.size(); i++) {
                         if (!array.get(i).isJsonObject()) { // 게시물 끝
                             break;
                         }
@@ -76,6 +66,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     callBack.onDataNotAvailable();
                 }
             }
+
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
 
@@ -97,7 +88,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                 try {
                     BoardDetailVO board = new Gson().fromJson(new String(bytes), BoardDetailVO.class);
                     callBack.onDataLoaded(board);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                     Log.e(TAG, "getData() with URL: " + URL + " " + R.string.data_not_available);
                     e.printStackTrace();
@@ -105,6 +96,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     callBack.onDataNotAvailable();
                 }
             }
+
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
 
@@ -127,7 +119,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
 
                 try {
                     response = new String(responseBody);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                     callBack.onDataNotAvailable();
 
@@ -137,7 +129,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                 }
 
                 // 게시글 등록 정상적으로 처리
-                if(response != null && response.equals("hi")) {
+                if (response != null && response.equals("hi")) {
                     callBack.onDataLoaded("success");
                 } else {
 
@@ -146,6 +138,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     callBack.onDataNotAvailable();
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
@@ -157,8 +150,9 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
         });
     }
 
+
     @Override
-    public void updateData(RequestParams params, final LoadDataCallBack callBack){
+    public void updateData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/updateBoardArticle";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
@@ -168,7 +162,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                 try {
                     BoardDetailVO board = new Gson().fromJson(new String(responseBody), BoardDetailVO.class);
                     callBack.onDataLoaded(board);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                     Log.e(TAG, "updateData() with URL: " + URL + " " + R.string.data_not_available);
                     e.printStackTrace();
@@ -176,6 +170,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     callBack.onDataNotAvailable();
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
@@ -188,7 +183,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
     }
 
     @Override
-    public void deleteData(RequestParams params, final LoadDataCallBack callBack){
+    public void deleteData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/deleteBoardArticle";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
@@ -197,7 +192,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                 String response = responseBody.toString();
 
                 // 게시글 삭제 정상 처리
-                if(response != null) {
+                if (response != null) {
                     callBack.onDataLoaded("success");
                 } else {
 
@@ -206,6 +201,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     callBack.onDataNotAvailable();
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
@@ -217,7 +213,49 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
         });
     }
 
-    public LikeModel getLikeModel(){
+    @Override
+    public void sendReport(RequestParams params,final LoadDataCallBack callBack) {
+        final String URL = "/insertBbsReport";
+
+        HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response;
+
+                try {
+                    response = new String(responseBody);
+                } catch (Exception e) {
+
+                    callBack.onDataNotAvailable();
+
+                    Log.e(TAG, "insertData() with URL: " + URL + " " + R.string.data_not_available);
+                    e.printStackTrace();
+                    return;
+                }
+
+                // 게시글 등록 정상적으로 처리
+                if (response != null && response.equals("hi")) {
+                    callBack.onDataLoaded("success");
+                } else {
+
+                    Log.e(TAG, "insertData() with URL: " + URL + " " + R.string.data_not_available);
+
+                    callBack.onDataNotAvailable();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                Log.e(TAG, "insertData() with URL: " + URL + " " + R.string.server_not_available);
+                error.printStackTrace();
+
+                callBack.onDataNotAvailable();
+            }
+        });
+    }
+
+    public LikeModel getLikeModel() {
 
         return new LikeModel() {
 
@@ -230,6 +268,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                         callBack.onDataLoaded("success");
                     }
+
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
@@ -252,7 +291,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
 
                         try {
                             result = new JsonParser().parse(new String(responseBody));
-                        } catch (Exception e){
+                        } catch (Exception e) {
 
                             callBack.onDataNotAvailable();
 
@@ -262,10 +301,10 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                         }
 
                         // 결과 존재
-                        if (result != null && result.isJsonArray()){
+                        if (result != null && result.isJsonArray()) {
                             JsonArray array = result.getAsJsonArray();
                             List<BoardDetailVO> boardList = new ArrayList<>();
-                            for(int i = 0 ; i < array.size() ; i++) {
+                            for (int i = 0; i < array.size(); i++) {
                                 BoardDetailVO vo = new Gson().fromJson(array.get(i), BoardDetailVO.class);
                                 boardList.add(vo);
                             }

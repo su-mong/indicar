@@ -70,6 +70,11 @@ public class UserDao implements BaseDao<UserVO> {
     }
 
     @Override
+    public void sendReport(RequestParams params, LoadDataCallBack callBack) {
+
+    }
+
+    @Override
     public void getDataList(RequestParams params, LoadDataListCallBack callBack) {
 
     }

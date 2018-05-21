@@ -56,6 +56,7 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
         likeCount = in.readString();
         boardTitle = in.readString();
         boardContent = in.readString();
+
         firstDate = in.readString();
         lastUpdateDate = in.readString();
         readCount = in.readString();
@@ -184,11 +185,17 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
 
     @Bindable
     public String getBoardContent() {
+
         return boardContent;
     }
 
     public void setBoardContent(String boardContent) {
-        this.boardContent = boardContent;
+        String temp;
+        if(boardContent.equals("NaN"))
+            temp="";
+        else
+            temp=boardContent;
+        this.boardContent = temp;
         notifyPropertyChanged(BR.boardContent);
     }
 

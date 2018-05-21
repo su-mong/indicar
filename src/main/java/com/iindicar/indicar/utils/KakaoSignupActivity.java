@@ -99,7 +99,8 @@ public static Activity kakaoAct;
     }
 
     @Override
-    public void onBackPressed() {}
+    public void onBackPressed() {
+    }
 
     //유저 가입여부 체크
     public class CheckUser extends AsyncTask<String, Void, String> {

@@ -1,7 +1,6 @@
 package com.iindicar.indicar.b2_community.boardDetail;
 
 import android.content.Intent;
-import android.widget.EditText;
 
 import com.iindicar.indicar.data.vo.BoardCommentVO;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
@@ -29,6 +28,8 @@ public interface BoardDetailNavigator {
     void onItemAdded(BoardFileVO file);
 
     Intent getActivityIntent();
+
+    void onLikeBoard();
 
     void showKeyboard();
 

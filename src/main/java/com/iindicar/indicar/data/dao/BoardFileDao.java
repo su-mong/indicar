@@ -151,4 +151,9 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
             }
         });
     }
+
+    @Override
+    public void sendReport(RequestParams params, LoadDataCallBack callBack) {
+
+    }
 }
