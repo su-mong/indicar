@@ -73,7 +73,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         boardTab = getArguments().getInt("boardTab");
         tabId.set(boardTab);
 
-        Log.d("ddff", "boardlistcreated_Tab " + boardTab + " " + TAG);
         viewModel.boardTab.set(boardTab);
         viewModel.setNavigator(this);
         viewModel.start();
@@ -166,8 +165,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
                     Intent intent = new Intent(getContext(), BoardWriteEditActivity.class);
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.enter_bottom, R.anim.exit_no_anim);
+                    startActivityForResult(intent, 13);
                 }
                 return true;
             }
@@ -189,7 +187,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         binding.buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("ddf click_search",binding.editTextSearch.getText().toString());
                 onSearch(binding.editTextSearch.getText().toString());
             }
 
@@ -265,22 +262,23 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        isUpdate = 0;
         if (resultCode != RESULT_OK)
             return;
 
+        Log.d("ddf list request", "" + requestCode + " " + resultCode+" "+data.getBooleanExtra("isUpdated", false));
         if (requestCode == REQUEST_BOARD_DETAIL) { // result from BoardDetailActivity
             if (data.getBooleanExtra("isUpdated", false))
-                isUpdate = 1;
+                viewModel.onRefresh(binding.recyclerViewBoardContainer);
+        }
+        if (requestCode == 13) { // result from BoardDetailActivity
+            if (data.getBooleanExtra("isUpdated", false))
+                viewModel.onRefresh(binding.recyclerViewBoardContainer);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (isUpdate == 1) {
-            viewModel.onRefresh(binding.recyclerViewBoardContainer);
-        }
 
 
     }

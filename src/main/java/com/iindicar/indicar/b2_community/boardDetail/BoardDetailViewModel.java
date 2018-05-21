@@ -126,7 +126,6 @@ public class BoardDetailViewModel {
         boardDao.getData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-                Log.d("ddf getBoarddata",boardHeader.getBoardContent());
                 boardHeader = ((BoardDetailVO) data);
 
                 getUser();
@@ -290,7 +289,6 @@ public class BoardDetailViewModel {
                 @Override
                 public void onDataLoaded(Object data) {
                     int likeCount = Integer.parseInt(boardHeader.getLikeCount());
-                    Log.d("ddf","islike"+isLikeBoard.get());
                     if(isLikeBoard.get()) { // 좋아요 였는데 취소함
                         boardHeader.setLikeCount(String.valueOf(likeCount - 1));
                     } else {

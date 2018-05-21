@@ -199,6 +199,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
     @Override
     public void onBoardUpdated() {
+
         setResult(RESULT_UPDATE_SUCCESS);
         finish();
         overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
@@ -206,8 +207,9 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
     @Override
     public void onBoardUploaded() {
-
-        setResult(RESULT_UPLOAD_SUCCESS);
+        Intent intent = new Intent();
+        intent.putExtra("isUpdated", true);
+        setResult(RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
     }

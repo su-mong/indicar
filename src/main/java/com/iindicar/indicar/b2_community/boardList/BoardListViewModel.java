@@ -115,7 +115,6 @@ public class BoardListViewModel {
                 if (size != PAGE_UNIT_COUNT) {
                     isListEnd = true;
                 }
-                Log.d("ddff", "list" + list.get(0));
                 currentPage++;
 
                 navigator.onListAdded(list);

@@ -61,7 +61,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
     @Override
     protected void setActionBarImage(ObservableInt centerImageId, ObservableInt leftImageId) {
-        centerImageId.set(R.drawable.logo_community);
+        centerImageId.set(R.drawable.logo_account);
         leftImageId.set(0);
     }
 
