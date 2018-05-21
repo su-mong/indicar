@@ -1,5 +1,6 @@
 package com.iindicar.indicar.a1_main;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.b1_tunning.TunningFragment;
@@ -28,6 +31,7 @@ import com.iindicar.indicar.databinding.MainActivityBinding;
 import com.iindicar.indicar.utils.KakaoSignupActivity;
 
 import java.security.MessageDigest;
+import java.util.ArrayList;
 
 import static com.iindicar.indicar.Constant.ACCOUNT;
 import static com.iindicar.indicar.Constant.COMMUNITY;
@@ -87,6 +91,33 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         binding.setActivity(this);
 
         changeTab();
+
+        PermissionListener permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                Toast.makeText(MainActivity.this, "권한 거부\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+
+        };
+
+
+        TedPermission.with(this)
+                .setPermissionListener(permissionlistener)
+                .setDeniedMessage("필수 권한을 거절하시면 앱을 이용하실 수 없습니다.\n [설정] > [권한] 에서 권한을 허용할 수 있어요\n")
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE
+                        , Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        , Manifest.permission.READ_PHONE_STATE
+                        , Manifest.permission.CAMERA
+                        , Manifest.permission.ACCESS_FINE_LOCATION)
+                .check();
+
     }
 
     public void setTab(View view) {

@@ -1,11 +1,11 @@
 package com.iindicar.indicar.a1_main;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.databinding.DataBindingUtil;
 import android.databinding.ObservableInt;
 import android.graphics.Point;
 import android.os.AsyncTask;
@@ -46,6 +46,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
@@ -58,6 +60,7 @@ import com.kakao.util.exception.KakaoException;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import okhttp3.FormBody;
@@ -89,10 +92,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     private EditText etEmail2;
     int screenWidth, screenHeight;
     public static Activity LoginAct;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 
         //hasActionBar.set(false);
 // Initialize SDK before setContentView(Layout ID)
@@ -111,7 +116,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             editor2.putInt("OtherAlarm", 0);
             editor2.commit();
         }
-        LoginAct=this;
+        LoginAct = this;
         //화면 크기를 구한다.
         WindowManager w = getWindowManager();
         Display d = w.getDefaultDisplay();
@@ -148,7 +153,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         Session.getCurrentSession().addCallback(KakaoModule);
 
 
-
         //구글 로그인 버튼
         binding.btnLoginGoogle.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -173,11 +177,15 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                 Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
             }
         });
+
+
+
     }
+
 
     public void fbLogin() {
         //페이스북 로그인 버튼
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email","user_photos","public_profile"));
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "user_photos", "public_profile"));
         LoginManager.getInstance().registerCallback(FBcallBackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -264,9 +272,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         } else if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
             return;
-        } else if(FacebookSdk.isFacebookRequestCode(requestCode)){
+        } else if (FacebookSdk.isFacebookRequestCode(requestCode)) {
             super.onActivityResult(requestCode, resultCode, data);
-            FBcallBackManager.onActivityResult(requestCode,resultCode,data);
+            FBcallBackManager.onActivityResult(requestCode, resultCode, data);
             return;
 
         }
@@ -317,7 +325,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             if (e != null) {
                 Toast.makeText(LoginActivity.this, "카카오톡 로그인을 중지합니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
-                
+
                 finish();
                 startActivity(intent);
             }

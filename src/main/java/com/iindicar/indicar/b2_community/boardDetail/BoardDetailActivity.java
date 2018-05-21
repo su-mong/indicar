@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ObservableInt;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,10 +14,13 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -42,12 +46,11 @@ import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_UPDATE;
 
 /**
  * 게시물 조회 화면
- *
+ * <p>
  * TODO
  * 3. 맨위로 스크롤
- *
+ * <p>
  * 7. 이미지 슬라이드 뷰
- *
  */
 
 public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding> implements BoardDetailNavigator {
@@ -58,7 +61,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     private BoardDetailAdapter boardAdapter;
     private BoardCommentAdapter commentAdapter;
-    private boolean isUpdated=false;
+    private boolean isUpdated = false;
 
     private Teleprinter keyboard;
 
@@ -66,7 +69,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     @Override
     public void onBackPressed() {
-        if(viewModel.isKeyboardOpen.get()){
+        if (viewModel.isKeyboardOpen.get()) {
             hideKeyboard();
         } else {
             onFinishActivity();
@@ -128,10 +131,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         binding.boardContent.commentText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if(b) {
+                if (b) {
                     keyboard.showKeyboard(view);
-                }
-                else {
+                } else {
                     keyboard.hideKeyboard();
                 }
             }
@@ -147,7 +149,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
                 Handler handler = new Handler();
 
-                if(isPageUp){
+                if (isPageUp) {
                     viewModel.isPageUpScrolling.set(true);
                     viewModel.isScrolling.set(true);
                     handler.postDelayed(new Runnable() {
@@ -164,7 +166,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                     }, 500);
                 }
 
-                if(isPageDown){
+                if (isPageDown) {
                     viewModel.isScrolling.set(true);
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -180,14 +182,14 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         binding.boardContent.scrollViewContainer.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                if(viewModel.isKeyboardOpen.get()){
+                if (viewModel.isKeyboardOpen.get()) {
                     keyboard.hideKeyboard();
                 }
                 return false;
             }
         });
 
-        ((SimpleItemAnimator)binding.boardContent.recyclerviewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) binding.boardContent.recyclerviewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     private void initBoardView() {
@@ -243,7 +245,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     private void showMenuDialog(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
 
-        if(canUpdate) { // 수정 가능한 게시물인 경우
+        if (canUpdate) { // 수정 가능한 게시물인 경우
             getMenuInflater().inflate(R.menu.board_menu_canupdate, popupMenu.getMenu());
         } else {
             getMenuInflater().inflate(R.menu.board_menu, popupMenu.getMenu());
@@ -254,7 +256,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
 
-                switch (id){
+                switch (id) {
                     case R.id.update:
                         onStartBoardUpdated();
                         break;
@@ -262,15 +264,60 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                         showDeleteDialog();
                         break;
                     case R.id.report:
-                        Toast.makeText(BoardDetailActivity.this,
-                                "BoardDetail file url: " + boardAdapter.getItemList().get(0).getFileUrl()
-                                , Toast.LENGTH_SHORT).show();
+                        reasonPopupWindow();
                         break;
                 }
                 return false;
             }
         });
         popupMenu.show();
+    }
+
+    //팝업창을 보여주는 함수
+    private void reasonPopupWindow() {
+        ImageView btnSend;
+        ImageView btnAlertCancel;
+        final EditText editReason;
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View popupDialogView = factory.inflate(R.layout.alert_reason, null);
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.setView(popupDialogView);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        btnSend = (ImageView) popupDialogView.findViewById(R.id.btn_send);
+        btnAlertCancel = (ImageView) popupDialogView.findViewById(R.id.btn_x);
+        editReason = (EditText) popupDialogView.findViewById(R.id.edit_reason);
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String textReason = editReason.getText().toString();
+                viewModel.sendReport(textReason);
+                dialog.dismiss();
+            }
+        });
+        btnAlertCancel.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    private void showReportDialog() {
+
+        DialogUtil.showDialog(this,
+                R.drawable.button_trash,
+                "신고사유를 입력해주세요.",
+                "Delete this post",
+                0.9, 0.25,
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        viewModel.deleteBoard();
+                    }
+                });
     }
 
     private void showDeleteDialog() {
@@ -288,10 +335,10 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                 });
     }
 
-    public void showCommentDialog(final int position){
+    public void showCommentDialog(final int position) {
         BoardCommentVO vo = commentAdapter.getItem(position);
 
-        if (viewModel.loginName.equals(vo.getUserName())){
+        if (viewModel.loginName.equals(vo.getUserName())) {
             CharSequence[] items = {"댓글 수정", "댓글 삭제"};
 
             new AlertDialog.Builder(this)
@@ -344,7 +391,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
         List<BoardFileVO> boardItems = boardAdapter.getItemList();
         ArrayList<WriteFileVO> updateItems = new ArrayList<>();
-        if(boardItems != null) {
+        if (boardItems != null) {
             for (int i = 0; i < boardItems.size(); i++) {
                 WriteFileVO vo = new WriteFileVO();
                 vo.setFileIndex(boardItems.get(i).getAtchFileId());
@@ -364,9 +411,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if(requestCode == REQUEST_BOARD_UPDATE){
-            if(resultCode == BoardWriteEditActivity.RESULT_UPDATE_SUCCESS){
-                isUpdated=true;
+        if (requestCode == REQUEST_BOARD_UPDATE) {
+            if (resultCode == BoardWriteEditActivity.RESULT_UPDATE_SUCCESS) {
+                isUpdated = true;
                 boardAdapter.clearItems();
                 commentAdapter.clearItems();
                 viewModel.onRefreshBoard();
@@ -376,9 +423,13 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         }
     }
 
-    public void onDeleteBoard(){
-        isUpdated=true;
+    public void onDeleteBoard() {
+        isUpdated = true;
         onFinishActivity();
+    }
+
+    public void onLikeBoard() {
+        isUpdated = true;
     }
 
     @Override
@@ -406,13 +457,13 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     }
 
     @Override
-    public void showKeyboard(){
+    public void showKeyboard() {
         keyboard.showKeyboard(binding.boardContent.commentText);
         binding.boardContent.commentText.requestFocus();
     }
 
     @Override
-    public void hideKeyboard(){
+    public void hideKeyboard() {
         keyboard.hideKeyboard();
         binding.boardContent.commentText.clearFocus();
     }
@@ -425,17 +476,16 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     @Override
     public void onCommentUpdated(List<BoardCommentVO> list) {
-        LinearLayout lin_alert_empty=(LinearLayout)findViewById(R.id.lin_alert_reply_empty);
+        LinearLayout lin_alert_empty = (LinearLayout) findViewById(R.id.lin_alert_reply_empty);
         lin_alert_empty.setVisibility(View.GONE);
         commentAdapter.updateItems(list);
     }
 
     @Override
     public void onCommentUpdated_emtpy() {
-        LinearLayout lin_alert_empty=(LinearLayout)findViewById(R.id.lin_alert_reply_empty);
+        LinearLayout lin_alert_empty = (LinearLayout) findViewById(R.id.lin_alert_reply_empty);
         lin_alert_empty.setVisibility(View.VISIBLE);
     }
-
 
 
     @Override
@@ -444,6 +494,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         comment.setUserProfileUrl(vo.getProfileImageUrl());
         commentAdapter.notifyItemChanged(position);
     }
+
     @Override
     protected void onResume() {
         super.onResume();

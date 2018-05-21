@@ -22,6 +22,8 @@ public interface BaseDao<T> {
 
     void deleteData(RequestParams params, LoadDataCallBack callBack);
 
+    void sendReport(RequestParams params, LoadDataCallBack callBack);
+
     interface LoadDataListCallBack<T> {
 
         void onDataListLoaded(List<T> list);

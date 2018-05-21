@@ -95,7 +95,7 @@ public class BoardListViewModel {
         isDataLoading.set(true);
 
         RequestParams params = new RequestParams();
-        Log.d("ddff", "tabt" + boardTab.get());
+
         /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
         params.put("bbs_id", "all");
         if (boardTab.get() == BOARD_POPULAR) {
@@ -115,7 +115,7 @@ public class BoardListViewModel {
                 if (size != PAGE_UNIT_COUNT) {
                     isListEnd = true;
                 }
-
+                Log.d("ddff", "list" + list.get(0));
                 currentPage++;
 
                 navigator.onListAdded(list);
