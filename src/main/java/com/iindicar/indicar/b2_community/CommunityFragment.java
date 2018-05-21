@@ -20,12 +20,8 @@ import com.iindicar.indicar.databinding.CommunityFragmentBinding;
 
 public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
 
-    public final ObservableField<String> textSearch = new ObservableField<>();
-    public final ObservableBoolean isSearchBarOpen = new ObservableBoolean(false);
-    public final ObservableBoolean showButton = new ObservableBoolean(true);
 
 
-    private Teleprinter keyboard;
 
     @Override
     protected int getLayoutId() {
@@ -65,99 +61,12 @@ public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
             }
         });
 
-        keyboard = new Teleprinter((Activity) context);
 
     }
 
-    public void showKeyboard(){
-        keyboard.showKeyboard(binding.editTextSearch);
-        binding.editTextSearch.requestFocus();
-    }
 
-    public void hideKeyboard(){
-        keyboard.hideKeyboard();
-        binding.editTextSearch.clearFocus();
-    }
 
-    /**
-     * 검색창 열기, 닫기
-     * */
-    public void toggleSearchBar() {
 
-        if(!isSearchBarOpen.get()){ // 검색창 open 애니메이션
-
-            openSearchBar();
-
-        } else { // 검색창 close 애니메이션
-
-            closeSearchBar();
-
-        }
-    }
-
-    public void openSearchBar(){
-
-        TranslateAnimation animation = new TranslateAnimation(
-                Animation.RELATIVE_TO_SELF, 0,
-                Animation.RELATIVE_TO_SELF, 0,
-                Animation.RELATIVE_TO_SELF, -1,
-                Animation.RELATIVE_TO_SELF, 0
-                );
-        animation.setDuration(300);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-                isSearchBarOpen.set(true);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                showKeyboard();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        binding.searchBarLayout.startAnimation(animation);
-
-    }
-
-    public void closeSearchBar() {
-
-        TranslateAnimation animation = new TranslateAnimation(
-                Animation.RELATIVE_TO_SELF, 0,
-                Animation.RELATIVE_TO_SELF, 0,
-                Animation.RELATIVE_TO_SELF, 0,
-                Animation.RELATIVE_TO_SELF, -1
-        );
-        animation.setDuration(300);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-                hideKeyboard();
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                isSearchBarOpen.set(false);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        binding.searchBarLayout.startAnimation(animation);
-
-    }
 
 }
 
