@@ -29,6 +29,7 @@
             style="@style/imageButtonCustomStyle"
             android:id="@+id/image_center"
             android:layout_width="wrap_content"
+            android:layout_marginTop="7dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             app:imageUrl="@{activity.centerImageId}"/>

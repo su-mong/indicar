@@ -147,6 +147,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         KakaoModule = new SessionCallback();
         Session.getCurrentSession().addCallback(KakaoModule);
 
+
+
         //구글 로그인 버튼
         binding.btnLoginGoogle.setOnClickListener(new Button.OnClickListener() {
             @Override
