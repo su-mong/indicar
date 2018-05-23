@@ -18,6 +18,7 @@ import com.iindicar.indicar.databinding.BoardWriteItemFragmentBinding;
 import com.iindicar.indicar.utils.DialogUtil;
 import com.iindicar.indicar.utils.IPickPhotoHelper;
 import com.iindicar.indicar.utils.PickPhotoHelper;
+import com.iindicar.indicar.utils.RealPathUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -175,7 +176,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
             @Override
             public void onPhotoLoaded(Uri photoUri) {
                 adapter.getItemList().get(viewModel.currentPage.get()).setImageUrl(photoUri);
-                adapter.getItemList().get(viewModel.currentPage.get()).setFilePath(getRealPathFromURI(photoUri));
+                adapter.getItemList().get(viewModel.currentPage.get()).setFilePath(RealPathUtil.getRealPath(context,photoUri));
                 adapter.notifyItemChanged(viewModel.currentPage.get());
             }
 
@@ -201,7 +202,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                 for(int i = 0 ; i < IMAGE_COUNT ; i++){
                     WriteFileVO vo = new WriteFileVO();
                     vo.setImageUrl(photoUriList.get(i));
-                    vo.setFilePath(getRealPathFromURI(photoUriList.get(i)));
+                    vo.setFilePath(RealPathUtil.getRealPath(context,photoUriList.get(i)));
                     listFromAlbum.add(vo);
                 }
 

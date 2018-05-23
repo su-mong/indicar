@@ -84,7 +84,7 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
         }
         if (photoFile != null) {
             cameraPhotoUri = FileProvider.getUriForFile(context,
-                    "com.iindicar.indicar.provider", photoFile);
+                    "com.iindicar.indicar_community.provider", photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPhotoUri);
             context.startActivityForResult(intent, PICK_FROM_CAMERA);
         }
@@ -159,7 +159,7 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
             File tempFile = new File(folder.toString(), croppedFileName.getName());
 
             cameraPhotoUri = FileProvider.getUriForFile(context,
-                    "com.iindicar.indicar.provider", tempFile);
+                    "com.iindicar.indicar_community.provider", tempFile);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +16,9 @@ import com.iindicar.indicar.R;
 
 import java.util.ArrayList;
 
-public class ListViewAdapter extends BaseAdapter{
+public class ListViewAdapter extends BaseAdapter implements Filterable{
+
+
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
@@ -81,4 +85,8 @@ public class ListViewAdapter extends BaseAdapter{
     }
 
 
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
 }
