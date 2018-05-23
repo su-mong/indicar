@@ -16,6 +16,8 @@ public interface IPickPhotoHelper<T extends Uri> {
 
     interface loadPhotoCallBack<T> {
 
+        void onPhotoLoaded(Uri photoUri, String imagePath);
+
         void onPhotoLoaded(T photoUri);
 
         void onPhotoNotAvailable();

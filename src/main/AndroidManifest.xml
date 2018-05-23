@@ -5,16 +5,16 @@
     android:versionCode="1"
     android:versionName="1.0">
 
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="26" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true"
         android:xlargeScreens="true" />
-
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="26" />
 
     <uses-feature android:glEsVersion="0x00020000" />
     <uses-feature
@@ -69,22 +69,21 @@
         <activity
             android:name=".a1_main.SplashActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".b4_account.ProfileSuggest"
             android:screenOrientation="portrait"
-            android:theme="@style/noActionTheme"
-            ></activity>
+            android:theme="@style/noActionTheme" />
         <activity
             android:name=".a1_main.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
-            />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -93,9 +92,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".b2_community.CarFilterActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -111,6 +108,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.iindicar.indicar_community.provider"
@@ -120,19 +118,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <activity
             android:name=".a1_main.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/noActionTheme"
-            >
-
-
-        </activity>
+            android:theme="@style/noActionTheme"></activity>
         <activity
             android:name=".utils.KakaoSignupActivity"
             android:launchMode="singleTask"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".b1_tunning.Tuning2Activity"
@@ -142,18 +136,20 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".b4_account.ProfileTerm"
-            android:screenOrientation="portrait"
-            android:theme="@style/noActionTheme"
-             />
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".a1_main.Tutorial"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".b4_account.TraceActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".b2_community.boardWrite.BoardWriteEditActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.iindicar.indicar.UnityPlayerActivity"
+            android:name=".UnityPlayerActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -176,5 +172,8 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
+
+
     </application>
+
 </manifest>

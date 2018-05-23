@@ -10,4 +10,5 @@
     <string name="server_not_available">http request failure 서버 응답없음 ---------------</string>
     <string name="data_not_available">response data not available 데이터 처리 오류 ---------------</string>
     <string name="photo_from_storage_not_available">photo from storage not available 저장소에서 사진 불러오기 오류 ---------------</string>
+    <string name="title_activity_tutorial">Tutorial</string>
 </resources>
