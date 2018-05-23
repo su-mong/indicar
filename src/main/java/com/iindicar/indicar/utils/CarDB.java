@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by candykick on 2018. 4. 29..
  */
 
-public class CarDB  extends SQLiteOpenHelper {
+public class CarDB extends SQLiteOpenHelper {
 
     private Context context;
 
@@ -32,6 +32,7 @@ public class CarDB  extends SQLiteOpenHelper {
         sql.append("specName TEXT,");
         sql.append("level integer(1),");
         sql.append("parentName TEXT,");
+        sql.append("brandName TEXT,");
         sql.append("useChecker Integer(1))");
 
         //String보다 StringBuffer가 Query 만들기 편하다.
@@ -44,8 +45,8 @@ public class CarDB  extends SQLiteOpenHelper {
         try {
             db.execSQL(sql.toString());
             db.execSQL(sql2.toString());
-        } catch(Exception e) {
-            Toast.makeText(context,"IDVC ERROR: "+e.toString(),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(context, "IDVC ERROR: " + e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -65,10 +66,27 @@ public class CarDB  extends SQLiteOpenHelper {
         StringBuffer sql = new StringBuffer();
         sql.append("INSERT INTO carDB ");
         sql.append("(specName, level, parentName, useChecker) VALUES (");
-        sql.append("'"+specName+"',");
-        sql.append(Integer.toString(level)+",");
-        sql.append("'"+parentName+"',");
-        sql.append(Integer.toString(useChecker)+");");
+        sql.append("'" + specName + "',");
+        sql.append(Integer.toString(level) + ",");
+        sql.append("'" + parentName + "',");
+        sql.append(Integer.toString(useChecker) + ");");
+
+        //3. 쿼리문 실행
+        db.execSQL(sql.toString());
+    }
+
+    public void addCar(String specName, int level, String parentName, String brandName) {
+        //1. 쓸 수 있는 DB객체를 가져온다.
+        SQLiteDatabase db = getWritableDatabase();
+
+        //2. 데이터를 넣는 쿼리문 작성. 단 ID는 자동으로 증가하기 때문에 넣지 않는다.
+        StringBuffer sql = new StringBuffer();
+        sql.append("INSERT INTO carDB ");
+        sql.append("(specName, level, parentName, useChecker) VALUES (");
+        sql.append("'" + specName + "',");
+        sql.append(Integer.toString(level) + ",");
+        sql.append("'" + parentName + "','");
+        sql.append( brandName+ "');");
 
         //3. 쿼리문 실행
         db.execSQL(sql.toString());
@@ -82,8 +100,8 @@ public class CarDB  extends SQLiteOpenHelper {
         //2. carDB 테이블이 존재하는지 확인.
         StringBuffer sql1 = new StringBuffer();
         sql1.append("SELECT name FROM sqlite_master WHERE type='table' AND name ='carDB'");
-        Cursor c = db.rawQuery(sql1.toString(),null);
-        if(c.moveToFirst()) {
+        Cursor c = db.rawQuery(sql1.toString(), null);
+        if (c.moveToFirst()) {
             //3. 데이터를 날리는 쿼리문 작성.
             StringBuffer sql2 = new StringBuffer();
             sql2.append("delete from carDB");
@@ -98,15 +116,15 @@ public class CarDB  extends SQLiteOpenHelper {
 
         StringBuffer sql1 = new StringBuffer();
         sql1.append("SELECT name FROM sqlite_master WHERE type='table' AND name ='searchDB'");
-        Cursor c = db.rawQuery(sql1.toString(),null);
-        if(c.moveToFirst()) {
+        Cursor c = db.rawQuery(sql1.toString(), null);
+        if (c.moveToFirst()) {
             StringBuffer sql2 = new StringBuffer();
             sql2.append("delete from searchDB");
             db.execSQL(sql2.toString());
         }
 
         //2.데이터를 새로 넣는다.
-        for(int i=0;i<parent.size();i++) {
+        for (int i = 0; i < parent.size(); i++) {
             StringBuffer sql3 = new StringBuffer();
             sql3.append("INSERT INTO searchDB");
             sql3.append("(specName, level, parentName, useChecker) VALUES (");
@@ -116,7 +134,7 @@ public class CarDB  extends SQLiteOpenHelper {
             sql3.append(Integer.toString(0) + ");");
             db.execSQL(sql3.toString());
 
-            for(int j=0;j<child.size();j++) {
+            for (int j = 0; j < child.size(); j++) {
                 StringBuffer sql4 = new StringBuffer();
                 sql4.append("INSERT INTO searchDB");
                 sql4.append("(specName, level, parentName, useChecker) VALUES (");

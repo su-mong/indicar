@@ -204,7 +204,7 @@ public class BoardDetailViewModel {
                 navigator.onCommentUpdated(list);
                 isCommentDataLoading.set(false);
 
-                getUserProfile(list);
+//                getUserProfile(list);
             }
 
             @Override
