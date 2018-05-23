@@ -81,10 +81,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
             />
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
 
         </activity>
         <activity
@@ -94,7 +91,10 @@
         <activity
             android:name=".b2_community.CarFilterActivity"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data
