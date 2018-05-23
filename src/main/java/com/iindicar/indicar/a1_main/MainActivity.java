@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
                 SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefLogin.edit();
                 boolean isFirst = prefLogin.getBoolean("isFirst",true);
-                if(isFirst){
+                if(!isFirst){
                     startActivity(new Intent(MainActivity.this,Tutorial.class));
                     editor.putBoolean("isFirst", false);
                     editor.commit();
