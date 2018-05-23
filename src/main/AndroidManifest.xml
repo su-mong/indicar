@@ -81,10 +81,8 @@
             android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".b2_community.boardDetail.BoardDetailActivity"
@@ -139,6 +137,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".a1_main.Tutorial"
+            android:theme="@style/Transparent"
             android:screenOrientation="portrait">
 
         </activity>

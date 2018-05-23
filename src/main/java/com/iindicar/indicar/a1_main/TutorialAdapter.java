@@ -1,5 +1,6 @@
 package com.iindicar.indicar.a1_main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -40,6 +41,15 @@ public class TutorialAdapter extends PagerAdapter {
         ImageView imageView = (ImageView) v.findViewById(R.id.imageView);
         imageView.setImageResource(images[position]);
         container.addView(v);
+
+        ImageView btnSkip = (ImageView) v.findViewById(R.id.btn_skip);
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((Activity)context).finish();
+            }
+        });
+
         return v;
     }
 
