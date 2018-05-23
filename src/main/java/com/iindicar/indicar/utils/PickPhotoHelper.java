@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.iindicar.indicar.R;
@@ -36,7 +37,7 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
     public static final int PICK_FROM_CAMERA = 1;
     public static final int CROP_IMAGE = 2;
     public static final int PICK_FROM_ALBUM = 3;
-
+String imagePath;
     Activity context;
 
     Uri cameraPhotoUri;
@@ -99,7 +100,6 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
             case PICK_FROM_CAMERA:
 
                 cropImage();
-
                 MediaScannerConnection.scanFile(context,
                         new String[]{cameraPhotoUri.getPath()}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
@@ -111,7 +111,7 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
 
             case CROP_IMAGE:
 
-                cameraCallBack.onPhotoLoaded(cameraPhotoUri);
+                cameraCallBack.onPhotoLoaded(cameraPhotoUri,imagePath);
 
                 break;
 
@@ -155,9 +155,9 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
                 e.printStackTrace();
             }
 
-            File folder = new File(Environment.getExternalStorageDirectory() + "/indicar/");
+            File folder = new File(Environment.getExternalStorageDirectory() + "/Pictures", "indicar");
             File tempFile = new File(folder.toString(), croppedFileName.getName());
-
+            imagePath=tempFile.getAbsolutePath();
             cameraPhotoUri = FileProvider.getUriForFile(context,
                     "com.iindicar.indicar_community.provider", tempFile);
 
@@ -187,11 +187,14 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("HHmmss").format(new Date());
         String imageFileName = "nostest_" + timeStamp + "_";
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/indicar/");
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Pictures", "indicar");
         if (!storageDir.exists()) {
             storageDir.mkdirs();
         }
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        imagePath=image.getAbsolutePath();
+
+        Log.d("ddf create_uri",image.toString());
         return image;
     }
 

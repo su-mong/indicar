@@ -2,6 +2,7 @@ package com.iindicar.indicar.a1_main;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
@@ -95,6 +96,14 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
+                SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefLogin.edit();
+                boolean isFirst = prefLogin.getBoolean("isFirst",true);
+                if(isFirst){
+                    startActivity(new Intent(MainActivity.this,Tutorial.class));
+                    editor.putBoolean("isFirst", false);
+                    editor.commit();
+                }
 
             }
 

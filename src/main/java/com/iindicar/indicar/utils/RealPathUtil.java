@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 public class RealPathUtil {
 
@@ -162,6 +163,7 @@ public class RealPathUtil {
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
                     null);
+            Log.d("ddf realPath",uri.toString());
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(index);

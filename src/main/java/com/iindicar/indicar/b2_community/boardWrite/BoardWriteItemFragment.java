@@ -174,10 +174,16 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
 
         pickPhotoHelper.pickFromCamera(new IPickPhotoHelper.loadPhotoCallBack<Uri>() {
             @Override
-            public void onPhotoLoaded(Uri photoUri) {
+            public void onPhotoLoaded(Uri photoUri,String imagePath) {
+                Log.d("ddf uri_acti",photoUri.toString());
                 adapter.getItemList().get(viewModel.currentPage.get()).setImageUrl(photoUri);
-                adapter.getItemList().get(viewModel.currentPage.get()).setFilePath(RealPathUtil.getRealPath(context,photoUri));
+                adapter.getItemList().get(viewModel.currentPage.get()).setFilePath(imagePath);
                 adapter.notifyItemChanged(viewModel.currentPage.get());
+            }
+
+            @Override
+            public void onPhotoLoaded(Uri photoUri) {
+
             }
 
             @Override
