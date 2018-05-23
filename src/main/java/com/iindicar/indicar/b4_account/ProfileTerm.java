@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ProfileSuggestBinding;
 import com.iindicar.indicar.databinding.ProfileTermBinding;
@@ -19,20 +20,23 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.Header;
 
 
-public class ProfileTerm extends Activity {
+public class ProfileTerm extends BaseActivity2<ProfileTermBinding> {
 
-    ProfileTermBinding binding;
     private final String TAG = ProfileTerm.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.profile_term);
         binding.btnProfileTermOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.profile_term;
     }
 }

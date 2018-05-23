@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -188,7 +189,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                 return false;
             }
         });
-
         ((SimpleItemAnimator) binding.boardContent.recyclerviewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
@@ -265,6 +265,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                         break;
                     case R.id.report:
                         reasonPopupWindow();
+
                         break;
                 }
                 return false;
@@ -283,9 +284,11 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         final AlertDialog dialog = new AlertDialog.Builder(this).create();
         dialog.setView(popupDialogView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         btnSend = (ImageView) popupDialogView.findViewById(R.id.btn_send);
         btnAlertCancel = (ImageView) popupDialogView.findViewById(R.id.btn_x);
         editReason = (EditText) popupDialogView.findViewById(R.id.edit_reason);
+        keyboard.showKeyboard(editReason);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -300,6 +303,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                 dialog.dismiss();
             }
         });
+
 
         dialog.show();
 
@@ -425,6 +429,10 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     public void onDeleteBoard() {
         isUpdated = true;
         onFinishActivity();
+    }
+
+    public void onSended(){
+        Toast.makeText(this, "신고가 접수되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     public void onLikeBoard() {
