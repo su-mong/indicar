@@ -1,6 +1,6 @@
 <resources>
-    <style name="UnityThemeSelector" parent="android:Theme.Light.NoTitleBar.Fullscreen">
-    </style>
+
+    <style name="UnityThemeSelector" parent="android:Theme.Light.NoTitleBar.Fullscreen"></style>
 
     <style name="UnityThemeSelector.Translucent" parent="@style/UnityThemeSelector">
         <item name="android:windowIsTranslucent">true</item>
@@ -16,13 +16,20 @@
         <item name="actionBarSize">60dp</item>
     </style>
 
-    <!-- Splash Activity 테마 -->
-    <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="noActionTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionBarSize">60dp</item>
     </style>
 
+
+    <!-- Splash Activity 테마 -->
+    <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
+
     <!--New Splash Activity 테마 -->
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-    </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
 
     <!-- Photo Picker 테마 -->
     <style name="photoPickerTheme" parent="Matisse.Zhihu">

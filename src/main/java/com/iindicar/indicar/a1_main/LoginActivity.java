@@ -49,6 +49,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.iindicar.indicar.BaseActivity;
+import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
 import com.iindicar.indicar.utils.ConstClass;
@@ -69,7 +70,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
+public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
     //뒤로가기 버튼을 두 번 클릭시 종료. 이를 구현하기 위한 변수를 선언한다.
     private final long FINISH_INTERVAL_TIME = 2000;
@@ -235,14 +236,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         return R.layout.activity_login;
     }
 
-    @Override
-    protected void setActionBarImage(ObservableInt centerImageId, ObservableInt leftImageId) {
-    }
 
-    @Override
-    protected void initActionBar() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-    }
 
     @Override
     public void onBackPressed() {

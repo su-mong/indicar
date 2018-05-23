@@ -25,6 +25,8 @@ public interface BoardDetailNavigator {
 
     void onItemsAdded(List<BoardFileVO> items);
 
+    void onSended();
+
     void onItemAdded(BoardFileVO file);
 
     Intent getActivityIntent();

@@ -4,14 +4,9 @@ import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.iindicar.indicar.R;
-import com.iindicar.indicar.b4_account.ProfileSuggest;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardCommentDao;
 import com.iindicar.indicar.data.dao.BoardDao;
@@ -28,7 +23,6 @@ import java.util.TreeMap;
 
 /**
  * Created by yeseul on 2018-04-13.
- *
  */
 
 public class BoardDetailViewModel {
@@ -86,15 +80,15 @@ public class BoardDetailViewModel {
         boardDao.getLikeModel().getLikeList(params, new BaseDao.LoadDataListCallBack() {
             @Override
             public void onDataListLoaded(List list) {
-                if(list == null){
+                if (list == null) {
                     isLikeBoard.set(false);
                     return;
                 }
 
-                for(int i = 0 ; i < list.size() ; i++){
+                for (int i = 0; i < list.size(); i++) {
                     BoardDetailVO vo = (BoardDetailVO) list.get(i);
-                    if(boardHeader.getBoardType().equals(vo.getBoardType())
-                            && boardHeader.getBoardId().equals(vo.getBoardId())){
+                    if (boardHeader.getBoardType().equals(vo.getBoardType())
+                            && boardHeader.getBoardId().equals(vo.getBoardId())) {
                         isLikeBoard.set(true);
                         return;
                     }
@@ -117,7 +111,7 @@ public class BoardDetailViewModel {
         getCommentList();
     }
 
-    public void getBoardData(){
+    public void getBoardData() {
 
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardHeader.getBoardType());
@@ -164,13 +158,13 @@ public class BoardDetailViewModel {
         final String[] fileIndexArray = boardHeader.getAtchFileId();
 
         // 이미지가 없는 게시물
-        if(fileIndexArray == null || fileIndexArray.length == 0||fileIndexArray[0].equals("FILE_9")||fileIndexArray[0].equals("FILE_10")){
+        if (fileIndexArray == null || fileIndexArray.length == 0 || fileIndexArray[0].equals("FILE_9") || fileIndexArray[0].equals("FILE_10")) {
 
             isBoardDataLoading.set(false);
             return;
         }
 
-        for(int i = 0 ; i < fileIndexArray.length ; i++) {
+        for (int i = 0; i < fileIndexArray.length; i++) {
             final int position = i;
             RequestParams params = new RequestParams();
             params.put("atch_file_id", fileIndexArray[i]);
@@ -181,9 +175,9 @@ public class BoardDetailViewModel {
                     BoardFileVO vo = (BoardFileVO) data;
                     doneFile.put(position, vo);
 
-                    if(doneFile.size() == fileIndexArray.length) {
+                    if (doneFile.size() == fileIndexArray.length) {
                         isBoardDataLoading.set(false);
-                        for(BoardFileVO file : doneFile.values()){
+                        for (BoardFileVO file : doneFile.values()) {
                             navigator.onItemAdded(file);
                         }
                     }
@@ -223,14 +217,14 @@ public class BoardDetailViewModel {
 
     private void getUserProfile(List list) {
 
-        if(list == null){
+        if (list == null) {
             return;
         }
 
-        for(int i = 0 ; i < list.size() ; i++){
+        for (int i = 0; i < list.size(); i++) {
             final BoardCommentVO comment = (BoardCommentVO) list.get(i);
 
-            if(comment.getUserKey() == null){
+            if (comment.getUserKey() == null) {
                 continue;
             }
 
@@ -253,33 +247,32 @@ public class BoardDetailViewModel {
 
     }
 
-    public void sendReport(String reason){
+    public void sendReport(String reason) {
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardHeader.getBoardType());
         params.put("ntt_id", boardHeader.getBoardId());
         params.put("writer_id", loginId);
-        params.put("reason",reason);
+        params.put("reason", reason);
 
 
         boardDao.sendReport(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-
+                navigator.onSended();
             }
             @Override
             public void onDataNotAvailable() {
-
             }
         });
     }
 
     /* Data Binding
-    *
-    * 좋아요 버튼 onClick 메서드
-    * */
-    public boolean onLikeButtonClick(View view, MotionEvent event){
+     *
+     * 좋아요 버튼 onClick 메서드
+     * */
+    public boolean onLikeButtonClick(View view, MotionEvent event) {
 
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             RequestParams params = new RequestParams();
             params.put("_id", loginId);
             params.put("bbs_id", boardHeader.getBoardType());
@@ -289,7 +282,7 @@ public class BoardDetailViewModel {
                 @Override
                 public void onDataLoaded(Object data) {
                     int likeCount = Integer.parseInt(boardHeader.getLikeCount());
-                    if(isLikeBoard.get()) { // 좋아요 였는데 취소함
+                    if (isLikeBoard.get()) { // 좋아요 였는데 취소함
                         boardHeader.setLikeCount(String.valueOf(likeCount - 1));
                     } else {
                         boardHeader.setLikeCount(String.valueOf(likeCount + 1));
@@ -308,15 +301,15 @@ public class BoardDetailViewModel {
         return true;
     }
 
-    public void onCommentSubmitClick(){
+    public void onCommentSubmitClick() {
         navigator.hideKeyboard();
-        if(commentWrite.get().equals("")){
+        if (commentWrite.get().equals("")) {
             return;
         }
 
-        if(isCommentUpdating)
+        if (isCommentUpdating)
             updateComment();
-        else{
+        else {
             insertComment();
         }
     }
@@ -327,7 +320,7 @@ public class BoardDetailViewModel {
         answerNo = vo.getCommentIndex();
     }
 
-    public void updateComment(){
+    public void updateComment() {
 
         RequestParams params = new RequestParams();
         params.put("ntt_id", boardHeader.getBoardId());
@@ -341,6 +334,7 @@ public class BoardDetailViewModel {
                 isCommentUpdating = false;
                 getCommentList();
             }
+
             @Override
             public void onDataNotAvailable() {
                 isCommentUpdating = false;
@@ -348,7 +342,7 @@ public class BoardDetailViewModel {
         });
     }
 
-    public void insertComment(){
+    public void insertComment() {
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardHeader.getBoardType());
         params.put("ntt_id", boardHeader.getBoardId());
@@ -364,6 +358,7 @@ public class BoardDetailViewModel {
                 isCommentUpdating = false;
                 getCommentList();
             }
+
             @Override
             public void onDataNotAvailable() {
 
@@ -372,11 +367,11 @@ public class BoardDetailViewModel {
     }
 
     /* Data Binding
-    *
-    * 댓글 버튼의 onClick 메서드
-    * */
-    public boolean onCommentButtonClick(View view, MotionEvent event){
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+     *
+     * 댓글 버튼의 onClick 메서드
+     * */
+    public boolean onCommentButtonClick(View view, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             navigator.showKeyboard();
         }
         return true;

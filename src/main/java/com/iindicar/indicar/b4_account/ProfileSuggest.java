@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
+import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.iindicar.indicar.BaseActivity;
+import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ProfileSuggestBinding;
 import com.iindicar.indicar.utils.HttpClient;
@@ -18,15 +21,14 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.Header;
 
 
-public class ProfileSuggest extends Activity {
+public class ProfileSuggest extends BaseActivity2<ProfileSuggestBinding> {
 
-    ProfileSuggestBinding binding;
     private final String TAG = ProfileSuggest.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.profile_suggest);
+//        binding = DataBindingUtil.setContentView(this, R.layout.profile_suggest);
         binding.btnProfileSuggestX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +42,14 @@ public class ProfileSuggest extends Activity {
             }
         });
     }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.profile_suggest;
+    }
+
+
+
 
     private void sendReport() {
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
