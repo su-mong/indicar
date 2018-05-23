@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ccc"
+    android:padding="1dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvName"
-        android:textSize="20dp"
-        android:textColor="#000000"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:padding="10dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ccc"
+            android:orientation="horizontal"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:paddingRight="1dp"
+                android:background="#ccc"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_name1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:background="@color/colorWhite"
+                    android:gravity="center"
+                    android:text="그랜저 전체"
+                    android:textAlignment="center"
+                    android:textColor="#888"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/text_name2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:background="@color/colorWhite"
+                    android:gravity="center"
+                    android:text="그랜저 전체"
+
+                    android:textAlignment="center"
+                    android:textColor="#888"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_name3"
+                android:background="@color/colorWhite"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:gravity="center"
+                android:text="그랜저 전체"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
