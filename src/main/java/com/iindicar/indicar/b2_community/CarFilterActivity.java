@@ -1,5 +1,6 @@
 package com.iindicar.indicar.b2_community;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.databinding.ObservableInt;
@@ -7,11 +8,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.iindicar.indicar.BaseActivity;
+import com.iindicar.indicar.ListViewItem;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.CarFilterActivityBinding;
 import com.iindicar.indicar.utils.CarDB;
@@ -44,6 +47,12 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
         carDB = new CarDB(getApplicationContext(), "carDB", null, 1);
         db = carDB.getReadableDatabase();
 
+        actionBarBinding.buttonLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         name1 = new ArrayList<>();
         name2 = new ArrayList<>();
@@ -68,16 +77,6 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
             }
         });
         binding.listView.setAdapter(firstAdapter);
-//        binding.searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    binding.listView.setFilterText(binding.searchText.getText().toString());
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
 
 
         String sql1 = "SELECT specName,parentName FROM carDB WHERE level=1";
@@ -96,23 +95,20 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
                 while (cursor1.moveToNext()) {
 
                     tmp1 = cursor1.getString(0);
-                    Log.d("ddf cursor1", tmp1);
                     while (cursor2.moveToNext()) {
                         if (tmp1.equals(cursor2.getString(1))) {
-                            Log.d("ddf cursor2", cursor2.getString(0));
                             tmp2 = cursor2.getString(0);
                             while (cursor3.moveToNext()) {
                                 if (tmp2.equals(cursor3.getString(1))) {
-                                    Log.d("ddf cursor3", cursor3.getString(0));
                                     tmp3 = cursor3.getString(0);
                                     final String finalTmp1 = tmp1;
                                     final String finalTmp2 = tmp2;
                                     final String finalTmp3 = tmp3;
+
                                     mHandler.post(new Runnable() {
                                         @Override
                                         public void run() {
                                             firstAdapter.addItem(finalTmp1, finalTmp2, finalTmp3);
-                                            Log.d("ddf adapter", finalTmp1 + finalTmp2 + finalTmp3);
                                         }
                                     });
                                 }
@@ -127,6 +123,17 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
                     public void run() {
                         binding.searchText.setEnabled(true);
                         binding.searchText.setText("");
+                        binding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                ListViewItem carName = (ListViewItem) parent.getAdapter().getItem(position);
+                                String tmp= carName.get3();
+                                Intent data = new Intent();
+                                data.putExtra("car_name",tmp);
+                                setResult(RESULT_OK,data);
+                                finish();
+                            }
+                        });
                     }
                 });
 

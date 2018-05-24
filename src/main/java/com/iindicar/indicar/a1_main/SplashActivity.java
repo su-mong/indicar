@@ -178,18 +178,15 @@ public class SplashActivity extends AppCompatActivity {
                 for(int i=0;i<allNum;i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String specName = jsonObject.getString("specName");
-                    specName = specName.replace("[]","");
                     //specName = specName.replace("[]","");//이름에 들어가 있는 []을 지운다.
                     int level = Integer.parseInt(jsonObject.getString("level"));
                     if(level == 1) {//level이 1인 경우 parentName이 넘어오지 않는다.
                         carDB.addCar(specName,1,null,0);
                     } else if(level==2) {//level이 2인 경우 해당 specName 전체를 선택할 수 있는 level 3의 요소를 추가해야 한다.
                         String parentName = jsonObject.getString("parentName");
-                        parentName = parentName.replace("[]","");
                         carDB.addCar(specName,2,parentName,0);
                     } else {//level이 3인 경우
                         String parentName = jsonObject.getString("parentName");
-                        parentName = parentName.replace("[]","");
                         carDB.addCar(specName,3,parentName,0);
                     }
                 }

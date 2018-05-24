@@ -11,6 +11,8 @@ import com.iindicar.indicar.R;
 import com.iindicar.indicar.b2_community.CarFilterActivity;
 import com.iindicar.indicar.databinding.BoardWriteFilterFragmentBinding;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by yeseul on 2018-05-06.
  */
@@ -31,26 +33,26 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         binding.setViewModel(viewModel);
         binding.buttonSearchCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), CarFilterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 13);
             }
         });
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-                if (resultCode == 13) {
-                    // TODO Extract the data returned from the child Activity.
-                    String returnValue = data.getStringExtra("car_name");
-                }
-
+        if (requestCode == 13) {
+            if (resultCode == RESULT_OK) {
+                String returnValue = data.getStringExtra("car_name");
+                viewModel.setCarName(returnValue);
+                binding.textCarName.setText("선택된 차량 : "+returnValue);
+            }
+        }
     }
 }
 

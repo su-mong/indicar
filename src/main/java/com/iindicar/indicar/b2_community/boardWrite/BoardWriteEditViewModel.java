@@ -65,6 +65,10 @@ public class BoardWriteEditViewModel {
         });
     }
 
+    public void setCarName(String carName){
+        this.boardVO.setCarName(carName);
+    }
+
     // this will be called only Editing Exist Board
     public void start(WriteBoardVO boardVO, List<WriteFileVO> boardItems) {
         isNewBoard = false;
@@ -228,6 +232,7 @@ public class BoardWriteEditViewModel {
         params.put("ntcr_nm", boardVO.getUserName());
         params.put("ntcr_id", boardVO.getUserId());
         params.put("atch_file_id", boardVO.getFileIndex());
+        params.put("carSpecName", boardVO.getCarName());
 
         boardDao.insertData(params, new BaseDao.LoadDataCallBack() {
             @Override
