@@ -308,6 +308,9 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         });
     }
 
+
+
+
     @Override
     public void onBackPressed() {
         if(binding.pbALoading.getVisibility() != View.VISIBLE) {

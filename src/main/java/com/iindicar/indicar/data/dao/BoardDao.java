@@ -220,30 +220,9 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String response;
 
-                try {
-                    response = new String(responseBody);
-                } catch (Exception e) {
-
-                    callBack.onDataNotAvailable();
-
-                    Log.e(TAG, "insertData() with URL: " + URL + " " + R.string.data_not_available);
-                    e.printStackTrace();
-                    return;
-                }
-
-                // 게시글 등록 정상적으로 처리
-                if (response != null && response.equals("hi")) {
-                    callBack.onDataLoaded("success");
-                } else {
-
-                    Log.e(TAG, "insertData() with URL: " + URL + " " + R.string.data_not_available);
-
-                    callBack.onDataNotAvailable();
-                }
+                callBack.onDataLoaded("success");
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 

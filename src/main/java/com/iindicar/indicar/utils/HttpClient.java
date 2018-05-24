@@ -9,12 +9,14 @@ import com.loopj.android.http.RequestParams;
  */
 
 public class HttpClient {
+    final int DEFAULT_TIMEOUT = 20 * 1000;
     private static final String BASE_URL = "http://13.125.173.118:8080";
     private static AsyncHttpClient client = new AsyncHttpClient();
     private static AsyncHttpClient multipartClient = new AsyncHttpClient();
 
-    private HttpClient(){
 
+    private HttpClient(){
+        client.setTimeout(DEFAULT_TIMEOUT);
     }
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler){
