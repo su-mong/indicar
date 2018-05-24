@@ -10,14 +10,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 
 import com.commit451.teleprinter.Teleprinter;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
-import com.iindicar.indicar.b2_community.boardList.BoardListFragment;
-import com.iindicar.indicar.b2_community.boardList.BoardListViewModel;
 import com.iindicar.indicar.data.vo.WriteBoardVO;
 import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardWriteEditActivityBinding;
@@ -63,7 +60,10 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
     @Override
     public void onBackPressed() {
-        onCancelWrite();
+        if (currFrag == FRAG_WRITE_ITEM)
+            changeToWriteFilter();
+        else
+            onCancelWrite();
     }
 
     @Override
@@ -195,7 +195,6 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     }
 
 
-
     @Override
     public void onBoardUpdated() {
 
@@ -246,7 +245,10 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
                 changeToWriteItem();
                 break;
             case R.id.button_cancel:
-                onCancelWrite();
+                if (currFrag == FRAG_WRITE_ITEM)
+                    changeToWriteFilter();
+                else
+                    onCancelWrite();
                 break;
         }
     }
