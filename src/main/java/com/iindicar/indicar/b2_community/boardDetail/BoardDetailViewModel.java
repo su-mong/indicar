@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -203,8 +204,8 @@ public class BoardDetailViewModel {
             public void onDataListLoaded(List list) {
                 navigator.onCommentUpdated(list);
                 isCommentDataLoading.set(false);
-
-//                getUserProfile(list);
+Log.d("ddf comment","");
+                getUserProfile(list);
             }
 
             @Override
@@ -234,6 +235,8 @@ public class BoardDetailViewModel {
             userDao.getData(params, new BaseDao.LoadDataCallBack() {
                 @Override
                 public void onDataLoaded(Object data) {
+                    Log.d("ddf comment_user","");
+
                     UserVO vo = (UserVO) data;
                     navigator.onCommentProfileAttached(comment, vo);
                 }

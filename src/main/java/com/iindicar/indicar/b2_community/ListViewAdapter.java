@@ -54,9 +54,13 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         ListViewItem listViewItem = filteredItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        titleTextView1.setText(listViewItem.get1());
-        titleTextView2.setText(listViewItem.get2());
-        titleTextView3.setText(listViewItem.get3());
+        String tv1 = listViewItem.get1().replace("[]","");
+        String tv2 = listViewItem.get2().replace("[]","");
+        String tv3 = listViewItem.get3().replace("[]","");
+
+        titleTextView1.setText(tv1);
+        titleTextView2.setText(tv2);
+        titleTextView3.setText(tv3);
 
         return convertView;
     }

@@ -3,10 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="constant" type="com.iindicar.indicar.Constant"/>
+
+        <variable
+            name="constant"
+            type="com.iindicar.indicar.Constant" />
+
         <variable
             name="viewModel"
-            type="com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditViewModel"/>
+            type="com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditViewModel" />
     </data>
 
     <LinearLayout
@@ -18,13 +22,13 @@
             style="@style/imageButtonCustomStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/button_share"/>
+            android:src="@drawable/button_share" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -35,18 +39,29 @@
                 android:src="@drawable/text_write_category_car" />
 
             <ImageButton
-                style="@style/imageButtonCustomStyle"
                 android:id="@+id/button_search_car"
+                style="@style/imageButtonCustomStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/img_search_bar" />
 
+
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textAlignment="center"
+                android:id="@+id/text_car_name"
+                android:layout_width="match_parent"
+                android:text="선택된 차량 : 없음"
+                android:layout_height="25dp" />
+
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -59,48 +74,48 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageButton
-                    style="@style/imageButtonCustomStyle"
-                    android:tag="@{constant.DAY_LIFE}"
                     android:id="@+id/button_day_life"
+                    style="@style/imageButtonCustomStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:setSelected="@{viewModel.boardType == constant.DAY_LIFE}"
                     android:onClick="@{(v) -> viewModel.setBoardTypeFiltering(v)}"
-                    android:src="@drawable/write_filter_daylife_selector" />
+                    android:src="@drawable/write_filter_daylife_selector"
+                    android:tag="@{constant.DAY_LIFE}"
+                    app:setSelected="@{viewModel.boardType == constant.DAY_LIFE}" />
 
                 <ImageButton
-                    style="@style/imageButtonCustomStyle"
-                    android:tag="@{constant.MARKET}"
                     android:id="@+id/button_market"
+                    style="@style/imageButtonCustomStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:setSelected="@{viewModel.boardType == constant.MARKET}"
                     android:onClick="@{(v) -> viewModel.setBoardTypeFiltering(v)}"
-                    android:src="@drawable/write_filter_market_selector" />
+                    android:src="@drawable/write_filter_market_selector"
+                    android:tag="@{constant.MARKET}"
+                    app:setSelected="@{viewModel.boardType == constant.MARKET}" />
 
                 <ImageButton
-                    style="@style/imageButtonCustomStyle"
-                    android:tag="@{constant.DIY}"
                     android:id="@+id/button_diy"
+                    style="@style/imageButtonCustomStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:setSelected="@{viewModel.boardType == constant.DIY}"
                     android:onClick="@{(v) -> viewModel.setBoardTypeFiltering(v)}"
-                    android:src="@drawable/write_filter_diy_selector" />
+                    android:src="@drawable/write_filter_diy_selector"
+                    android:tag="@{constant.DIY}"
+                    app:setSelected="@{viewModel.boardType == constant.DIY}" />
 
             </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
         </LinearLayout>
 

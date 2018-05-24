@@ -194,7 +194,6 @@ String imagePath;
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         imagePath=image.getAbsolutePath();
 
-        Log.d("ddf create_uri",image.toString());
         return image;
     }
 

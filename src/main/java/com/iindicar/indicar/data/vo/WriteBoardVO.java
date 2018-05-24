@@ -12,23 +12,31 @@ import com.iindicar.indicar.BR;
  * Created by yeseul on 2018-05-02.
  */
 
-public class WriteBoardVO extends BaseObservable implements Parcelable{
+public class WriteBoardVO extends BaseObservable implements Parcelable {
 
-    @SerializedName("bbs_id") private String boardType;
-    @SerializedName("ntt_id") private String boardId;
-    @SerializedName("ntcr_nm") private String userName;
-    @SerializedName("ntcr_id") private String userId;
-    @SerializedName("atch_file_id") private String[] fileIndex;
+    @SerializedName("bbs_id")
+    private String boardType;
+    @SerializedName("ntt_id")
+    private String boardId;
+    @SerializedName("ntcr_nm")
+    private String userName;
+    @SerializedName("ntcr_id")
+    private String userId;
+    @SerializedName("car_name")
+    private String carName;
+    @SerializedName("atch_file_id")
+    private String[] fileIndex;
 
-    public WriteBoardVO(){
+    public WriteBoardVO() {
 
     }
-    
+
     protected WriteBoardVO(Parcel in) {
         boardType = in.readString();
         boardId = in.readString();
         userName = in.readString();
         userId = in.readString();
+        carName = in.readString();
         fileIndex = in.createStringArray();
     }
 
@@ -74,8 +82,17 @@ public class WriteBoardVO extends BaseObservable implements Parcelable{
         return userId;
     }
 
+
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getCarName() {
+        return carName;
+    }
+
+    public void setCarName(String carName) {
+        this.carName = carName;
     }
 
     public String[] getFileIndex() {
@@ -97,6 +114,7 @@ public class WriteBoardVO extends BaseObservable implements Parcelable{
         parcel.writeString(boardId);
         parcel.writeString(userName);
         parcel.writeString(userId);
+        parcel.writeString(carName);
         parcel.writeStringArray(fileIndex);
     }
 }
