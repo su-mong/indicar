@@ -123,7 +123,7 @@ public class SplashActivity extends AppCompatActivity {
                 SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefLogin.edit();
 
-                dbVersion = prefLogin.getString("dbVersion","0");
+                dbVersion = prefLogin.getString("dbVersion","1");
                 PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
                 version = Integer.toString(info.versionCode);
 
@@ -187,7 +187,6 @@ public class SplashActivity extends AppCompatActivity {
                         String parentName = jsonObject.getString("parentName");
                         parentName = parentName.replace("[]","");
                         carDB.addCar(specName,2,parentName,0);
-                        carDB.addCar(specName+" 전체",3,specName,0);
                     } else {//level이 3인 경우
                         String parentName = jsonObject.getString("parentName");
                         parentName = parentName.replace("[]","");
