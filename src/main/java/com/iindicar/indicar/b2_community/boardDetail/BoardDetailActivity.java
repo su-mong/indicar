@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ScrollingView;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SimpleItemAnimator;
@@ -39,6 +40,7 @@ import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardDetailActivityBinding;
 import com.iindicar.indicar.utils.DialogUtil;
 import com.iindicar.indicar.utils.RecyclerViewDecoration;
+import com.iindicar.indicar.utils.ScrollBottomAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +103,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
             }
         });
 
+
         binding.setViewModel(viewModel);
         viewModel.setNavigator(this);
 
@@ -141,7 +144,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         });
 
         // bind scroll listener to show/hide buttons
-        binding.boardContent.scrollViewContainer.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        binding.scrollViewContainer.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
@@ -180,7 +183,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
             }
         });
 
-        binding.boardContent.scrollViewContainer.setOnTouchListener(new View.OnTouchListener() {
+        binding.scrollViewContainer.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (viewModel.isKeyboardOpen.get()) {
@@ -190,6 +193,21 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
             }
         });
         ((SimpleItemAnimator) binding.boardContent.recyclerviewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
+
+        new ScrollBottomAction()
+                .with(binding.scrollViewContainer)
+                .setOnScrollBottomListener(new ScrollBottomAction.onScrollEndListener() {
+                    @Override
+                    public void onScrollBottom(ScrollingView view) {
+                        // request more list when scroll is bottom
+                        viewModel.getCommentList();
+                    }
+                });
+    }
+
+    @Override
+    public void showPageEndMessage() {
+        Toast.makeText(this, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show();
     }
 
     private void initBoardView() {
@@ -230,7 +248,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         keyboard.addKeyboardToggleListener(new Teleprinter.OnKeyboardToggleListener() {
             @Override
             public void onKeyboardShown(int keyboardSize) {
-                binding.boardContent.scrollViewContainer.fullScroll(View.FOCUS_DOWN);
+                binding.scrollViewContainer.fullScroll(View.FOCUS_DOWN);
                 binding.boardContent.commentText.requestFocus();
                 viewModel.isKeyboardOpen.set(true);
             }
@@ -284,7 +302,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         final AlertDialog dialog = new AlertDialog.Builder(this).create();
         dialog.setView(popupDialogView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         btnSend = (ImageView) popupDialogView.findViewById(R.id.btn_send);
         btnAlertCancel = (ImageView) popupDialogView.findViewById(R.id.btn_x);
         editReason = (EditText) popupDialogView.findViewById(R.id.edit_reason);
@@ -431,7 +449,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         onFinishActivity();
     }
 
-    public void onSended(){
+    public void onSended() {
         Toast.makeText(this, "신고가 접수되었습니다.", Toast.LENGTH_SHORT).show();
     }
 

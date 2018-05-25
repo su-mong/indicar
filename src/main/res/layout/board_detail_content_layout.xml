@@ -10,12 +10,7 @@
             type="com.iindicar.indicar.b2_community.boardDetail.BoardDetailViewModel" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollView_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:scrollbars="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,6 +87,5 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
 
 </layout>
