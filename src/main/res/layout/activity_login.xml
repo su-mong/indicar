@@ -1,63 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="activity"
             type="com.iindicar.indicar.a1_main.LoginActivity"/>
     </data>
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/back_login"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:background="@drawable/back_login1">
 
-        <com.ssomai.android.scalablelayout.ScalableLayout
-            android:layout_width="200dp"
-            android:layout_height="180dp"
-            android:layout_marginTop="350dp"
-            android:layout_centerHorizontal="true"
-            app:scale_base_width="728"
-            app:scale_base_height="602">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnLoginKakao"
-                android:background="@drawable/btn_kakaologin_light"
-                app:scale_left="0"
-                app:scale_top="0"
-                app:scale_width="728"
-                app:scale_height="182"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnLoginGoogle"
-                android:background="@drawable/btn_googlelogin_light"
-                app:scale_left="0"
-                app:scale_top="210"
-                app:scale_width="728"
-                app:scale_height="182"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnLoginFacebook"
-                android:text="FACEBOOK_LOGIN"
-                android:textSize="15dp"
-                app:scale_left="0"
-                app:scale_top="420"
-                app:scale_width="728"
-                app:scale_height="182"/>
-
-
-        </com.ssomai.android.scalablelayout.ScalableLayout>
-
-        <ProgressBar
+        <android.support.constraint.Guideline
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/guidelineLogin1"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.25"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineLogin2"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.75"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineLogin3"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.52"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineLogin4"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,37:10"
+            android:src="@drawable/logintop"
+            app:layout_constraintStart_toStartOf="@id/guidelineLogin4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"/>
+        
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,17:15"
+            android:src="@drawable/logintitle"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
+            app:layout_constraintBottom_toTopOf="@+id/btnLoginKakao"
+            android:layout_marginBottom="30dp"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,23:5"
+            android:id="@+id/btnLoginKakao"
+            android:background="@drawable/btn_kakaologin_light"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
+            app:layout_constraintTop_toTopOf="@+id/guidelineLogin3"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,23:5"
+            android:id="@+id/btnLoginGoogle"
+            android:background="@drawable/btn_googlelogin_light"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
+            app:layout_constraintTop_toBottomOf="@+id/btnLoginKakao"
+            android:layout_marginTop="12dp"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,23:5"
+            android:id="@+id/btnLoginFacebook"
+            android:background="@drawable/btn_facebooklogin"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
+            app:layout_constraintTop_toBottomOf="@+id/btnLoginGoogle"
+            android:layout_marginTop="12dp"/>
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="13dp"
+            android:src="@drawable/loginbottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="15dp"/>
+
+        <ProgressBar
             android:id="@+id/pbLogin"
-            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:visibility="gone"/>
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>
