@@ -6,7 +6,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath 'com.android.tools.build:gradle:3.0.1'
+		classpath 'com.android.tools.build:gradle:3.1.2'
 		classpath 'com.google.gms:google-services:3.1.2'
 	}
 }
@@ -89,7 +89,14 @@ android {
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 		multiDexEnabled true
 	}
-
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86'
+            universalApk true
+        }
+    }
 	lintOptions {
 		abortOnError false
 	}

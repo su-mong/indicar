@@ -1,5 +1,7 @@
 package com.iindicar.indicar.a1_main;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +29,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
@@ -43,7 +46,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 import com.iindicar.indicar.BaseActivity;
+import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
 import com.iindicar.indicar.utils.ConstClass;
@@ -55,8 +61,8 @@ import com.kakao.util.exception.KakaoException;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Observable;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -64,7 +70,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
+public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
     //뒤로가기 버튼을 두 번 클릭시 종료. 이를 구현하기 위한 변수를 선언한다.
     private final long FINISH_INTERVAL_TIME = 2000;
@@ -77,7 +83,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     private SessionCallback KakaoModule;
 
     //회원가입 메소드
-    String id,login_method, name, profile_img_url, email;
+    String id, login_method, name, profile_img_url, email;
 
     private PopupWindow pWindow;
     private Button btnAlertSignUp;
@@ -86,17 +92,20 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     private EditText etEmail1;
     private EditText etEmail2;
     int screenWidth, screenHeight;
+    public static Activity LoginAct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //hasActionBar.set(false);
 
+
+        //hasActionBar.set(false);
+// Initialize SDK before setContentView(Layout ID)
         //앱 설치 후 첫 실행인지를 체크한다.
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        SharedPreferences pref = getSharedPreferences("firstexe",MODE_PRIVATE);
-        if(pref.getString("index","").equals("")) {
+        SharedPreferences pref = getSharedPreferences("firstexe", MODE_PRIVATE);
+        if (pref.getString("index", "").equals("")) {
             /*Intent i = new Intent(FirstActivity.this,GuideActivity.class);
             startActivity(i);*/
             SharedPreferences.Editor editor = pref.edit();
@@ -108,7 +117,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             editor2.putInt("OtherAlarm", 0);
             editor2.commit();
         }
-
+        LoginAct = this;
         //화면 크기를 구한다.
         WindowManager w = getWindowManager();
         Display d = w.getDefaultDisplay();
@@ -116,7 +125,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         d.getMetrics(metrics);
         screenWidth = metrics.widthPixels;
         screenHeight = metrics.heightPixels;
-        if(Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17) {
+        if (Build.VERSION.SDK_INT >= 14 && Build.VERSION.SDK_INT < 17) {
             try {
                 screenWidth = (Integer) Display.class.getMethod("getRawWidth").invoke(d);
                 screenHeight = (Integer) Display.class.getMethod("getRawHeight").invoke(d);
@@ -138,73 +147,86 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                 .requestEmail()
                 .requestProfile()
                 .build();
-        GoogleClient = GoogleSignIn.getClient(this,gso);
+        GoogleClient = GoogleSignIn.getClient(this, gso);
         GoogleModule = FirebaseAuth.getInstance();
         FBcallBackManager = CallbackManager.Factory.create();
         KakaoModule = new SessionCallback();
         Session.getCurrentSession().addCallback(KakaoModule);
+
 
         //구글 로그인 버튼
         binding.btnLoginGoogle.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = GoogleClient.getSignInIntent();
-                startActivityForResult(intent,9001);
+                startActivityForResult(intent, 9001);
             }
         });
-        //페이스북 로그인 버튼
+
         binding.btnLoginFacebook.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
-                LoginManager.getInstance().registerCallback(FBcallBackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        login_method = "facebook";
-
-                        GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {//AccessToken.getCurrentAccessToken()
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                try {
-                                    String userId = object.getString("id");
-                                    name = object.getString("name");
-                                    profile_img_url = "https://graph.facebook.com/" + userId + "/picture";
-
-                                    if(object.toString().contains("email")) {
-                                        email = object.getString("email");
-                                    } else {
-                                        email = "";
-                                    }
-
-                                    new CheckUser().execute();
-                                } catch (Exception e) {
-                                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,email,gender");
-                        graphRequest.setParameters(parameters);
-                        graphRequest.executeAsync();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(getApplicationContext(), "페이스북 로그인 취소", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Toast.makeText(getApplicationContext(), "페이스북 로그인 실패: 1단계", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                fbLogin();
             }
         });
+
+
         //카카오 로그인 버튼
         binding.btnLoginKakao.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
+            }
+        });
+
+
+
+    }
+
+
+    public void fbLogin() {
+        //페이스북 로그인 버튼
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "user_photos", "public_profile"));
+        LoginManager.getInstance().registerCallback(FBcallBackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                login_method = "facebook";
+
+                GraphRequest graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {//AccessToken.getCurrentAccessToken()
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        try {
+                            String userId = object.getString("id");
+                            name = object.getString("name");
+                            profile_img_url = "https://graph.facebook.com/" + userId + "/picture";
+
+                            if (object.toString().contains("email")) {
+                                email = object.getString("email");
+                            } else {
+                                email = "";
+                            }
+
+                            new CheckUser().execute();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender");
+                graphRequest.setParameters(parameters);
+                graphRequest.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), "페이스북 로그인을 취소하셨습니다.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(), "페이스북 로그인 실패: 1단계", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -214,13 +236,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         return R.layout.activity_login;
     }
 
-    @Override
-    protected void setActionBarImage(ObservableInt centerImageId, ObservableInt leftImageId) {}
 
-    @Override
-    protected void initActionBar() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-    }
 
     @Override
     public void onBackPressed() {
@@ -230,44 +246,44 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
             super.onBackPressed();
             overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
-        }
-        else {
+        } else {
             backPressTime = tempTime;
-            Toast.makeText(LoginActivity.this, "뒤로 버튼을 한 번 더 누르시면 종료됩니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "뒤로 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
     //각 로그인의 onActivityResult
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 9001) {
+        if (requestCode == 9001) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-            } catch(Exception e) {
-                Toast.makeText(getApplicationContext(),"구글 로그인 실패",Toast.LENGTH_SHORT);
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "구글 로그인 실패", Toast.LENGTH_SHORT);
             }
-        } else if(Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)) {
+        } else if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
             return;
-        }
-        else {
-            FBcallBackManager.onActivityResult(requestCode, resultCode, data);
+        } else if (FacebookSdk.isFacebookRequestCode(requestCode)) {
             super.onActivityResult(requestCode, resultCode, data);
+            FBcallBackManager.onActivityResult(requestCode, resultCode, data);
+            return;
+
         }
     }
 
     //구글 로그인 구현
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d("Individual Car","firebaseAuthWithGoogle:" + acct.getId());
+        Log.d("Individual Car", "firebaseAuthWithGoogle:" + acct.getId());
 
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(),null);
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         GoogleModule.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
+                        if (task.isSuccessful()) {
                             FirebaseUser account = GoogleModule.getCurrentUser();
                             login_method = "google";
                             name = account.getDisplayName();
@@ -276,11 +292,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
                             try {
                                 new CheckUser().execute();
-                            } catch(Exception e) {
-                                Toast.makeText(getApplicationContext(),"유저 정보 획득 실패",Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), "유저 정보 획득 실패", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(LoginActivity.this, "구글 로그인 오류: "+task.getException(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "구글 로그인 오류: " + task.getException(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -292,17 +308,20 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         public void onSessionOpened() {
             Intent intent = new Intent(getApplicationContext(), KakaoSignupActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent.putExtra("screenWidth",screenWidth);
-            intent.putExtra("screenHeight",screenHeight);
+            intent.putExtra("screenWidth", screenWidth);
+            intent.putExtra("screenHeight", screenHeight);
             startActivity(intent);
             finish();
         }
 
         @Override
         public void onSessionOpenFailed(KakaoException e) {
-            if(e != null) {
-                Toast.makeText(LoginActivity.this,"카카오톡 로그인 오류: "+e.toString(),Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.activity_login);
+            if (e != null) {
+                Toast.makeText(LoginActivity.this, "카카오톡 로그인을 중지합니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = getIntent();
+
+                finish();
+                startActivity(intent);
             }
         }
     }
@@ -322,7 +341,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                 OkHttpClient client = new OkHttpClient();
 
                 RequestBody body = new FormBody.Builder()
-                        .add("email",email)
+                        .add("email", email)
                         .build();
                 Request request = new Request.Builder()
                         .url(ConstClass.check_User)
@@ -333,16 +352,16 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                 strcheckUser = response.body().string();
                 response.body().close();
                 return strcheckUser;
-            } catch(Exception e) {
-                strcheckUser = "AsyncTask Fail: "+e.toString();
+            } catch (Exception e) {
+                strcheckUser = "AsyncTask Fail: " + e.toString();
                 return strcheckUser;
             }
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("onPostExecuteIn",result);
-            if(!result.equals("no result")) {//유저 존재
+            Log.d("onPostExecuteIn", result);
+            if (!result.equals("no result")) {//유저 존재
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
@@ -352,20 +371,20 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
 
                     SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefLogin.edit();
-                    editor.putLong("profileEditDate",0);
-                    editor.putString("_id",id);
-                    editor.putString("login_method",login_method);
-                    editor.putString("name",name);
-                    editor.putString("profile_img_url",profile_img_url);
-                    editor.putString("email",email);
+                    editor.putLong("profileEditDate", 0);
+                    editor.putString("_id", id);
+                    editor.putString("login_method", login_method);
+                    editor.putString("name", name);
+                    editor.putString("profile_img_url", profile_img_url);
+                    editor.putString("email", email);
                     editor.commit();
                     binding.pbLogin.setVisibility(View.GONE);
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     LoginActivity.this.finish();
-                } catch(Exception e) {//에러
-                    Toast.makeText(getApplicationContext(),ConstClass.strLoginedErr,Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {//에러
+                    Toast.makeText(getApplicationContext(), ConstClass.strLoginedErr, Toast.LENGTH_SHORT).show();
                     binding.pbLogin.setVisibility(View.GONE);
                 }
             } else {//유저 존재하지 않음
@@ -389,10 +408,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             try {
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
-                        .add("login_method",login_method)
-                        .add("name",name)
-                        .add("profile_img_url",profile_img_url)
-                        .add("email",email)
+                        .add("login_method", login_method)
+                        .add("name", name)
+                        .add("profile_img_url", profile_img_url)
+                        .add("email", email)
                         .build();
                 Request request = new Request.Builder()
                         .url(ConstClass.add_User)
@@ -402,8 +421,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                 result = response.body().string();
                 response.body().close();
                 return result;
-            } catch(Exception e) {
-                result = "AsyncTask Fail: "+e.toString();
+            } catch (Exception e) {
+                result = "AsyncTask Fail: " + e.toString();
                 return result;
             }
         }
@@ -411,7 +430,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
         @Override
         protected void onPostExecute(String result) {
             pWindow.dismiss();
-            Toast.makeText(getApplicationContext(),ConstClass.strAddUserSuccess,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), ConstClass.strAddUserSuccess, Toast.LENGTH_SHORT).show();
             binding.pbLogin.setVisibility(View.GONE);
 
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -424,12 +443,12 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
     private void initiatePopupWindow() {
         LayoutInflater inflater = (LayoutInflater) LoginActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         try {
-            int popupWidth = (int)Math.round(screenWidth*0.88);
-            int popupHeight = (int)Math.round(screenHeight*0.406);
+            int popupWidth = (int) Math.round(screenWidth * 0.88);
+            int popupHeight = (int) Math.round(screenHeight * 0.406);
 
-            View layout = inflater.inflate(R.layout.alert_login, (ViewGroup)findViewById(R.id.popup));
+            View layout = inflater.inflate(R.layout.alert_login, (ViewGroup) findViewById(R.id.popup));
             pWindow = new PopupWindow(layout, popupWidth, popupHeight, true);
-            pWindow.showAtLocation(layout, Gravity.CENTER, 0,0);
+            pWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
             btnAlertSignUp = layout.findViewById(R.id.btnAlertSignUp);
             /*RelativeLayout.LayoutParams agreeParams = new RelativeLayout.LayoutParams((int)Math.round(popupWidth*0.33),(int)Math.round(popupHeight*0.174));
             agreeParams.setMargins((int)Math.round(popupWidth*0.109),(int)Math.round(popupHeight*0.735),0,0);
@@ -444,7 +463,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
             pWindow.setTouchable(true);
 
 
-            if(!email.equals("")) {
+            if (!email.equals("")) {
                 String[] emailArr = email.split("@");
                 etName.setText(name);
                 etEmail1.setText(emailArr[0]);
@@ -455,14 +474,14 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                 @Override
                 public void onClick(View v) {
                     name = etName.getText().toString();
-                    email = etEmail1.getText().toString()+"@"+etEmail2.getText().toString();
+                    email = etEmail1.getText().toString() + "@" + etEmail2.getText().toString();
 
-                    if(name.getBytes().length > 20) { //닉네임은 한글 10자, 영어 20자 이하여야 함
-                        Toast.makeText(getApplicationContext(),ConstClass.strTooLongNickname,Toast.LENGTH_SHORT).show();
+                    if (name.getBytes().length > 20) { //닉네임은 한글 10자, 영어 20자 이하여야 함
+                        Toast.makeText(getApplicationContext(), ConstClass.strTooLongNickname, Toast.LENGTH_SHORT).show();
                         pWindow.dismiss();
-                        if(login_method.equals("facebook")) {
+                        if (login_method.equals("facebook")) {
                             LoginManager.getInstance().logOut();
-                        } else if(login_method.equals("google")) {
+                        } else if (login_method.equals("google")) {
                             FirebaseAuth.getInstance().signOut();
                         }
                     } else {
@@ -485,7 +504,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                     SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                     pWindow.dismiss();
 
-                    if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                         FirebaseAuth.getInstance().signOut();
                         SharedPreferences.Editor editor = prefLogin.edit();
                         editor.putLong("profileEditDate", 0);
@@ -495,7 +514,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding> {
                         editor.putString("profile_img_url", "0");
                         editor.putString("email", "fail");
                         editor.apply();
-                    } else if(AccessToken.getCurrentAccessToken() != null) {
+                    } else if (AccessToken.getCurrentAccessToken() != null) {
                         SharedPreferences.Editor editor = prefLogin.edit();
                         editor.putLong("profileEditDate", 0);
                         editor.putString("_id", "0");
