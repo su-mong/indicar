@@ -8,20 +8,20 @@
            
 
     <android.support.v7.widget.CardView
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardUseCompatPadding="true" android:tag="layout/notice_item_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <RelativeLayout
-            android:layout_width="200dp"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
 
             <ImageView
                 android:id="@+id/image_main"
                 style="@style/popularImageCustomStyle"
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
                 android:tag="binding_1"            />
 
             <LinearLayout

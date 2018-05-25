@@ -23,14 +23,14 @@ public final class R {
         public static final int textview_wrapcontent_scale_maxwidth = 0x7f04019f;
     }
     public static final class id {
-        public static final int bottom = 0x7f09002a;
-        public static final int center = 0x7f09006a;
-        public static final int center_horizontal = 0x7f09006b;
-        public static final int center_vertical = 0x7f09006c;
-        public static final int left = 0x7f0900d1;
-        public static final int none = 0x7f0900ec;
-        public static final int right = 0x7f090110;
-        public static final int top = 0x7f090167;
+        public static final int bottom = 0x7f09002b;
+        public static final int center = 0x7f09006f;
+        public static final int center_horizontal = 0x7f090070;
+        public static final int center_vertical = 0x7f090071;
+        public static final int left = 0x7f0900e0;
+        public static final int none = 0x7f0900fc;
+        public static final int right = 0x7f090120;
+        public static final int top = 0x7f09017a;
     }
     public static final class styleable {
         public static final int[] ScalableLayout = { 0x7f040152, 0x7f040153 };

@@ -22,9 +22,7 @@
             android:id="@+id/imageview_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="binding_1"       
-                                              
-                                                />
+            android:tag="binding_1"       />
 
         <LinearLayout
             android:background="@color/colorPrimary"
@@ -71,7 +69,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/ic_menu"/>
+                android:src="@drawable/ic_menu"/>
 
         </LinearLayout>
 

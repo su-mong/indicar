@@ -25,9 +25,7 @@
                 android:id="@+id/imageview_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:tag="binding_1"            
-                                                       
-                                                         />
+                android:tag="binding_1"            />
 
             <TextView
                 style="@style/textViewBoardContentStyle"

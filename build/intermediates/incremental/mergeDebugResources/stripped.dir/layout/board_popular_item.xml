@@ -30,18 +30,8 @@
                 android:layout_height="match_parent"
                 android:background="@color/popularTextFrame"
                 android:orientation="vertical"
-                android:padding="20dp"
-                android:gravity="right">
-
-                <TextView
-                    android:textColor="@color/colorWhite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="5dp"
-                    android:textStyle="italic"
-                    android:textAlignment="gravity"
-                    android:text="Writer."/>
+                android:padding="15dp"
+                android:gravity="left">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -50,8 +40,8 @@
 
                     <ImageButton
                         style="@style/imageButtonCustomStyle"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center_vertical"
                         android:tag="binding_2"                    />
 
@@ -63,96 +53,51 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:textAlignment="gravity"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:tag="binding_3"        />
 
                 </LinearLayout>
 
-                <Space
+                <ImageView
+                    style="@style/imageButtonCustomStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
-
-                <android.support.v7.widget.CardView
-                    android:layout_margin="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:contentPaddingLeft="3dp"
-                    app:contentPaddingRight="3dp"
-                    app:cardBackgroundColor="#ebe1df"
-                    app:cardUseCompatPadding="false"
-                    app:cardElevation="0dp"
-                    app:cardMaxElevation="0dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardPreventCornerOverlap="false">
-
-                    <TextView
-                        android:layout_margin="3dp"
-                        android:textColor="@color/colorFont"
-                        android:id="@+id/text_board_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textSize="9sp"
-                        android:tag="binding_4"          />
-
-                </android.support.v7.widget.CardView>
-
-                <TextView
-                    android:layout_margin="5dp"
-                    android:textColor="@color/colorWhite"
-                    android:id="@+id/text_board_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:singleLine="false"
-                    android:textAlignment="gravity"
-                    android:tag="binding_5"          />
-
-                <TextView
-                    android:layout_margin="5dp"
-                    android:textColor="@color/colorWhite"
-                    android:id="@+id/text_board_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:singleLine="false"
-                    android:maxWidth="200dp"
-                    android:textAlignment="gravity"
-                    android:maxLines="2"
-                    android:tag="binding_6"            />
+                    android:layout_height="100dp"
+                    android:tag="binding_4"       
+                    android:layout_gravity="center_horizontal"/>
 
                 <LinearLayout
+                    android:layout_margin="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical">
 
                     <ImageView
+                        android:padding="1dp"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/icon_like"
-                        android:padding="3dp"/>
+                        android:src="@drawable/icon_heart"/>
 
                     <TextView
                         android:layout_margin="5dp"
                         android:id="@+id/text_like"
                         android:textColor="@color/colorWhite"
-                        android:layout_marginRight="10dp"
                         android:minWidth="20dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="gravity"
-                        android:tag="binding_7"         
+                        android:tag="binding_5"         
                         android:textSize="13sp"/>
 
                     <ImageView
+                        android:padding="1dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:src="@drawable/icon_comment"
-                        android:adjustViewBounds="true"
-                        android:padding="3dp"/>
+                        android:adjustViewBounds="true"/>
 
                     <TextView
                         android:layout_margin="5dp"
@@ -162,9 +107,70 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="13sp"
-                        android:tag="binding_8"            />
+                        android:tag="binding_6"            />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/border_pop_board_line">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_margin="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:contentPaddingLeft="3dp"
+                        app:contentPaddingRight="3dp"
+                        app:cardBackgroundColor="#eff2f1"
+                        app:cardUseCompatPadding="false"
+                        app:cardElevation="0dp"
+                        app:cardMaxElevation="0dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <TextView
+                            android:layout_margin="3dp"
+                            android:textColor="@color/colorFont"
+                            android:id="@+id/text_board_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:textSize="9sp"
+                            android:tag="binding_7"          />
+
+                    </android.support.v7.widget.CardView>
+
+                    <Space
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:gravity="bottom|right"
+                        android:textColor="@color/colorWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="12sp"
+                        android:tag="binding_8"     />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/colorWhite"
+                    android:id="@+id/text_board_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:singleLine="false"
+                    android:maxWidth="200dp"
+                    android:textAlignment="center"
+                    android:maxLines="2"
+                    android:tag="binding_9"            />
+
             </LinearLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>

@@ -1,27 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/merged.dir/values-mn/values-mn.xml",
+            "outputFile": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-mn\\values-mn.xml",
             "map": [
                 {
-                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/f81288cfee4de04097d34444c9ff75cc/res/values-mn/values-mn.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "100",
-                        "endOffsets": "151"
-                    },
-                    "to": {
-                        "startLines": "38",
-                        "startColumns": "4",
-                        "startOffsets": "4590",
-                        "endColumns": "100",
-                        "endOffsets": "4686"
-                    }
-                },
-                {
-                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-base-11.6.0.aar/3454960dee5a801facd23d5e0b6a7c4d/res/values-mn/values.xml",
+                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-11.6.0.aar\\0d1dcdeea085733e4bd0fe478904e042\\res\\values-mn\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -38,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.6.0.aar/a7f379b57af101ee1c4ca8ee5c6bc6fe/res/values-mn/values.xml",
+                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\firebase-messaging-11.6.0.aar\\d4d3493e8d1245d51fac199309c2d729\\res\\values-mn\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "243",
+                        "endColumns": "99",
+                        "endOffsets": "342"
+                    },
+                    "to": {
+                        "startLines": "36",
+                        "startColumns": "4",
+                        "startOffsets": "4405",
+                        "endColumns": "103",
+                        "endOffsets": "4504"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-11.6.0.aar\\5dcfd5102a2fb07f7e6ef0457bfdd2f9\\res\\values-mn\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -55,7 +55,24 @@
                     }
                 },
                 {
-                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/8774baeeb0e9f97589a6f3ce0f4fb97e/res/values-mn/values-mn.xml",
+                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-27.0.2.aar\\d7440751449049a09db02a6b33194115\\res\\values-mn\\values-mn.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "38",
+                        "startColumns": "4",
+                        "startOffsets": "4590",
+                        "endColumns": "100",
+                        "endOffsets": "4686"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.0.2.aar\\2c7d6ed007e1bc313ae0d27447105c9e\\res\\values-mn\\values-mn.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -69,23 +86,6 @@
                         "startOffsets": "105,218,318,431,518,624,736,818,900,982,1091,1195,1292,1400,1501,1604,1763,4509",
                         "endColumns": "112,99,112,86,105,111,81,81,81,108,103,96,107,100,102,158,96,80",
                         "endOffsets": "213,313,426,513,619,731,813,895,977,1086,1190,1287,1395,1496,1599,1758,1855,4585"
-                    }
-                },
-                {
-                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/firebase-messaging-11.6.0.aar/cca519db6e027928f22b238f5f38e4d7/res/values-mn/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "243",
-                        "endColumns": "99",
-                        "endOffsets": "342"
-                    },
-                    "to": {
-                        "startLines": "36",
-                        "startColumns": "4",
-                        "startOffsets": "4405",
-                        "endColumns": "103",
-                        "endOffsets": "4504"
                     }
                 }
             ]

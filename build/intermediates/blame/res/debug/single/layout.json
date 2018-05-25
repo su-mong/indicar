@@ -1,102 +1,110 @@
 [
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/community_fragment.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/community_fragment.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\profile_term.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\profile_term.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_write_intro_layout.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_write_intro_layout.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_write_item.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_write_item.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_trace.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/activity_trace.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_detail_content_layout.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_detail_content_layout.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_comment_item.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_comment_item.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_detail_header.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_detail_header.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/car_filter_activity.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/car_filter_activity.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\tunning_fragment.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\tunning_fragment.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/tunning_fragment.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/tunning_fragment.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_account.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\fragment_account.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/fragment_account.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/fragment_account.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_write_filter_fragment.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_write_filter_fragment.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_write_item.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_write_item.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_trace.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\activity_trace.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/action_bar_layout.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/action_bar_layout.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\dialog_layout.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\dialog_layout.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_detail_item.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_detail_item.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\car_filter_activity.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\car_filter_activity.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/main_activity.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/main_activity.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_popular_item.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_popular_item.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/splash_activity.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/splash_activity.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_write_edit_activity.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_write_edit_activity.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_tuning2.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/activity_tuning2.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\splash_activity.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\splash_activity.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_login.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/activity_login.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\community_fragment.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\community_fragment.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_popular_item.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_popular_item.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_list_fragment.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_list_fragment.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_detail_activity.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_detail_activity.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_login.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\activity_login.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/notice_item.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/notice_item.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\action_bar_layout.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\action_bar_layout.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/activity_profile.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/activity_profile.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\profile_suggest.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\profile_suggest.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_write_activity.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_write_activity.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_profile.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\activity_profile.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/dialog_layout.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/dialog_layout.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_detail_item.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_detail_item.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_write_detail_layout.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_write_detail_layout.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_tuning2.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\activity_tuning2.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_detail_header.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_detail_header.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_comment_item.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_comment_item.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_detail_content_layout.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_detail_content_layout.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_detail_activity.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_detail_activity.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_list_fragment.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_list_fragment.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_write_item_fragment.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_write_item_fragment.xml"
     },
     {
-        "merged": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/stripped.dir/layout/board_all_item.xml",
-        "source": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/src/main/res/layout/board_all_item.xml"
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\notice_item.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\notice_item.xml"
+    },
+    {
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\main_activity.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\main_activity.xml"
+    },
+    {
+        "merged": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\board_all_item.xml",
+        "source": "D:\\github\\indicar\\src\\main\\res\\layout\\board_all_item.xml"
     }
 ]

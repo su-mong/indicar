@@ -1,63 +1,115 @@
 
                                                         
+
     
-                                          
+
+                                           
+
                  
                             
+                                                                                    
+
+                 
+                           
                                                                                    
            
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorPrimaryBackground" android:tag="layout/board_list_fragment_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:background="@color/colorPrimaryBackground"
+        android:orientation="vertical" android:tag="layout/board_list_fragment_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <!--app:onRefreshListener="@{viewModel::onRefresh}"-->
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/refresh_layout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:tag="binding_1"                    
-                                                                                            >
+            android:orientation="vertical">
 
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/scrollview"
+            <LinearLayout
+                android:id="@+id/search_bar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="45dp"
+                android:background="@color/colorPrimary"
+                android:elevation="1dp"
+                android:orientation="horizontal"
+                android:padding="2dp"
+                android:visibility="gone"
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_board_container"
+                >
+
+
+                <EditText
+                    android:id="@+id/edit_text_search"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="none"
-                    android:background="@color/colorPrimaryBackground"
-                    android:tag="binding_2"   />
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="검색어를 입력하세요."
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:textSize="13sp" />
 
-            </android.support.v4.widget.NestedScrollView>
+                <ImageButton
+                    android:id="@+id/button_search"
+                    style="@style/imageButtonCustomStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:padding="10dp"
+                    android:src="@drawable/btn_search" />
+                <!--android:onTextChanged="@{(t, s, b, c) -> fragment.setSearchText(t)}"-->
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+            </LinearLayout>
+
+            <!--app:onRefreshListener="@{viewModel::onRefresh}"-->
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/refresh_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="binding_1"                                                         
+                                                           >
+
+                <android.support.v4.widget.NestedScrollView
+                    android:id="@+id/scrollview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_board_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimaryBackground"
+                        android:scrollbars="none"
+                        android:tag="binding_2"    />
+
+                </android.support.v4.widget.NestedScrollView>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
 
         <ImageButton
-            style="@style/imageButtonCustomStyle"
             android:id="@+id/button_fast_up"
-            android:layout_margin="10dp"
+            style="@style/imageButtonCustomStyle"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
             android:src="@drawable/btn_hide_up"
-            android:tag="binding_3"                                                                                           />
+            android:tag="binding_3"                                                                                            />
 
         <ImageButton
-            style="@style/imageButtonCustomStyle"
             android:id="@+id/button_board_write"
-            android:layout_margin="26dp"
+            style="@style/imageButtonCustomStyle"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="26dp"
             android:src="@drawable/btn_write_board"
-            android:tag="binding_4"                                                                                  />
+            android:tag="binding_4"                                                                                   />
 
     </RelativeLayout>
          

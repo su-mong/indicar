@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml:2:1-6:12
-INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml:2:1-6:12
-INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml:2:1-6:12
+ADDED from D:\github\indicar\crashlytics\AndroidManifest.xml:2:1-6:12
+INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml:2:1-6:12
+INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml:2:1-6:12
 	package
-		ADDED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml:2:70-115
-		INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml
-		INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml
+		ADDED from D:\github\indicar\crashlytics\AndroidManifest.xml:2:70-115
+		INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml
+		INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml:2:11-69
+		ADDED from D:\github\indicar\crashlytics\AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml:3:3-4:17
+ADDED from D:\github\indicar\crashlytics\AndroidManifest.xml:3:3-4:17
 uses-permission#android.permission.INTERNET
-ADDED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml:5:3-65
+ADDED from D:\github\indicar\crashlytics\AndroidManifest.xml:5:3-65
 	android:name
-		ADDED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml:5:20-62
+		ADDED from D:\github\indicar\crashlytics\AndroidManifest.xml:5:20-62
 uses-sdk
-INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml
-INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml
+INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml
+INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml
-		ADDED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml
-		INJECTED from /Users/candykick/Documents/Incar Tuning#3/indicar_unity/crashlytics/AndroidManifest.xml
+		INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml
+		ADDED from D:\github\indicar\crashlytics\AndroidManifest.xml
+		INJECTED from D:\github\indicar\crashlytics\AndroidManifest.xml

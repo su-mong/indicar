@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/incremental/mergeDebugResources/merged.dir/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-watch-v20\\values-watch-v20.xml",
             "map": [
                 {
-                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-auth-11.6.0.aar/713c0cb2204e1ded8ef9945046bac3fc/res/values-watch-v20/values.xml",
+                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-auth-11.6.0.aar\\08162fbd4798cdbce1fc0ec9893ff8bd\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",

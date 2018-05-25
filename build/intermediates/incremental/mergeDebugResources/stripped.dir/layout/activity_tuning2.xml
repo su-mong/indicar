@@ -48,23 +48,26 @@
                 app:scale_top="190"
                 app:scale_width="908"
                 app:scale_height="209"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <ImageView
                 android:id="@+id/btnT_left"
-                android:background="@drawable/btn_left"
-                app:scale_left="192"
+                android:layout_width="76dp"
+                android:layout_height="114dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/btn_left"
+                app:scale_height="209"
+                app:scale_left="142"
                 app:scale_top="190"
-                app:scale_width="50"
-                app:scale_height="209"/>
-            <Button
+                app:scale_width="200" />
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnT_right"
-                android:background="@drawable/btn_right"
-                app:scale_left="1198"
+                android:layout_gravity="left"
+                android:src="@drawable/btn_right"
+                app:scale_left="1098"
                 app:scale_top="190"
-                app:scale_width="50"
+                app:scale_width="200"
                 app:scale_height="209"/>
 
             <!--<EditText
@@ -120,6 +123,8 @@
                     android:background="@drawable/et_tuningsearch"
                     android:hint="브랜드 및 차량을 검색하세요"
                     android:gravity="center"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
                     app:scale_left="78"
                     app:scale_top="0"
                     app:scale_width="1175"

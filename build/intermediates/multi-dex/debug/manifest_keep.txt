@@ -1,3 +1,3 @@
-# Referenced at /Users/candykick/Documents/Incar Tuning#3/indicar_unity/build/intermediates/manifests/full/debug/AndroidManifest.xml:49
+# Referenced at D:\github\indicar\build\intermediates\manifests\full\debug\AndroidManifest.xml:49
 -keep class com.iindicar.indicar.utils.App { <init>(...); }
 

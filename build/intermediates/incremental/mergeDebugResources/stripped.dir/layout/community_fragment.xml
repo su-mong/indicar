@@ -55,56 +55,10 @@
                 android:src="@drawable/btn_car_filter"
                 android:visibility="gone"/>
 
-            <ImageButton
-                style="@style/imageButtonCustomStyle"
-                android:id="@+id/button_search_toggle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/btn_search"
-                android:tag="binding_1"                               />
+
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/search_bar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:elevation="1dp"
-            android:orientation="horizontal"
-            android:background="@color/colorPrimary"
-            android:tag="binding_2"                                                      >
-
-            <ImageButton
-                style="@style/imageButtonCustomStyle"
-                android:id="@+id/button_search"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/btn_back"
-                android:tag="binding_3"                               
-                                                                                             />
-
-            <EditText
-                android:id="@+id/text_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="검색어를 입력하세요."
-                android:textSize="13sp"
-                android:inputType="text"
-                android:imeOptions="actionSearch"
-                android:background="@android:color/transparent"
-                android:tag="binding_4"              
-                                                                                             />
-            <!--android:onTextChanged="@{(t, s, b, c) -> fragment.setSearchText(t)}"-->
-
-        </LinearLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_board"
@@ -113,7 +67,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@id/layout_search_box_container"
-            android:tag="binding_5"   
+            android:tag="binding_1"   
                                            >
 
         </android.support.v4.view.ViewPager>
