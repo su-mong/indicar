@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1" />
+        android:layout_weight="2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +25,9 @@
             android:padding="20dp">
 
             <RelativeLayout
-                android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="0px"
+                android:layout_marginBottom="15dp"
                 android:layout_weight="2"
                 android:orientation="horizontal">
 
@@ -48,8 +48,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_gravity="right"
                     android:adjustViewBounds="true"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="15dp"
                     android:src="@drawable/profile_suggest_btn_x" />
 
             </RelativeLayout>
@@ -62,20 +60,21 @@
 
                 <LinearLayout
                     android:layout_width="0px"
-                    android:layout_weight="1"
-                    android:paddingRight="5dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingRight="5dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="제휴요청 사유" />
+                        android:text="업체 분류"
+                        android:textSize="12dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0px"
-                        android:layout_marginVertical="10dp"
+                        android:layout_marginVertical="5dp"
                         android:layout_weight="3"
                         android:background="#aaa">
 
@@ -83,35 +82,34 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="1dp"
-                            android:background="#fff"
-                            android:padding="10dp">
+                            android:background="#fff">
 
                             <EditText
                                 android:id="@+id/edit_category"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@android:color/transparent"
-                                android:gravity="top" />
+                                android:background="@android:color/transparent" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0px"
-                    android:layout_weight="1"
-                    android:paddingLeft="5dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingLeft="5dp">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="제휴요청 사유" />
+                        android:text="업체,회사,기관명칭"
+                        android:textSize="12dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0px"
-                        android:layout_marginVertical="10dp"
+                        android:layout_marginVertical="5dp"
                         android:layout_weight="3"
                         android:background="#aaa">
 
@@ -119,16 +117,47 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="1dp"
-                            android:background="#fff"
-                            android:padding="10dp">
+                            android:background="#fff">
 
                             <EditText
                                 android:id="@+id/edit_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@android:color/transparent"
-                                android:gravity="top" />
+                                android:background="@android:color/transparent" />
                         </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1.7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="연락처 혹은 이메일 주소"
+                    android:textSize="12dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="5dp"
+                    android:background="#aaa">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="1dp"
+                        android:background="#fff">
+
+                        <EditText
+                            android:id="@+id/edit_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/transparent" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -136,35 +165,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="연락처 혹은 이메일 주소" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_marginVertical="10dp"
-                android:layout_weight="0.7"
-                android:background="#aaa">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="1dp"
-                    android:background="#fff"
-                    android:padding="10dp">
-
-                    <EditText
-                        android:id="@+id/edit_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:gravity="top" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="제휴요청 사유" />
+                android:text="제휴요청 사유"
+                android:textSize="12dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -206,5 +208,5 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1" />
+        android:layout_weight="2" />
 </LinearLayout>

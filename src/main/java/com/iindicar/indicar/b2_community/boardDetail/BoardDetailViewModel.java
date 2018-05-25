@@ -217,9 +217,6 @@ public class BoardDetailViewModel {
                 int size = list.size();
 
                 // end of board list
-                    Log.d("ddf bbs_id",size+ ""+boardHeader.getBoardType());
-                    Log.d("ddf ntt_id",size+ ""+boardHeader.getBoardId());
-                    Log.d("ddf getComment",size+ ""+PAGE_UNIT_COUNT);
                 if (size != PAGE_UNIT_COUNT) {
                     isListEnd = true;
                 }
@@ -264,8 +261,6 @@ public class BoardDetailViewModel {
             userDao.getData(params, new BaseDao.LoadDataCallBack() {
                 @Override
                 public void onDataLoaded(Object data) {
-                    Log.d("ddf comment_user","");
-
                     UserVO vo = (UserVO) data;
                     navigator.onCommentProfileAttached(comment, vo);
                 }

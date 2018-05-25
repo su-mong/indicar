@@ -33,11 +33,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:paddingLeft="17dp"
-                    android:paddingBottom="17dp"
                     android:id="@+id/btn_profile_suggest_x"
                     android:layout_gravity="right"
-                    android:adjustViewBounds="true"
+                    android:adjustViewBounds="false"
                     android:src="@drawable/profile_suggest_btn_x" />
 
             </RelativeLayout>

@@ -146,7 +146,6 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         binding.btnAAlliance.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Teleprinter keyboard = new Teleprinter(getActivity());
                 //팝업창을 보여주는 함수
                 ImageView btnSend;
                 ImageView btnAlertCancel;
@@ -159,17 +158,14 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                 final AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
                 dialog.setView(popupDialogView);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
                 btnSend = (ImageView) popupDialogView.findViewById(R.id.btn_send);
                 btnAlertCancel = (ImageView) popupDialogView.findViewById(R.id.btn_x);
                 editCategory = (EditText) popupDialogView.findViewById(R.id.edit_category);
                 editName = (EditText) popupDialogView.findViewById(R.id.edit_name);
                 editEmail = (EditText) popupDialogView.findViewById(R.id.edit_email);
                 editReason = (EditText) popupDialogView.findViewById(R.id.edit_reason);
-                keyboard.showKeyboard(editReason);
-                keyboard.showKeyboard(editCategory);
-                keyboard.showKeyboard(editName);
-                keyboard.showKeyboard(editEmail);
+                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 btnSend.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
