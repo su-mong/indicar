@@ -1,5 +1,6 @@
 package com.iindicar.indicar.b2_community;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -33,6 +33,7 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
     Cursor cursor3;
     ListViewAdapter firstAdapter;
     Handler mHandler = null;
+    private ProgressDialog dialog;
 
     @Override
     public void onBackPressed() {
@@ -43,7 +44,9 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("리스트 생성중...");
+//        dialog.show();
         carDB = new CarDB(getApplicationContext(), "carDB", null, 1);
         db = carDB.getReadableDatabase();
 
@@ -77,6 +80,8 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
             }
         });
         binding.listView.setAdapter(firstAdapter);
+        binding.listView.setEnabled(false);
+
 
 
         String sql1 = "SELECT specName,parentName FROM carDB WHERE level=1";
@@ -109,6 +114,7 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
                                         @Override
                                         public void run() {
                                             firstAdapter.addItem(finalTmp1, finalTmp2, finalTmp3);
+                                            firstAdapter.notifyDataSetChanged();
                                         }
                                     });
                                 }
@@ -121,19 +127,28 @@ public class CarFilterActivity extends BaseActivity<CarFilterActivityBinding> {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        binding.searchText.setEnabled(true);
                         binding.searchText.setText("");
+                        binding.searchText.setEnabled(true);
+                        binding.listView.setEnabled(true);
                         binding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                ListViewItem carName = (ListViewItem) parent.getAdapter().getItem(position);
-                                String tmp= carName.get3();
-                                Intent data = new Intent();
-                                data.putExtra("car_name",tmp);
-                                setResult(RESULT_OK,data);
-                                finish();
+                                try {
+                                    ListViewItem carName = (ListViewItem) parent.getAdapter().getItem(position);
+                                    String tmp = carName.get3();
+                                    Intent data = new Intent();
+                                    data.putExtra("car_name", tmp);
+                                    setResult(RESULT_OK, data);
+                                    finish();
+                                } catch (Exception e) {
+
+                                }
+
                             }
                         });
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                     }
                 });
 

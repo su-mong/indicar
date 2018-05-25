@@ -15,7 +15,7 @@ import com.iindicar.indicar.R;
 import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter implements Filterable {
-
+    public boolean isLoaded = false;
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>();
@@ -26,6 +26,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
     public ListViewAdapter() {
 
     }
+
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
@@ -54,9 +55,9 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         ListViewItem listViewItem = filteredItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        String tv1 = listViewItem.get1().replace("[]","");
-        String tv2 = listViewItem.get2().replace("[]","");
-        String tv3 = listViewItem.get3().replace("[]","");
+        String tv1 = listViewItem.get1().replace("[]", "");
+        String tv2 = listViewItem.get2().replace("[]", "");
+        String tv3 = listViewItem.get3().replace("[]", "");
 
         titleTextView1.setText(tv1);
         titleTextView2.setText(tv2);

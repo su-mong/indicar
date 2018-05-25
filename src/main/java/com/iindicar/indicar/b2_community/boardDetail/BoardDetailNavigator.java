@@ -21,6 +21,8 @@ public interface BoardDetailNavigator {
 
     void onDeleteBoard();
 
+    void showPageEndMessage();
+
     void onHeaderAdded(BoardDetailVO header);
 
     void onItemsAdded(List<BoardFileVO> items);

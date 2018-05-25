@@ -42,8 +42,12 @@ public class BoardDetailViewModel {
     public String loginId;
     public String loginName;
     private int answerNo;
+    private Boolean isListEnd = false;
+
+    private int currentPage = 1;
 
     private boolean isCommentUpdating = false;
+    private final int PAGE_UNIT_COUNT = 15;
 
     public final ObservableBoolean isKeyboardOpen = new ObservableBoolean(false);
     public final ObservableBoolean isPageUpScrolling = new ObservableBoolean(false);
@@ -192,19 +196,37 @@ public class BoardDetailViewModel {
         }
     }
 
-    private void getCommentList() {
+    public void getCommentList() {
+        // 마지막 페이지
+        if (isListEnd) {
+            isCommentDataLoading.set(false);
+            navigator.showPageEndMessage();
+            return;
+        }
         isCommentDataLoading.set(true);
 
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardHeader.getBoardType());
         params.put("ntt_id", boardHeader.getBoardId());
+        params.put("pageIndex", String.valueOf(currentPage));
+        params.put("pageUnit", PAGE_UNIT_COUNT);
 
         commentDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
             @Override
             public void onDataListLoaded(List list) {
+                int size = list.size();
+
+                // end of board list
+                    Log.d("ddf bbs_id",size+ ""+boardHeader.getBoardType());
+                    Log.d("ddf ntt_id",size+ ""+boardHeader.getBoardId());
+                    Log.d("ddf getComment",size+ ""+PAGE_UNIT_COUNT);
+                if (size != PAGE_UNIT_COUNT) {
+                    isListEnd = true;
+                }
+                currentPage++;
+
                 navigator.onCommentUpdated(list);
                 isCommentDataLoading.set(false);
-Log.d("ddf comment","");
                 getUserProfile(list);
             }
 
@@ -216,6 +238,9 @@ Log.d("ddf comment","");
         });
     }
 
+
+
+
     private void getUserProfile(List list) {
 
         if (list == null) {
@@ -225,7 +250,11 @@ Log.d("ddf comment","");
         for (int i = 0; i < list.size(); i++) {
             final BoardCommentVO comment = (BoardCommentVO) list.get(i);
 
-            if (comment.getUserKey() == null) {
+            if (comment==null) {
+                isListEnd=true;
+                continue;
+            }else{
+                if(comment.getUserKey() == null)
                 continue;
             }
 

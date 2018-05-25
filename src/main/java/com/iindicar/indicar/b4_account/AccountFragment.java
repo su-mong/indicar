@@ -11,6 +11,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,9 +30,14 @@ import com.iindicar.indicar.R;
 import com.iindicar.indicar.a1_main.LoginActivity;
 import com.iindicar.indicar.databinding.FragmentAccountBinding;
 import com.iindicar.indicar.utils.ConstClass;
+import com.iindicar.indicar.utils.HttpClient;
 import com.kakao.auth.Session;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import cz.msebera.android.httpclient.Header;
 
 public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
     public AccountFragment() {
@@ -140,7 +146,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         binding.btnAAlliance.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Teleprinter keyboard=new Teleprinter(getActivity());
+                Teleprinter keyboard = new Teleprinter(getActivity());
                 //팝업창을 보여주는 함수
                 ImageView btnSend;
                 ImageView btnAlertCancel;
@@ -157,8 +163,8 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                 btnSend = (ImageView) popupDialogView.findViewById(R.id.btn_send);
                 btnAlertCancel = (ImageView) popupDialogView.findViewById(R.id.btn_x);
                 editCategory = (EditText) popupDialogView.findViewById(R.id.edit_category);
-                editName= (EditText) popupDialogView.findViewById(R.id.edit_name);
-                editEmail= (EditText) popupDialogView.findViewById(R.id.edit_email);
+                editName = (EditText) popupDialogView.findViewById(R.id.edit_name);
+                editEmail = (EditText) popupDialogView.findViewById(R.id.edit_email);
                 editReason = (EditText) popupDialogView.findViewById(R.id.edit_reason);
                 keyboard.showKeyboard(editReason);
                 keyboard.showKeyboard(editCategory);
@@ -168,13 +174,48 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                     @Override
                     public void onClick(View v) {
                         String textReason = editReason.getText().toString();
-                        String textCategory= editCategory.getText().toString();
-                        String textName= editName.getText().toString();
-                        String textEmail= editEmail.getText().toString();
-//                        viewModel.sendReport(textReason);
+                        String textCategory = editCategory.getText().toString();
+                        String textName = editName.getText().toString();
+                        String textEmail = editEmail.getText().toString();
+                        RequestParams params = new RequestParams();
+                        params.put("alliance_type", textCategory);
+                        params.put("alliance_name", textName);
+                        params.put("alliance_email", textEmail);
+                        params.put("alliance_cn", textReason);
+
+                        final String URL = "/insertAlliance";
+
+                        HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                String response;
+
+                                try {
+                                    response = new String(responseBody);
+                                    Toast.makeText(context, "제휴요청이 성공적으로 처리되었습니다.", Toast.LENGTH_SHORT).show();
+                                    return;
+
+                                } catch (Exception e) {
+
+                                    Log.e("Error", "insertData() with URL: " + URL + " " + R.string.data_not_available);
+                                    e.printStackTrace();
+                                    return;
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                Log.e("Error", "insertData() with URL: " + URL + " " + R.string.server_not_available);
+                                error.printStackTrace();
+                            }
+                        });
                         dialog.dismiss();
                     }
                 });
+
                 btnAlertCancel.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {

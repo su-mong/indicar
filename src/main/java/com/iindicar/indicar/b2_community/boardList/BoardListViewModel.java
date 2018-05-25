@@ -3,7 +3,6 @@ package com.iindicar.indicar.b2_community.boardList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardDao;
@@ -65,7 +64,7 @@ public class BoardListViewModel {
         getBoardList();
     }
 
-    public void onSearch(RecyclerView recyclerView,String searchWord) {
+    public void onSearch(RecyclerView recyclerView, String searchWord) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter != null && adapter instanceof BoardListAdapter) {
             ((BoardListAdapter) adapter).clearItems();
@@ -138,9 +137,10 @@ public class BoardListViewModel {
         RequestParams params = new RequestParams();
         /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
         params.put("bbs_id", "all");
-            params.put("searchCnd", "search");
-            params.put("searchWord",searchWord);
-
+        params.put("searchCnd", "search");
+        params.put("searchWord", searchWord);
+        params.put("pageIndex", String.valueOf(currentPage));
+        params.put("pageUnit", PAGE_UNIT_COUNT);
         boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
             @Override
             public void onDataListLoaded(List list) {
