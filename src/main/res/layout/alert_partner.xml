@@ -84,11 +84,11 @@
                             android:layout_margin="1dp"
                             android:background="#fff">
 
-                            <EditText
-                                android:id="@+id/edit_category"
+                            <Spinner
+                                android:id="@+id/spinner1"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@android:color/transparent" />
+                                android:layout_height="wrap_content"
+                                android:spinnerMode="dropdown"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

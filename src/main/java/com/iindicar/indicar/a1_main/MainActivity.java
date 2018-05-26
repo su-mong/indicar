@@ -66,6 +66,8 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
             LoginActivity.LoginAct.finish();
         if (KakaoSignupActivity.kakaoAct != null)
             KakaoSignupActivity.kakaoAct.finish();
+
+        Log.d("ddf","main");
         //키해쉬 받아오기
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.iindicar.indicar", PackageManager.GET_SIGNATURES);

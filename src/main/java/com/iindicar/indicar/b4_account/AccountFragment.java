@@ -15,9 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +43,7 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.Header;
 
 public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
+    String partnerCategory;
     public AccountFragment() {
         // Required empty public constructor
     }
@@ -161,7 +165,23 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
 
                 btnSend = (ImageView) popupDialogView.findViewById(R.id.btn_send);
                 btnAlertCancel = (ImageView) popupDialogView.findViewById(R.id.btn_x);
-                editCategory = (EditText) popupDialogView.findViewById(R.id.edit_category);
+                String[] items = new String[]{"공임업체", "제조업체", "기타"};
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
+//set the spinners adapter to the previously created one.
+                Spinner dropdown =(Spinner)popupDialogView.findViewById(R.id.spinner1);
+                dropdown.setAdapter(adapter);
+                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                {
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                    {
+                       partnerCategory=parent.getItemAtPosition(position).toString();
+                    } // to close the onItemSelected
+                    public void onNothingSelected(AdapterView<?> parent)
+                    {
+
+                    }
+                });
                 editName = (EditText) popupDialogView.findViewById(R.id.edit_name);
                 editEmail = (EditText) popupDialogView.findViewById(R.id.edit_email);
                 editReason = (EditText) popupDialogView.findViewById(R.id.edit_reason);
@@ -170,14 +190,14 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                     @Override
                     public void onClick(View v) {
                         String textReason = editReason.getText().toString();
-                        String textCategory = editCategory.getText().toString();
                         String textName = editName.getText().toString();
                         String textEmail = editEmail.getText().toString();
                         RequestParams params = new RequestParams();
-                        params.put("alliance_type", textCategory);
                         params.put("alliance_name", textName);
                         params.put("alliance_email", textEmail);
                         params.put("alliance_cn", textReason);
+                        params.put("alliance_type", partnerCategory);
+
 
                         final String URL = "/insertAlliance";
 
@@ -241,6 +261,10 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                 Toast.makeText(getActivity(), ConstClass.strNotPrepare, Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+
     }
 
     @Override

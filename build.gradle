@@ -89,7 +89,14 @@ android {
 		testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 		multiDexEnabled true
 	}
-
+	splits {
+		abi {
+			enable true
+			reset()
+			include 'x86'
+			universalApk true //generate an additional APK that contains all the ABIs
+		}
+	}
 	lintOptions {
 		abortOnError false
 	}
