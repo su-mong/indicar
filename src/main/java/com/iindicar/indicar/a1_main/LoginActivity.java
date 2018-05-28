@@ -503,27 +503,39 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 public void onClick(View v) {
                     SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                     pWindow.dismiss();
+                    SharedPreferences.Editor editor = prefLogin.edit();
+                    editor.putLong("profileEditDate", 0);
+                    editor.putString("_id", "0");
+                    editor.putString("login_method", "0");
+                    editor.putString("name", "0");
+                    editor.putString("profile_img_url", "0");
+                    editor.putString("email", "fail");
+                    editor.commit();
+//                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+//                        FirebaseAuth.getInstance().signOut();
+//                        SharedPreferences.Editor editor = prefLogin.edit();
+//                        editor.putLong("profileEditDate", 0);
+//                        editor.putString("_id", "0");
+//                        editor.putString("login_method", "0");
+//                        editor.putString("name", "0");
+//                        editor.putString("profile_img_url", "0");
+//                        editor.putString("email", "fail");
+//                        editor.apply();
+//                    } else if (AccessToken.getCurrentAccessToken() != null) {
+//                        SharedPreferences.Editor editor = prefLogin.edit();
+//                        editor.putLong("profileEditDate", 0);
+//                        editor.putString("_id", "0");
+//                        editor.putString("login_method", "0");
+//                        editor.putString("name", "0");
+//                        editor.putString("profile_img_url", "0");
+//                        editor.putString("email", "fail");
+//                        editor.apply();
+//                    }
+                    Intent intent = getIntent();
 
-                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                        FirebaseAuth.getInstance().signOut();
-                        SharedPreferences.Editor editor = prefLogin.edit();
-                        editor.putLong("profileEditDate", 0);
-                        editor.putString("_id", "0");
-                        editor.putString("login_method", "0");
-                        editor.putString("name", "0");
-                        editor.putString("profile_img_url", "0");
-                        editor.putString("email", "fail");
-                        editor.apply();
-                    } else if (AccessToken.getCurrentAccessToken() != null) {
-                        SharedPreferences.Editor editor = prefLogin.edit();
-                        editor.putLong("profileEditDate", 0);
-                        editor.putString("_id", "0");
-                        editor.putString("login_method", "0");
-                        editor.putString("name", "0");
-                        editor.putString("profile_img_url", "0");
-                        editor.putString("email", "fail");
-                        editor.apply();
-                    }
+                    finish();
+                    startActivity(intent);
+
                 }
             });
         } catch (Exception e) {

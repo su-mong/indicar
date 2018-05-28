@@ -31,6 +31,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.a1_main.LoginActivity;
+import com.iindicar.indicar.a1_main.MainActivity;
+import com.iindicar.indicar.a1_main.Tutorial;
 import com.iindicar.indicar.databinding.FragmentAccountBinding;
 import com.iindicar.indicar.utils.ConstClass;
 import com.iindicar.indicar.utils.HttpClient;
@@ -258,7 +260,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         binding.btnAHowtouse.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), ConstClass.strNotPrepare, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(context,Tutorial.class));
             }
         });
 

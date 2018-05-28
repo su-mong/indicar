@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 
 import com.commit451.teleprinter.Teleprinter;
@@ -22,6 +23,8 @@ import com.iindicar.indicar.utils.DialogUtil;
 import com.iindicar.indicar.utils.PickPhotoHelper;
 
 import java.util.List;
+
+import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_UPDATE;
 
 /**
  * Created by yeseul on 2018-05-06.
@@ -41,7 +44,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     private final String FRAG_WRITE_ITEM = "FRAG_WRITE_ITEM";
 
     private BoardWriteEditViewModel viewModel;
-
+    private boolean isUpdate = false;
     private String currFrag;
 
     private PickPhotoHelper pickPhotoHelper;
@@ -60,7 +63,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
     @Override
     public void onBackPressed() {
-        if (currFrag == FRAG_WRITE_ITEM)
+        if (currFrag == FRAG_WRITE_ITEM&&!isUpdate)
             changeToWriteFilter();
         else
             onCancelWrite();
@@ -115,7 +118,9 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
             changeToWriteFilter();
 
+
         } else { // update board
+            isUpdate = true;
             WriteBoardVO vo = bundle.getParcelable(EXTRA_BOARD_DETAIL);
             List<WriteFileVO> items = bundle.getParcelableArrayList(EXTRA_BOARD_FILE_LIST);
             viewModel.start(vo, items);
@@ -245,7 +250,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
                 changeToWriteItem();
                 break;
             case R.id.button_cancel:
-                if (currFrag == FRAG_WRITE_ITEM)
+                if (currFrag == FRAG_WRITE_ITEM&&!isUpdate)
                     changeToWriteFilter();
                 else
                     onCancelWrite();
