@@ -17,9 +17,6 @@ import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.b2_community.boardList.BoardListAdapter;
-import com.iindicar.indicar.b2_community.boardList.BoardListNavigator;
-import com.iindicar.indicar.b2_community.boardList.BoardListPagerAdapter;
-import com.iindicar.indicar.b2_community.boardList.BoardListViewModel;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.data.vo.UserVO;
@@ -34,11 +31,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements BoardListNavigator {
+public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements TraceNavigator {
     public final ObservableField<String> textSearch = new ObservableField<>();
     public final ObservableBoolean isSearchBarOpen = new ObservableBoolean(false);
     String id;
-    private BoardListViewModel viewModel;
+    private TraceViewModel viewModel;
     private BoardListAdapter adapter;
 
     @Override
@@ -46,7 +43,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         super.onCreate(savedInstanceState);
 
         binding.setActivity(this);
-        this.viewModel = new BoardListViewModel();
+        this.viewModel = new TraceViewModel();
         viewModel.boardTab.set(1);
         viewModel.setNavigator(this);
         //viewPager 어댑터 설정
@@ -130,7 +127,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         binding.ivAWritingOn.setImageResource(0);
         binding.ivACommentOn.setImageResource(0);
 //        binding.viewPagerTrace.setCurrentItem(2);
-        viewModel.getBoardListTrace(id,"like");
+        viewModel.getBoardList();
         /*try {
 
         } catch (Exception e) {
@@ -165,25 +162,35 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
 
     }
 
+
+
     @Override
     public void onImageAttached(BoardDetailVO board, BoardFileVO vo) {
-
+        int position = adapter.getItemList().indexOf(board);
+        adapter.setBoardFile(position, vo);
     }
 
     @Override
     public void onSearch(String searchWord) {
-
+        viewModel.onSearch(binding.recyclerViewBoardContainer, searchWord);
     }
+
 
     @Override
     public void onProfileAttached(BoardDetailVO board, UserVO vo) {
-
+        int position = adapter.getItemList().indexOf(board);
+        adapter.setUserProfile(position, vo.getProfileImageUrl());
     }
 
     @Override
     public void onListAdded(List<BoardDetailVO> list) {
+        Log.d("dff trace",list.get(0).toString());
+        Log.d("dff trace",list.get(1).toString());
         adapter.addItems(list);
+        adapter.notifyDataSetChanged();
     }
+
+
 
     private class userLikeAsync extends AsyncTask<String, Void, String> {
         String json = new String();

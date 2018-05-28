@@ -7,7 +7,9 @@
             name="activity"
             type="com.iindicar.indicar.b4_account.TraceActivity"/>
 
-
+        <variable
+            name="viewModel"
+            type="com.iindicar.indicar.b4_account.TraceViewModel" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

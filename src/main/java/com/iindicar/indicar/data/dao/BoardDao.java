@@ -84,7 +84,6 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
                 JsonElement result;
-
                 try {
                     result = new JsonParser().parse(new String(bytes));
                 } catch (Exception e) {
@@ -101,7 +100,6 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     JsonArray array = result.getAsJsonArray();
 
                     List<BoardDetailVO> boardList = new ArrayList<>();
-
                     for (int i = 0; i < array.size(); i++) {
                         if (!array.get(i).isJsonObject()) { // 게시물 끝
                             break;
