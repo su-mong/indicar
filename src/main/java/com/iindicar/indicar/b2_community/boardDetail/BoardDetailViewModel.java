@@ -76,6 +76,8 @@ public class BoardDetailViewModel {
         this.loginName = intent.getStringExtra("loginName");
 
         checkIsLikeBoard();
+
+
         onRefreshBoard();
     }
 
@@ -315,7 +317,6 @@ public class BoardDetailViewModel {
                         boardHeader.setLikeCount(String.valueOf(likeCount + 1));
                     }
                     isLikeBoard.set(!isLikeBoard.get());
-                    onRefreshBoard();
                     navigator.onLikeBoard();
                 }
 

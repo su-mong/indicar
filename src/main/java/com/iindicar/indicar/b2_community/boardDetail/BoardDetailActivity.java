@@ -456,6 +456,11 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     public void onLikeBoard() {
         isUpdated = true;
+        isUpdated = true;
+        boardAdapter.clearItems();
+        commentAdapter.clearItems();
+        viewModel.onRefreshBoard();
+
     }
 
     @Override

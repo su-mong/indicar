@@ -64,7 +64,10 @@
             android:name=".a1_main.SplashActivity"
             android:theme="@style/noActionTheme"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".b4_account.ProfileSuggest"
@@ -74,10 +77,7 @@
             android:name=".a1_main.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".b2_community.boardDetail.BoardDetailActivity"
