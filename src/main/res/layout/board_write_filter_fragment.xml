@@ -94,10 +94,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="@{(v) -> viewModel.setBoardTypeFiltering(v)}"
                     android:src="@drawable/write_filter_market_selector"
                     android:tag="@{constant.MARKET}"
-                    app:setSelected="@{viewModel.boardType == constant.MARKET}" />
+                    />
 
                 <ImageButton
                     android:id="@+id/button_diy"

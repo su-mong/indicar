@@ -43,7 +43,6 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     e.printStackTrace();
                     return;
                 }
-Log.d("ddf getdata",bytes.toString());
                 // 게시물 리스트 존재
                 if (result != null && result.isJsonArray()) {
                     JsonArray array = result.getAsJsonArray();
@@ -78,8 +77,15 @@ Log.d("ddf getdata",bytes.toString());
         });
     }
 
-    public void getDataListTrace(RequestParams params, final LoadDataListCallBack callBack) {
-        final String URL = "/selectUserLikeBoardArticle";
+    public void getDataListTrace(String category, RequestParams params, final LoadDataListCallBack callBack) {
+        final String URL;
+        if (category.equals("like")) {
+            URL = "/selectUserLikeBoardArticle";
+        } else if (category.equals("mine")) {
+            URL = "/selectUserMyBoardArticle";
+        } else {
+            URL = "/selectUserMyCommentList";
+        }
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
@@ -87,15 +93,12 @@ Log.d("ddf getdata",bytes.toString());
                 try {
                     result = new JsonParser().parse(new String(bytes));
                 } catch (Exception e) {
-
                     callBack.onDataNotAvailable();
-
                     Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.data_not_available);
                     e.printStackTrace();
                     return;
                 }
-                Log.d("ddf getdatatrace",bytes.toString());
-
+                Log.d("ddf getdata", new String(bytes).toString());
                 // 게시물 리스트 존재
                 if (result != null && result.isJsonArray()) {
                     JsonArray array = result.getAsJsonArray();

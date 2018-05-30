@@ -112,7 +112,6 @@
             android:name=".a1_main.Tutorial"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent">
-
         </activity>
         <activity
             android:name=".b4_account.TraceActivity"

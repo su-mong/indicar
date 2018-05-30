@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.iindicar.indicar.b2_community.boardList.BoardListAdapter;
-import com.iindicar.indicar.b2_community.boardList.BoardListNavigator;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardDao;
 import com.iindicar.indicar.data.dao.BoardFileDao;
@@ -64,7 +63,6 @@ public class TraceViewModel {
         }
         currentPage = 1;
         isListEnd = false;
-        getBoardList();
     }
 
     public void onSearch(RecyclerView recyclerView, String searchWord) {
@@ -77,16 +75,13 @@ public class TraceViewModel {
         getBoardListOnSearch(searchWord);
     }
 
-    public void start() {
-        getBoardList();
-    }
 
     public void openBoardDetail(int position) {
 
         navigator.openBoardDetail(position);
     }
 
-    public void getBoardList() {
+    public void getBoardListMine() {
         // 마지막 페이지
         if (isListEnd) {
             isDataLoading.set(false);
@@ -120,7 +115,7 @@ public class TraceViewModel {
                 currentPage++;
 
                 navigator.onListAdded(list);
-                Log.d("ddf vmto navi",list.get(0).toString());
+                Log.d("ddf vmto navi", list.get(0).toString());
                 isDataLoading.set(false);
 
                 // 메인 사진을 받아온다
@@ -135,7 +130,7 @@ public class TraceViewModel {
         });
     }
 
-    public void getBoardListTrace(String user_id,String category) {
+    public void getBoardListTrace(String user_id, String category) {
 //        // 마지막 페이지
 //        if (isListEnd) {
 //            isDataLoading.set(false);
@@ -148,12 +143,12 @@ public class TraceViewModel {
         RequestParams params = new RequestParams();
 
         /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
+
         params.put("_id", user_id);
-
         params.put("pageIndex", String.valueOf(1));
-        params.put("pageUnit", ""+100);
+        params.put("pageUnit", "" + 100);
 
-        boardDao.getDataListTrace(params, new BaseDao.LoadDataListCallBack() {
+        boardDao.getDataListTrace(category, params, new BaseDao.LoadDataListCallBack() {
             @Override
             public void onDataListLoaded(List list) {
                 int size = list.size();

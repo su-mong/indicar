@@ -3,8 +3,8 @@ package com.iindicar.indicar.b2_community.boardWrite;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
@@ -41,6 +41,13 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
                 startActivityForResult(intent, 13);
             }
         });
+        binding.buttonMarket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "준비중입니다.", Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
@@ -50,10 +57,11 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
             if (resultCode == RESULT_OK) {
                 String returnValue = data.getStringExtra("car_name");
                 viewModel.setCarName(returnValue);
-                binding.textCarName.setText("선택된 차량 : "+returnValue);
+                binding.textCarName.setText("선택된 차량 : " + returnValue);
             }
         }
     }
+
 }
 
 

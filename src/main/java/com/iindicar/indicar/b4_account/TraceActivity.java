@@ -16,6 +16,7 @@ import android.widget.Button;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
+import com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity;
 import com.iindicar.indicar.b2_community.boardList.BoardListAdapter;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
@@ -31,6 +32,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
+
 public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements TraceNavigator {
     public final ObservableField<String> textSearch = new ObservableField<>();
     public final ObservableBoolean isSearchBarOpen = new ObservableBoolean(false);
@@ -41,9 +44,9 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding.setActivity(this);
         this.viewModel = new TraceViewModel();
+        binding.setViewModel(viewModel);
+        binding.setActivity(this);
         viewModel.boardTab.set(1);
         viewModel.setNavigator(this);
         binding.setViewModel(viewModel);
@@ -102,6 +105,12 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
             }
         });
 
+        actionBarBinding.buttonLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -112,7 +121,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
 
     @Override
     protected void setActionBarImage(ObservableInt centerImageId, ObservableInt leftImageId) {
-        centerImageId.set(R.drawable.logo_tuning);
+        centerImageId.set(R.drawable.logo_account);
         leftImageId.set(R.drawable.btn_back);
     }
 
@@ -128,7 +137,8 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         binding.ivAWritingOn.setImageResource(0);
         binding.ivACommentOn.setImageResource(0);
 //        binding.viewPagerTrace.setCurrentItem(2);
-        viewModel.getBoardList();
+//        viewModel.getBoardListTrace(id,"like");
+        viewModel.getBoardListTrace(id,"like");
         /*try {
 
         } catch (Exception e) {
@@ -140,7 +150,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         binding.ivALikeOn.setImageResource(0);
         binding.ivAWritingOn.setImageResource(R.drawable.btna_on);
         binding.ivACommentOn.setImageResource(0);
-
+        viewModel.getBoardListTrace(id,"mine");
         /*try {
 
         } catch (Exception e) {
@@ -152,17 +162,36 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         binding.ivALikeOn.setImageResource(0);
         binding.ivAWritingOn.setImageResource(0);
         binding.ivACommentOn.setImageResource(R.drawable.btna_on);
+        viewModel.getBoardListTrace(id,"comment");
     }
+
     @Override
     public void openBoardDetail(int position) {
+        SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+        Intent intent = new Intent(this, BoardDetailActivity.class);
+        String loginId = prefLogin.getString("_id", "admin");
+        String loginName = prefLogin.getString("name", "이예슬");
+        BoardDetailVO vo = adapter.getItem(position);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("boardVO", vo);
+        intent.putExtra("board", bundle);
+        intent.putExtra("boardVO", vo);
+        intent.putExtra("loginId", loginId);
+        intent.putExtra("loginName", loginName);
 
+        if (vo.getUserId().equals(loginId)) { // 로그인 유저 정보와 글쓴이 정보 동일
+            intent.putExtra("canUpdate", true);
+        } else {
+            intent.putExtra("canUpdate", false);
+        }
+        startActivityForResult(intent, REQUEST_BOARD_DETAIL);
+        overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
     }
 
     @Override
     public void showPageEndMessage() {
 
     }
-
 
 
     @Override
@@ -185,69 +214,9 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
 
     @Override
     public void onListAdded(List<BoardDetailVO> list) {
-        Log.d("dff trace",list.get(0).toString());
-        Log.d("dff trace",list.get(1).toString());
-        adapter.addItems(list);
-        adapter.notifyItemInserted(list.size() - 1);
+        adapter.updateItems(list);
     }
 
 
 
-    private class userLikeAsync extends AsyncTask<String, Void, String> {
-        String json = new String();
-
-        @Override
-        protected String doInBackground(String... params) {
-            if (id != null) {
-                try {
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody body = new FormBody.Builder()
-                            .add("_id", id)
-                            .build();
-                    Request request = new Request.Builder()
-                            .url(ConstClass.traceLikeResult)
-                            .post(body)
-                            .build();
-                    Response response = client.newCall(request).execute();
-                    json = response.body().string();
-                    response.body().close();
-                    return json;
-                } catch (Exception e) {
-                    json = "AsyncTask Fail: " + e.toString();
-                    return json;
-                }
-            } else {
-                return "NullError";
-            }
-        }
-    }
-
-    private class userWriting extends AsyncTask<String, Void, String> {
-        String json = new String();
-
-        @Override
-        protected String doInBackground(String... params) {
-            if (id != null) {
-                try {
-                    OkHttpClient client = new OkHttpClient();
-                    RequestBody body = new FormBody.Builder()
-                            .add("ntcr_id", id)
-                            .build();
-                    Request request = new Request.Builder()
-                            .url(ConstClass.traceWritingResult)
-                            .post(body)
-                            .build();
-                    Response response = client.newCall(request).execute();
-                    json = response.body().string();
-                    response.body().close();
-                    return json;
-                } catch (Exception e) {
-                    json = "AsyncTask Fail: " + e.toString();
-                    return json;
-                }
-            } else {
-                return "NullError";
-            }
-        }
-    }
 }

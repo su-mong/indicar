@@ -94,6 +94,7 @@
             android:layout_weight="17"
             android:background="@color/colorPrimaryBackground"
             android:scrollbars="none"
+            app:binding="@{viewModel}"
             />
 
     </LinearLayout>
