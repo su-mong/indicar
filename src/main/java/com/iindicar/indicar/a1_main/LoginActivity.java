@@ -53,10 +53,14 @@ import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
 import com.iindicar.indicar.utils.ConstClass;
-import com.iindicar.indicar.utils.KakaoSignupActivity;
 import com.kakao.auth.AuthType;
+import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 
 import org.json.JSONObject;
@@ -306,12 +310,41 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     private class SessionCallback implements ISessionCallback {
         @Override
         public void onSessionOpened() {
-            Intent intent = new Intent(getApplicationContext(), KakaoSignupActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent.putExtra("screenWidth", screenWidth);
-            intent.putExtra("screenHeight", screenHeight);
-            startActivity(intent);
-            finish();
+            UserManagement.requestMe(new MeResponseCallback() {
+                @Override
+                public void onFailure(ErrorResult errorResult) {
+                    String message = "Kakao Login Fail : "+errorResult;
+                    Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                    ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+                    if(result == ErrorCode.CLIENT_ERROR_CODE) { //인터넷 연결이 끊어진 경우.
+                        redirectLoginActivitywithFail("인터넷 연결이 끊어졌습니다. 다시 시도해 주세요.");
+                    } else {
+                        redirectLoginActivitywithFail("다음 에러가 발생했습니다 : "+errorResult);
+                    }
+                }
+
+                @Override
+                public void onSessionClosed(ErrorResult errorResult) {
+                    redirectLoginActivitywithFail("로그인 세션이 닫혔습니다. 다시 시도해 주세요.");
+                }
+
+                @Override
+                public void onNotSignedUp() { }
+
+                @Override
+                public void onSuccess(UserProfile result) {
+                    login_method = "kakao";
+                    name = result.getNickname();
+                    profile_img_url = result.getProfileImagePath();
+                    email = result.getEmail();
+
+                    try {
+                        new  CheckUser().execute();
+                    } catch(Exception e) {
+                        Toast.makeText(getApplicationContext(),"유저 정보 획득 실패",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
 
         @Override
@@ -541,5 +574,8 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private void redirectLoginActivitywithFail(String strErr) {
+        Toast.makeText(getApplicationContext(),strErr,Toast.LENGTH_SHORT).show();
     }
 }

@@ -46,6 +46,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         this.viewModel = new TraceViewModel();
         viewModel.boardTab.set(1);
         viewModel.setNavigator(this);
+        binding.setViewModel(viewModel);
         //viewPager 어댑터 설정
         adapter = new BoardListAdapter(this, 1);
 
@@ -187,7 +188,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         Log.d("dff trace",list.get(0).toString());
         Log.d("dff trace",list.get(1).toString());
         adapter.addItems(list);
-        adapter.notifyDataSetChanged();
+        adapter.notifyItemInserted(list.size() - 1);
     }
 
 

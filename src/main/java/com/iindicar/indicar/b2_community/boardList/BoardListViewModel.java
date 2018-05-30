@@ -3,6 +3,7 @@ package com.iindicar.indicar.b2_community.boardList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardDao;

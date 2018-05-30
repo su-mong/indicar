@@ -76,6 +76,7 @@
         <activity
             android:name=".a1_main.MainActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustNothing">
 
         </activity>

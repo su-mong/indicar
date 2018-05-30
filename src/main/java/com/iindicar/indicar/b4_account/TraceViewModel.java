@@ -120,6 +120,7 @@ public class TraceViewModel {
                 currentPage++;
 
                 navigator.onListAdded(list);
+                Log.d("ddf vmto navi",list.get(0).toString());
                 isDataLoading.set(false);
 
                 // 메인 사진을 받아온다

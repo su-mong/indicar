@@ -24,4 +24,5 @@ void onSearch(String searchWord);
 
     void onListAdded(List<BoardDetailVO> list);
 
+
 }
