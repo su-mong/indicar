@@ -90,13 +90,8 @@ public class NoticeViewModel {
 
         RequestParams params = new RequestParams();
 
-        /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
-        params.put("bbs_id", "all");
-        if (boardTab.get() == BOARD_POPULAR){
-            params.put("searchCnd", "pop");
-        } else {
-            params.put("searchCnd", "");
-        }
+        params.put("bbs_id", "notice");
+        params.put("searchCnd", "");
         params.put("pageIndex", String.valueOf(currentPage));
         params.put("pageUnit", PAGE_UNIT_COUNT);
 
