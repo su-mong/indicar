@@ -3,7 +3,6 @@ package com.iindicar.indicar.data.dao;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
@@ -13,6 +12,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -24,7 +24,7 @@ import cz.msebera.android.httpclient.Header;
 public class BoardCommentDao implements BaseDao<BoardCommentVO> {
 
     @Override
-    public void getDataList(RequestParams params, final LoadDataListCallBack callBack) {
+    public void getDataList(RequestParams params, final LoadDataListCallBack callBack){
         final String URL = "/selectCommentList";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
@@ -32,35 +32,26 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 JsonElement result;
                 try {
-                    Log.d("ddf json1",new String(responseBody));
-                    result = new JsonParser().parse(new String(responseBody));
-                } catch (Exception e) {
+                   result = new JsonParser().parse(new String(responseBody));
+                }
+                catch (Exception e){
                     e.printStackTrace();
                     callBack.onDataNotAvailable();
                     return;
                 }
 
                 // 댓글 존재
-                if (result.isJsonArray()) {
-                    Log.d("ddf json",result.toString());
-                    String tempStr=result.toString().replace(",null","");
-                    JsonArray array = result.getAsJsonArray();
-                    JsonArray temp = new JsonArray();
-                    for (int i = 0; i < array.size(); i++) {
-                        if (!array.get(i).toString().equals("null"))
-                            temp.add(array.get(i).toString());
-                    }
-                    JsonParser parser = new JsonParser();
-                    JsonElement o = parser.parse(tempStr);
+                if(result.isJsonArray()){
+                    Type listType = new TypeToken<List<BoardCommentVO>>(){}.getType();
 
-                    Type listType = new TypeToken<List<BoardCommentVO>>() {
-                    }.getType();
-                    List<BoardCommentVO> commentList = new Gson().fromJson(o, listType);
+                    List<BoardCommentVO> commentList = new Gson().fromJson(result, listType);
+
                     callBack.onDataListLoaded(commentList);
                 } else {
                     callBack.onDataNotAvailable();
                 }
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 callBack.onDataNotAvailable();
@@ -113,7 +104,7 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
     }
 
     @Override
-    public void insertData(RequestParams params, final LoadDataCallBack callBack) {
+    public void insertData(RequestParams params, final LoadDataCallBack callBack){
         final String URL = "/insertComment";
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override

@@ -417,6 +417,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     startActivity(intent);
                     LoginActivity.this.finish();
                 } catch (Exception e) {//에러
+                    Log.d("checkuserError",e.toString());
                     Toast.makeText(getApplicationContext(), ConstClass.strLoginedErr, Toast.LENGTH_SHORT).show();
                     binding.pbLogin.setVisibility(View.GONE);
                 }
@@ -452,10 +453,12 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         .build();
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
+                Log.d("ddf","adduser response1"+result);
                 response.body().close();
                 return result;
             } catch (Exception e) {
                 result = "AsyncTask Fail: " + e.toString();
+                Log.d("ddf","adduser response2"+result);
                 return result;
             }
         }
@@ -536,34 +539,27 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 public void onClick(View v) {
                     SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                     pWindow.dismiss();
-                    SharedPreferences.Editor editor = prefLogin.edit();
-                    editor.putLong("profileEditDate", 0);
-                    editor.putString("_id", "0");
-                    editor.putString("login_method", "0");
-                    editor.putString("name", "0");
-                    editor.putString("profile_img_url", "0");
-                    editor.putString("email", "fail");
-                    editor.commit();
-//                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-//                        FirebaseAuth.getInstance().signOut();
-//                        SharedPreferences.Editor editor = prefLogin.edit();
-//                        editor.putLong("profileEditDate", 0);
-//                        editor.putString("_id", "0");
-//                        editor.putString("login_method", "0");
-//                        editor.putString("name", "0");
-//                        editor.putString("profile_img_url", "0");
-//                        editor.putString("email", "fail");
-//                        editor.apply();
-//                    } else if (AccessToken.getCurrentAccessToken() != null) {
-//                        SharedPreferences.Editor editor = prefLogin.edit();
-//                        editor.putLong("profileEditDate", 0);
-//                        editor.putString("_id", "0");
-//                        editor.putString("login_method", "0");
-//                        editor.putString("name", "0");
-//                        editor.putString("profile_img_url", "0");
-//                        editor.putString("email", "fail");
-//                        editor.apply();
-//                    }
+
+                    if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                        FirebaseAuth.getInstance().signOut();
+                        SharedPreferences.Editor editor = prefLogin.edit();
+                        editor.putLong("profileEditDate", 0);
+                        editor.putString("_id", "0");
+                        editor.putString("login_method", "0");
+                        editor.putString("name", "0");
+                        editor.putString("profile_img_url", "0");
+                        editor.putString("email", "fail");
+                        editor.apply();
+                    } else if (AccessToken.getCurrentAccessToken() != null) {
+                        SharedPreferences.Editor editor = prefLogin.edit();
+                        editor.putLong("profileEditDate", 0);
+                        editor.putString("_id", "0");
+                        editor.putString("login_method", "0");
+                        editor.putString("name", "0");
+                        editor.putString("profile_img_url", "0");
+                        editor.putString("email", "fail");
+                        editor.apply();
+                    }
                     Intent intent = getIntent();
 
                     finish();

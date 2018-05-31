@@ -64,8 +64,6 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         if (LoginActivity.LoginAct != null)
             LoginActivity.LoginAct.finish();
-        if (KakaoSignupActivity.kakaoAct != null)
-            KakaoSignupActivity.kakaoAct.finish();
 
         //키해쉬 받아오기
         try {

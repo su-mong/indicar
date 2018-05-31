@@ -56,7 +56,6 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
         likeCount = in.readString();
         boardTitle = in.readString();
         boardContent = in.readString();
-
         firstDate = in.readString();
         lastUpdateDate = in.readString();
         readCount = in.readString();
@@ -231,6 +230,7 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
 
     @Bindable
     public String getCommentCount() {
+
         return commentCount;
     }
 

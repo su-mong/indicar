@@ -98,7 +98,6 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                     e.printStackTrace();
                     return;
                 }
-                Log.d("ddf getdata", new String(bytes).toString());
                 // 게시물 리스트 존재
                 if (result != null && result.isJsonArray()) {
                     JsonArray array = result.getAsJsonArray();
@@ -336,6 +335,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
 
                         // 결과 존재
                         if (result != null && result.isJsonArray()) {
+
                             JsonArray array = result.getAsJsonArray();
                             List<BoardDetailVO> boardList = new ArrayList<>();
                             for (int i = 0; i < array.size(); i++) {
