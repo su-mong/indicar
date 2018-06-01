@@ -40,11 +40,15 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SplashActivity extends AppCompatActivity {
+    //회원가입 메소드
+    String id, login_method, name, profile_img_url, email;
 
     CarDB carDB;
     String version;
@@ -57,8 +61,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_splash);
-        ImageView progress=(ImageView)findViewById(R.id.anim_loading);
-        AnimationDrawable frameAnimation = (AnimationDrawable)progress.getDrawable();
+        ImageView progress = (ImageView) findViewById(R.id.anim_loading);
+        AnimationDrawable frameAnimation = (AnimationDrawable) progress.getDrawable();
         frameAnimation.start();
 //        ImageView mImgView = (ImageView) findViewById(R.id.loadin_dot);
 //        final Animation animTransRight = AnimationUtils.loadAnimation(
@@ -74,28 +78,26 @@ public class SplashActivity extends AppCompatActivity {
         //Glide.with(this).load(R.drawable.loading2).into(imageViewTarget);
 
         //인터넷 상태 검사
-        if(isNetworkConnected() == false) {
-            Toast.makeText(SplashActivity.this, ConstClass.strNoInternet,Toast.LENGTH_SHORT).show();
+        if (isNetworkConnected() == false) {
+            Toast.makeText(SplashActivity.this, ConstClass.strNoInternet, Toast.LENGTH_SHORT).show();
             finish();
         } else {//로그인 여부 확인
             try {
 //                Thread.sleep(3000);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             try {
                 new versionCheck().execute();
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(),ConstClass.strServerCheck,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), ConstClass.strServerCheck, Toast.LENGTH_SHORT).show();
             }
         }
-
-
-
 
 
     }
 
     //앱 및 DB 버전 체크
-    public class versionCheck extends AsyncTask<String,Void,String> {
+    public class versionCheck extends AsyncTask<String, Void, String> {
 
         Response response;
 
@@ -123,19 +125,19 @@ public class SplashActivity extends AppCompatActivity {
                 SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefLogin.edit();
 
-                dbVersion = prefLogin.getString("dbVersion","1");
+                dbVersion = prefLogin.getString("dbVersion", "1");
                 PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
                 version = Integer.toString(info.versionCode);
 
-                if(!version.equals(versionOnline)) {
-                    String marketuri = "market://details?id="+info.packageName;
+                if (!version.equals(versionOnline)) {
+                    String marketuri = "market://details?id=" + info.packageName;
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(marketuri));
                     finish();
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(),ConstClass.strVersionErr,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), ConstClass.strVersionErr, Toast.LENGTH_SHORT).show();
                 }
-                if(!dbVersion.equals(dbVersionOnline)) {
+                if (!dbVersion.equals(dbVersionOnline)) {
                     editor.putString("dbVersion", dbVersionOnline);
                     editor.commit();
                     new LoadingExe().execute();
@@ -143,14 +145,14 @@ public class SplashActivity extends AppCompatActivity {
                     loginCheck();
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(),"서버 점검중입니다. 다시 시도해 주세요",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "서버 점검중입니다. 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
     }
 
     //차량 데이터 받아와서 db에 기록하기
-    public class LoadingExe extends AsyncTask<String,Void,String> {
+    public class LoadingExe extends AsyncTask<String, Void, String> {
 
         Response response;
 
@@ -169,32 +171,32 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             try {
-                carDB = new CarDB(getApplicationContext(),"carDB",null,1);
+                carDB = new CarDB(getApplicationContext(), "carDB", null, 1);
                 carDB.getWritableDatabase();
                 carDB.deleteTable();
 
                 JSONArray jsonArray = new JSONArray(result);
                 int allNum = jsonArray.length();
-                for(int i=0;i<allNum;i++) {
+                for (int i = 0; i < allNum; i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String specName = jsonObject.getString("specName");
                     //specName = specName.replace("[]","");//이름에 들어가 있는 []을 지운다.
                     int level = Integer.parseInt(jsonObject.getString("level"));
-                    if(level == 1) {//level이 1인 경우 parentName이 넘어오지 않는다.
-                        carDB.addCar(specName,1,null,0);
-                    } else if(level==2) {//level이 2인 경우 해당 specName 전체를 선택할 수 있는 level 3의 요소를 추가해야 한다.
+                    if (level == 1) {//level이 1인 경우 parentName이 넘어오지 않는다.
+                        carDB.addCar(specName, 1, null, 0);
+                    } else if (level == 2) {//level이 2인 경우 해당 specName 전체를 선택할 수 있는 level 3의 요소를 추가해야 한다.
                         String parentName = jsonObject.getString("parentName");
-                        carDB.addCar(specName,2,parentName,0);
+                        carDB.addCar(specName, 2, parentName, 0);
                     } else {//level이 3인 경우
                         String parentName = jsonObject.getString("parentName");
-                        carDB.addCar(specName,3,parentName,0);
+                        carDB.addCar(specName, 3, parentName, 0);
                     }
                 }
 
                 loginCheck();
             } catch (Exception e) {
-                Log.d("dbCheck",e.toString());
-                Toast.makeText(getApplicationContext(),ConstClass.strServerCheck,Toast.LENGTH_SHORT).show();
+                Log.d("dbCheck", e.toString());
+                Toast.makeText(getApplicationContext(), ConstClass.strServerCheck, Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -203,37 +205,10 @@ public class SplashActivity extends AppCompatActivity {
     //로그인 체크하는 함수
     private void loginCheck() {
         SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+        email = prefLogin.getString("email", "fail");
         //로그인 체크
-        if(Session.getCurrentSession().isClosed() == false ) { //카카오
-            //Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL,SplashActivity.this);
-            if(!prefLogin.getString("email","fail").equals("fail")) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
-                SplashActivity.this.finish();
-            } else {
-                redirectLoginActivitywithFail(ConstClass.strLoginedErr,2);
-            }
-        } else if(FirebaseAuth.getInstance().getCurrentUser() != null) { //구글
-            //Intent googleIntent = GoogleClient.getSignInIntent();
-            //startActivityForResult(googleIntent,9001);
-            if(!prefLogin.getString("email","fail").equals("fail")) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
-                SplashActivity.this.finish();
-            } else {
-                redirectLoginActivitywithFail(ConstClass.strLoginedErr,2);
-            }
-        } else if(AccessToken.getCurrentAccessToken() != null) { //페이스북
-            if(!prefLogin.getString("email","fail").equals("fail")) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
-                SplashActivity.this.finish();
-            } else {
-                redirectLoginActivitywithFail(ConstClass.strLoginedErr,2);
-            }
+        if (!email.equals("fail")) {
+            new CheckUser().execute();
         } else {
             Intent i = new Intent(SplashActivity.this, LoginActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -243,15 +218,82 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    //유저 가입여부 체크
+    public class CheckUser extends AsyncTask<String, Void, String> {
+        String strcheckUser;
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                OkHttpClient client = new OkHttpClient();
+
+                RequestBody body = new FormBody.Builder()
+                        .add("email", email)
+                        .build();
+                Request request = new Request.Builder()
+                        .url(ConstClass.check_User)
+                        .post(body)
+                        .build();
+
+                Response response = client.newCall(request).execute();
+                strcheckUser = response.body().string();
+                response.body().close();
+                return strcheckUser;
+            } catch (Exception e) {
+                strcheckUser = "AsyncTask Fail: " + e.toString();
+                return strcheckUser;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("onPostExecuteIn", result);
+            if (!result.equals("no result")) {//유저 존재
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    id = jsonObject.getString("_id");
+                    Log.d("ddf Login checkUser", id);
+                    name = jsonObject.getString("name");
+                    profile_img_url = jsonObject.getString("profile_img_url");
+                    email = jsonObject.getString("email");
+
+                    SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefLogin.edit();
+                    editor.putLong("profileEditDate", 0);
+                    editor.putString("_id", id);
+                    editor.putString("login_method", login_method);
+                    editor.putString("name", name);
+                    editor.putString("profile_img_url", profile_img_url);
+                    editor.putString("email", email);
+                    editor.commit();
+
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
+                    SplashActivity.this.finish();
+                } catch (Exception e) {//에러
+                    redirectLoginActivitywithFail(ConstClass.strLoginedErr, 2);
+                }
+            } else {//유저 존재하지 않음
+                redirectLoginActivitywithFail(ConstClass.strLoginedErr, 2);
+            }
+        }
+    }
+
     //인터넷 연결상태 확인
     private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo()!=null;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
     //로그인 실패 시 작동하는 함수
     private void redirectLoginActivitywithFail(final String strErr, int errCode) {//errCode: 0은 kakao, 1은 google, 2는 facebook
-        switch(errCode) {
+        switch (errCode) {
             case 0://카카오
                 UserManagement.requestLogout(new LogoutResponseCallback() {
                     @Override
@@ -265,7 +307,7 @@ public class SplashActivity extends AppCompatActivity {
                 });
                 break;
             case 1://구글
-                Toast.makeText(SplashActivity.this, strErr,Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashActivity.this, strErr, Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 Intent i = new Intent(SplashActivity.this, LoginActivity.class);
@@ -274,7 +316,7 @@ public class SplashActivity extends AppCompatActivity {
                 SplashActivity.this.finish();
                 break;
             case 2://페이스북
-                Toast.makeText(SplashActivity.this, strErr,Toast.LENGTH_SHORT).show();
+                Toast.makeText(SplashActivity.this, strErr, Toast.LENGTH_SHORT).show();
                 LoginManager.getInstance().logOut();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 Intent i2 = new Intent(SplashActivity.this, LoginActivity.class);

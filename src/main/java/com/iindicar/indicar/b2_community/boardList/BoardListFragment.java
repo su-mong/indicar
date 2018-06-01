@@ -25,6 +25,7 @@ import com.commit451.teleprinter.Teleprinter;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
+import com.iindicar.indicar.a1_main.LoginActivity;
 import com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity;
 import com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditActivity;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
@@ -175,7 +176,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    binding.scrollview.scrollTo(0,0);
+                    binding.scrollview.scrollTo(0, 0);
                 }
                 return true;
             }
@@ -209,9 +210,9 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     public void openBoardDetail(int position) {
 
         SharedPreferences prefLogin = context.getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        String loginId = prefLogin.getString("_id", "admin");
-        String loginName = prefLogin.getString("name", "이예슬");
-
+        String loginId = prefLogin.getString("_id", "0");
+        Log.d("ddf list loginId",loginId);
+        String loginName = prefLogin.getString("name", "fail");
         Intent intent = new Intent(context, BoardDetailActivity.class);
 
         BoardDetailVO vo = adapter.getItem(position);

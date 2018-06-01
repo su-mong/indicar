@@ -81,53 +81,7 @@ public class TraceViewModel {
         navigator.openBoardDetail(position);
     }
 
-    public void getBoardListMine() {
-        // 마지막 페이지
-        if (isListEnd) {
-            isDataLoading.set(false);
-            navigator.showPageEndMessage();
-            return;
-        }
 
-        isDataLoading.set(true);
-
-        RequestParams params = new RequestParams();
-
-        /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
-        params.put("bbs_id", "all");
-        if (boardTab.get() == BOARD_POPULAR) {
-            params.put("searchCnd", "pop");
-        } else {
-            params.put("searchCnd", "");
-        }
-        params.put("pageIndex", String.valueOf(currentPage));
-        params.put("pageUnit", PAGE_UNIT_COUNT);
-
-        boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
-            @Override
-            public void onDataListLoaded(List list) {
-                int size = list.size();
-
-                // end of board list
-                if (size != PAGE_UNIT_COUNT) {
-                    isListEnd = true;
-                }
-                currentPage++;
-
-                navigator.onListAdded(list);
-                isDataLoading.set(false);
-
-                // 메인 사진을 받아온다
-                getImageFile(list);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                isDataLoading.set(false);
-                isListEnd = true;
-            }
-        });
-    }
 
     public void getBoardListTrace(String user_id, String category) {
 //        // 마지막 페이지

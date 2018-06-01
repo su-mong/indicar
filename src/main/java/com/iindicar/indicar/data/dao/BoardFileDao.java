@@ -54,6 +54,11 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
     }
 
     @Override
+    public void getDataListLike(RequestParams params, LoadDataListCallBack callBack) {
+
+    }
+
+    @Override
     public void getData(RequestParams params, final LoadDataCallBack callBack){
         final String URL = "/selectFileInfs";
 

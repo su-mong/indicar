@@ -53,12 +53,14 @@ import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
 import com.iindicar.indicar.utils.ConstClass;
+import com.iindicar.indicar.utils.KakaoSignupActivity;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
@@ -184,7 +186,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         });
 
 
-
     }
 
 
@@ -239,7 +240,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     protected int getLayoutId() {
         return R.layout.activity_login;
     }
-
 
 
     @Override
@@ -313,13 +313,13 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             UserManagement.requestMe(new MeResponseCallback() {
                 @Override
                 public void onFailure(ErrorResult errorResult) {
-                    String message = "Kakao Login Fail : "+errorResult;
-                    Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                    String message = "Kakao Login Fail : " + errorResult;
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
-                    if(result == ErrorCode.CLIENT_ERROR_CODE) { //인터넷 연결이 끊어진 경우.
+                    if (result == ErrorCode.CLIENT_ERROR_CODE) { //인터넷 연결이 끊어진 경우.
                         redirectLoginActivitywithFail("인터넷 연결이 끊어졌습니다. 다시 시도해 주세요.");
                     } else {
-                        redirectLoginActivitywithFail("다음 에러가 발생했습니다 : "+errorResult);
+                        redirectLoginActivitywithFail("다음 에러가 발생했습니다 : " + errorResult);
                     }
                 }
 
@@ -329,7 +329,8 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 }
 
                 @Override
-                public void onNotSignedUp() { }
+                public void onNotSignedUp() {
+                }
 
                 @Override
                 public void onSuccess(UserProfile result) {
@@ -339,9 +340,9 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     email = result.getEmail();
 
                     try {
-                        new  CheckUser().execute();
-                    } catch(Exception e) {
-                        Toast.makeText(getApplicationContext(),"유저 정보 획득 실패",Toast.LENGTH_SHORT).show();
+                        new CheckUser().execute();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "유저 정보 획득 실패", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -398,6 +399,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
+                    Log.d("ddf Login checkUser", id);
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
@@ -417,7 +419,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     startActivity(intent);
                     LoginActivity.this.finish();
                 } catch (Exception e) {//에러
-                    Log.d("checkuserError",e.toString());
+                    Log.d("checkuserError", e.toString());
                     Toast.makeText(getApplicationContext(), ConstClass.strLoginedErr, Toast.LENGTH_SHORT).show();
                     binding.pbLogin.setVisibility(View.GONE);
                 }
@@ -453,12 +455,12 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         .build();
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
-                Log.d("ddf","adduser response1"+result);
+                Log.d("ddf", "adduser response1" + result);
                 response.body().close();
                 return result;
             } catch (Exception e) {
                 result = "AsyncTask Fail: " + e.toString();
-                Log.d("ddf","adduser response2"+result);
+                Log.d("ddf", "adduser response2" + result);
                 return result;
             }
         }
@@ -469,9 +471,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             Toast.makeText(getApplicationContext(), ConstClass.strAddUserSuccess, Toast.LENGTH_SHORT).show();
             binding.pbLogin.setVisibility(View.GONE);
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            LoginActivity.this.finish();
+            new CheckUser().execute();
         }
     }
 
@@ -519,6 +519,12 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                             LoginManager.getInstance().logOut();
                         } else if (login_method.equals("google")) {
                             FirebaseAuth.getInstance().signOut();
+                        } else if (login_method.equals(("kakao"))) {
+                            UserManagement.requestLogout(new LogoutResponseCallback() {
+                                @Override
+                                public void onCompleteLogout() {
+                                }
+                            });
                         }
                     } else {
                         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
@@ -559,6 +565,21 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         editor.putString("profile_img_url", "0");
                         editor.putString("email", "fail");
                         editor.apply();
+                    } else if (!Session.getCurrentSession().isClosed()) {
+                        UserManagement.requestLogout(new LogoutResponseCallback() {
+                            @Override
+                            public void onCompleteLogout() {
+                                SharedPreferences prefLogin = getApplicationContext().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefLogin.edit();
+                                editor.putLong("profileEditDate", 0);
+                                editor.putString("_id", "0");
+                                editor.putString("login_method", "0");
+                                editor.putString("name", "0");
+                                editor.putString("profile_img_url", "0");
+                                editor.putString("email", "fail");
+                                editor.apply();
+                            }
+                        });
                     }
                     Intent intent = getIntent();
 
@@ -571,7 +592,46 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             e.printStackTrace();
         }
     }
+
     private void redirectLoginActivitywithFail(String strErr) {
-        Toast.makeText(getApplicationContext(),strErr,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), strErr, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                String message = "Kakao Login Fail : "+errorResult;
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
+                if(result == ErrorCode.CLIENT_ERROR_CODE) { //인터넷 연결이 끊어진 경우.
+                    redirectLoginActivitywithFail("인터넷 연결이 끊어졌습니다. 다시 시도해 주세요.");
+                } else {
+                    redirectLoginActivitywithFail("다음 에러가 발생했습니다 : "+errorResult);
+                }
+            }
+
+            @Override
+            public void onSessionClosed(ErrorResult errorResult) {
+                redirectLoginActivitywithFail("로그인 세션이 닫혔습니다. 다시 시도해 주세요.");
+            }
+
+            @Override
+            public void onNotSignedUp() { }
+
+            @Override
+            public void onSuccess(UserProfile result) {
+                login_method = "kakao";
+                name = result.getNickname();
+                profile_img_url = result.getProfileImagePath();
+                email = result.getEmail();
+
+                try {
+                    new CheckUser().execute();
+                } catch(Exception e) {
+                    Toast.makeText(getApplicationContext(),"유저 정보 획득 실패",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

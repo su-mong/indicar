@@ -87,6 +87,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
             FirebaseMessaging.getInstance().subscribeToTopic("Other");
             FirebaseInstanceId.getInstance().getToken();
         }
+        SharedPreferences.Editor editor = prefLogin.edit();
 
         binding.setActivity(this);
 

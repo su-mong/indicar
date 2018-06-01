@@ -16,6 +16,8 @@ public interface BoardListNavigator {
 
     void showPageEndMessage();
 
+
+
     void onImageAttached(BoardDetailVO board, BoardFileVO vo);
 
 void onSearch(String searchWord);

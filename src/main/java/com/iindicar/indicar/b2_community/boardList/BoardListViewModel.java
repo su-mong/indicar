@@ -1,5 +1,7 @@
 package com.iindicar.indicar.b2_community.boardList;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
@@ -44,11 +46,12 @@ public class BoardListViewModel {
     private Boolean isListEnd = false;
 
     private int currentPage = 1;
-
+private String userId;
     public BoardListViewModel() {
         boardDao = new BoardDao();
         fileDao = new BoardFileDao();
         userDao = new UserDao();
+
     }
 
     public void setNavigator(BoardListNavigator navigator) {
@@ -107,6 +110,50 @@ public class BoardListViewModel {
         params.put("pageUnit", PAGE_UNIT_COUNT);
 
         boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
+            @Override
+            public void onDataListLoaded(List list) {
+                int size = list.size();
+
+                // end of board list
+                if (size != PAGE_UNIT_COUNT) {
+                    isListEnd = true;
+                }
+                currentPage++;
+
+                navigator.onListAdded(list);
+                isDataLoading.set(false);
+
+                // 메인 사진을 받아온다
+                getImageFile(list);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                isDataLoading.set(false);
+                isListEnd = true;
+            }
+        });
+    }
+  public void getBoardListLike(String userId) {
+        // 마지막 페이지
+        if (isListEnd) {
+            isDataLoading.set(false);
+            navigator.showPageEndMessage();
+            return;
+        }
+
+        isDataLoading.set(true);
+
+        RequestParams params = new RequestParams();
+
+        /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
+        params.put("bbs_id", "all");
+
+        params.put("_id", userId);
+        params.put("pageIndex", String.valueOf(1));
+        params.put("pageUnit", 100);
+
+        boardDao.getDataListLike(params, new BaseDao.LoadDataListCallBack() {
             @Override
             public void onDataListLoaded(List list) {
                 int size = list.size();

@@ -66,7 +66,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
 
         SharedPreferences prefLogin = getApplicationContext().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
         id = prefLogin.getString("_id", null);
-        Log.d("idTag", id);
+        Log.d("ddf idTag", id);
 
         Intent intent = getIntent();
         int trace = intent.getIntExtra("trace", 1);

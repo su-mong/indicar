@@ -14,6 +14,8 @@ public interface BaseDao<T> {
 
     void getDataList(RequestParams params, LoadDataListCallBack callBack);
 
+    void getDataListLike(RequestParams params, LoadDataListCallBack callBack);
+
     void getData(RequestParams params, LoadDataCallBack callBack);
 
     void insertData(RequestParams params, LoadDataCallBack callBack);

@@ -60,6 +60,11 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
     }
 
     @Override
+    public void getDataListLike(RequestParams params, LoadDataListCallBack callBack) {
+
+    }
+
+    @Override
     public void getData(RequestParams params, LoadDataCallBack callBack) {
 
     }

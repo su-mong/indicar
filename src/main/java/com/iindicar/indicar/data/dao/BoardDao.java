@@ -132,6 +132,59 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
     }
 
     @Override
+    public void getDataListLike(RequestParams params, final LoadDataListCallBack callBack) {
+        final String URL = "/selectUserLikeBoardArticles";
+        HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int index, Header[] headers, byte[] bytes) {
+                JsonElement result;
+
+                try {
+                    result = new JsonParser().parse(new String(bytes));
+                } catch (Exception e) {
+
+                    callBack.onDataNotAvailable();
+
+                    Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.data_not_available);
+                    e.printStackTrace();
+                    return;
+                }
+
+                // 게시물 리스트 존재
+                if (result != null && result.isJsonArray()) {
+                    JsonArray array = result.getAsJsonArray();
+
+                    List<BoardDetailVO> boardList = new ArrayList<>();
+
+                    for (int i = 0; i < array.size(); i++) {
+                        if (!array.get(i).isJsonObject()) { // 게시물 끝
+                            break;
+                        }
+                        BoardDetailVO vo = new Gson().fromJson(array.get(i), BoardDetailVO.class);
+                        boardList.add(vo);
+                    }
+
+                    callBack.onDataListLoaded(boardList);
+                } else {
+
+                    Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.data_not_available);
+
+                    callBack.onDataNotAvailable();
+                }
+            }
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+
+                Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.server_not_available);
+                throwable.printStackTrace();
+
+                callBack.onDataNotAvailable();
+            }
+        });
+    }
+
+    @Override
     public void getData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/selectBoardArticle";
 
