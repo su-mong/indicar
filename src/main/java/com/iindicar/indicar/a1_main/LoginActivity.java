@@ -353,7 +353,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             if (e != null) {
                 Toast.makeText(LoginActivity.this, "카카오톡 로그인을 중지합니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
-
                 finish();
                 startActivity(intent);
             }
@@ -432,6 +431,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
     //회원가입
     public class AddUser extends AsyncTask<String, Void, String> {
+        String result;
 
         @Override
         protected void onPreExecute() {
@@ -440,27 +440,29 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
         @Override
         protected String doInBackground(String... params) {
-            String result;
+
             try {
                 OkHttpClient client = new OkHttpClient();
-                RequestBody body = new FormBody.Builder()
-                        .add("login_method", login_method)
-                        .add("name", name)
-                        .add("profile_img_url", profile_img_url)
-                        .add("email", email)
-                        .build();
+                FormBody.Builder formBuilder = new FormBody.Builder()
+                        .add("login_method", login_method);
+                formBuilder.add("name", name)
+                        .add("email", email);
+                if(profile_img_url!=null && !profile_img_url.equals("null"))
+                        formBuilder.add("profile_img_url", profile_img_url);
+
+                RequestBody body = formBuilder.build();
+
+
                 Request request = new Request.Builder()
                         .url(ConstClass.add_User)
                         .post(body)
                         .build();
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
-                Log.d("ddf", "adduser response1" + result);
                 response.body().close();
                 return result;
             } catch (Exception e) {
                 result = "AsyncTask Fail: " + e.toString();
-                Log.d("ddf", "adduser response2" + result);
                 return result;
             }
         }
@@ -468,10 +470,79 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         @Override
         protected void onPostExecute(String result) {
             pWindow.dismiss();
-            Toast.makeText(getApplicationContext(), ConstClass.strAddUserSuccess, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), ConstClass.strAddUserSuccess + result, Toast.LENGTH_SHORT).show();
             binding.pbLogin.setVisibility(View.GONE);
 
-            new CheckUser().execute();
+            new CheckUser2().execute();
+        }
+    }
+
+    //유저 가입여부 체크
+    public class CheckUser2 extends AsyncTask<String, Void, String> {
+        String strcheckUser;
+
+        @Override
+        protected void onPreExecute() {
+            binding.pbLogin.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                OkHttpClient client = new OkHttpClient();
+
+                RequestBody body = new FormBody.Builder()
+                        .add("email", email)
+                        .build();
+                Request request = new Request.Builder()
+                        .url(ConstClass.check_User)
+                        .post(body)
+                        .build();
+
+                Response response = client.newCall(request).execute();
+                strcheckUser = response.body().string();
+                response.body().close();
+                return strcheckUser;
+            } catch (Exception e) {
+                strcheckUser = "AsyncTask Fail: " + e.toString();
+                return strcheckUser;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("onPostExecuteIn", result);
+            if (!result.equals("no result")) {//유저 존재
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    id = jsonObject.getString("_id");
+                    Log.d("ddf Login checkUser", id);
+                    name = jsonObject.getString("name");
+                    profile_img_url = jsonObject.getString("profile_img_url");
+                    email = jsonObject.getString("email");
+
+                    SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefLogin.edit();
+                    editor.putLong("profileEditDate", 0);
+                    editor.putString("_id", id);
+                    editor.putString("login_method", login_method);
+                    editor.putString("name", name);
+                    editor.putString("profile_img_url", profile_img_url);
+                    editor.putString("email", email);
+                    editor.commit();
+                    binding.pbLogin.setVisibility(View.GONE);
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    LoginActivity.this.finish();
+                } catch (Exception e) {//에러
+                    Log.d("checkuserError", e.toString());
+                    Toast.makeText(getApplicationContext(), ConstClass.strLoginedErr, Toast.LENGTH_SHORT).show();
+                    binding.pbLogin.setVisibility(View.GONE);
+                }
+            } else {//유저 존재하지 않음
+                binding.pbLogin.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -535,6 +606,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         editor.putString("profile_img_url", profile_img_url);
                         editor.putString("email", email);
                         editor.commit();
+                        Toast.makeText(LoginActivity.this, "add user send param:" + login_method + name + email, Toast.LENGTH_LONG).show();
 
                         new AddUser().execute();
                     }
@@ -601,13 +673,13 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         UserManagement.requestMe(new MeResponseCallback() {
             @Override
             public void onFailure(ErrorResult errorResult) {
-                String message = "Kakao Login Fail : "+errorResult;
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                String message = "Kakao Login Fail : " + errorResult;
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
-                if(result == ErrorCode.CLIENT_ERROR_CODE) { //인터넷 연결이 끊어진 경우.
+                if (result == ErrorCode.CLIENT_ERROR_CODE) { //인터넷 연결이 끊어진 경우.
                     redirectLoginActivitywithFail("인터넷 연결이 끊어졌습니다. 다시 시도해 주세요.");
                 } else {
-                    redirectLoginActivitywithFail("다음 에러가 발생했습니다 : "+errorResult);
+                    redirectLoginActivitywithFail("다음 에러가 발생했습니다 : " + errorResult);
                 }
             }
 
@@ -617,7 +689,8 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             }
 
             @Override
-            public void onNotSignedUp() { }
+            public void onNotSignedUp() {
+            }
 
             @Override
             public void onSuccess(UserProfile result) {
@@ -628,8 +701,8 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
                 try {
                     new CheckUser().execute();
-                } catch(Exception e) {
-                    Toast.makeText(getApplicationContext(),"유저 정보 획득 실패",Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "유저 정보 획득 실패", Toast.LENGTH_SHORT).show();
                 }
             }
         });
