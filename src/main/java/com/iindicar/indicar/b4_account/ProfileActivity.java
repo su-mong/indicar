@@ -5,10 +5,41 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableBoolean;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.iindicar.indicar.BaseActivity;
+import com.iindicar.indicar.R;
+import com.iindicar.indicar.a1_main.LoginActivity;
+import com.iindicar.indicar.data.vo.UserVO;
+import com.iindicar.indicar.databinding.ActivityProfileBinding;
+import com.iindicar.indicar.utils.ConstClass;
+import com.iindicar.indicar.utils.DialogUtil;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.kakao.usermgmt.callback.UnLinkResponseCallback;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     private final int REQUEST_UPDATE_NAME = 100; // request code 이름 수정
-    private final int REQUEST_UPDATE_ADDRESS = 101; // request code 이름 수정
+    private final int REQUEST_UPDATE_ADDRESS = 101; // request code 주소 수정
 
     public final ObservableBoolean isEventAlarmOn = new ObservableBoolean();
     public final ObservableBoolean isOtherAlarmOn = new ObservableBoolean();
@@ -18,7 +49,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
     @Override
     protected int getLayoutId() {
-        return com.iindicar.indicar.R.layout.activity_profile2;
+        return R.layout.activity_profile;
     }
 
     @Override
@@ -67,7 +98,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         binding.btnClause.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Profile2Activity.this,ProfileTerm.class);
+                Intent intent = new Intent(ProfileActivity.this,ProfileTerm.class);
                 startActivity(intent);
             }
         });
@@ -76,7 +107,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         binding.btnOpinion.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Profile2Activity.this,ProfileSuggest.class);
+                Intent intent = new Intent(ProfileActivity.this,ProfileSuggest.class);
                 startActivity(intent);
             }
         });
@@ -100,8 +131,8 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             return;
         }
 
-        Intent intent = new Intent(getApplicationContext(), DaumAddressActivity.class);
-        startActivityForResult(intent, REQUEST_UPDATE_ADDRESS);
+//        Intent intent = new Intent(getApplicationContext(), DaumAddressActivity.class);
+//        startActivityForResult(intent, REQUEST_UPDATE_ADDRESS);
     }
 
     // 이벤트 알람 클릭 리스너
@@ -131,12 +162,13 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
             showSnackBar(ConstClass.strUserInfoChanged);
             getUserPreference();
-        } else if(requestCode == REQUEST_UPDATE_ADDRESS
-                && resultCode == DaumAddressActivity.RESULT_UPDATED){ // 유저 주소 수정됨
-
-            showSnackBar(ConstClass.strUserInfoChanged);
-            getUserPreference();
         }
+//        else if(requestCode == REQUEST_UPDATE_ADDRESS
+//                && resultCode == DaumAddressActivity.RESULT_UPDATED){ // 유저 주소 수정됨
+//
+//            showSnackBar(ConstClass.strUserInfoChanged);
+//            getUserPreference();
+//        }
     }
 
     // 회원 탈퇴 혹은 로그아웃 시
@@ -177,7 +209,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
                 @Override
                 public void onSuccess(Long result) { //탈퇴처리
-                    new Profile2Activity.DeleteUser().execute();
+                    new DeleteUser().execute();
                     Toast.makeText(getApplicationContext(), userVO.getUserName() + ConstClass.strUnlink, Toast.LENGTH_SHORT).show();
                     startLoginActivity();
                 }
@@ -187,7 +219,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()) {
-                        new Profile2Activity.DeleteUser().execute();
+                        new DeleteUser().execute();
                         Toast.makeText(getApplicationContext(), userVO.getUserName() + ConstClass.strUnlink, Toast.LENGTH_SHORT).show();
                         startLoginActivity();
                     } else {
@@ -199,7 +231,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             LoginManager.getInstance().unregisterCallback(new CallbackManager() {
                 @Override
                 public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-                    new Profile2Activity.DeleteUser().execute();
+                    new DeleteUser().execute();
                     Toast.makeText(getApplicationContext(), userVO.getUserName() + ConstClass.strUnlink, Toast.LENGTH_SHORT).show();
                     startLoginActivity();
                     return true;
