@@ -13,18 +13,19 @@ import com.iindicar.indicar.BR;
 
 public class UserVO extends BaseObservable{
 
-    @SerializedName("_id") private String userKey = "";
+    @SerializedName("_id") private String userId = "";
     @SerializedName("name") private String userName = "";
     @SerializedName("email") private String userEmail = "";
     @SerializedName("profile_img_url") private String profileImageUrl = "";
+    @SerializedName("address") private String userAddress = "";
 
     @Bindable
-    public String getUserKey() {
-        return userKey;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserKey(String userKey) {
-        this.userKey = userKey;
+    public void setUserId(String userId) {
+        this.userId = userId;
         notifyPropertyChanged(BR.userKey);
     }
 
@@ -56,5 +57,13 @@ public class UserVO extends BaseObservable{
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
         notifyPropertyChanged(BR.profileImageUrl);
+    }
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
     }
 }

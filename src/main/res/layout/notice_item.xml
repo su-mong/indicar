@@ -11,19 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="@color/colorPrimary"
-        app:cardUseCompatPadding="false">
+        app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="260dp">
 
             <ImageView
                 android:id="@+id/image_main"
                 style="@style/popularImageCustomStyle"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="260dp"
                 app:imageUrl="@{item.mainImageUrl}"/>
-
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

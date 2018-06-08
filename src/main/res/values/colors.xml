@@ -13,5 +13,12 @@
         <color name="colorFontLight">#979797</color>
         <color name="colorSplashBackground">#ededed</color>
         <color name="colorPrimaryBackground">#ececec</color>
-        <color name="popularTextFrame">#32787878</color>
+        <color name="popularTextFrame">#50787878</color>
+        <color name="profileUnderLine">#D9D9D9</color>
+        <color name="profileText">#626262</color>
+        <color name="profileNameText">#454545</color>
+        <color name="profileButtonBackgroundLight">#E5E5E5</color>
+        <color name="profileButtonBackground">#646464</color>
+        <color name="transBackground">#cc000000</color>
+        <color name="dialogOutline">#D4D4D4</color>
 </resources>

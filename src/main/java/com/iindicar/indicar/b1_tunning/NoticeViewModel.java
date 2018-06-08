@@ -5,7 +5,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
 
-import com.iindicar.indicar.BaseViewModel;
 import com.iindicar.indicar.b2_community.boardList.BoardListAdapter;
 import com.iindicar.indicar.b2_community.boardList.BoardListNavigator;
 import com.iindicar.indicar.b2_community.boardList.BoardListViewModel;

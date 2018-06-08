@@ -60,8 +60,20 @@ public class UserDao implements BaseDao<UserVO> {
     }
 
     @Override
-    public void updateData(RequestParams params, LoadDataCallBack callBack) {
+    public void updateData(RequestParams params, final LoadDataCallBack callBack) {
+        final String URL = "/user/updt_user";
 
+        HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                callBack.onDataLoaded(null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                callBack.onDataNotAvailable();
+            }
+        });
     }
 
     @Override
