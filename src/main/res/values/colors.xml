@@ -21,4 +21,6 @@
         <color name="profileButtonBackground">#646464</color>
         <color name="transBackground">#cc000000</color>
         <color name="dialogOutline">#D4D4D4</color>
+        <color name="searchBoxTransParent">#cecece</color>
+        <color name="searchBoxOutline">#c0c0c0</color>
 </resources>

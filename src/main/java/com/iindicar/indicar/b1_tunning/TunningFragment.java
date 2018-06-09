@@ -58,7 +58,7 @@ public class TunningFragment extends BaseFragment<TunningFragmentBinding> implem
         binding.btnTToTuning2.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),Tuning2Activity.class);
+                Intent intent = new Intent(getActivity(), CarListActivity.class);
                 startActivity(intent);
             }
         });

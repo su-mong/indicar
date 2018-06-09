@@ -59,6 +59,20 @@ public class CustomAlertDialog extends Dialog {
                     dismiss();
                 }
             });
+            binding.positiveImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    positiveButtonListener.onClick(view);
+                    dismiss();
+                }
+            });
+            binding.positiveText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    positiveButtonListener.onClick(view);
+                    dismiss();
+                }
+            });
         }
 
         if(negativeButtonListener == null){
@@ -70,6 +84,8 @@ public class CustomAlertDialog extends Dialog {
             };
         }
         binding.negativeButton.setOnClickListener(negativeButtonListener);
+        binding.negativeImage.setOnClickListener(negativeButtonListener);
+        binding.negativeText.setOnClickListener(negativeButtonListener);
 
         if(width != 0 && height != 0){
 
