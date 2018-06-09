@@ -22,6 +22,7 @@
             android:background="@drawable/border_underline">
 
             <ImageButton
+                android:id="@+id/button_back"
                 style="@style/imageButtonCustomStyle"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -181,13 +182,7 @@
                     android:textSize="14sp"
                     android:textColor="@color/colorFont"
                     android:text="@{activity.selectedCarFilter}"/>
-
             </LinearLayout>
-
-
-
         </LinearLayout>
-
     </LinearLayout>
-
 </layout>

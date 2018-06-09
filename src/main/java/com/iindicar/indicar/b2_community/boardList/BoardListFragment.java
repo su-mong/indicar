@@ -52,14 +52,8 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     private int boardTab;
     private BoardListViewModel viewModel;
     private BoardListAdapter adapter;
-    private int isUpdate;
-    private Teleprinter keyboard;
 
-    public final ObservableField<String> textSearch = new ObservableField<>();
-    public final ObservableBoolean isSearchBarOpen = new ObservableBoolean(false);
     public final ObservableInt tabId = new ObservableInt();
-    public final ObservableBoolean showButton = new ObservableBoolean(true);
-
 
     public BoardListFragment() {
         this.viewModel = new BoardListViewModel();
@@ -182,34 +176,12 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             }
         });
 
-        if (boardTab == 1)
-            binding.searchBarLayout.setVisibility(View.VISIBLE);
-
-        binding.buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSearch(binding.editTextSearch.getText().toString());
-            }
-
-
-        });
-
-        binding.editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    binding.buttonSearch.callOnClick();
-                    return true;
-                }
-                return false;
-            }
-        });
-
         ((MainActivity)getActivity()).getActionBarBinding().buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, BoardFilterActivity.class);
                 startActivityForResult(intent, REQUEST_BOARD_FILTER);
+                getActivity().overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
             }
         });
     }
@@ -256,7 +228,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         viewModel.onSearch(binding.recyclerViewBoardContainer, searchWord);
     }
 
-
     @Override
     public void onProfileAttached(BoardDetailVO board, UserVO vo) {
         int position = adapter.getItemList().indexOf(board);
@@ -281,6 +252,10 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         if (requestCode == 13) { // result from BoardDetailActivity
             if (data.getBooleanExtra("isUpdated", false))
                 viewModel.onRefresh(binding.recyclerViewBoardContainer);
+        }
+
+        if(requestCode == REQUEST_BOARD_FILTER){ // 검색
+            onSearch(data.getStringExtra("searchKey"));
         }
     }
 

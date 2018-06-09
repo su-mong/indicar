@@ -1,6 +1,7 @@
 package com.iindicar.indicar.b2_community;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.os.Build;
@@ -62,10 +63,6 @@ public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
 
 
     }
-
-
-
-
 
 }
 

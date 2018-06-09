@@ -19,7 +19,7 @@
             android:id="@+id/button_left"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:visibility="@{activity.leftImageId == 0 ? View.GONE : View.VISIBLE}"

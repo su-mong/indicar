@@ -1,21 +1,20 @@
 package com.iindicar.indicar.b2_community;
 
 import android.content.Intent;
-import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
-import android.databinding.ObservableList;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import com.iindicar.indicar.BaseActivity;
+import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityBoardFilterBinding;
 
-import java.util.List;
-
-public class BoardFilterActivity extends BaseActivity<ActivityBoardFilterBinding> {
+public class BoardFilterActivity extends BaseActivity2<ActivityBoardFilterBinding> {
     public final static int REQUEST_CAR_FILTER = 11;
     public final ObservableField<String> searchInputText = new ObservableField<>();
     public final ObservableField<String> selectedCarFilter = new ObservableField<>();
@@ -28,12 +27,6 @@ public class BoardFilterActivity extends BaseActivity<ActivityBoardFilterBinding
     }
 
     @Override
-    protected void setActionBarImage(ObservableInt centerImageId, ObservableInt leftImageId) {
-        centerImageId.set(R.drawable.logo_community);
-        leftImageId.set(R.drawable.btn_back);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -41,11 +34,33 @@ public class BoardFilterActivity extends BaseActivity<ActivityBoardFilterBinding
         initView();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
+    }
+
     private void initView() {
-        actionBarBinding.buttonLeft.setOnClickListener(new View.OnClickListener() {
+        binding.buttonBack.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 finish();
+                overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
+            }
+        });
+
+        binding.searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Intent intent = new Intent();
+                    intent.putExtra("searchKey", binding.searchText.getText().toString());
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
+                    return true;
+                }
+                return false;
             }
         });
     }

@@ -30,7 +30,7 @@ public class BindAdapter {
 
         String[] TAB_NAME = {
                 "인기순",
-                "전체순"
+                "최신순"
         };
 
         for(int i = 0 ; i < NUM_OF_BOARD_BUTTONS ; i++){

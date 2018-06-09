@@ -1,6 +1,7 @@
 package com.iindicar.indicar.a1_main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -28,4 +29,9 @@ public class Tutorial extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
+    }
 }

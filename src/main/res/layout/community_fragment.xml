@@ -13,10 +13,10 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/layout_search_box_container"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -26,9 +26,10 @@
                 android:id="@+id/tab_board_type"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
+                android:layout_gravity="center"
                 android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                app:tabBackground="@color/colorPrimary"
+                android:background="@drawable/border_underline"
+                app:tabBackground="@drawable/border_underline"
                 app:tabGravity="center"
                 app:tabMinWidth="120dp"
                 app:tabIndicatorColor="#454545"
@@ -36,7 +37,7 @@
                 app:tabSelectedTextColor="#454545"
                 app:tabTextColor="#828282"/>
 
-        </RelativeLayout>
+        </FrameLayout>
 
 
         <android.support.v4.view.ViewPager

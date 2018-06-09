@@ -261,6 +261,7 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context,Tutorial.class));
+                getActivity().overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
             }
         });
 
