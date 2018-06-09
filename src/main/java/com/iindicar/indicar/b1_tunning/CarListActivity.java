@@ -10,6 +10,8 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.text.Editable;
@@ -105,10 +107,15 @@ public class CarListActivity extends BaseActivity<ActivityCarListBinding> {
         // 나머지 : 크기 작게
         binding.tabLogo.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
+            public void onTabSelected(final TabLayout.Tab tab) {
                 ImageView imageView = tab.getCustomView().findViewById(R.id.logo_image);
                 if(imageView != null){
+                    int width = imageView.getLayoutParams().width;
                     imageView.setPadding(0, 0, 0, 0);
+                    ColorMatrix matrix = new ColorMatrix();
+                    matrix.setSaturation(0.8F); //0이면 greyscale
+                    ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+                    imageView.setColorFilter(cf);
                 }
                 if(tab.getTag() != null) {
                     getSelectedCarList(tab.getTag().toString());
@@ -120,6 +127,10 @@ public class CarListActivity extends BaseActivity<ActivityCarListBinding> {
                 ImageView imageView = tab.getCustomView().findViewById(R.id.logo_image);
                 if(imageView != null){
                     imageView.setPadding(0, 60, 0, 0);
+                    ColorMatrix matrix = new ColorMatrix();
+                    matrix.setSaturation(0.3F);                        //0이면 grayscale
+                    ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+                    imageView.setColorFilter(cf);
                 }
             }
 
@@ -128,6 +139,10 @@ public class CarListActivity extends BaseActivity<ActivityCarListBinding> {
                 ImageView imageView = tab.getCustomView().findViewById(R.id.logo_image);
                 if(imageView != null){
                     imageView.setPadding(0, 0, 0, 0);
+                    ColorMatrix matrix = new ColorMatrix();
+                    matrix.setSaturation(0.8F); //0이면 greyscale
+                    ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+                    imageView.setColorFilter(cf);
                 }
             }
         });
@@ -138,6 +153,10 @@ public class CarListActivity extends BaseActivity<ActivityCarListBinding> {
             ImageView imageView = tabView.findViewById(R.id.logo_image);
             imageView.setImageResource(CAR_LOGO_IMAGE_LIST[i]);
             imageView.setPadding(0, 60, 0, 0);
+            ColorMatrix matrix = new ColorMatrix();
+            matrix.setSaturation(0.3F); //0이면 greyscale
+            ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+            imageView.setColorFilter(cf);
             tab.setCustomView(tabView);
             tab.setTag(CAR_LOGO_NAME_LIST[i]);
             binding.tabLogo.addTab(tab);
@@ -169,6 +188,9 @@ public class CarListActivity extends BaseActivity<ActivityCarListBinding> {
                 String filterText = editable.toString();
                 searchInput.set(filterText);
                 ((CarListAdapter) binding.gridViewCarList.getAdapter()).getFilter().filter(filterText);
+                if(filterText.length() == 0){
+                    binding.searchText.clearFocus();
+                }
             }
         });
     }

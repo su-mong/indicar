@@ -26,6 +26,8 @@ import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.a1_main.LoginActivity;
+import com.iindicar.indicar.a1_main.MainActivity;
+import com.iindicar.indicar.b2_community.BoardFilterActivity;
 import com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity;
 import com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditActivity;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
@@ -45,7 +47,7 @@ import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
  */
 
 public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> implements BoardListNavigator {
-    private static final String TAG = BoardListFragment.class.getSimpleName();
+    private final int REQUEST_BOARD_FILTER = 111; // 게시판 필터링
 
     private int boardTab;
     private BoardListViewModel viewModel;
@@ -77,8 +79,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         viewModel.boardTab.set(boardTab);
         viewModel.setNavigator(this);
         viewModel.start();
-
-
     }
 
 
@@ -202,6 +202,14 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                     return true;
                 }
                 return false;
+            }
+        });
+
+        ((MainActivity)getActivity()).getActionBarBinding().buttonLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, BoardFilterActivity.class);
+                startActivityForResult(intent, REQUEST_BOARD_FILTER);
             }
         });
     }

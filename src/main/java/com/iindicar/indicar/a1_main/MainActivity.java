@@ -25,6 +25,7 @@ import com.gun0912.tedpermission.TedPermission;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.b1_tunning.TunningFragment;
+import com.iindicar.indicar.b2_community.BoardFilterActivity;
 import com.iindicar.indicar.b2_community.CommunityFragment;
 import com.iindicar.indicar.b3_shopping.ShoppingFragment;
 import com.iindicar.indicar.b4_account.AccountFragment;
@@ -40,6 +41,7 @@ import static com.iindicar.indicar.Constant.SHOPPING;
 import static com.iindicar.indicar.Constant.TUNING;
 
 public class MainActivity extends BaseActivity<MainActivityBinding> {
+
 
     //뒤로가기 버튼을 두 번 클릭시 종료. 이를 구현하기 위한 변수를 선언한다.
     private final long FINISH_INTERVAL_TIME = 2000;
@@ -79,11 +81,11 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
 
         //푸시알람을 받아오는 부분을 구현한다.
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        if (prefLogin.getInt("EventAlarm", 1) == 1) {
+        if (!prefLogin.getBoolean("eventAlarm", false)) {
             FirebaseMessaging.getInstance().subscribeToTopic("Event");
             FirebaseInstanceId.getInstance().getToken();
         }
-        if (prefLogin.getInt("OtherAlarm", 0) == 1) {
+        if (!prefLogin.getBoolean("otherAlarm", false)) {
             FirebaseMessaging.getInstance().subscribeToTopic("Other");
             FirebaseInstanceId.getInstance().getToken();
         }
@@ -141,18 +143,22 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         if (TUNING.get().equals(currentTab.get())) {
             fragment = new TunningFragment();
             centerImageId.set(R.drawable.logo_tuning);
+            leftImageId.set(0);
 
         } else if (COMMUNITY.get().equals(currentTab.get())) {
             fragment = new CommunityFragment();
             centerImageId.set(R.drawable.logo_community);
+            leftImageId.set(R.drawable.btn_search);
 
         } else if (SHOPPING.get().equals(currentTab.get())) {
             fragment = new ShoppingFragment();
             centerImageId.set(R.drawable.logo_shopping);
+            leftImageId.set(0);
 
         } else if (ACCOUNT.get().equals(currentTab.get())) {
             fragment = new AccountFragment();
             centerImageId.set(R.drawable.logo_account);
+            leftImageId.set(0);
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

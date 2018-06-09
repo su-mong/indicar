@@ -52,6 +52,10 @@ public abstract class BaseActivity<B extends ViewDataBinding> extends AppCompatA
         return binding;
     }
 
+    public ActionBarLayoutBinding getActionBarBinding() {
+        return actionBarBinding;
+    }
+
     protected void initKeyBoardManager() {
         keyBoardManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
     }

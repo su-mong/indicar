@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.iindicar.indicar.b2_community.CommunityFragment;
@@ -28,8 +29,8 @@ public class BindAdapter {
         tabLayout.setupWithViewPager(viewPager);
 
         String[] TAB_NAME = {
-                "인기",
-                "전체"
+                "인기순",
+                "전체순"
         };
 
         for(int i = 0 ; i < NUM_OF_BOARD_BUTTONS ; i++){
@@ -53,7 +54,7 @@ public class BindAdapter {
     }
 
     @BindingAdapter({"setSelected"})
-    public static void setSelected(ImageButton imageView, Boolean bool){
+    public static void setSelected(View imageView, Boolean bool){
         imageView.setSelected(bool);
     }
 

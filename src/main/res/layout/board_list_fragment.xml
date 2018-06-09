@@ -80,6 +80,7 @@
                         android:id="@+id/recycler_view_board_container"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:overScrollMode="never"
                         android:background="@color/colorPrimaryBackground"
                         android:scrollbars="none"
                         app:binding="@{viewModel}" />
