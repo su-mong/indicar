@@ -9,159 +9,184 @@
     </data>
 
     <LinearLayout
-        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorPrimary">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:background="@drawable/border_underline">
+
+            <ImageButton
+                style="@style/imageButtonCustomStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/btn_back"/>
 
             <EditText
+                android:id="@+id/search_text"
                 android:singleLine="true"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="30dp"
                 android:textColor="@color/colorFont"
-                android:background="@drawable/img_underline"
-                android:textSize="14sp"
+                android:textSize="15sp"
+                android:imeOptions="actionSearch"
                 android:text="@{activity.searchInputText}"
+                android:background="@android:color/transparent"
                 android:hint="검색어를 입력하세요."/>
 
             <ImageButton
                 style="@style/imageButtonCustomStyle"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:src="@mipmap/icon_search"/>
-        </LinearLayout>
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_board_type_label"
-            android:textSize="13sp"
-            android:textColor="@color/colorFont"/>
+        </LinearLayout>
 
         <LinearLayout
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="25dp"
-                android:text="전체"
-                android:textSize="11.5sp"
-                app:setSelected="@{activity.isBoardFilterSelected[0]}"
-                android:onClick="@{(v) -> activity.onBoardFilterSelected(0)}"
-                android:background="@drawable/filter_selector"/>
-            <Button
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="25dp"
-                android:text="자유, 일상"
-                android:textSize="11.5sp"
-                app:setSelected="@{activity.isBoardFilterSelected[1]}"
-                android:onClick="@{(v) -> activity.onBoardFilterSelected(1)}"
-                android:background="@drawable/filter_selector"/>
-            <Button
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="25dp"
-                android:text="중고, 판매"
-                android:textSize="11.5sp"
-                app:setSelected="@{activity.isBoardFilterSelected[2]}"
-                android:onClick="@{(v) -> activity.onBoardFilterSelected(2)}"
-                android:background="@drawable/filter_selector"/>
-            <Button
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="25dp"
-                android:text="시공, DIY"
-                android:textSize="11.5sp"
-                app:setSelected="@{activity.isBoardFilterSelected[3]}"
-                android:onClick="@{(v) -> activity.onBoardFilterSelected(3)}"
-                android:background="@drawable/filter_selector"/>
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-        <TextView
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/filter_car_type_label"
-            android:textSize="13sp"
-            android:textColor="@color/colorFont"/>
-
-        <FrameLayout
-            android:padding="5dp"
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:onClick="@{(v) -> activity.onCarSearchClicked()}"
-            android:background="@drawable/border_box_shadow">
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:singleLine="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter_board_type_label"
+                android:textSize="13sp"
+                android:textColor="@color/colorFont"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/colorFont"
-                android:textSize="14sp"
-                android:onClick="@{(v) -> activity.onCarSearchClicked()}"
-                android:text="차량 또는 브랜드를 검색하세요."/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <ImageView
-                style="@style/imageButtonCustomStyle"
-                android:layout_gravity="right|center_vertical"
-                android:padding="3dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:onClick="@{(v) -> activity.onCarSearchClicked()}"
-                android:src="@drawable/btn_search"/>
-
-        </FrameLayout>
-
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+                <Button
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="25dp"
+                    android:text="전체"
+                    android:textSize="11.5sp"
+                    app:setSelected="@{activity.isBoardFilterSelected[0]}"
+                    android:onClick="@{(v) -> activity.onBoardFilterSelected(0)}"
+                    android:background="@drawable/filter_selector"/>
+                <Button
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="25dp"
+                    android:text="자유, 일상"
+                    android:textSize="11.5sp"
+                    app:setSelected="@{activity.isBoardFilterSelected[1]}"
+                    android:onClick="@{(v) -> activity.onBoardFilterSelected(1)}"
+                    android:background="@drawable/filter_selector"/>
+                <Button
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="25dp"
+                    android:text="중고, 판매"
+                    android:textSize="11.5sp"
+                    app:setSelected="@{activity.isBoardFilterSelected[2]}"
+                    android:onClick="@{(v) -> activity.onBoardFilterSelected(2)}"
+                    android:background="@drawable/filter_selector"/>
+                <Button
+                    android:layout_margin="5dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="25dp"
+                    android:text="시공, DIY"
+                    android:textSize="11.5sp"
+                    app:setSelected="@{activity.isBoardFilterSelected[3]}"
+                    android:onClick="@{(v) -> activity.onBoardFilterSelected(3)}"
+                    android:background="@drawable/filter_selector"/>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
             <TextView
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/colorFont"
-                android:text="선택된 차량 : "/>
+                android:text="@string/filter_car_type_label"
+                android:textSize="13sp"
+                android:textColor="@color/colorFont"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:padding="5dp"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/colorFont"
-                android:text="@{activity.selectedCarFilter}"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:onClick="@{(v) -> activity.onCarSearchClicked()}"
+                android:background="@drawable/border_box_shadow">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorFont"
+                    android:textSize="14sp"
+                    android:onClick="@{(v) -> activity.onCarSearchClicked()}"
+                    android:text="차량 또는 브랜드를 검색하세요."/>
+
+                <ImageView
+                    style="@style/imageButtonCustomStyle"
+                    android:layout_gravity="right|center_vertical"
+                    android:padding="3dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:onClick="@{(v) -> activity.onCarSearchClicked()}"
+                    android:src="@drawable/btn_search"/>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorFont"
+                    android:text="선택된 차량 : "/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorFont"
+                    android:text="@{activity.selectedCarFilter}"/>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
-
 
     </LinearLayout>
 

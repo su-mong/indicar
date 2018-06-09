@@ -29,8 +29,6 @@ public class CustomAlertDialog extends Dialog {
     public final ObservableField<String> title = new ObservableField<>();
     public final ObservableField<String> subTitle = new ObservableField<>();
     public final ObservableInt imageId = new ObservableInt(R.drawable.ic_action_alert);
-    public final ObservableInt positiveImageId = new ObservableInt(R.drawable.btn_agree);
-    public final ObservableInt negativeImageId = new ObservableInt(R.drawable.btn_cancel);
 
     private int width = 0;
     private int height = 0;
@@ -122,20 +120,8 @@ public class CustomAlertDialog extends Dialog {
         return this;
     }
 
-    public CustomAlertDialog setPositiveButton(int buttonId, View.OnClickListener onClickListener){
-        this.positiveButtonListener = onClickListener;
-        this.positiveImageId.set(buttonId);
-        return this;
-    }
-
     public CustomAlertDialog setNegativeButtonListener(View.OnClickListener onClickListener){
         this.negativeButtonListener = onClickListener;
-        return this;
-    }
-
-    public CustomAlertDialog setNegativeButton(int buttonId, View.OnClickListener onClickListener){
-        this.negativeButtonListener = onClickListener;
-        this.negativeImageId.set(buttonId);
         return this;
     }
 

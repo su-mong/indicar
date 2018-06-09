@@ -1,0 +1,309 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="fragment"
+            type="com.iindicar.indicar.b4_account.AccountFragment"/>
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:scrollbarSize="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="30dp"
+            android:background="@drawable/background_account">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="무엇을 도와드릴까요?"
+                android:textSize="27sp"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="How can I help you?"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"/>
+
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile."
+                        android:textStyle="italic|bold"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorWhite"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="80dp"
+                        android:layout_height="70dp">
+
+                        <ImageButton
+                            style="@style/commentButtonCustomStyle"
+                            android:id="@+id/ivA_profileImage"
+                            android:layout_gravity="start|bottom"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@drawable/border_circle"/>
+
+                        <ImageButton
+                            style="@style/imageButtonCustomStyle"
+                            android:id="@+id/btnA_gotoProfile"
+                            android:layout_gravity="end|bottom"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="3dp"
+                            android:background="@drawable/account_setting"/>
+
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:background="@drawable/border_leftline">
+
+                        <TextView
+                            android:id="@+id/tvA_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textSize="20sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:id="@+id/tvA_email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:id="@+id/tvA_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textSize="12sp"
+                            android:text="주소 없음"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Category."
+                        android:textStyle="italic|bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorWhite"/>
+
+                    <LinearLayout
+                        android:id="@+id/btnA_basket"
+                        android:layout_marginBottom="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="장바구니"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Shopping Basket"
+                            android:textSize="13sp"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btnA_howtouse"
+                        android:layout_marginBottom="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="이용방법"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="How to use"
+                            android:textSize="13sp"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btnA_alliance"
+                        android:layout_marginBottom="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="제휴요청"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Alliance Inquiry"
+                            android:textSize="13sp"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btnA_logout"
+                        android:layout_marginBottom="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="로그아웃"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Log out"
+                            android:textSize="13sp"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginBottom="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trace."
+                        android:textStyle="italic|bold"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorWhite"/>
+
+                    <LinearLayout
+                        android:id="@+id/btnA_like"
+                        android:layout_marginBottom="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="좋아요"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Like"
+                            android:textSize="13sp"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btnA_writing"
+                        android:layout_marginBottom="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="내 글"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="My Writings"
+                            android:textSize="13sp"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btnA_comment"
+                        android:layout_marginBottom="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="내 댓글"
+                            android:textSize="15sp"
+                            android:textColor="@color/colorWhite"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="My Comments"
+                            android:textSize="13sp"
+                            android:textColor="@color/colorWhite"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</layout>

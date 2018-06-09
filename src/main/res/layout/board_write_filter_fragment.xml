@@ -22,7 +22,7 @@
             style="@style/imageButtonCustomStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/button_share" />
+            android:src="@drawable/background_write_main" />
 
         <LinearLayout
             android:layout_width="match_parent"

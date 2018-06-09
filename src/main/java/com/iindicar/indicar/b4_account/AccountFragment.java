@@ -33,7 +33,7 @@ import com.iindicar.indicar.R;
 import com.iindicar.indicar.a1_main.LoginActivity;
 import com.iindicar.indicar.a1_main.MainActivity;
 import com.iindicar.indicar.a1_main.Tutorial;
-import com.iindicar.indicar.databinding.FragmentAccountBinding;
+import com.iindicar.indicar.databinding.FragmentAccount2Binding;
 import com.iindicar.indicar.utils.ConstClass;
 import com.iindicar.indicar.utils.HttpClient;
 import com.kakao.auth.Session;
@@ -44,7 +44,7 @@ import com.loopj.android.http.RequestParams;
 
 import cz.msebera.android.httpclient.Header;
 
-public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
+public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
     String partnerCategory;
     public AccountFragment() {
         // Required empty public constructor
@@ -52,7 +52,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_account;
+        return R.layout.fragment_account2;
     }
 
     @Override
