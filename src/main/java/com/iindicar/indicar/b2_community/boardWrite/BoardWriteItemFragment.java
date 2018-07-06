@@ -1,8 +1,12 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +24,9 @@ import com.iindicar.indicar.utils.IPickPhotoHelper;
 import com.iindicar.indicar.utils.PickPhotoHelper;
 import com.iindicar.indicar.utils.RealPathUtil;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +45,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     private ViewPagerLayoutManager layoutManager;
     private PickPhotoHelper pickPhotoHelper;
     private Teleprinter keyboard;
-
+private int wantWidth=10;
     @Override
     protected int getLayoutId() {
         return R.layout.board_write_item_fragment;
@@ -175,6 +182,23 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
         pickPhotoHelper.pickFromCamera(new IPickPhotoHelper.loadPhotoCallBack<Uri>() {
             @Override
             public void onPhotoLoaded(Uri photoUri,String imagePath) {
+                Bitmap b= BitmapFactory.decodeFile(imagePath);
+                float originalWidth = b.getWidth();
+                float originalHeight = b.getHeight();
+
+                int wantHeight= (int) ((int)wantWidth*(originalHeight/originalWidth));
+                Bitmap out = Bitmap.createScaledBitmap(b, wantWidth, wantHeight, false);
+
+                File file = new File(imagePath);
+                FileOutputStream fOut;
+                try {
+                    fOut = new FileOutputStream(file);
+                    out.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                    fOut.flush();
+                    fOut.close();
+                    b.recycle();
+                    out.recycle();
+                } catch (Exception e) {}
                 adapter.getItemList().get(viewModel.currentPage.get()).setImageUrl(photoUri);
                 adapter.getItemList().get(viewModel.currentPage.get()).setFilePath(imagePath);
                 adapter.notifyItemChanged(viewModel.currentPage.get());
@@ -198,15 +222,32 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
         pickPhotoHelper.pickFromAlbum(MAX_PAGE - viewModel.totalPage.get() + 1, new IPickPhotoHelper.loadPhotoListCallBack<Uri>() {
             @Override
             public void onPhotoListLoaded(List<Uri> photoUriList) {
-
                 final int IMAGE_COUNT = photoUriList.size(); // 리스트 개수
                 viewModel.totalPage.set(viewModel.totalPage.get() + IMAGE_COUNT - 1);
 
                 ArrayList<WriteFileVO> listFromAlbum = new ArrayList<>();
 
                 for(int i = 0 ; i < IMAGE_COUNT ; i++){
+
                     WriteFileVO vo = new WriteFileVO();
                     vo.setImageUrl(photoUriList.get(i));
+                    Bitmap b= BitmapFactory.decodeFile(RealPathUtil.getRealPath(context,photoUriList.get(i)));
+                    float originalWidth = b.getWidth();
+                    float originalHeight = b.getHeight();
+
+                    int wantHeight= (int) ((int)wantWidth*(originalHeight/originalWidth));
+                    Bitmap out = Bitmap.createScaledBitmap(b, wantWidth, wantHeight, false);
+
+                    File file = new File(RealPathUtil.getRealPath(context,photoUriList.get(i)));
+                    FileOutputStream fOut;
+                    try {
+                        fOut = new FileOutputStream(file);
+                        out.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                        fOut.flush();
+                        fOut.close();
+                        b.recycle();
+                        out.recycle();
+                    } catch (Exception e) {}
                     vo.setFilePath(RealPathUtil.getRealPath(context,photoUriList.get(i)));
                     listFromAlbum.add(vo);
                 }
