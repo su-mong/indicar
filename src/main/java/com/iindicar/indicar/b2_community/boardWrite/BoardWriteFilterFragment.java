@@ -1,15 +1,22 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.b2_community.CarFilterActivity;
 import com.iindicar.indicar.databinding.BoardWriteFilterFragmentBinding;
+import com.iindicar.indicar.utils.LocaleHelper;
+
+import io.fabric.sdk.android.Fabric;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -21,6 +28,8 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
 
     private BoardWriteEditViewModel viewModel;
 
+    Resources resources;
+
     @Override
     protected int getLayoutId() {
         return R.layout.board_write_filter_fragment;
@@ -31,8 +40,28 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Fabric.with(getActivity(),new Crashlytics());
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Context boardWriteFilterContext = LocaleHelper.setLocale(getActivity());
+        resources = boardWriteFilterContext.getResources();
+
+        //언어에 맞는 뷰 셋팅
+        binding.imageviewBWFTitle.setImageDrawable(resources.getDrawable(R.drawable.background_write_main));
+        binding.textTypeofvehicle.setImageDrawable(resources.getDrawable(R.drawable.text_write_category_car));
+        binding.textTypeofpost.setImageDrawable(resources.getDrawable(R.drawable.text_write_category_board));
+        binding.buttonSearchCar.setImageDrawable(resources.getDrawable(R.drawable.img_search_bar));
+        binding.textCarName.setText(resources.getString(R.string.selectNoCar));
+        binding.buttonDayLife.setImageDrawable(resources.getDrawable(R.drawable.write_filter_daylife_selector));
+        binding.buttonMarket.setImageDrawable(resources.getDrawable(R.drawable.write_filter_market_selector));
+        binding.buttonDiy.setImageDrawable(resources.getDrawable(R.drawable.write_filter_diy_selector));
+
         binding.setViewModel(viewModel);
         binding.buttonSearchCar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,8 +73,7 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
         binding.buttonMarket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "준비중입니다.", Toast.LENGTH_SHORT).show();
-
+                Snackbar.make(binding.getRoot(), resources.getString(R.string.strNotPrepare), Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -57,7 +85,7 @@ public class BoardWriteFilterFragment extends BaseFragment<BoardWriteFilterFragm
             if (resultCode == RESULT_OK) {
                 String returnValue = data.getStringExtra("car_name");
                 viewModel.setCarName(returnValue);
-                binding.textCarName.setText("선택된 차량 : " + returnValue);
+                binding.textCarName.setText(resources.getString(R.string.selectCar) + returnValue);
             }
         }
     }

@@ -33,6 +33,7 @@
 
 
                 <ImageView
+                    android:id="@+id/ivAP_Title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
@@ -66,9 +67,10 @@
                     android:paddingRight="5dp">
 
                     <TextView
+                        android:id="@+id/tvAP_category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="업체 분류"
+                        android:text="@string/strPartner1"
                         android:textSize="12dp" />
 
                     <LinearLayout
@@ -101,9 +103,10 @@
                     android:paddingLeft="5dp">
 
                     <TextView
+                        android:id="@+id/tvAP_company"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="업체,회사,기관명칭"
+                        android:text="@string/strPartner2"
                         android:textSize="12dp" />
 
                     <LinearLayout
@@ -136,9 +139,10 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvAP_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="연락처 혹은 이메일 주소"
+                    android:text="@string/strPartner3"
                     android:textSize="12dp" />
 
                 <LinearLayout
@@ -163,9 +167,10 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvAP_reason"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="제휴요청 사유"
+                android:text="@string/strPartner4"
                 android:textSize="12dp" />
 
             <LinearLayout

@@ -17,8 +17,8 @@ public class CarDB extends SQLiteOpenHelper {
     private Context context;
 
     //흔한 생성자.
-    public CarDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public CarDB(Context context, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, "carDB", factory, version);
         this.context = context;
     }
 
@@ -28,23 +28,33 @@ public class CarDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //String보다 StringBuffer가 Query 만들기 편하다.
         StringBuffer sql = new StringBuffer();
-        sql.append("CREATE TABLE carDB (");
+        sql.append("CREATE TABLE carDBkor (");
         sql.append("specName TEXT,");
         sql.append("level integer(1),");
         sql.append("parentName TEXT,");
-        sql.append("brandName TEXT,");
+        //sql.append("brandName TEXT,");
         sql.append("useChecker Integer(1))");
 
         //String보다 StringBuffer가 Query 만들기 편하다.
         StringBuffer sql2 = new StringBuffer();
-        sql2.append("CREATE TABLE searchDB (");
+        sql2.append("CREATE TABLE carDBeng (");
         sql2.append("specName TEXT,");
         sql2.append("level integer(1),");
         sql2.append("parentName TEXT,");
+        //sql2.append("brandName TEXT,");
         sql2.append("useChecker Integer(1))");
+
+        StringBuffer sql3 = new StringBuffer();
+        sql3.append("CREATE TABLE searchDB (");
+        sql3.append("specName TEXT,");
+        sql3.append("level integer(1),");
+        sql3.append("parentName TEXT,");
+        sql3.append("useChecker Integer(1))");
+
         try {
             db.execSQL(sql.toString());
             db.execSQL(sql2.toString());
+            db.execSQL(sql3.toString());
         } catch (Exception e) {
             Toast.makeText(context, "IDVC ERROR: " + e.toString(), Toast.LENGTH_SHORT).show();
         }
@@ -58,7 +68,43 @@ public class CarDB extends SQLiteOpenHelper {
     }
 
     //자동차 데이터를 db에 넣는 함수
-    public void addCar(String specName, int level, String parentName, int useChecker) {
+    public void addCarKor(String specName, int level, String parentName, int useChecker) {
+        //1. 쓸 수 있는 DB객체를 가져온다.
+        SQLiteDatabase db = getWritableDatabase();
+
+        //2. 데이터를 넣는 쿼리문 작성. 단 ID는 자동으로 증가하기 때문에 넣지 않는다.
+        StringBuffer sql = new StringBuffer();
+        sql.append("INSERT INTO carDBkor ");
+        sql.append("(specName, level, parentName, useChecker) VALUES (");
+        sql.append("'" + specName + "', ");
+        sql.append(Integer.toString(level) + ", ");
+        sql.append("'" + parentName + "', ");
+        sql.append(Integer.toString(useChecker) + ");");
+
+        //3. 쿼리문 실행
+        db.execSQL(sql.toString());
+    }
+
+    //자동차 데이터를 db에 넣는 함수
+    public void addCarEng(String specName, int level, String parentName, int useChecker) {
+        //1. 쓸 수 있는 DB객체를 가져온다.
+        SQLiteDatabase db = getWritableDatabase();
+
+        //2. 데이터를 넣는 쿼리문 작성. 단 ID는 자동으로 증가하기 때문에 넣지 않는다.
+        StringBuffer sql = new StringBuffer();
+        sql.append("INSERT INTO carDBeng ");
+        sql.append("(specName, level, parentName, useChecker) VALUES (");
+        sql.append("'" + specName + "', ");
+        sql.append(Integer.toString(level) + ", ");
+        sql.append("'" + parentName + "', ");
+        sql.append(Integer.toString(useChecker) + ");");
+
+        //3. 쿼리문 실행
+        db.execSQL(sql.toString());
+    }
+
+    //자동차 데이터를 db에 넣는 함수
+    /*public void addCar(String specName, int level, String parentName, int useChecker) {
         //1. 쓸 수 있는 DB객체를 가져온다.
         SQLiteDatabase db = getWritableDatabase();
 
@@ -90,27 +136,38 @@ public class CarDB extends SQLiteOpenHelper {
 
         //3. 쿼리문 실행
         db.execSQL(sql.toString());
-    }
+    }*/
 
     //테이블을 다 날리는 함수
     public void deleteTable() {
         //1. 쓸 수 있는 DB객체를 가져온다.
         SQLiteDatabase db = getWritableDatabase();
 
-        //2. carDB 테이블이 존재하는지 확인.
+        //2. carDBkor 테이블이 존재하는지 확인.
         StringBuffer sql1 = new StringBuffer();
-        sql1.append("SELECT name FROM sqlite_master WHERE type='table' AND name ='carDB'");
+        sql1.append("SELECT name FROM sqlite_master WHERE type='table' AND name ='carDBkor'");
         Cursor c = db.rawQuery(sql1.toString(), null);
         if (c.moveToFirst()) {
             //3. 데이터를 날리는 쿼리문 작성.
             StringBuffer sql2 = new StringBuffer();
-            sql2.append("delete from carDB");
+            sql2.append("delete from carDBkor");
             db.execSQL(sql2.toString());
+        }
+
+        //2. carDBeng 테이블이 존재하는지 확인.
+        StringBuffer sql3 = new StringBuffer();
+        sql3.append("SELECT name FROM sqlite_master WHERE type='table' AND name ='carDBeng'");
+        Cursor c1 = db.rawQuery(sql3.toString(), null);
+        if (c1.moveToFirst()) {
+            //3. 데이터를 날리는 쿼리문 작성.
+            StringBuffer sql4 = new StringBuffer();
+            sql4.append("delete from carDBeng");
+            db.execSQL(sql4.toString());
         }
     }
 
     //차량 검색 결과를 반영하는 함수
-    public void searchResult(ArrayList<String> parent, ArrayList<ArrayList<String>> child) {
+    /*public void searchResult(ArrayList<String> parent, ArrayList<ArrayList<String>> child) {
         //1. searchDB 내용을 지운다.
         SQLiteDatabase db = getWritableDatabase();
 
@@ -145,5 +202,5 @@ public class CarDB extends SQLiteOpenHelper {
                 db.execSQL(sql4.toString());
             }
         }
-    }
+    }*/
 }

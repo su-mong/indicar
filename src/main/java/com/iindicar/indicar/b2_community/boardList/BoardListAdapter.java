@@ -1,6 +1,7 @@
 package com.iindicar.indicar.b2_community.boardList;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
@@ -16,6 +18,7 @@ import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.databinding.BoardAllItemBinding;
 import com.iindicar.indicar.databinding.BoardPopularItemBinding;
+import com.iindicar.indicar.utils.LocaleHelper;
 
 import java.util.List;
 
@@ -29,15 +32,23 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
     public static final int BOARD_ALL = 1;
     private final int BOARD_TYPE;
 
+    Resources resources;
+
     public BoardListAdapter(Context context, List<BoardDetailVO> list, int boardType) {
         super(context);
         itemList = list;
         this.BOARD_TYPE = boardType;
+
+        Context context1 = LocaleHelper.setLocale(context);
+        resources = context1.getResources();
     }
 
     public BoardListAdapter(Context context, int boardType) {
         super(context);
         this.BOARD_TYPE = boardType;
+
+        Context context1 = LocaleHelper.setLocale(context);
+        resources = context1.getResources();
     }
 
     @Override
@@ -109,6 +120,10 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
             return new BoardPopularViewHolder(view);
         } else {
             View view = LayoutInflater.from(context).inflate(R.layout.board_all_item, null);
+            TextView tvBA_Like = view.findViewById(R.id.tvBA_Like);
+            tvBA_Like.setText(resources.getString(R.string.strBoardAlllike));
+            TextView tvBA_Comment = view.findViewById(R.id.tvBA_Comment);
+            tvBA_Comment.setText(resources.getString(R.string.strBoardAllcomment));
             return new BoardAllViewHolder(view);
         }
     }

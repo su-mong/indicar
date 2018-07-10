@@ -1,50 +1,44 @@
 package com.iindicar.indicar.a1_main;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
-import android.databinding.ObservableInt;
+import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
-import com.iindicar.indicar.databinding.SplashActivityBinding;
 import com.iindicar.indicar.utils.CarDB;
-import com.iindicar.indicar.utils.ConstClass;
-import com.kakao.auth.Session;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Locale;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 public class SplashActivity extends AppCompatActivity {
     //회원가입 메소드
@@ -56,11 +50,38 @@ public class SplashActivity extends AppCompatActivity {
     String dbVersion;
     String dbVersionOnline;
 
+    LinearLayout rootView; Resources resources;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_splash);
+
+        //앱 설치 후 첫 실행인지를 체크한다. 첫 실행이면 알람 셋팅과 국가 셋팅을 미리 해 둔다.
+        SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("firstexe", MODE_PRIVATE);
+        if (pref.getString("index", "").equals("")) {
+            /*Intent i = new Intent(FirstActivity.this,GuideActivity.class);
+            startActivity(i);*/
+            Locale systemLocale = getApplicationContext().getResources().getConfiguration().locale;
+            SharedPreferences.Editor editor2 = prefLogin.edit();
+            editor2.putInt("EventAlarm", 1);
+            editor2.putInt("OtherAlarm", 0);
+            editor2.putString("locale",systemLocale.getLanguage()); //ko이거나 아니거나.
+            editor2.commit();
+        }
+
+        Context splachContext = LocaleHelper.setLocale(getApplicationContext());
+        resources = splachContext.getResources();
+
+        rootView = findViewById(R.id.ll_splash_root);
+        TextView tvS_wait = findViewById(R.id.tvS_wait);
+        ImageView ivS_title = findViewById(R.id.ivS_title);
+        tvS_wait.setText(resources.getString(R.string.Splash_wait));
+        ivS_title.setImageDrawable(resources.getDrawable(R.drawable.splash_center_image));
+
         ImageView progress = (ImageView) findViewById(R.id.anim_loading);
         AnimationDrawable frameAnimation = (AnimationDrawable) progress.getDrawable();
         frameAnimation.start();
@@ -79,21 +100,17 @@ public class SplashActivity extends AppCompatActivity {
 
         //인터넷 상태 검사
         if (isNetworkConnected() == false) {
-            Toast.makeText(SplashActivity.this, ConstClass.strNoInternet, Toast.LENGTH_SHORT).show();
+            Toast.makeText(SplashActivity.this, getString(R.string.strNoInternet), Toast.LENGTH_SHORT).show();
             finish();
         } else {//로그인 여부 확인
             try {
-//                Thread.sleep(3000);
-            } catch (Exception e) {
-            }
-            try {
                 new versionCheck().execute();
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), ConstClass.strServerCheck, Toast.LENGTH_SHORT).show();
+                Log.e("Indicar Tuning Error",e.toString());
+                Toast.makeText(getApplicationContext(), getString(R.string.strServerCheck), Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
-
-
     }
 
     //앱 및 DB 버전 체크
@@ -105,7 +122,7 @@ public class SplashActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder().url(ConstClass.versionLink).get().build();
+                Request request = new Request.Builder().url(getString(R.string.versionLink)).get().build();
                 response = client.newCall(request).execute();
                 return response.body().string();
             } catch (Exception e) {
@@ -123,7 +140,6 @@ public class SplashActivity extends AppCompatActivity {
                 dbVersionOnline = jsonObject.getString("carSpecVersion");
 
                 SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefLogin.edit();
 
                 dbVersion = prefLogin.getString("dbVersion", "1");
                 PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
@@ -135,32 +151,50 @@ public class SplashActivity extends AppCompatActivity {
                     intent.setData(Uri.parse(marketuri));
                     finish();
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(), ConstClass.strVersionErr, Toast.LENGTH_SHORT).show();
-                }
-                if (!dbVersion.equals(dbVersionOnline)) {
-                    editor.putString("dbVersion", dbVersionOnline);
-                    editor.commit();
-                    new LoadingExe().execute();
+                    Toast.makeText(getApplicationContext(), getString(R.string.strVersionErr), Toast.LENGTH_SHORT).show();
                 } else {
-                    loginCheck();
+                    if (!dbVersion.equals(dbVersionOnline)) {
+                        new CarDBLoad().execute();
+                    } else {
+                        loginCheck();
+                    }
                 }
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "서버 점검중입니다. 다시 시도해 주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.strServerCheck), Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
     }
 
     //차량 데이터 받아와서 db에 기록하기
-    public class LoadingExe extends AsyncTask<String, Void, String> {
+    public class CarDBLoad extends AsyncTask<String, Void, String> {
 
         Response response;
+        String resultEng;
 
         @Override
         protected String doInBackground(String... params) {
             try {
+                OkHttpClient clientEng = new OkHttpClient();
+                RequestBody bodyEng = new FormBody.Builder()
+                        .add("branch_id", "eng")
+                        .build();
+                Request requestEng = new Request.Builder()
+                        .url("http://13.125.173.118:9000/carSpec/list")
+                        .post(bodyEng)
+                        .build();
+                response = clientEng.newCall(requestEng).execute();
+                resultEng = response.body().string();
+
+
                 OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder().url("http://13.125.173.118:8080/carSpec/list").get().build();
+                RequestBody body = new FormBody.Builder()
+                        .add("branch_id", "kor")
+                        .build();
+                Request request = new Request.Builder()
+                        .url(getString(R.string.carDBLink))
+                        .post(body)
+                        .build();
                 response = client.newCall(request).execute();
                 return response.body().string();
             } catch (Exception e) {
@@ -171,38 +205,78 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             try {
-                carDB = new CarDB(getApplicationContext(), "carDB", null, 1);
+                //Log.d("Indicar Tuning",result);
+                //Log.d("Indicar Tuning",resultEng);
+                carDB = new CarDB(getApplicationContext(), null, 1);
                 carDB.getWritableDatabase();
                 carDB.deleteTable();
 
-                JSONArray jsonArray = new JSONArray(result);
-                int allNum = jsonArray.length();
-                for (int i = 0; i < allNum; i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String specName = jsonObject.getString("specName");
-                    //specName = specName.replace("[]","");//이름에 들어가 있는 []을 지운다.
-                    int level = Integer.parseInt(jsonObject.getString("level"));
-                    if (level == 1) {//level이 1인 경우 parentName이 넘어오지 않는다.
-                        carDB.addCar(specName, 1, null, 0);
-                    } else if (level == 2) {//level이 2인 경우 해당 specName 전체를 선택할 수 있는 level 3의 요소를 추가해야 한다.
-                        String parentName = jsonObject.getString("parentName");
-                        carDB.addCar(specName, 2, parentName, 0);
-                    } else {//level이 3인 경우
-                        String parentName = jsonObject.getString("parentName");
-                        carDB.addCar(specName, 3, parentName, 0);
+                JSONObject jsonObject = new JSONObject(result);
+                String jsonResult = jsonObject.getString("result");
+                if(jsonResult.equals("S")) {
+                    JSONArray jsonArray = jsonObject.getJSONArray("content");
+                    int allNum = jsonArray.length();
+                    Log.d("Indicar Tuning",Integer.toString(allNum));
+                    for (int i = 0; i < allNum; i++) {
+                        JSONObject jsonObjectMain = jsonArray.getJSONObject(i);
+                        String specName = jsonObjectMain.getString("spec_name");
+                        //specName = specName.replace("[]","");//이름에 들어가 있는 []을 지운다.
+                        int level = jsonObjectMain.getInt("level");
+                        if (level == 1) {//level이 1인 경우 parentName이 넘어오지 않는다.
+                            carDB.addCarKor(specName, 1, null, 0);
+                        } else if (level == 2) {//level이 2인 경우 해당 specName 전체를 선택할 수 있는 level 3의 요소를 추가해야 한다.
+                            String parentName = jsonObjectMain.getString("parent_name");
+                            carDB.addCarKor(specName, 2, parentName, 0);
+                        } else {//level이 3인 경우
+                            String parentName = jsonObjectMain.getString("parent_name");
+                            carDB.addCarKor(specName, 3, parentName, 0);
+                        }
                     }
+                } else {
+                    Toast.makeText(getApplicationContext(),resources.getString(R.string.strServerCheck),Toast.LENGTH_SHORT).show();
+                    finish();
                 }
 
-                loginCheck();
+                JSONObject jsonObject2 = new JSONObject(resultEng);
+                String jsonResult2 = jsonObject2.getString("result");
+                if(jsonResult2.equals("S")) {
+                    JSONArray jsonArray = jsonObject2.getJSONArray("content");
+                    int allNum = jsonArray.length();
+                    Log.d("Indicar Tuning",Integer.toString(allNum));
+                    for (int i = 0; i < allNum; i++) {
+                        JSONObject jsonObjectMain = jsonArray.getJSONObject(i);
+                        String specName = jsonObjectMain.getString("spec_name");
+                        //specName = specName.replace("[]","");//이름에 들어가 있는 []을 지운다.
+                        int level = jsonObjectMain.getInt("level");
+                        if (level == 1) {//level이 1인 경우 parentName이 넘어오지 않는다.
+                            carDB.addCarEng(specName, 1, null, 0);
+                        } else if (level == 2) {//level이 2인 경우 해당 specName 전체를 선택할 수 있는 level 3의 요소를 추가해야 한다.
+                            String parentName = jsonObjectMain.getString("parent_name");
+                            carDB.addCarEng(specName, 2, parentName, 0);
+                        } else {//level이 3인 경우
+                            String parentName = jsonObjectMain.getString("parent_name");
+                            carDB.addCarEng(specName, 3, parentName, 0);
+                        }
+                    }
+                    SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefLogin.edit();
+                    editor.putString("dbVersion", dbVersionOnline);
+                    editor.commit();
+                    loginCheck();
+                } else {
+                    Toast.makeText(getApplicationContext(),resources.getString(R.string.strServerCheck),Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             } catch (Exception e) {
-                Log.d("dbCheck", e.toString());
-                Toast.makeText(getApplicationContext(), ConstClass.strServerCheck, Toast.LENGTH_SHORT).show();
+                Log.d("Indicar Tuning", e.toString());
+                //Toast.makeText(getApplicationContext(), resources.getString(R.string.strServerCheck), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),resources.getString(R.string.strServerCheck),Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
     }
 
-    //로그인 체크하는 함수
+    //로그인+국가 체크하는 함수
     private void loginCheck() {
         SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
         email = prefLogin.getString("email", "fail");
@@ -223,9 +297,7 @@ public class SplashActivity extends AppCompatActivity {
         String strcheckUser;
 
         @Override
-        protected void onPreExecute() {
-
-        }
+        protected void onPreExecute() { }
 
         @Override
         protected String doInBackground(String... params) {
@@ -236,7 +308,7 @@ public class SplashActivity extends AppCompatActivity {
                         .add("email", email)
                         .build();
                 Request request = new Request.Builder()
-                        .url(ConstClass.check_User)
+                        .url(getString(R.string.check_User))
                         .post(body)
                         .build();
 
@@ -277,10 +349,10 @@ public class SplashActivity extends AppCompatActivity {
                     overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
                     SplashActivity.this.finish();
                 } catch (Exception e) {//에러
-                    redirectLoginActivitywithFail(ConstClass.strLoginedErr, 2);
+                    redirectLoginActivitywithFail(getString(R.string.strLoginedErr), 2);
                 }
             } else {//유저 존재하지 않음
-                redirectLoginActivitywithFail(ConstClass.strLoginedErr, 2);
+                redirectLoginActivitywithFail(getString(R.string.strLoginedErr), 2);
             }
         }
     }

@@ -2,7 +2,6 @@ package com.iindicar.indicar.a1_main;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +13,13 @@ import android.widget.TextView;
 import com.iindicar.indicar.R;
 
 public class TutorialAdapter extends PagerAdapter {
-    private int[] images = {R.drawable.tutorial_1,
-            R.drawable.tutorial_2,
-            R.drawable.tutorial_3};
+    private int[] images;
     private LayoutInflater inflater;
     private Context context;
 
-    public TutorialAdapter(Context context) {
+    public TutorialAdapter(Context context, int[] images) {
         this.context = context;
+        this.images = images;
     }
 
     @Override
@@ -48,7 +46,7 @@ public class TutorialAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 ((Activity)context).finish();
-                ((Activity)context).overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
+                //((Activity)context).overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
             }
         });
 

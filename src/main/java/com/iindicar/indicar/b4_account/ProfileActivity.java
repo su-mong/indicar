@@ -3,6 +3,7 @@ package com.iindicar.indicar.b4_account;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableBoolean;
 import android.os.AsyncTask;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
@@ -23,19 +25,22 @@ import com.iindicar.indicar.R;
 import com.iindicar.indicar.a1_main.LoginActivity;
 import com.iindicar.indicar.data.vo.UserVO;
 import com.iindicar.indicar.databinding.ActivityProfileBinding;
-import com.iindicar.indicar.utils.ConstClass;
 import com.iindicar.indicar.utils.DialogUtil;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.UnLinkResponseCallback;
+import android.support.design.widget.Snackbar;
 
+import io.fabric.sdk.android.Fabric;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 
 public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     private final int REQUEST_UPDATE_NAME = 100; // request code 이름 수정
@@ -46,6 +51,8 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
     private SharedPreferences prefLogin;
     private UserVO userVO = new UserVO();
+
+    Resources resources;
 
     @Override
     protected int getLayoutId() {
@@ -61,6 +68,10 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this,new Crashlytics());
+
+        Context mainContext = LocaleHelper.setLocale(getApplicationContext());
+        resources = mainContext.getResources();
 
         binding.setActivity(this);
         binding.setUser(userVO);
@@ -86,6 +97,19 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     }
 
     private void initView(){
+        //언어 설정
+        binding.textName.setHint(resources.getString(R.string.strNoName));
+        binding.textEmail.setHint(resources.getString(R.string.strNoEmail));
+        binding.textAddress.setHint(resources.getString(R.string.strNoAddress));
+        binding.textEventAlarm.setText(resources.getString(R.string.strEventAlarm));
+        binding.textEventAlarmSub.setText(resources.getString(R.string.strEventAlarmExp));
+        binding.textOtherAlarm.setText(resources.getString(R.string.strOtherAlarm));
+        binding.textOtherAlarmSub.setText(resources.getString(R.string.strOtherAlarmExp));
+        binding.textClause.setText(resources.getString(R.string.strClause));
+        binding.textOpinion.setText(resources.getString(R.string.strSuggest));
+        binding.textDeleteAccount.setText(resources.getString(R.string.strDeleteAccount));
+        binding.textLogout.setText(resources.getString(R.string.strLogout));
+
         // 액션바 뒤로가기 버튼
         actionBarBinding.buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +140,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     // 이름 수정 클릭 리스너
     public void onEditNameClicked(){
         if(userVO.getUserId() == null || userVO.getUserId().equals("")){
-            showSnackBar(ConstClass.strNotAllowUpdateUser);
+            showSnackBar(getString(R.string.strNotAllowUpdateUser));
             return;
         }
 
@@ -127,7 +151,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     // 주소 수정 클릭 리스너
     public void onEditAddressClicked(){
         if(userVO.getUserId() == null || userVO.getUserId().equals("")){
-            showSnackBar(ConstClass.strNotAllowUpdateUser);
+            showSnackBar(getString(R.string.strNotAllowUpdateUser));
             return;
         }
 
@@ -160,7 +184,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         if(requestCode == REQUEST_UPDATE_NAME
                 && resultCode == EditProfileActivity.RESULT_UPDATED){ // 유저 이름 수정됨
 
-            showSnackBar(ConstClass.strUserInfoChanged);
+            showSnackBar(getString(R.string.strUserInfoChanged));
             getUserPreference();
         }
 //        else if(requestCode == REQUEST_UPDATE_ADDRESS
@@ -184,8 +208,8 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     public void onDeleteAccountClicked() {
 
         DialogUtil.showDialog(this,
-                "회원탈퇴 후에는 계정 정보 복구가 불가합니다.\n정말로 회원을 탈퇴하시겠습니까?",
-                "Delete my account.",
+                resources.getString(R.string.deleteAccountCheck),
+                resources.getString(R.string.deleteAccountSub),
                 0.9, 0.25,
                 new View.OnClickListener() {
                     @Override
@@ -210,7 +234,8 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
                 @Override
                 public void onSuccess(Long result) { //탈퇴처리
                     new DeleteUser().execute();
-                    Toast.makeText(getApplicationContext(), userVO.getUserName() + ConstClass.strUnlink, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.strUnlink), Toast.LENGTH_SHORT).show();
+                    //showSnackBar(resources.getString(R.string.strUnlink));
                     startLoginActivity();
                 }
             });
@@ -220,10 +245,10 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()) {
                         new DeleteUser().execute();
-                        Toast.makeText(getApplicationContext(), userVO.getUserName() + ConstClass.strUnlink, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.strUnlink), Toast.LENGTH_SHORT).show();
                         startLoginActivity();
                     } else {
-                        Toast.makeText(getApplicationContext(),"죄송합니다. 탈퇴에 실패했습니다.",Toast.LENGTH_SHORT).show();
+                        showSnackBar(resources.getString(R.string.SignoutFail));
                     }
                 }
             });
@@ -232,13 +257,24 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
                 @Override
                 public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
                     new DeleteUser().execute();
-                    Toast.makeText(getApplicationContext(), userVO.getUserName() + ConstClass.strUnlink, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.strUnlink), Toast.LENGTH_SHORT).show();
                     startLoginActivity();
                     return true;
                 }
             });
         } else {
-            Toast.makeText(getApplicationContext(),"오류가 발생하였습니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),getString(R.string.SignoutFail),Toast.LENGTH_SHORT).show();
+            SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefLogin.edit();
+            editor.putString("profileEditDate",null);
+            editor.putString("_id","0");
+            editor.putString("login_method","0");
+            editor.putString("name","0");
+            editor.putString("profile_img_url","0");
+            editor.putString("email","fail");
+            editor.apply();
+
+            startLoginActivity();
         }
     }
 
@@ -286,7 +322,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             LoginManager.getInstance().logOut();
             startLoginActivity();
         } else {
-            Toast.makeText(getApplicationContext(),ConstClass.strLoginedErr,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),getString(R.string.strLoginedErr),Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor editor = prefLogin.edit();
             editor.putString("profileEditDate",null);
             editor.putString("_id","0");
@@ -311,7 +347,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
                         .add("_id", userVO.getUserId())
                         .build();
                 Request request = new Request.Builder()
-                        .url(ConstClass.delete_User)
+                        .url(getString(R.string.delete_User))
                         .post(body)
                         .build();
                 Response response = client.newCall(request).execute();
@@ -328,12 +364,11 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
                 editor.putString("email","fail");
                 editor.apply();
 
-                return ConstClass.strUnlink;
+                return getString(R.string.strUnlink);
             } catch(Exception e) {
-                result = ConstClass.strErrwithCode+e.toString();
+                result = getString(R.string.strErrwithCode)+e.toString();
                 return result;
             }
         }
     }
-
 }

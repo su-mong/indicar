@@ -9,33 +9,193 @@
             name="user"
             type="com.iindicar.indicar.data.vo.UserVO"/>
     </data>
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineProfile1"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.49" />
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineProfile2"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.51" />
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineProfile3"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.47" />
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineProfile4"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.7" />
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineProfile5"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.84"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,90:61"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.constraint.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guidelineProfile6"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.65"/>
+            <android.support.constraint.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/guidelineProfile7"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8"/>
+
+            <ImageView
+                style="@style/commentButtonCustomStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="h,7:2"
+                android:src="@drawable/img_profile_main_background"
+                android:id="@+id/ivA_profileback1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <LinearLayout
+                android:id="@+id/ivA_profileback2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/border_outline"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintDimensionRatio="h,21:8"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/text_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="27dp"
+                android:gravity="center"
+                android:lines="1"
+                android:singleLine="true"
+                android:background="@android:color/transparent"
+                android:hint="@string/strNoName"
+                android:text="@{user.userName}"
+                android:textAlignment="center"
+                android:textColor="@color/profileNameText"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toTopOf="@+id/ivA_profileback2"
+                android:layout_marginTop="23dp" />
+            <!--app:layout_constraintHorizontal_chainStyle="packed"-->
+            <ImageButton
+                android:id="@+id/btnA_modify1"
+                style="@style/commentButtonCustomStyle"
+                android:padding="3dp"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_gravity="bottom"
+                android:onClick="@{(v) -> activity.onEditNameClicked()}"
+                android:src="@drawable/btn_write"
+                app:layout_constraintTop_toTopOf="@+id/ivA_profileback2"
+                android:layout_marginTop="23dp"
+                app:layout_constraintStart_toEndOf="@+id/text_Name"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/border_underline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guidelineProfile6">
+                <TextView
+                    android:id="@+id/text_Email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/strNoEmail"
+                    android:text="@{user.userEmail}"
+                    android:textColor="@color/profileText"
+                    android:textSize="15sp" />
+                <!--<ImageButton
+                    style="@style/commentButtonCustomStyle"
+                    android:padding="3dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/btn_write" />-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/border_underline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guidelineProfile7">
+                <TextView
+                    android:id="@+id/text_Address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/strNoAddress"
+                    android:text="@{user.userAddress}"
+                    android:textColor="@color/profileText"
+                    android:textSize="15sp" />
+                <!--<ImageButton
+                    style="@style/commentButtonCustomStyle"
+                    android:padding="3dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="bottom"
+                    android:onClick="@{(v) -> activity.onEditAddressClicked()}"
+                    android:src="@drawable/btn_write" />-->
+            </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    style="@style/commentButtonCustomStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:src="@drawable/img_profile_main_background"/>
-
-                <LinearLayout
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/border_outline"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:padding="10dp"
@@ -45,15 +205,15 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_margin="5dp"
                     style="@style/commentButtonCustomStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:src="@drawable/text_profile"/>
+                    android:layout_margin="5dp"
+                    android:src="@drawable/text_profile" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="15dp"
                     android:textSize="25sp"
                     android:textScaleX="0.95"
                     android:scaleY="-1"
@@ -65,104 +225,21 @@
                 <ImageButton
                     android:layout_gravity="center"
                     style="@style/imageButtonCustomStyle"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="62dp"
+                    android:layout_height="62dp"
                     android:background="@drawable/border_circle"
                     app:circleImageUrl="@{user.profileImageUrl}"/>
-
-                <LinearLayout
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{user.userName}"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:hint="이름"
-                        android:textAlignment="center"
-                        android:textColor="@color/profileNameText"
-                        android:background="@android:color/transparent"/>
-
-                    <ImageButton
-                        style="@style/commentButtonCustomStyle"
-                        android:padding="3dp"
-                        android:layout_width="23dp"
-                        android:layout_height="23dp"
-                        android:layout_gravity="bottom"
-                        android:onClick="@{(v) -> activity.onEditNameClicked()}"
-                        android:src="@drawable/btn_write" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:background="@drawable/border_underline">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:text="@{user.userEmail}"
-                        android:hint="이메일 없음"
-                        android:textSize="15sp"
-                        android:textColor="@color/profileText"
-                        android:background="@android:color/transparent"/>
-
-                    <ImageButton
-                        style="@style/commentButtonCustomStyle"
-                        android:padding="3dp"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="bottom"
-                        android:src="@drawable/btn_write" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_margin="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:background="@drawable/border_underline">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:hint="주소 없음"
-                        android:text="@{user.userAddress}"
-                        android:textSize="15sp"
-                        android:textColor="@color/profileText"
-                        android:background="@android:color/transparent"/>
-
-                    <ImageButton
-                        style="@style/commentButtonCustomStyle"
-                        android:padding="3dp"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="bottom"
-                        android:onClick="@{(v) -> activity.onEditAddressClicked()}"
-                        android:src="@drawable/btn_write" />
-                </LinearLayout>
             </LinearLayout>
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="horizontal">
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineProfile3">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -172,7 +249,6 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="10dp">
-
                 <ImageButton
                     style="@style/imageButtonCustomStyle"
                     android:layout_width="50dp"
@@ -181,19 +257,19 @@
                     app:setSelected="@{activity.isEventAlarmOn}"
                     android:onClick="@{(v) -> activity.onEventAlarmClicked()}"
                     android:src="@drawable/alarm_selector" />
-
                 <TextView
+                    android:id="@+id/text_eventAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="이벤트알림"
+                    android:text="@string/strEventAlarm"
                     android:textColor="@color/profileNameText"
-                    android:textSize="12sp"/>
-
+                    android:textSize="12sp" />
                 <TextView
+                    android:id="@+id/text_eventAlarmSub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="이벤트, 프로모션 관련 알림"
+                    android:text="@string/strEventAlarmExp"
                     android:textColor="@color/profileNameText"
                     android:textSize="8sp" />
             </LinearLayout>
@@ -207,7 +283,6 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="10dp">
-
                 <ImageButton
                     style="@style/imageButtonCustomStyle"
                     android:layout_width="50dp"
@@ -216,29 +291,33 @@
                     app:setSelected="@{activity.isOtherAlarmOn}"
                     android:onClick="@{(v) -> activity.onOtherAlarmClicked()}"
                     android:src="@drawable/alarm_selector" />
-
                 <TextView
+                    android:id="@+id/text_otherAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="기본 및 기타알림"
+                    android:text="@string/strOtherAlarm"
                     android:textColor="@color/profileNameText"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/text_otherAlarmSub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="차량 및 부품 업데이트 등 기본적 알림"
+                    android:text="@string/strOtherAlarmExp"
                     android:textColor="@color/profileNameText"
                     android:textSize="8sp" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_margin="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineProfile4">
 
             <LinearLayout
                 android:id="@+id/btn_clause"
@@ -251,15 +330,14 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
                 android:background="@color/profileButtonBackgroundLight">
-
                 <TextView
+                    android:id="@+id/text_clause"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="이용약관"
-                    android:textSize="15sp"
-                    android:textColor="@color/profileNameText"/>
-
+                    android:layout_weight="1"
+                    android:text="@string/strClause"
+                    android:textColor="@color/profileNameText"
+                    android:textSize="15sp" />
                 <ImageButton
                     android:layout_gravity="center_vertical"
                     style="@style/imageButtonCustomStyle"
@@ -281,15 +359,14 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
                 android:background="@color/profileButtonBackgroundLight">
-
                 <TextView
+                    android:id="@+id/text_opinion"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:text="의견보내기"
-                    android:textSize="15sp"
-                    android:textColor="@color/profileNameText"/>
-
+                    android:layout_weight="1"
+                    android:text="@string/strSuggest"
+                    android:textColor="@color/profileNameText"
+                    android:textSize="15sp" />
                 <ImageButton
                     android:layout_gravity="center_vertical"
                     style="@style/imageButtonCustomStyle"
@@ -301,14 +378,15 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineProfile5">
 
-            <LinearLayout
+            <RelativeLayout
                 android:padding="15dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -317,26 +395,26 @@
                 android:gravity="center"
                 android:onClick="@{(v) -> activity.onDeleteAccountClicked()}"
                 android:background="@color/profileButtonBackground">
-
                 <TextView
+                    android:id="@+id/text_delete_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="회원탈퇴"
+                    android:text="@string/strDeleteAccount"
                     android:textSize="14sp"
+                    android:layout_centerInParent="true"
                     android:textColor="@color/colorWhite"/>
-
-                <TextView
+                <!--<TextView
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Delete my account"
                     android:textSize="11.5sp"
-                    android:textColor="@color/colorWhite"/>
-            </LinearLayout>
+                    android:textColor="@color/colorWhite"/>-->
+            </RelativeLayout>
 
             <Space android:layout_width="10dp" android:layout_height="match_parent"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:padding="15dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -345,22 +423,22 @@
                 android:gravity="center"
                 android:onClick="@{(v) -> activity.onLogoutClicked()}"
                 android:background="@color/profileButtonBackground">
-
                 <TextView
+                    android:id="@+id/text_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="로그아웃"
+                    android:text="@string/strLogout"
                     android:textSize="14sp"
+                    android:layout_centerInParent="true"
                     android:textColor="@color/colorWhite"/>
-
-                <TextView
+                <!--<TextView
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Log out"
                     android:textSize="11.5sp"
-                    android:textColor="@color/colorWhite"/>
-            </LinearLayout>
+                    android:textColor="@color/colorWhite"/>-->
+            </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>

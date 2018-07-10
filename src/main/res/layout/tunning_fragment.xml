@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimaryBackground"
         android:orientation="vertical">
 
         <ImageButton
@@ -18,57 +19,67 @@
             style="@style/imageButtonCustomStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/btn_gototuning2" />
+            android:src="@drawable/btn_gototuning" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <FrameLayout
-                android:layout_width="match_parent"
+            android:background="#fff"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                                />
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:layout_weight="1"
+                android:gravity="center">
 
                 <TextView
                     style="@style/textViewBoardInfoStyle"
+                    android:id="@+id/tvT_articleTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textSize="14sp"
-                    android:text="공지사항"/>
-
-                <ImageButton
-                    style="@style/imageButtonCustomStyle"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:onClick="@{(v) -> viewModel.onRefresh(noticeContainer)}"
-                    android:src="@drawable/ic_action_refresh" />
-
-            </FrameLayout>
-            <LinearLayout
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="#DFDFDF"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
-                    android:layout_height="match_parent"
-                    android:background="#565656"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:background="#DFDFDF"/>
+                    android:text="@string/noticeTitle"
+                    android:textStyle="bold" />
             </LinearLayout>
+
+
+            <ImageButton
+                style="@style/imageButtonCustomStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:onClick="@{(v) -> viewModel.onRefresh(noticeContainer)}"
+                android:src="@drawable/ic_action_refresh" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#dfdfdf"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:background="#454545"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout

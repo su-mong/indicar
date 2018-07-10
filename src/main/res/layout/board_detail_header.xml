@@ -83,13 +83,14 @@
             android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/tvBDH_like"
                 style="@style/textViewBoardInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/colorFontLight"
-                android:text="좋아요"/>
+                android:text="@string/strBoardAlllike"/>
 
             <TextView
                 style="@style/textViewBoardInfoStyle"
@@ -103,21 +104,23 @@
                 android:text="@{board.likeCount}"/>
 
             <TextView
+                android:id="@+id/tvBDH_unit1"
                 style="@style/textViewBoardInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorFontLight"
                 android:layout_gravity="center_vertical"
-                android:text="개"/>
+                android:text="@string/strBoardNumberUnit"/>
 
             <TextView
+                android:id="@+id/tvBDH_comment"
                 style="@style/textViewBoardInfoStyle"
                 android:layout_marginLeft="10dp"
                 android:background="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="댓글"
+                android:text="@string/strBoardAllcomment"
                 android:textColor="@color/colorFontLight"
                 android:gravity="center_vertical"/>
 
@@ -133,12 +136,13 @@
                 android:text="@{board.commentCount}"/>
 
             <TextView
+                android:id="@+id/tvBDH_unit2"
                 style="@style/textViewBoardInfoStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/colorFontLight"
-                android:text="개"/>
+                android:text="@string/strBoardNumberUnit"/>
 
             <Space
                 android:layout_width="wrap_content"

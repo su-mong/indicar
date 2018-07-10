@@ -46,6 +46,7 @@
                 android:visibility="gone">
 
                 <ImageView
+                    android:id="@+id/imageviewBD_empty"
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -72,7 +73,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="댓글을 입력하세요."
+                    android:hint="@string/strBoardDetailcomment"
                     android:padding="10dp"
                     android:text="@{viewModel.commentWrite}" />
 

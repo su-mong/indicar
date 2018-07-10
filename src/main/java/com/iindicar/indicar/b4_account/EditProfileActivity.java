@@ -1,25 +1,29 @@
 package com.iindicar.indicar.b4_account;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.UserDao;
 import com.iindicar.indicar.databinding.ActivityEditProfileBinding;
 import com.iindicar.indicar.utils.ByteLengthFilter;
-import com.iindicar.indicar.utils.ConstClass;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.loopj.android.http.RequestParams;
+
+import io.fabric.sdk.android.Fabric;
 
 public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding> {
     public static final int RESULT_UPDATED = 101; // Activity Result Code 유저이름 변경 된 경우
@@ -34,6 +38,7 @@ public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding
     private String userName;
 
     private UserDao userDao = new UserDao();
+    Resources resources;
 
     @Override
     protected int getLayoutId() {
@@ -49,6 +54,10 @@ public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this,new Crashlytics());
+
+        Context boardFilterContext = LocaleHelper.setLocale(getApplicationContext());
+        resources = boardFilterContext.getResources();
 
         binding.setActivity(this);
 
@@ -73,6 +82,11 @@ public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding
     }
 
     private void initView(){
+        //언어에 맞게 레이아웃을 적용한다.
+        binding.tvAName2.setText(resources.getString(R.string.editNameTitle));
+        binding.inputName.setHint(resources.getString(R.string.editNameHint));
+        binding.buttonSubmit.setText(resources.getString(R.string.editButton));
+
         // 액션바 뒤로가기 버튼
         actionBarBinding.buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +151,7 @@ public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding
             @Override
             public void onDataNotAvailable() {
                 isLoading.set(false);
-                showSnackBar(ConstClass.strNotAllowUpdateUser);
+                showSnackBar(getString(R.string.strNotAllowUpdateUser)) ;
             }
         });
     }

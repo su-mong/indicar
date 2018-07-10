@@ -1,5 +1,7 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,12 +13,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.commit451.teleprinter.Teleprinter;
+import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardWriteItemFragmentBinding;
 import com.iindicar.indicar.utils.DialogUtil;
 import com.iindicar.indicar.utils.IPickPhotoHelper;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.iindicar.indicar.utils.PickPhotoHelper;
 import com.iindicar.indicar.utils.RealPathUtil;
 
@@ -24,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.apptik.multiview.layoutmanagers.ViewPagerLayoutManager;
+import io.fabric.sdk.android.Fabric;
 
 import static com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditViewModel.MAX_PAGE;
 
@@ -38,6 +43,8 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     private ViewPagerLayoutManager layoutManager;
     private PickPhotoHelper pickPhotoHelper;
     private Teleprinter keyboard;
+
+    Resources resources;
 
     @Override
     protected int getLayoutId() {
@@ -58,8 +65,17 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Fabric.with(getActivity(),new Crashlytics());
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Context boardWriteContext = LocaleHelper.setLocale(getActivity());
+        resources = boardWriteContext.getResources();
 
         binding.setViewModel(viewModel);
 
@@ -156,8 +172,8 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
         }
 
         DialogUtil.showDialog(context,
-                "현재 슬라이드를 정말로 삭제하시겠습니까?",
-                "Delete this slide.",
+                resources.getString(R.string.deleteSlide),
+                resources.getString(R.string.deleteSlideSub),
                 0.9, 0.25,
                 new View.OnClickListener() {
                     @Override
@@ -243,8 +259,8 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     public void showPhotoDeleteDialog(final int position){
 
         DialogUtil.showDialog(context,
-                "사진을 정말로 삭제하시겠습니까?",
-                "delete this photo.",
+                resources.getString(R.string.deletePhoto),
+                resources.getString(R.string.deletePhotoSub),
                 0.9, 0.25,
                 new View.OnClickListener() {
                     @Override

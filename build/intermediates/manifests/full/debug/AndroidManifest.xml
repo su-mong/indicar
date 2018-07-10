@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.iindicar.indicar"
     android:installLocation="auto"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="16"
+    android:versionName="16.0" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -73,7 +73,8 @@
 
         <activity
             android:name="com.iindicar.indicar.a1_main.SplashActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/noActionTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -86,9 +87,9 @@
             android:theme="@style/noActionTheme" />
         <activity
             android:name="com.iindicar.indicar.a1_main.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" >
-        </activity>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name="com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity"
             android:screenOrientation="portrait"
@@ -118,8 +119,7 @@
         <activity
             android:name="com.iindicar.indicar.a1_main.Tutorial"
             android:screenOrientation="portrait"
-            android:theme="@style/Transparent" >
-        </activity>
+            android:theme="@style/Transparent" />
         <activity
             android:name="com.iindicar.indicar.b4_account.TraceActivity"
             android:screenOrientation="portrait" />
@@ -163,7 +163,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="fb1228514043878949" />
             </intent-filter>
         </activity>
 
@@ -183,9 +183,17 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
+
+        <activity android:name="com.iindicar.indicar.b4_account.EditProfileActivity" />
+        <activity
+            android:name="com.iindicar.indicar.b2_community.BoardFilterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/noActionTheme"
+            android:windowSoftInputMode="stateAlwaysVisible" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="ae6ed9b3ba8596fac687674e2c448d5c9fda61c0" />
+            android:value="dea8dc7a0d51137b08381a3569c9de2c13c3c0b6" />
         <meta-data
             android:name="io.fabric.unity.crashlytics.version"
             android:value="1.2.5" />
@@ -238,7 +246,30 @@ Service handling Google Sign-In user revocation. For apps that do not integrate 
             android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
             android:exported="true"
             android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" />
+        <!--
+         "launchMode" of this activity must not be singleInstance and singleTask because, this is
+         launched with using startActivityForResult().
+         This activity must be stacked on same Activity Stack of the caller.
+        -->
+        <activity
+            android:name="com.linecorp.linesdk.auth.internal.LineAuthenticationActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:theme="@style/LineSdk_AuthenticationActivity" />
+        <activity
+            android:name="com.linecorp.linesdk.auth.internal.LineAuthenticationCallbackActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="lineauth" />
+            </intent-filter>
+        </activity>
         <activity android:name="com.facebook.CustomTabMainActivity" />
 
         <receiver
@@ -302,6 +333,11 @@ Service handling Google Sign-In user revocation. For apps that do not integrate 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <provider
+            android:name="com.facebook.marketing.internal.MarketingInitProvider"
+            android:authorities="com.iindicar.indicar.MarketingInitProvider"
+            android:exported="false" />
         <!--
          The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
          with the application context. This config is merged in with the host app's manifest,

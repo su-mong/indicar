@@ -1,17 +1,24 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.databinding.Observable;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
 import com.iindicar.indicar.Constant;
+import com.iindicar.indicar.R;
+import com.iindicar.indicar.a1_main.MainActivity;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardDao;
 import com.iindicar.indicar.data.dao.BoardFileDao;
 import com.iindicar.indicar.data.vo.WriteBoardVO;
 import com.iindicar.indicar.data.vo.WriteFileVO;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.loopj.android.http.RequestParams;
 
 import java.io.File;
@@ -43,10 +50,14 @@ public class BoardWriteEditViewModel {
     public boolean isNewBoard;
 
     public List<Boolean> DONE_FILE_UPLOAD_COUNT = new ArrayList<>();
+    Resources resources;
 
-    public BoardWriteEditViewModel(){
+    public BoardWriteEditViewModel(Context context){
         boardDao = new BoardDao();
         fileDao = new BoardFileDao();
+
+        Context loginContext = LocaleHelper.setLocale(context);
+        resources = loginContext.getResources();
     }
 
     // this will be called only writing a New Board
@@ -120,7 +131,7 @@ public class BoardWriteEditViewModel {
             WriteFileVO vo = boardItems.get(i);
 
             if(vo.getFilePath() == null || vo.getFilePath().equals("")){
-                navigator.showSnackBar("사진을 등록해주세요.");
+                navigator.showSnackBar(resources.getString(R.string.needPhoto));
                 pageNavigator.pageChangeToPosition(i);
                 return;
             }
@@ -139,7 +150,7 @@ public class BoardWriteEditViewModel {
 
     public void pageAddClick(){
         if(totalPage.get() == MAX_PAGE){
-            navigator.showSnackBar("페이지를 더이상 추가할 수 없습니다.");
+            navigator.showSnackBar(resources.getString(R.string.cannotAddPage));
             return;
         }
         pageNavigator.addPage(currentPage.get() + 1);
@@ -147,7 +158,7 @@ public class BoardWriteEditViewModel {
 
     public void pageRemoveClick(){
         if(totalPage.get() == 1){
-            navigator.showSnackBar("페이지를 더이상 삭제할 수 없습니다.");
+            navigator.showSnackBar(resources.getString(R.string.cannotDeletePage));
             return;
         }
         pageNavigator.removePage(currentPage.get());
@@ -177,7 +188,7 @@ public class BoardWriteEditViewModel {
 
             @Override
             public void onDataNotAvailable() {
-                navigator.showSnackBar("게시물 등록에 실패하였습니다. 다시 시도해주세요.");
+                navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
                 navigator.onActivityFinish();
             }
         });
@@ -207,7 +218,7 @@ public class BoardWriteEditViewModel {
             }
             @Override
             public void onDataNotAvailable() {
-                navigator.showSnackBar("게시물 등록에 실패하였습니다. 다시 시도해주세요.");
+                navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
                 navigator.onActivityFinish();
             }
         });
@@ -242,7 +253,7 @@ public class BoardWriteEditViewModel {
 
             @Override
             public void onDataNotAvailable() {
-                navigator.showSnackBar("게시물 등록에 실패하였습니다. 다시 시도해주세요.");
+                navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
                 navigator.onActivityFinish();
             }
         });
@@ -264,7 +275,7 @@ public class BoardWriteEditViewModel {
 
             @Override
             public void onDataNotAvailable() {
-                navigator.showSnackBar("게시물 수정에 실패하였습니다. 다시 시도해주세요.");
+                navigator.showSnackBar(resources.getString(R.string.failedModifyPost));
                 navigator.onActivityFinish();
             }
         });

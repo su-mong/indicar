@@ -1,28 +1,20 @@
 package com.iindicar.indicar.b2_community;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 
-import com.commit451.teleprinter.Teleprinter;
+import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.CommunityFragmentBinding;
 
+import io.fabric.sdk.android.Fabric;
+
 public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
-
-
-
 
     @Override
     protected int getLayoutId() {
@@ -31,6 +23,12 @@ public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
 
     public CommunityFragment() {
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Fabric.with(getActivity(),new Crashlytics());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -60,9 +58,6 @@ public class CommunityFragment extends BaseFragment<CommunityFragmentBinding> {
 
             }
         });
-
-
     }
-
 }
 

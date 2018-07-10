@@ -7,10 +7,10 @@ import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by candykick on 2018. 4. 29..
+ * Created by candykick on 2018. 7. 9..
  */
 
-public class CarDataVO extends BaseObservable{
+public class CarDataVO extends BaseObservable {
     private int carDataImgIndex;
     @SerializedName("car_name") private String carDataName;
     @SerializedName("car_name_kor") private String carDataNameKor;

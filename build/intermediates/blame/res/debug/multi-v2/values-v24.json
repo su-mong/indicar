@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v24\\values-v24.xml",
+            "outputFile": "/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.0.2.aar\\2c7d6ed007e1bc313ae0d27447105c9e\\res\\values-v24\\values-v24.xml",
+                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/8774baeeb0e9f97589a6f3ce0f4fb97e/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-27.0.2.aar\\a43c03a635bfa5feaa60b288021250be\\res\\values-v24\\values-v24.xml",
+                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/f04fd927bfde2d22aea3c0e00ddd9ef9/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

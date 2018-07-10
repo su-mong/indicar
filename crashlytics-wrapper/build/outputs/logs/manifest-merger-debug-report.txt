@@ -1,21 +1,21 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml:2:1-5:12
-INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml:2:1-5:12
-INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml:2:1-5:12
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml:2:1-5:12
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml:2:1-5:12
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml:2:1-5:12
 	package
-		ADDED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml:2:70-134
-		INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml
-		INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml:2:70-134
+		INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml
+		INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml:2:11-69
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml:2:11-69
 application
-ADDED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml:3:3-4:17
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml:3:3-4:17
 uses-sdk
-INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml
-INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml
-		ADDED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml
-		INJECTED from D:\github\indicar\crashlytics-wrapper\AndroidManifest.xml
+		INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml
+		INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/AndroidManifest.xml

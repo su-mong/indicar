@@ -8,6 +8,6 @@ package io.fabric.sdk.android.unity;
 
 public final class R {
     public static final class string {
-        public static final int com_crashlytics_android_build_id = 0x7f0e0029;
+        public static final int com_crashlytics_android_build_id = 0x7f0e0053;
     }
 }

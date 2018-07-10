@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.SimpleItemAnimator;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.commit451.teleprinter.Teleprinter;
+import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
@@ -34,9 +37,12 @@ import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.data.vo.UserVO;
 import com.iindicar.indicar.databinding.BoardListFragmentBinding;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.iindicar.indicar.utils.ScrollBottomAction;
 
 import java.util.List;
+
+import io.fabric.sdk.android.Fabric;
 
 import static android.app.Activity.RESULT_OK;
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
@@ -47,13 +53,22 @@ import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
  */
 
 public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> implements BoardListNavigator {
+    private static final String TAG = BoardListFragment.class.getSimpleName();
     private final int REQUEST_BOARD_FILTER = 111; // 게시판 필터링
 
     private int boardTab;
     private BoardListViewModel viewModel;
     private BoardListAdapter adapter;
+    private int isUpdate;
+    private Teleprinter keyboard;
 
+    public final ObservableField<String> textSearch = new ObservableField<>();
+    public final ObservableBoolean isSearchBarOpen = new ObservableBoolean(false);
     public final ObservableInt tabId = new ObservableInt();
+    public final ObservableBoolean showButton = new ObservableBoolean(true);
+
+    Resources resources;
+
 
     public BoardListFragment() {
         this.viewModel = new BoardListViewModel();
@@ -67,12 +82,19 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(getActivity(),new Crashlytics());
+
         boardTab = getArguments().getInt("boardTab");
         tabId.set(boardTab);
+
+        Context boardListContext = LocaleHelper.setLocale(getActivity());
+        resources = boardListContext.getResources();
 
         viewModel.boardTab.set(boardTab);
         viewModel.setNavigator(this);
         viewModel.start();
+
+
     }
 
 
@@ -84,6 +106,8 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         super.onViewCreated(view, savedInstanceState);
 
         binding.setViewModel(viewModel);
+
+        //binding.editTextSearch.setHint(resources.getString(R.string.communityHint));
 
         // set scroll bottom action listener to recyclerView
         new ScrollBottomAction()
@@ -184,6 +208,29 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                 getActivity().overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
             }
         });
+
+        /*if (boardTab == 1)
+            binding.searchBarLayout.setVisibility(View.VISIBLE);
+
+        binding.buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSearch(binding.editTextSearch.getText().toString());
+            }
+
+
+        });
+
+        binding.editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    binding.buttonSearch.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });*/
     }
 
     @Override
@@ -214,7 +261,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
 
     @Override
     public void showPageEndMessage() {
-        Toast.makeText(context, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show();
+        Snackbar.make(binding.getRoot(), resources.getString(R.string.lastPage), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -227,6 +274,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     public void onSearch(String searchWord) {
         viewModel.onSearch(binding.recyclerViewBoardContainer, searchWord);
     }
+
 
     @Override
     public void onProfileAttached(BoardDetailVO board, UserVO vo) {

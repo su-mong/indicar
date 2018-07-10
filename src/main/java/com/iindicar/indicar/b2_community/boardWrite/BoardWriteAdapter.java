@@ -1,6 +1,7 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardWriteItemBinding;
+import com.iindicar.indicar.utils.LocaleHelper;
 
 import java.util.List;
 
@@ -31,15 +33,23 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
     private CameraButtonClickListener cameraButtonClickListener;
     private ImageButtonClickListener imageButtonClickListener;
 
+    Resources resources;
+
     public BoardWriteAdapter(Context context, BoardWriteEditViewModel viewModel) {
         super(context);
         this.viewModel = viewModel;
+
+        Context context1 = LocaleHelper.setLocale(context);
+        resources = context1.getResources();
     }
 
     public BoardWriteAdapter(Context context, BoardWriteEditViewModel viewModel, List<WriteFileVO> list) {
         super(context);
         this.viewModel = viewModel;
         this.itemList = list;
+
+        Context context1 = LocaleHelper.setLocale(context);
+        resources = context1.getResources();
     }
 
     public void setAlbumButtonClickListener(AlbumButtonClickListener albumButtonClickListener) {
@@ -61,6 +71,10 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
         final WriteFileVO item = itemList.get(position);
 
         holder.binding.setItem(item);
+
+        //언어별 뷰 셋팅
+        holder.binding.buttonFromAlbum.setImageDrawable(resources.getDrawable(R.drawable.img_write_album));
+        holder.binding.buttonFromCamera.setImageDrawable(resources.getDrawable(R.drawable.img_write_camera));
 
         // 앨범에서 사진 선택 콜백
         if(albumButtonClickListener != null) {

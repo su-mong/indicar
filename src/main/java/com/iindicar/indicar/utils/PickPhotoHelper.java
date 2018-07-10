@@ -2,9 +2,11 @@ package com.iindicar.indicar.utils;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -37,8 +39,9 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
     public static final int PICK_FROM_CAMERA = 1;
     public static final int CROP_IMAGE = 2;
     public static final int PICK_FROM_ALBUM = 3;
-String imagePath;
+    String imagePath;
     Activity context;
+    Resources resources;
 
     Uri cameraPhotoUri;
 
@@ -47,6 +50,8 @@ String imagePath;
 
     public PickPhotoHelper(Activity context){
         this.context = context;
+        Context pickPhotoHelperContext = LocaleHelper.setLocale(context);
+        resources = pickPhotoHelperContext.getResources();
     }
 
     @Override
@@ -79,7 +84,7 @@ String imagePath;
         try {
             photoFile = createImageFile();
         } catch (IOException e) {
-            Toast.makeText(context, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, resources.getString(R.string.failedHandleImage), Toast.LENGTH_SHORT).show();
             context.finish();
             e.printStackTrace();
         }
@@ -137,7 +142,7 @@ String imagePath;
         }
 
         if (list.size() == 0) {
-            Toast.makeText(context, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, resources.getString(R.string.canceled), Toast.LENGTH_SHORT).show();
             return;
         } else {
 
