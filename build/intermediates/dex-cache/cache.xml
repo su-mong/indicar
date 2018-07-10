@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-auth-api-phone-11.6.0.aar/14d3ce5faeb91d0fc40a393aae2f7663/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="269771e258a0d07bc8f5213f1f5ed77e8f42d72f">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/37.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/network-1.2.2.aar/4a55e9f68ed7450a970b0025b529975d/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9169ae7138b48682481b2d76250f4c4cceb4bb70">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/82.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.0.2.aar/9729dd084422186c480c37f6645a2f8f/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="fe3916317a699975bcce0cba2d13fd2d8cf88922">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/55.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/s2-lite-1.2.2.aar/92d9382ee52e636cdf503aa3f38dcd5f/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8c921e82b7b245ea43bcebe5769de6fc2c86d0c9">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/71.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/auth-1.2.2.aar/edf8fb2f157d8e48e9e4c190a60aa8f4/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b0c5e72d61d5b31525c8b3177b9e8f38b8aa44c9">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/57.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/tedpermission-2.1.1.aar/56e58527484bb75f54fc96f07aa05fde/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="55cf70d81d7bf001dc2fe9c895e0f5b1535b16d5">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/15.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics/build/intermediates/intermediate-jars/release/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a4bf0aeea3f5f93b257c9c817ef936ea20ffa64d">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/92.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/firebase-messaging-11.6.0.aar/cca519db6e027928f22b238f5f38e4d7/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9b8544d0c4d3a508ffc7da674ac79d5dc5d79395">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/25.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/library-1.3.1.aar/1606edab8fe9325bdd236cc61845f9de/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7f2f348b830f292429db987f74ba3e67c6752322">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.0.2.aar/8774baeeb0e9f97589a6f3ce0f4fb97e/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="04cd0cacbedcb338f64665b88bad64d145325fbd">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/33.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/firebase-auth-11.6.0.aar/c84d1e4ac5c5edd00ba937856fd5d87f/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cd1ff651ddb8608e9c4037f3d9ab475e9472abb2">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-26.1.0.aar/df832423142870e27ce5f871ba2853c1/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b12cd9c87c3dfb012a911b6e38d2444ed0a65e1f">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/46.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/531fac3190e05ce9e671ad19c7e71c34/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f46121a7c3b3ba958fc27c39447ae205be23ac4a">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/34.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/common-0.0.3.aar/32110b8d83a18217e04c2b04f1703d71/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7225abc9a928655618c6d829504591603707e647">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/29.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/84.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/beta/build/intermediates/intermediate-jars/release/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="918c09988455bcf0bdacc84d31c2866325621415">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/91.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/library-1.0.2.aar/34914a890027fd0208c051bfeaa8d4be/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="524dbb5c53295c006c7aa1a209aae0407d6ebc53">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/70.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/answers/build/intermediates/intermediate-jars/release/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="870da9607f0f96f60221c2959e9cb3ce0ba634ed">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/90.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.0.2.aar/ea491eed98201ae337b8c3222fbc5a79/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ac2ce6027755bcf49442e70597bec0feb9064f68">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/59.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/build/intermediates/intermediate-jars/release/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a2bb9375c561318c4eae252dee3fe8babf03c44e">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/93.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/85.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric-init/build/intermediates/intermediate-jars/release/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="15b84ade6db5a236a014727607b1d1fd9d3c5353">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/95.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/cz.msebera.android/httpclient/4.3.6/526a9f794eab830eae4f23a62c572878b3f491ab/httpclient-4.3.6.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/69.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-v4-27.0.2.aar/8491dfb0946bfbbcbab55941024886e0/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="bcd0bcdef85b31a656af76e39c0c95ce70800772">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/45.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.6.0.aar/a7f379b57af101ee1c4ca8ee5c6bc6fe/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="869a1d15fa9d8e8aa36587b042f553c1baea46bc">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/44.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/matisse-0.4.3.aar/1078fb5548841a9ba9e1d096dab79643/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="57e0ef2a88702e623130d33d2590fb7b78521c83">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.6.0.aar/b1f67392bbea30bbac96cc824bfb7492/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="729a6a1975c19d7461378172c7932f5c57f1c3fe">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/43.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-compat-27.0.2.aar/f81288cfee4de04097d34444c9ff75cc/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b432e82447a3af781e927b9ba0bbb9fe2a496d4a">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/62.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.0.0/a2d487452376193fc8c103dd2b9bd5f2b1b44563/common-1.0.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a2d487452376193fc8c103dd2b9bd5f2b1b44563">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/89.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.3.0/73c49077166faa4c3c0059c5f583d1d7bd1475fe/core-3.3.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="73c49077166faa4c3c0059c5f583d1d7bd1475fe">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/81.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/design-26.1.0.aar/3f82c6d33344282a23ee4adac44c10ff/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a37fc31c5ceeaa4532a37358add1b189d8db4af1">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/13.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/Teleprinter-1.0.2.aar/c8bff440e1686ecd489d8c9d5b89dd7e/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="efc42fc670ca94d61491f3e78279647503f96ecb">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/20.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/runtime-1.0.3.aar/5034f44c439623e76472ec86ba0495b3/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d7cc5473b9cf4ea159a263cd477fb3ecb2987b96">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/87.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/layoutmanagers-0.0.3.aar/e113602e61afb8251bbbed51d6aae13c/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ca3b4b051437f253629571d14c60b1f15065ac65">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.0.2.aar/bed535ab7b46efedebd154a54c71e303/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="ed6560f31a6a40b5965f5879d8f2eab1f68def05">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/61.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-fragment-27.0.2.aar/5561f309522bc99ec5a3f748fef1a3b1/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="618f75fe11febf263e3234c7da7dc892232a5608">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/58.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-auth-base-11.6.0.aar/516db1731bba870ad567f1ae8dec9835/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d90cb9610620b7631c75f1953a4956810edd4bed">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/38.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-auth-11.6.0.aar/713c0cb2204e1ded8ef9945046bac3fc/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d6ff091e2c6df07894e5b921671404047d70d3f7">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/26.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/26.1.0/814258103cf26a15fcc26ecce35f5b7d24b73f8/support-annotations-26.1.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0814258103cf26a15fcc26ecce35f5b7d24b73f8">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/63.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/adapters-1.3.1.aar/628ea5a8906dba198580cee01d1fd385/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="68956f5ba1517b7a3d513ba540548e257741cbae">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/firebase-analytics-11.6.0.aar/23ec85916b0c92384b9b694c6c2c58a5/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e9b8fd995f9c6c2caeb49827f0b52e0e8cc621e0">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/36.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.0.2.aar/03504aca6ce9a9f1699f1f65b9cca3ed/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="caa03787689212c10939f308a55a8dc8a3333ed2">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/56.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.7.0/9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4/glide-3.7.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/17.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/typekit-1.0.1.aar/97da5b9fe40163430f11c345e9e71e42/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9408a959e65e1740548fb112a5145413c0f2daef">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/12.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Applications/Android Studio.app/Contents/gradle/m2repository/com/android/databinding/baseLibrary/3.0.1/baseLibrary-3.0.1.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="915f7f0c560968a3d7bfac7456ad7a0d3a974b39">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/customtabs-27.0.2.aar/271a44e2f4ec458a5813af6169bb02d4/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cdebcd9e0580b35115f655f8dc8ed7a66a8ef0fc">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/54.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/transition-26.1.0.aar/f527482c9c43be349e538ee201327822/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="58b12bdb21a84f22e0dc3b047aeceb0a546b1b44">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/35.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/build/intermediates/intermediate-jars/release/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="afca5b6a0d29edc8419af23c2626feeef3c72ef2">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/94.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.9/386a4339ffe52d5d63e80f9bed8d2b1d1a418249/android-async-http-1.4.9.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/48.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/firebase-common-11.6.0.aar/43d5da293dbee5bab4c57c2444c33a17/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="1cde19cbf9be88547ab4b7f03668eac5d91bd611">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/42.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/firebase-iid-11.6.0.aar/1438aa6533c9cedbcbb8ee75e6408124/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d6399340139f67ce4faba06e97f256ef0d6817c0">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/41.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/util-1.2.2.aar/788050264d4e8b1254534beb218dd431/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5c3fc6f9fc9da7044a4ae48cfd0fa7a27edf2437">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/86.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/21.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/cardview-v7-27.0.2.aar/ff0d0988fe0e422ba53154ff7e665a58/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="14bfdbf5594d4d7c320de20831849050788ab1e3">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/47.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.android.support.constraint/constraint-layout-solver/1.1.0/931532e953a477f876f2de18c2e7f16eee01078f/constraint-layout-solver-1.1.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="931532e953a477f876f2de18c2e7f16eee01078f">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/68.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.0.3/7d7f60c4783872861222166f6164215f8951c7b1/common-1.0.3.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7d7f60c4783872861222166f6164215f8951c7b1">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/88.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.2/3edcfe49d2c6053a70a2a47e4e1c2f94998a49cf/gson-2.8.2.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3edcfe49d2c6053a70a2a47e4e1c2f94998a49cf">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/19.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/65.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-11.6.0.aar/573c92781bd5291fb1480dd194ae1ecb/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="da443aff9cd3c2cd75b957e0547e1ca2c4f30308">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/40.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/play-services-base-11.6.0.aar/3454960dee5a801facd23d5e0b6a7c4d/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="863b37c463df79f340b5d83bbbfc63ad25612e01">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/39.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/library-1.0.4.aar/374226300c5c0b1abf34cebe869b197a/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="808deed0b600a65b805b642c2234feb6992dec88">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/64.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.0.2.aar/f04fd927bfde2d22aea3c0e00ddd9ef9/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="25c8cb628374f9a2d59ff9e1172753751e9a9f84">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/60.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/line-sdk-4.0.8.aar/859408050a31e74c317f6963701184ce/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b94266a936f08fe658fbe4cc4900075a427ae356">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/28.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/glide-transformations-1.0.6.aar/b152f81eea43a6d3ab20aa08bd5e066a/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2c8af48ae86723e44761977b30d63df71a00ef4e">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/candykick/.gradle/caches/transforms-1/files-1.1/usermgmt-1.2.2.aar/9a4f4313e6af1471de4bdd24ca207819/jars/classes.jar"
+        jumboMode="true"
+        min-sdk-version="16"
+        optimize="true"
+        revision="26.0.2"
+        sha1="69b044f124dd8726a7b376e315a7f722628297cc">
+        <dex dex="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/transforms/preDex/release/22.jar" />
+    </item>
+
+</items>

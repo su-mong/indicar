@@ -1,3 +1,0 @@
-# Referenced at D:\github\indicar\build\intermediates\manifests\full\debug\x86\AndroidManifest.xml:49
--keep class com.iindicar.indicar.utils.App { <init>(...); }
-

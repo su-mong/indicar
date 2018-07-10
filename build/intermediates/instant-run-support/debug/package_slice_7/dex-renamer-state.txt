@@ -1,0 +1,4 @@
+#Mon Jul 09 23:08:10 KST 2018
+base.0=/Users/candykick/Documents/Incar Tuning\#3/IndividualCar (16)/build/intermediates/transforms/dexMerger/debug/8
+path.0=classes.dex
+renamed.0=classes.dex

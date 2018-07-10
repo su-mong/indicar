@@ -1,0 +1,57 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:2:1-11:12
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:2:1-11:12
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:2:1-11:12
+	package
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:2:70-107
+		INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml
+		INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:2:11-69
+application
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:3:3-10:17
+meta-data#io.fabric.ApiKey
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:4:5-107
+	android:value
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:4:48-104
+	android:name
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:4:16-47
+meta-data#io.fabric.unity.crashlytics.version
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:5:5-91
+	android:value
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:5:67-88
+	android:name
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:5:16-66
+meta-data#io.fabric.crashlytics.qualified
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:6:5-117
+	android:value
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:6:63-114
+	android:name
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:6:16-62
+meta-data#io.fabric.crashlytics.unqualified
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:7:5-95
+	android:value
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:7:65-92
+	android:name
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:7:16-64
+meta-data#io.fabric.kits
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:8:5-76
+	android:value
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:8:46-73
+	android:name
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:8:16-45
+meta-data#io.fabric.InitializationType
+ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:9:5-88
+	android:value
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:9:60-85
+	android:name
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml:9:16-59
+uses-sdk
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml
+INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml
+		ADDED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml
+		INJECTED from /Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric/AndroidManifest.xml
