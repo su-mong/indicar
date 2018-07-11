@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\github\\indicar\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-id\\values-id.xml",
+            "outputFile": "/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/build/intermediates/incremental/mergeDebugResources/merged.dir/values-id/values-id.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\moon\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-common-4.33.0.aar\\e86306e8e3691992116a6ce5396b200f\\res\\values-id\\values-id.xml",
+                    "source": "/Users/candykick/.gradle/caches/transforms-1/files-1.1/facebook-common-4.34.0.aar/47a8f3001a201bde2c3c2d218ca7ed3e/res/values-id/values-id.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/assets"/><source path="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/crashlytics-wrapper/src/debug/assets"/></dataSet></merger>

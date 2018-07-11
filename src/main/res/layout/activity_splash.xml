@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:id="@+id/ll_splash_root">
 
     <Space
         android:layout_width="match_parent"
@@ -12,6 +13,7 @@
         android:layout_weight="1"/>
 
     <ImageView
+        android:id="@+id/ivS_title"
         style="@style/imageButtonCustomStyle"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
@@ -27,13 +29,14 @@
         android:src="@drawable/anim_loading" />
 
     <TextView
-        android:layout_marginTop="20dp"
-        android:textAlignment="center"
-        android:layout_height="wrap_content"
+        android:id="@+id/tvS_wait"
         android:layout_width="wrap_content"
-        android:text="Please Wait"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/Splash_wait"
+        android:textAlignment="center"
         android:textColor="@color/colorFont"
-        android:textSize="15dp"/>
+        android:textSize="15dp" />
 
     <Space
         android:layout_width="match_parent"

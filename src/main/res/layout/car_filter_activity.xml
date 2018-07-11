@@ -6,6 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <ImageView
+            android:id="@+id/text_carfilter_title"
             android:layout_width="wrap_content"
             android:layout_height="15dp"
             android:layout_marginTop="20dp"
@@ -29,8 +30,8 @@
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
                 android:imeOptions="actionSearch"
-                android:text="리스트 생성중.."
-                android:hint="차량 또는 브랜드를 검색하세요."
+                android:text="@string/makingList"
+                android:hint="@string/tuning2Hint"
                 android:drawableRight="@mipmap/icon_search"
 
                 android:singleLine="true"

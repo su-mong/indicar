@@ -3,16 +3,17 @@ package com.iindicar.indicar.b4_account;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
@@ -22,15 +23,11 @@ import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.data.vo.UserVO;
 import com.iindicar.indicar.databinding.ActivityTraceBinding;
-import com.iindicar.indicar.utils.ConstClass;
+import com.iindicar.indicar.utils.LocaleHelper;
 
 import java.util.List;
 
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import io.fabric.sdk.android.Fabric;
 
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
 
@@ -41,9 +38,16 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
     private TraceViewModel viewModel;
     private BoardListAdapter adapter;
 
+    Resources resources;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this,new Crashlytics());
+
+        Context traceContext = LocaleHelper.setLocale(getApplicationContext());
+        resources = traceContext.getResources();
+
         this.viewModel = new TraceViewModel();
         binding.setViewModel(viewModel);
         binding.setActivity(this);
@@ -83,6 +87,12 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
                 setLikeActivity();
                 break;
         }
+
+        //언어별 뷰 설정
+        binding.constraintTitle.setBackground(resources.getDrawable(R.drawable.title_trace));
+        binding.btnALike2.setBackground(resources.getDrawable(R.drawable.btna_like));
+        binding.btnAWriting2.setBackground(resources.getDrawable(R.drawable.btna_writing));
+        binding.btnAComment2.setBackground(resources.getDrawable(R.drawable.btna_comment));
 
         //버튼 클릭 이벤트 설정
         binding.btnALike2.setOnClickListener(new Button.OnClickListener() {
@@ -137,7 +147,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         binding.ivACommentOn.setImageResource(0);
 //        binding.viewPagerTrace.setCurrentItem(2);
 //        viewModel.getBoardListTrace(id,"like");
-        viewModel.getBoardListTrace(id,"like");
+        viewModel.getBoardListTrace(id, "like");
         /*try {
 
         } catch (Exception e) {
@@ -149,7 +159,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         binding.ivALikeOn.setImageResource(0);
         binding.ivAWritingOn.setImageResource(R.drawable.btna_on);
         binding.ivACommentOn.setImageResource(0);
-        viewModel.getBoardListTrace(id,"mine");
+        viewModel.getBoardListTrace(id, "mine");
         /*try {
 
         } catch (Exception e) {
@@ -161,7 +171,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         binding.ivALikeOn.setImageResource(0);
         binding.ivAWritingOn.setImageResource(0);
         binding.ivACommentOn.setImageResource(R.drawable.btna_on);
-        viewModel.getBoardListTrace(id,"comment");
+        viewModel.getBoardListTrace(id, "comment");
     }
 
     @Override
@@ -215,7 +225,5 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
     public void onListAdded(List<BoardDetailVO> list) {
         adapter.updateItems(list);
     }
-
-
 
 }

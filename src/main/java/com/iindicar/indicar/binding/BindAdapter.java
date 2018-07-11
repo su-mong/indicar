@@ -1,15 +1,18 @@
 package com.iindicar.indicar.binding;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.iindicar.indicar.R;
 import com.iindicar.indicar.b2_community.CommunityFragment;
 import com.iindicar.indicar.b2_community.boardList.BoardListPagerAdapter;
+import com.iindicar.indicar.utils.LocaleHelper;
 
 /**
  * Created by yeseul on 2018-04-13.
@@ -24,13 +27,16 @@ public class BindAdapter {
                                    CommunityFragment fragment,
                                    TabLayout tabLayout){
 
+        Context bindAdapterContext = LocaleHelper.setLocale(fragment.getActivity());
+        Resources resources = bindAdapterContext.getResources();
+
         viewPager.setAdapter(new BoardListPagerAdapter(viewPager.getContext(), fragment.getChildFragmentManager()));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setupWithViewPager(viewPager);
 
         String[] TAB_NAME = {
-                "인기순",
-                "최신순"
+                resources.getString(R.string.cmTab1),
+                resources.getString(R.string.cmTab2)
         };
 
         for(int i = 0 ; i < NUM_OF_BOARD_BUTTONS ; i++){
@@ -54,7 +60,7 @@ public class BindAdapter {
     }
 
     @BindingAdapter({"setSelected"})
-    public static void setSelected(View imageView, Boolean bool){
+    public static void setSelected(ImageButton imageView, Boolean bool){
         imageView.setSelected(bool);
     }
 

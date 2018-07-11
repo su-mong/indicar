@@ -1,9 +1,12 @@
 package com.iindicar.indicar.b2_community.boardDetail;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.databinding.ObservableInt;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +19,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.commit451.teleprinter.Teleprinter;
+import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
@@ -40,11 +45,14 @@ import com.iindicar.indicar.data.vo.WriteBoardVO;
 import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardDetailActivityBinding;
 import com.iindicar.indicar.utils.DialogUtil;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.iindicar.indicar.utils.RecyclerViewDecoration;
 import com.iindicar.indicar.utils.ScrollBottomAction;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.fabric.sdk.android.Fabric;
 
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_UPDATE;
 
@@ -71,6 +79,8 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     private Boolean canUpdate;
 
+    Resources resources;
+
     @Override
     public void onBackPressed() {
         if (viewModel.isKeyboardOpen.get()) {
@@ -94,6 +104,11 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this,new Crashlytics());
+
+        Context boardDetailContext = LocaleHelper.setLocale(getApplicationContext());
+        resources = boardDetailContext.getResources();
+
         Intent intent = getIntent();
         this.canUpdate = intent.getBooleanExtra("canUpdate", false);
 
@@ -116,6 +131,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         viewModel.start();
 
         // bind edit text
+        binding.boardContent.commentText.setHint(resources.getString(R.string.strBoardDetailcomment));
         binding.boardContent.commentText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -208,7 +224,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     @Override
     public void showPageEndMessage() {
-        Toast.makeText(this, "마지막 페이지 입니다.", Toast.LENGTH_SHORT).show();
+        showSnackBar(resources.getString(R.string.lastPage));
     }
 
     private void initBoardView() {
@@ -233,6 +249,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                 showCommentDialog(position);
             }
         });
+
+        binding.boardContent.imageviewBDEmpty.setImageDrawable(resources.getDrawable(R.drawable.alert_reply_empty));
+
         binding.boardContent.recyclerviewCommentContainer.setLayoutManager(
                 new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         binding.boardContent.recyclerviewCommentContainer.setAdapter(commentAdapter);
@@ -265,9 +284,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         PopupMenu popupMenu = new PopupMenu(this, view);
 
         if (canUpdate) { // 수정 가능한 게시물인 경우
-            getMenuInflater().inflate(R.menu.board_menu_canupdate, popupMenu.getMenu());
+            getMenuInflater().inflate(resources.getIdentifier("@menu/board_menu_canupdate","menu","com.iindicar.indicar"), popupMenu.getMenu());
         } else {
-            getMenuInflater().inflate(R.menu.board_menu, popupMenu.getMenu());
+            getMenuInflater().inflate(resources.getIdentifier("@menu/board_menu","menu","com.iindicar.indicar"), popupMenu.getMenu());
         }
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -295,18 +314,30 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     //팝업창을 보여주는 함수
     private void reasonPopupWindow() {
+        ImageView ivTitle;
         ImageView btnSend;
         ImageView btnAlertCancel;
         final EditText editReason;
         LayoutInflater factory = LayoutInflater.from(this);
         final View popupDialogView = factory.inflate(R.layout.alert_reason, null);
         final AlertDialog dialog = new AlertDialog.Builder(this).create();
+
+        Display display = (BoardDetailActivity.this).getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+
         dialog.setView(popupDialogView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        ivTitle = (ImageView) popupDialogView.findViewById(R.id.imageViewR_title);
         btnSend = (ImageView) popupDialogView.findViewById(R.id.btn_send);
         btnAlertCancel = (ImageView) popupDialogView.findViewById(R.id.btn_x);
         editReason = (EditText) popupDialogView.findViewById(R.id.edit_reason);
+
+        //언어 설정
+        ivTitle.setImageDrawable(resources.getDrawable(R.drawable.reason_title));
+        btnSend.setImageDrawable(resources.getDrawable(R.drawable.profile_suggest_btn));
+
         keyboard.showKeyboard(editReason);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,8 +363,8 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
         DialogUtil.showDialog(this,
                 R.drawable.button_trash,
-                "신고사유를 입력해주세요.",
-                "Delete this post",
+                resources.getString(R.string.reportReason),
+                resources.getString(R.string.deletesubtitle),
                 0.9, 0.25,
                 new View.OnClickListener() {
                     @Override
@@ -347,8 +378,8 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
         DialogUtil.showDialog(this,
                 R.drawable.button_trash,
-                "이 게시글을 정말로 삭제하시겠습니까?",
-                "Delete this post",
+                resources.getString(R.string.wantToDelete),
+                resources.getString(R.string.wantToDeleteSub),
                 0.9, 0.25,
                 new View.OnClickListener() {
                     @Override
@@ -362,7 +393,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         BoardCommentVO vo = commentAdapter.getItem(position);
 
         if (viewModel.loginName.equals(vo.getUserName())) {
-            CharSequence[] items = {"댓글 수정", "댓글 삭제"};
+            CharSequence[] items = {resources.getString(R.string.commentModify), resources.getString(R.string.commentDelete)};
 
             new AlertDialog.Builder(this)
                     .setItems(items, new DialogInterface.OnClickListener() {
@@ -379,7 +410,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                     })
                     .show();
         } else {
-            CharSequence[] items = {"부적절한 댓글 신고"};
+            CharSequence[] items = {resources.getString(R.string.commentReport)};
 
             new AlertDialog.Builder(this)
                     .setItems(items, new DialogInterface.OnClickListener() {
@@ -451,7 +482,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     }
 
     public void onSended() {
-        Toast.makeText(this, "신고가 접수되었습니다.", Toast.LENGTH_SHORT).show();
+        showSnackBar(resources.getString(R.string.reportSuccess));
     }
 
     public void onLikeBoard() {
@@ -500,7 +531,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     @Override
     public void onBoardNotAvailable() {
-        Toast.makeText(this, "존재하지 않는 게시물입니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, resources.getString(R.string.noExistPost), Toast.LENGTH_SHORT).show();
         onFinishActivity();
     }
 

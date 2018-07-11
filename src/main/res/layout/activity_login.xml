@@ -9,7 +9,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/backgroung_login">
+        android:background="@drawable/back_login1">
 
         <android.support.constraint.Guideline
             android:layout_width="wrap_content"
@@ -48,23 +48,15 @@
             android:layout_marginTop="25dp"/>
 
         <ImageView
+            android:id="@+id/imageviewL_Title"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="h,17:15"
             android:src="@drawable/logintitle"
             app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
             app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
-            app:layout_constraintBottom_toTopOf="@+id/btnLoginKakao"
+            app:layout_constraintBottom_toTopOf="@+id/btnLoginGoogle"
             android:layout_marginBottom="30dp"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="h,23:5"
-            android:id="@+id/btnLoginKakao"
-            android:background="@drawable/btn_kakaologin_light"
-            app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
-            app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
-            app:layout_constraintTop_toTopOf="@+id/guidelineLogin3"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -73,8 +65,8 @@
             android:background="@drawable/btn_googlelogin_light"
             app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
             app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
-            app:layout_constraintTop_toBottomOf="@+id/btnLoginKakao"
-            android:layout_marginTop="12dp"/>
+            app:layout_constraintTop_toTopOf="@+id/guidelineLogin3"
+            android:onClick="@{() -> activity.googleLogin()}"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -84,7 +76,31 @@
             app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
             app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
             app:layout_constraintTop_toBottomOf="@+id/btnLoginGoogle"
-            android:layout_marginTop="12dp"/>
+            android:layout_marginTop="12dp"
+            android:onClick="@{() -> activity.fbLogin()}"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,23:5"
+            android:id="@+id/btnLoginKakao"
+            android:background="@drawable/btn_kakaologin_light"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
+            app:layout_constraintTop_toBottomOf="@+id/btnLoginFacebook"
+            android:layout_marginTop="12dp"
+            android:onClick="@{() -> activity.kakaoLogin()}"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="h,23:5"
+            android:id="@+id/btnLoginLine"
+            android:background="@drawable/btn_linelogin"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@+id/guidelineLogin1"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineLogin2"
+            app:layout_constraintTop_toBottomOf="@+id/btnLoginFacebook"
+            android:layout_marginTop="12dp"
+            android:onClick="@{() -> activity.lineLogin()}"/>
 
         <ImageView
             android:layout_width="300dp"

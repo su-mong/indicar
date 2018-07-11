@@ -1,11 +1,13 @@
 package com.iindicar.indicar.b2_community.boardDetail;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
@@ -13,6 +15,7 @@ import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.databinding.BoardDetailHeaderBinding;
 import com.iindicar.indicar.databinding.BoardDetailItemBinding;
+import com.iindicar.indicar.utils.LocaleHelper;
 
 /**
  * Created by yeseul on 2018-04-13.
@@ -28,10 +31,14 @@ public class BoardDetailAdapter extends BaseRecyclerViewAdapter<BoardFileVO, Rec
     private static final int BOARD_ITEM = 1;
     private OnMenuClickListener onMenuClickListener;
 
+    Resources resources;
+
 //    private OnItemUpdateClickListener onItemUpdateClickListener;
 
     public BoardDetailAdapter(Context context){
         super(context);
+        Context context1 = LocaleHelper.setLocale(context);
+        resources = context1.getResources();
     }
 
     public void setHeader(BoardDetailVO header) {
@@ -101,6 +108,14 @@ public class BoardDetailAdapter extends BaseRecyclerViewAdapter<BoardFileVO, Rec
 
         if (viewType == BOARD_HEADER){
             View view = LayoutInflater.from(context).inflate(R.layout.board_detail_header, null);
+            TextView tvBDH_like = view.findViewById(R.id.tvBDH_like);
+            tvBDH_like.setText(resources.getString(R.string.strBoardAlllike));
+            TextView tvBDH_comment = view.findViewById(R.id.tvBDH_comment);
+            tvBDH_comment.setText(resources.getString(R.string.strBoardAllcomment));
+            TextView tvBDH_unit1 = view.findViewById(R.id.tvBDH_unit1);
+            tvBDH_unit1.setText(resources.getString(R.string.strBoardNumberUnit));
+            TextView tvBDH_unit2 = view.findViewById(R.id.tvBDH_unit2);
+            tvBDH_unit2.setText(resources.getString(R.string.strBoardNumberUnit));
             return new BoardHeaderViewHolder(view);
 
         } else {

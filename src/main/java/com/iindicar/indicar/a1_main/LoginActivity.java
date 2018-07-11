@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -13,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -24,9 +26,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -51,6 +55,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.iindicar.indicar.utils.ConstClass;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
@@ -62,11 +67,15 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
+import com.linecorp.linesdk.auth.LineLoginApi;
+import com.linecorp.linesdk.auth.LineLoginResult;
 
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Locale;
 
+import io.fabric.sdk.android.Fabric;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -97,13 +106,21 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     int screenWidth, screenHeight;
     public static Activity LoginAct;
 
+    //언어 관련 객체
+    Resources resources;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this,new Crashlytics());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        binding.setActivity(this);
+
         //hasActionBar.set(false);
         // Initialize SDK before setContentView(Layout ID)
+
         //앱 설치 후 첫 실행인지를 체크한다.
+        //첫 실행이면 You're New!를 띄우고 그게 아니면 You're Back!을 띄운다.
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
         SharedPreferences pref = getSharedPreferences("firstexe", MODE_PRIVATE);
         if (pref.getString("index", "").equals("")) {
@@ -113,11 +130,15 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             editor.putString("index", "execute");
             editor.commit();
 
-            SharedPreferences.Editor editor2 = prefLogin.edit();
-            editor2.putInt("EventAlarm", 1);
-            editor2.putInt("OtherAlarm", 0);
-            editor2.commit();
+            Context boardFilterContext = LocaleHelper.setLocale(getApplicationContext());
+            resources = boardFilterContext.getResources();
+            binding.imageviewLTitle.setImageDrawable(resources.getDrawable(R.drawable.logintitle2));
+        } else {
+            Context boardFilterContext = LocaleHelper.setLocale(getApplicationContext());
+            resources = boardFilterContext.getResources();
+            binding.imageviewLTitle.setImageDrawable(resources.getDrawable(R.drawable.logintitle));
         }
+
         LoginAct = this;
         //화면 크기를 구한다.
         WindowManager w = getWindowManager();
@@ -154,61 +175,31 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         KakaoModule = new SessionCallback();
         Session.getCurrentSession().addCallback(KakaoModule);
 
-
-        //구글 로그인 버튼
-        binding.btnLoginGoogle.setOnTouchListener(new Button.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
-                    binding.btnLoginGoogle.getBackground().setColorFilter(new PorterDuffColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY));
-                }
-                if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                    binding.btnLoginGoogle.getBackground().setColorFilter(null);
-                    Intent intent = GoogleClient.getSignInIntent();
-                    startActivityForResult(intent, 9001);
-                }
-                return false;
-            }
-
-
-        });
-
-        binding.btnLoginFacebook.setOnTouchListener(new Button.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
-                    binding.btnLoginFacebook.getBackground().setColorFilter(new PorterDuffColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY));
-                }
-                if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                    binding.btnLoginFacebook.getBackground().setColorFilter(null);
-                    fbLogin();
-                }
-                return false;
-            }
-
-
-        });
-        binding.btnLoginKakao.setOnTouchListener(new Button.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
-                    binding.btnLoginKakao.getBackground().setColorFilter(new PorterDuffColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY));
-                }
-                if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-                    binding.btnLoginKakao.getBackground().setColorFilter(null);
-                    Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
-                }
-                return false;
-            }
-
-
-        });
-
+        //국가별 뷰 초기화
+        binding.btnLoginGoogle.setBackground(resources.getDrawable(R.drawable.btn_googlelogin_light));
+        binding.btnLoginFacebook.setBackground(resources.getDrawable(R.drawable.btn_facebooklogin));
+        if(!LocaleHelper.getLanguage(getApplicationContext()).equals("ko")) {
+            binding.btnLoginKakao.setVisibility(View.GONE);
+            binding.btnLoginLine.setVisibility(View.VISIBLE);
+        } else {
+            binding.btnLoginKakao.setVisibility(View.VISIBLE);
+            binding.btnLoginLine.setVisibility(View.GONE);
+        }
     }
 
+    //구글 로그인 버튼
+    public void googleLogin() {
+        Intent intent = GoogleClient.getSignInIntent();
+        startActivityForResult(intent, 9001);
+    }
 
+    //카카오 로그인 버튼
+    public void kakaoLogin() {
+        Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
+    }
+
+    //페이스북 로그인 버튼
     public void fbLogin() {
-        //페이스북 로그인 버튼
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "user_photos", "public_profile"));
         LoginManager.getInstance().registerCallback(FBcallBackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -221,7 +212,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         try {
                             String userId = object.getString("id");
                             name = object.getString("name");
-                            profile_img_url = "https://graph.facebook.com/" + userId + "/picture";
+                            profile_img_url = R.string.facebookGraphApi + userId + "/picture";
 
                             if (object.toString().contains("email")) {
                                 email = object.getString("email");
@@ -231,7 +222,8 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
                             new CheckUser().execute();
                         } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), getString(R.string.strErrwithCode)+e.toString(), Toast.LENGTH_SHORT).show();
+                            showSnackBar(resources.getString(R.string.strErrwithCode)+e.toString());
                         }
                     }
 
@@ -244,14 +236,25 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(), "페이스북 로그인을 취소하셨습니다.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "페이스북 로그인을 취소하셨습니다.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(), "페이스북 로그인 실패: 1단계", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), getString(R.string.strErrwithCode) + error.toString(), Toast.LENGTH_SHORT).show();
+                showSnackBar(resources.getString(R.string.strErrwithCode)+error.toString());
             }
         });
+    }
+
+    //라인 로그인 버튼
+    public void lineLogin() {
+        try {
+            Intent lineIntent = LineLoginApi.getLoginIntent(getApplicationContext(),getString(R.string.line_channel_id));
+            startActivityForResult(lineIntent,7000);
+        } catch (Exception e) {
+            showSnackBar(resources.getString(R.string.strErrwithCode)+e.toString());
+        }
     }
 
     @Override
@@ -270,20 +273,20 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
         } else {
             backPressTime = tempTime;
-            Toast.makeText(LoginActivity.this, "뒤로 버튼을 한 번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            showSnackBar(resources.getString(R.string.strBackpressed));
         }
     }
 
     //각 로그인의 onActivityResult
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 9001) {
+        if (requestCode == 9001) { //구글
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "구글 로그인 실패", Toast.LENGTH_SHORT);
+                showSnackBar(resources.getString(R.string.strErrwithCode) + e.toString());
             }
         } else if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -292,7 +295,20 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             super.onActivityResult(requestCode, resultCode, data);
             FBcallBackManager.onActivityResult(requestCode, resultCode, data);
             return;
+        } else if(requestCode == 7000) {
+            super.onActivityResult(requestCode, resultCode, data);
+            LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
 
+            switch(result.getResponseCode()) {
+                case SUCCESS:
+                    Toast.makeText(getApplicationContext(),result.getLineProfile().getDisplayName(),Toast.LENGTH_SHORT).show();
+                    break;
+                case CANCEL:
+                    break;
+                default:
+                    showSnackBar(resources.getString(R.string.strErrwithCode) + result.getResponseCode().name());
+                    break;
+            }
         }
     }
 
@@ -315,10 +331,10 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                             try {
                                 new CheckUser().execute();
                             } catch (Exception e) {
-                                Toast.makeText(getApplicationContext(), "유저 정보 획득 실패", Toast.LENGTH_SHORT).show();
+                                showSnackBar(resources.getString(R.string.strgetUserInfoError) + e.toString());
                             }
                         } else {
-                            Toast.makeText(LoginActivity.this, "구글 로그인 오류: " + task.getException(), Toast.LENGTH_SHORT).show();
+                            showSnackBar(resources.getString(R.string.strErrwithCode) + task.getException().toString());
                         }
                     }
                 });
@@ -331,19 +347,17 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             UserManagement.requestMe(new MeResponseCallback() {
                 @Override
                 public void onFailure(ErrorResult errorResult) {
-                    String message = "Kakao Login Fail : " + errorResult;
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                     ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
                     if (result == ErrorCode.CLIENT_ERROR_CODE) { //인터넷 연결이 끊어진 경우.
-                        redirectLoginActivitywithFail("인터넷 연결이 끊어졌습니다. 다시 시도해 주세요.");
+                        showSnackBar(resources.getString(R.string.strNoInternet));
                     } else {
-                        redirectLoginActivitywithFail("다음 에러가 발생했습니다 : " + errorResult);
+                        showSnackBar(resources.getString(R.string.strErrwithCode) + errorResult.toString());
                     }
                 }
 
                 @Override
                 public void onSessionClosed(ErrorResult errorResult) {
-                    redirectLoginActivitywithFail("로그인 세션이 닫혔습니다. 다시 시도해 주세요.");
+                    redirectLoginActivitywithFail(resources.getString(R.string.strLoginedErr));
                 }
 
                 @Override
@@ -360,7 +374,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     try {
                         new CheckUser().execute();
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "유저 정보 획득 실패", Toast.LENGTH_SHORT).show();
+                        showSnackBar(resources.getString(R.string.strgetUserInfoError)+e.toString());
                     }
                 }
             });
@@ -369,7 +383,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         @Override
         public void onSessionOpenFailed(KakaoException e) {
             if (e != null) {
-                Toast.makeText(LoginActivity.this, "카카오톡 로그인을 중지합니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.strKakaoLoginStop)+e.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
@@ -395,7 +409,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         .add("email", email)
                         .build();
                 Request request = new Request.Builder()
-                        .url(ConstClass.check_User)
+                        .url(getString(R.string.check_User))
                         .post(body)
                         .build();
 
@@ -416,6 +430,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
+                    Log.d("ddf Login checkUser", id);
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
@@ -428,6 +443,10 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     editor.putString("name", name);
                     editor.putString("profile_img_url", profile_img_url);
                     editor.putString("email", email);
+                    editor.putInt("EventAlarm", 1);
+                    editor.putInt("OtherAlarm", 0);
+                    Locale systemLocale = getApplicationContext().getResources().getConfiguration().locale;
+                    editor.putString("locale",systemLocale.getLanguage());
                     editor.commit();
                     binding.pbLogin.setVisibility(View.GONE);
 
@@ -436,7 +455,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     LoginActivity.this.finish();
                 } catch (Exception e) {//에러
                     Log.d("checkuserError", e.toString());
-                    Toast.makeText(getApplicationContext(), ConstClass.strLoginedErr, Toast.LENGTH_SHORT).show();
+                    showSnackBar(resources.getString(R.string.strLoginedErr));
                     binding.pbLogin.setVisibility(View.GONE);
                 }
             } else {//유저 존재하지 않음
@@ -464,14 +483,14 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         .add("login_method", login_method);
                 formBuilder.add("name", name)
                         .add("email", email);
-                if (profile_img_url != null && !profile_img_url.equals("null"))
+                if(profile_img_url!=null && !profile_img_url.equals("null"))
                     formBuilder.add("profile_img_url", profile_img_url);
 
                 RequestBody body = formBuilder.build();
 
 
                 Request request = new Request.Builder()
-                        .url(ConstClass.add_User)
+                        .url(getString(R.string.add_User))
                         .post(body)
                         .build();
                 Response response = client.newCall(request).execute();
@@ -487,7 +506,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         @Override
         protected void onPostExecute(String result) {
             pWindow.dismiss();
-            Toast.makeText(getApplicationContext(), ConstClass.strAddUserSuccess + result, Toast.LENGTH_SHORT).show();
+            showSnackBar(resources.getString(R.string.strAddUserSuccess));
             binding.pbLogin.setVisibility(View.GONE);
 
             new CheckUser2().execute();
@@ -512,7 +531,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         .add("email", email)
                         .build();
                 Request request = new Request.Builder()
-                        .url(ConstClass.check_User)
+                        .url(getString(R.string.check_User))
                         .post(body)
                         .build();
 
@@ -533,6 +552,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
+                    Log.d("ddf Login checkUser", id);
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
@@ -545,6 +565,10 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     editor.putString("name", name);
                     editor.putString("profile_img_url", profile_img_url);
                     editor.putString("email", email);
+                    editor.putInt("EventAlarm", 1);
+                    editor.putInt("OtherAlarm", 0);
+                    Locale systemLocale = getApplicationContext().getResources().getConfiguration().locale;
+                    editor.putString("locale",systemLocale.getLanguage());
                     editor.commit();
                     binding.pbLogin.setVisibility(View.GONE);
 
@@ -553,7 +577,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     LoginActivity.this.finish();
                 } catch (Exception e) {//에러
                     Log.d("checkuserError", e.toString());
-                    Toast.makeText(getApplicationContext(), ConstClass.strLoginedErr, Toast.LENGTH_SHORT).show();
+                    showSnackBar(resources.getString(R.string.strLoginedErr));
                     binding.pbLogin.setVisibility(View.GONE);
                 }
             } else {//유저 존재하지 않음
@@ -566,10 +590,12 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     private void initiatePopupWindow() {
         LayoutInflater inflater = (LayoutInflater) LoginActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         try {
+            ImageView nickTitle; ImageView emailTitle;
             int popupWidth = (int) Math.round(screenWidth * 0.88);
             int popupHeight = (int) Math.round(screenHeight * 0.406);
 
             View layout = inflater.inflate(R.layout.alert_login, (ViewGroup) findViewById(R.id.popup));
+            layout.setBackground(resources.getDrawable(R.drawable.alert_login));
             pWindow = new PopupWindow(layout, popupWidth, popupHeight, true);
             pWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
             btnAlertSignUp = layout.findViewById(R.id.btnAlertSignUp);
@@ -580,13 +606,26 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             /*RelativeLayout.LayoutParams cancelParams = new RelativeLayout.LayoutParams((int)Math.round(popupWidth*0.33),(int)Math.round(popupHeight*0.174));
             cancelParams.setMargins((int)Math.round(popupWidth*0.552),(int)Math.round(popupHeight*0.735),0,0);
             btnPopCancel.setLayoutParams(cancelParams);*/
+            nickTitle = layout.findViewById(R.id.ivAl_nick);
+            emailTitle = layout.findViewById(R.id.ivAl_email);
             etName = layout.findViewById(R.id.et_AlertName);
             etEmail1 = layout.findViewById(R.id.et_AlertEmail1);
             etEmail2 = layout.findViewById(R.id.et_AlertEmail2);
             pWindow.setTouchable(true);
 
+            //언어별 뷰 셋팅
+            nickTitle.setImageDrawable(resources.getDrawable(R.drawable.alert_login_nick));
+            emailTitle.setImageDrawable(resources.getDrawable(R.drawable.alert_login_email));
 
-            if (!email.equals("")) {
+            //회원가입하려는 정보에 이메일이 존재하면 이메일은 수정이 불가능하게 만든다.
+            if(email.length() != 0) {
+                etEmail1.setClickable(false);
+                etEmail1.setFocusable(false);
+                etEmail2.setClickable(false);
+                etEmail2.setFocusable(false);
+                etEmail1.setTextColor(getResources().getColor(R.color.colorAddUserEmail));
+                etEmail2.setTextColor(getResources().getColor(R.color.colorAddUserEmail));
+
                 String[] emailArr = email.split("@");
                 etName.setText(name);
                 etEmail1.setText(emailArr[0]);
@@ -600,7 +639,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     email = etEmail1.getText().toString() + "@" + etEmail2.getText().toString();
 
                     if (name.getBytes().length > 20) { //닉네임은 한글 10자, 영어 20자 이하여야 함
-                        Toast.makeText(getApplicationContext(), ConstClass.strTooLongNickname, Toast.LENGTH_SHORT).show();
+                        showSnackBar(resources.getString(R.string.strTooLongNickname));
                         pWindow.dismiss();
                         if (login_method.equals("facebook")) {
                             LoginManager.getInstance().logOut();
@@ -622,7 +661,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         editor.putString("profile_img_url", profile_img_url);
                         editor.putString("email", email);
                         editor.commit();
-                        Toast.makeText(LoginActivity.this, "add user send param:" + login_method + name + email, Toast.LENGTH_LONG).show();
 
                         new AddUser().execute();
                     }
@@ -682,10 +720,14 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     }
 
     private void redirectLoginActivitywithFail(String strErr) {
-        Toast.makeText(getApplicationContext(), strErr, Toast.LENGTH_SHORT).show();
+        showSnackBar(strErr);
     }
 
-    protected void requestMe() {
+    public void showSnackBar(String text) {
+        Snackbar.make(binding.getRoot(), "" + text, Snackbar.LENGTH_SHORT).show();
+    }
+
+    /*protected void requestMe() {
         UserManagement.requestMe(new MeResponseCallback() {
             @Override
             public void onFailure(ErrorResult errorResult) {
@@ -693,15 +735,15 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 ErrorCode result = ErrorCode.valueOf(errorResult.getErrorCode());
                 if (result == ErrorCode.CLIENT_ERROR_CODE) { //인터넷 연결이 끊어진 경우.
-                    redirectLoginActivitywithFail("인터넷 연결이 끊어졌습니다. 다시 시도해 주세요.");
+                    Toast.makeText(getApplicationContext,"인터넷 연결이 끊어졌습니다. 다시 시도해 주세요.",Toast.LENGTH_SHORT).show;
                 } else {
-                    redirectLoginActivitywithFail("다음 에러가 발생했습니다 : " + errorResult);
+                    Toast.makeText(getApplicationContext,"다음 에러가 발생했습니다 : " + errorResult,Toast.LENGTH_SHORT).show;
                 }
             }
 
             @Override
             public void onSessionClosed(ErrorResult errorResult) {
-                redirectLoginActivitywithFail("로그인 세션이 닫혔습니다. 다시 시도해 주세요.");
+                Toast.makeText(getApplicationContext,"로그인 세션이 닫혔습니다. 다시 시도해 주세요.",Toast.LENGTH_SHORT).show;
             }
 
             @Override

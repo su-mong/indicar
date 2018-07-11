@@ -1,7 +1,12 @@
 package com.iindicar.indicar.binding;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.BindingAdapter;
 import android.widget.TextView;
+
+import com.iindicar.indicar.R;
+import com.iindicar.indicar.utils.LocaleHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +20,9 @@ public class DateBinding {
 
     @BindingAdapter({"date"})
     public static void convertDateToDisplayText(TextView textView, String inputDate) {
+
+        Context dateBindingContext = LocaleHelper.setLocale(textView.getContext());
+        Resources resources = dateBindingContext.getResources();
 
         if(inputDate == null){
             return;
@@ -37,12 +45,12 @@ public class DateBinding {
 
         if (diffTime >= 0) {
             if (diffTime < 60) { // ~ 59분 전
-                displayString = diffTime + "분 전";
+                displayString = diffTime + resources.getString(R.string.minutes);
             } else {
                 diffTime = diffTime / 60; // 시간 단위로 변경
 
                 if (diffTime < 24) { // ~ 23시간 전
-                    displayString = diffTime + "시간 전";
+                    displayString = diffTime + resources.getString(R.string.hours);;
                 } else { // 날짜 출력
                     displayString = dateOnly.format(input);
                 }

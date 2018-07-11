@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric-init/libs"><file name="fabric-init.jar" path="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric-init/libs/fabric-init.jar"/></source></dataSet><dataSet config="debug"><source path="/Users/candykick/Documents/Incar Tuning#3/IndividualCar (16)/fabric-init/src/debug/jniLibs"/></dataSet></merger>

@@ -1,0 +1,545 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="fragment"
+            type="com.iindicar.indicar.b4_account.AccountFragment"/>
+    </data>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_account">
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineAccount1"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineAccount2"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.54"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineAccount3"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.12"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineAccount4"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.47"/>
+
+        <TextView
+            android:id="@+id/text_account_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/AccountTitle"
+            android:textColor="@color/colorWhite"
+            android:textSize="27sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineAccount1"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/text_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/AccountSub"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@+id/text_account_title"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineAccount1" />
+
+        <LinearLayout
+            android:id="@+id/llA_profile"
+            android:layout_marginTop="30dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="@+id/guidelineAccount3"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineAccount1"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile."
+                android:textStyle="italic|bold"
+                android:textSize="15sp"
+                android:textColor="@color/colorWhite"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="80dp"
+                    android:layout_height="70dp">
+
+                    <ImageButton
+                        style="@style/commentButtonCustomStyle"
+                        android:id="@+id/ivA_profileImage"
+                        android:layout_gravity="start|bottom"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@drawable/border_circle"/>
+
+                    <ImageButton
+                        style="@style/imageButtonCustomStyle"
+                        android:id="@+id/btnA_gotoProfile"
+                        android:layout_gravity="end|bottom"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="3dp"
+                        android:background="@drawable/account_setting"
+                        android:onClick="@{() -> fragment.btnAGotoProfile()}"/>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:background="@drawable/border_leftline">
+
+                    <TextView
+                        android:id="@+id/tvA_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorWhite"/>
+                    <TextView
+                        android:id="@+id/tvA_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textSize="12sp"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/tvA_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/AccountNoAddress"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvA_subtc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category."
+            android:textStyle="italic|bold"
+            android:textSize="15sp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            app:layout_constraintTop_toBottomOf="@+id/llA_profile"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:id="@+id/tvA_subtt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trace."
+            android:textStyle="italic|bold"
+            android:textSize="15sp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
+            app:layout_constraintTop_toBottomOf="@+id/llA_profile"
+            android:layout_marginTop="20dp"/>
+
+        <LinearLayout
+            android:id="@+id/btnA_basket"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/tvA_subtc"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            app:layout_constraintRight_toRightOf="@+id/guidelineAccount2"
+            android:layout_marginTop="10dp"
+            android:onClick="@{() -> fragment.btnABasket()}">
+
+            <TextView
+                android:id="@+id/buttontx_basket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/BasketTitle"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/subbutton_basket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/BasketSub"
+                android:textColor="@color/colorWhite"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/btnA_howtouse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_basket"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            app:layout_constraintRight_toRightOf="@+id/guidelineAccount2"
+            android:layout_marginTop="25dp"
+            android:onClick="@{() -> fragment.btnAHowtouse()}">
+
+            <TextView
+                android:id="@+id/buttontx_howtouse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/HowtouseTitle"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/subbutton_howtouse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/HowtouseSub"
+                android:textColor="@color/colorWhite"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/btnA_alliance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_howtouse"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            app:layout_constraintRight_toRightOf="@+id/guidelineAccount2"
+            android:layout_marginTop="25dp"
+            android:onClick="@{() -> fragment.btnAAlliance()}">
+
+            <TextView
+                android:id="@+id/buttontx_alliacne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AllianceTitle"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/subbutton_alliance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AllianceSub"
+                android:textColor="@color/colorWhite"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/btnA_logout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_alliance"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            app:layout_constraintRight_toRightOf="@+id/guidelineAccount2"
+            android:layout_marginTop="25dp"
+            android:onClick="@{() -> fragment.btnALogout()}">
+
+            <TextView
+                android:id="@+id/buttontx_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/LogoutTitle"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/subbutton_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/LogoutSub"
+                android:textColor="@color/colorWhite"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnA_like"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/tvA_subtt"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:onClick="@{(v) -> fragment.traceClickListener(v)}">
+
+            <TextView
+                android:id="@+id/buttontx_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/LikeTitle"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/subbutton_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/LikeSub"
+                android:textColor="@color/colorWhite"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/btnA_writing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_like"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="25dp"
+            android:onClick="@{(v) -> fragment.traceClickListener(v)}">
+
+            <TextView
+                android:id="@+id/buttontx_writing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/MywritingTitle"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/subbutton_writing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/MywritingSub"
+                android:textColor="@color/colorWhite"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/btnA_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_writing"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="25dp"
+            android:onClick="@{(v) -> fragment.traceClickListener(v)}">
+
+            <TextView
+                android:id="@+id/buttontx_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/MycommentTitle"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/subbutton_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/MycommentSub"
+                android:textColor="@color/colorWhite"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>
+
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="fragment"
+            type="com.iindicar.indicar.b4_account.AccountFragment"/>
+    </data>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background_account">
+
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineAccount1"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineAccount2"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.54"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineAccount3"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.12"/>
+        <android.support.constraint.Guideline
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/guidelineAccount4"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.47"/>
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="55dp"
+            android:src="@drawable/account_title"
+            android:id="@+id/ivA_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineAccount1"
+            android:layout_marginTop="25dp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="13dp"
+            android:src="@drawable/account_subtp"
+            android:id="@+id/ivA_subtp"
+            app:layout_constraintTop_toBottomOf="@+id/guidelineAccount3"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineAccount1"/>
+        <ImageView
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:id="@+id/ivA_profileImage"
+            app:layout_constraintTop_toBottomOf="@+id/ivA_subtp"
+            app:layout_constraintLeft_toLeftOf="@+id/guidelineAccount1"
+            android:layout_marginTop="7dp"/>
+        <Button
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:id="@+id/btnA_gotoProfile"
+            android:background="@drawable/account_setting"
+            app:layout_constraintRight_toRightOf="@+id/ivA_profileImage"
+            app:layout_constraintBottom_toBottomOf="@+id/ivA_profileImage"
+            android:layout_marginLeft="5dp"
+            android:onClick="@{() -> fragment.btnAGotoProfile()}"/>
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="62dp"
+            android:src="@drawable/account_bar2"
+            android:id="@+id/ivA_profilebar"
+            app:layout_constraintLeft_toRightOf="@+id/ivA_profileImage"
+            app:layout_constraintTop_toTopOf="@+id/ivA_profileImage"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="305dp"
+            android:layout_height="27dp"
+            android:textSize="22sp"
+            android:id="@+id/tvA_name"
+            android:textColor="#ffffff"
+            app:layout_constraintLeft_toRightOf="@+id/ivA_profilebar"
+            app:layout_constraintTop_toTopOf="@+id/ivA_profilebar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:layout_width="305dp"
+            android:layout_height="20dp"
+            android:textSize="13sp"
+            android:id="@+id/tvA_email"
+            android:textColor="#ffffff"
+            app:layout_constraintLeft_toRightOf="@+id/ivA_profilebar"
+            app:layout_constraintTop_toBottomOf="@+id/tvA_name"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="1dp"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="13dp"
+            android:src="@drawable/account_subtc"
+            android:id="@+id/ivA_subtc"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            app:layout_constraintTop_toTopOf="@+id/guidelineAccount4"/>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="13dp"
+            android:src="@drawable/account_subtt"
+            android:id="@+id/ivA_subtt"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
+            app:layout_constraintTop_toTopOf="@+id/guidelineAccount4"/>
+
+        <Button
+            android:layout_width="115dp"
+            android:layout_height="32dp"
+            android:id="@+id/btnA_basket"
+            android:background="@drawable/account_shop"
+            app:layout_constraintTop_toBottomOf="@+id/ivA_subtc"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            android:layout_marginTop="10dp"
+            android:onClick="@{() -> fragment.btnABasket()}"/>
+        <Button
+            android:layout_width="115dp"
+            android:layout_height="32dp"
+            android:id="@+id/btnA_howtouse"
+            android:background="@drawable/account_howtouse"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_basket"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            android:layout_marginTop="35dp"
+            android:onClick="@{() -> fragment.btnAHowtouse()}"/>
+        <Button
+            android:layout_width="115dp"
+            android:layout_height="32dp"
+            android:id="@+id/btnA_alliance"
+            android:background="@drawable/account_alliance"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_howtouse"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            android:layout_marginTop="35dp"
+            android:onClick="@{() -> fragment.btnAAlliance()}"/>
+        <Button
+            android:layout_width="115dp"
+            android:layout_height="32dp"
+            android:id="@+id/btnA_logout"
+            android:background="@drawable/account_logout"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_alliance"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
+            android:layout_marginTop="35dp"
+            android:onClick="@{() -> fragment.btnALogout()}"/>
+
+        <Button
+            android:layout_width="115dp"
+            android:layout_height="32dp"
+            android:id="@+id/btnA_like"
+            android:background="@drawable/account_like"
+            app:layout_constraintTop_toBottomOf="@+id/ivA_subtt"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
+            android:layout_marginTop="10dp"
+            android:onClick="@{(v) -> fragment.traceClickListener(v)}"/>
+        <Button
+            android:layout_width="115dp"
+            android:layout_height="32dp"
+            android:id="@+id/btnA_writing"
+            android:background="@drawable/account_mywrite"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_like"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
+            android:layout_marginTop="35dp"
+            android:onClick="@{(v) -> fragment.traceClickListener(v)}"/>
+        <Button
+            android:layout_width="115dp"
+            android:layout_height="32dp"
+            android:id="@+id/btnA_comment"
+            android:background="@drawable/account_mycomment"
+            app:layout_constraintTop_toBottomOf="@+id/btnA_writing"
+            app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
+            android:layout_marginTop="35dp"
+            android:onClick="@{(v) -> fragment.traceClickListener(v)}"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
+-->

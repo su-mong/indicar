@@ -19,6 +19,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/imageviewBWF_title"
             style="@style/imageButtonCustomStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +32,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/text_typeofvehicle"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
                 android:layout_margin="20dp"
@@ -54,7 +56,7 @@
                 android:textAlignment="center"
                 android:id="@+id/text_car_name"
                 android:layout_width="match_parent"
-                android:text="선택된 차량 : 없음"
+                android:text="@string/selectNoCar"
                 android:layout_height="25dp" />
 
 
@@ -64,6 +66,7 @@
                 android:layout_weight="0.5" />
 
             <ImageView
+                android:id="@+id/text_typeofpost"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
                 android:layout_margin="20dp"

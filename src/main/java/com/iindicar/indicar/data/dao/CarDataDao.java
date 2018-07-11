@@ -1,13 +1,9 @@
 package com.iindicar.indicar.data.dao;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.iindicar.indicar.R;
-import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.CarDataVO;
 import com.iindicar.indicar.utils.HttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -18,8 +14,11 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class CarDataDao implements BaseDao<CarDataVO>{
+/**
+ * Created by candykick on 2018. 7. 9..
+ */
 
+public class CarDataDao implements BaseDao<CarDataVO>{
     @Override
     public void getDataList(RequestParams params, final LoadDataListCallBack callBack) {
         final String URL = "/car/get_car";

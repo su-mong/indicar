@@ -3,6 +3,7 @@ package com.iindicar.indicar.b2_community.boardWrite;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,21 +11,22 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 
 import com.commit451.teleprinter.Teleprinter;
+import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.vo.WriteBoardVO;
 import com.iindicar.indicar.data.vo.WriteFileVO;
 import com.iindicar.indicar.databinding.BoardWriteEditActivityBinding;
 import com.iindicar.indicar.utils.DialogUtil;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.iindicar.indicar.utils.PickPhotoHelper;
 
 import java.util.List;
 
-import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_UPDATE;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by yeseul on 2018-05-06.
@@ -50,6 +52,8 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     private PickPhotoHelper pickPhotoHelper;
     private Teleprinter keyboard;
 
+    Resources resources;
+
     @Override
     protected int getLayoutId() {
         return R.layout.board_write_edit_activity;
@@ -72,7 +76,12 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new BoardWriteEditViewModel();
+        Fabric.with(this,new Crashlytics());
+
+        Context boardWriteEditContext = LocaleHelper.setLocale(getApplicationContext());
+        resources = boardWriteEditContext.getResources();
+
+        viewModel = new BoardWriteEditViewModel(BoardWriteEditActivity.this);
         viewModel.setNavigator(this);
 
         binding.setViewModel(viewModel);
@@ -109,6 +118,11 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra(BUNDLE_EXTRA_BOARD);
 
+        //언어별 뷰 셋팅
+        binding.buttonNext.setImageDrawable(resources.getDrawable(R.drawable.btn_next));
+        binding.buttonSubmit.setImageDrawable(resources.getDrawable(R.drawable.btn_upload_board));
+        binding.buttonCancel.setImageDrawable(resources.getDrawable(R.drawable.btn_quit));
+
         if (bundle == null) { // write new board
             // get login user id, name from sharedPreferences
             SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
@@ -133,7 +147,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     @Override
     public void changeToWriteItem() {
         if (viewModel.boardType.get() == null) {
-            showSnackBar("카테고리를 선택해주세요.");
+            showSnackBar(resources.getString(R.string.selectCategory));
             return;
         }
         currFrag = FRAG_WRITE_ITEM;
@@ -221,8 +235,8 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     public void onCancelWrite() {
 
         DialogUtil.showDialog(this,
-                "글 작성을 그만두시겠습니까?\n작성한 내용은 모두 삭제됩니다.",
-                "All content you write will be deleted",
+                resources.getString(R.string.stopWriting),
+                resources.getString(R.string.stopWritingSub),
                 0.9, 0.25,
                 new View.OnClickListener() {
                     @Override
@@ -267,5 +281,10 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     @Override
     public void onResume() {
         super.onResume();
+
+        //언어별 뷰 셋팅
+        binding.buttonNext.setImageDrawable(resources.getDrawable(R.drawable.btn_next));
+        binding.buttonSubmit.setImageDrawable(resources.getDrawable(R.drawable.btn_upload_board));
+        binding.buttonCancel.setImageDrawable(resources.getDrawable(R.drawable.btn_quit));
     }
 }

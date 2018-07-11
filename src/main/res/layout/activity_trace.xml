@@ -3,11 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="activity"
             type="com.iindicar.indicar.b4_account.TraceActivity"/>
-
         <variable
             name="viewModel"
             type="com.iindicar.indicar.b4_account.TraceViewModel" />
@@ -18,74 +16,71 @@
         android:orientation="vertical"
         android:weightSum="21">
 
-        <com.ssomai.android.scalablelayout.ScalableLayout
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraint_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="4"
-            app:scale_base_width="1440"
-            app:scale_base_height="416">
+            android:background="@drawable/title_trace">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/title_trace"
-                app:scale_top="0"
-                app:scale_left="0"
-                app:scale_height="416"
-                app:scale_width="1440"/>
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnA_like2"
-                android:background="@drawable/btna_like"
-                app:scale_top="30"
-                app:scale_left="1160"
-                app:scale_height="74"
-                app:scale_width="200"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="18dp"
                 android:id="@+id/btnA_writing2"
                 android:background="@drawable/btna_writing"
-                app:scale_top="171"
-                app:scale_left="1160"
-                app:scale_height="74"
-                app:scale_width="200"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"/>
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:id="@+id/ivA_writingOn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnA_writing2"
+                android:layout_marginRight="6dp"/>
+
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="18dp"
+                android:id="@+id/btnA_like2"
+                android:background="@drawable/btna_like"
+                app:layout_constraintBottom_toTopOf="@+id/btnA_writing2"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"/>
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:id="@+id/ivA_likeOn"
+                app:layout_constraintTop_toTopOf="@+id/btnA_like2"
+                android:layout_marginTop="6dp"
+                app:layout_constraintEnd_toStartOf="@+id/btnA_like2"
+                android:layout_marginRight="6dp"/>
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="18dp"
                 android:id="@+id/btnA_comment2"
                 android:background="@drawable/btna_comment"
-                app:scale_top="312"
-                app:scale_left="1160"
-                app:scale_height="74"
-                app:scale_width="200"/>
+                app:layout_constraintTop_toBottomOf="@+id/btnA_writing2"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ivA_likeOn"
-                app:scale_top="30"
-                app:scale_left="1120"
-                app:scale_height="25"
-                app:scale_width="25"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ivA_writingOn"
-                app:scale_top="171"
-                app:scale_left="1120"
-                app:scale_height="25"
-                app:scale_width="25"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
                 android:id="@+id/ivA_commentOn"
-                app:scale_top="312"
-                app:scale_left="1120"
-                app:scale_height="25"
-                app:scale_width="25"/>
+                app:layout_constraintTop_toTopOf="@+id/btnA_comment2"
+                android:layout_marginTop="6dp"
+                app:layout_constraintEnd_toStartOf="@+id/btnA_comment2"
+                android:layout_marginRight="6dp"/>
 
-        </com.ssomai.android.scalablelayout.ScalableLayout>
+        </android.support.constraint.ConstraintLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_board_container"

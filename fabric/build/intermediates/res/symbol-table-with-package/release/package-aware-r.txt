@@ -1,0 +1,2 @@
+io.fabric.sdk.android.unity
+int string com_crashlytics_android_build_id 0x7f150001

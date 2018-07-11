@@ -45,7 +45,8 @@ public class BoardListViewModel {
     private Boolean isListEnd = false;
 
     private int currentPage = 1;
-private String userId;
+    private String userId;
+
     public BoardListViewModel() {
         boardDao = new BoardDao();
         fileDao = new BoardFileDao();

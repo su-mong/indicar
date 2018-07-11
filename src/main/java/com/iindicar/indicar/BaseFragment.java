@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,5 +67,9 @@ public abstract class BaseFragment<B extends ViewDataBinding> extends Fragment {
 
     public B getBinding() {
         return binding;
+    }
+
+    public void showSnackBar(String text) {
+        Snackbar.make(binding.getRoot(), "" + text, Snackbar.LENGTH_SHORT).show();
     }
 }

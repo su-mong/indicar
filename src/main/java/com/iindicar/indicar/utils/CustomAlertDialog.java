@@ -2,6 +2,7 @@ package com.iindicar.indicar.utils;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
@@ -29,12 +30,16 @@ public class CustomAlertDialog extends Dialog {
     public final ObservableField<String> title = new ObservableField<>();
     public final ObservableField<String> subTitle = new ObservableField<>();
     public final ObservableInt imageId = new ObservableInt(R.drawable.ic_action_alert);
+    public final ObservableInt positiveImageId = new ObservableInt(R.drawable.btn_agree);
+    public final ObservableInt negativeImageId = new ObservableInt(R.drawable.btn_cancel);
 
     private int width = 0;
     private int height = 0;
 
     private View.OnClickListener positiveButtonListener;
     private View.OnClickListener negativeButtonListener;
+
+    Resources resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,12 @@ public class CustomAlertDialog extends Dialog {
         binding.setDialog(this);
 
         setContentView(binding.getRoot());
+
+        //언어에 따른 뷰 설정
+        Context context = LocaleHelper.setLocale(getWindow().getContext());
+        resources = context.getResources();
+        binding.positiveImage.setImageDrawable(resources.getDrawable(R.drawable.text_agree));
+        binding.negativeImage.setImageDrawable(resources.getDrawable(R.drawable.text_cancel));
 
         if(positiveButtonListener != null){
             binding.positiveButton.setOnClickListener(new View.OnClickListener() {
@@ -64,13 +75,13 @@ public class CustomAlertDialog extends Dialog {
                     dismiss();
                 }
             });
-            binding.positiveText.setOnClickListener(new View.OnClickListener() {
+            /*binding.positiveText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     positiveButtonListener.onClick(view);
                     dismiss();
                 }
-            });
+            });*/
         }
 
         if(negativeButtonListener == null){
@@ -83,7 +94,6 @@ public class CustomAlertDialog extends Dialog {
         }
         binding.negativeButton.setOnClickListener(negativeButtonListener);
         binding.negativeImage.setOnClickListener(negativeButtonListener);
-        binding.negativeText.setOnClickListener(negativeButtonListener);
 
         if(width != 0 && height != 0){
 
@@ -120,8 +130,20 @@ public class CustomAlertDialog extends Dialog {
         return this;
     }
 
+    public CustomAlertDialog setPositiveButton(int buttonId, View.OnClickListener onClickListener){
+        this.positiveButtonListener = onClickListener;
+        this.positiveImageId.set(buttonId);
+        return this;
+    }
+
     public CustomAlertDialog setNegativeButtonListener(View.OnClickListener onClickListener){
         this.negativeButtonListener = onClickListener;
+        return this;
+    }
+
+    public CustomAlertDialog setNegativeButton(int buttonId, View.OnClickListener onClickListener){
+        this.negativeButtonListener = onClickListener;
+        this.negativeImageId.set(buttonId);
         return this;
     }
 
