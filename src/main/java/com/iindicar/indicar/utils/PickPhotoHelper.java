@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.iindicar.indicar.R;
@@ -21,7 +21,9 @@ import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +39,7 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
     public static final int PICK_FROM_CAMERA = 1;
     public static final int CROP_IMAGE = 2;
     public static final int PICK_FROM_ALBUM = 3;
-String imagePath;
+    String imagePath;
     Activity context;
 
     Uri cameraPhotoUri;
@@ -45,7 +47,7 @@ String imagePath;
     loadPhotoCallBack cameraCallBack;
     loadPhotoListCallBack albumCallBack;
 
-    public PickPhotoHelper(Activity context){
+    public PickPhotoHelper(Activity context) {
         this.context = context;
     }
 
@@ -61,7 +63,7 @@ String imagePath;
         openPhotoPicker(maxSelectable);
     }
 
-    private void openPhotoPicker(int maxSelectable){
+    private void openPhotoPicker(int maxSelectable) {
         Matisse.from(context)
                 .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
                 .countable(true)
@@ -96,7 +98,7 @@ String imagePath;
             return;
         }
 
-        switch (requestCode){
+        switch (requestCode) {
             case PICK_FROM_CAMERA:
 
                 cropImage();
@@ -111,18 +113,47 @@ String imagePath;
 
             case CROP_IMAGE:
 
-                cameraCallBack.onPhotoLoaded(cameraPhotoUri,imagePath);
+                cameraCallBack.onPhotoLoaded(cameraPhotoUri, imagePath);
 
                 break;
 
             case PICK_FROM_ALBUM:
 
                 List<Uri> selectedPhotoList = Matisse.obtainResult(data); // 앨범에서 받아온 uri 리스트
+                for (Uri i : selectedPhotoList) {
+                    try {
+                        Uri imageUri = i;
+                        InputStream imageStream = context.getContentResolver().openInputStream(imageUri);
+                        Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
+                        selectedImage = getResizedBitmap(selectedImage, 400);// 400 is for example, replace with desired size
+
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                }
 
                 albumCallBack.onPhotoListLoaded(selectedPhotoList);
 
                 break;
         }
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
     public void cropImage() {
@@ -157,7 +188,7 @@ String imagePath;
 
             File folder = new File(Environment.getExternalStorageDirectory() + "/Pictures", "indicar");
             File tempFile = new File(folder.toString(), croppedFileName.getName());
-            imagePath=tempFile.getAbsolutePath();
+            imagePath = tempFile.getAbsolutePath();
             cameraPhotoUri = FileProvider.getUriForFile(context,
                     "com.iindicar.indicar_community.provider", tempFile);
 
@@ -192,7 +223,7 @@ String imagePath;
             storageDir.mkdirs();
         }
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        imagePath=image.getAbsolutePath();
+        imagePath = image.getAbsolutePath();
 
         return image;
     }

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -24,14 +25,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.commit451.teleprinter.Teleprinter;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.a1_main.LoginActivity;
-import com.iindicar.indicar.a1_main.MainActivity;
 import com.iindicar.indicar.a1_main.Tutorial;
 import com.iindicar.indicar.databinding.FragmentAccount2Binding;
 import com.iindicar.indicar.utils.ConstClass;
@@ -46,6 +45,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
     String partnerCategory;
+
     public AccountFragment() {
         // Required empty public constructor
     }
@@ -74,6 +74,7 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
         binding.btnAGotoProfile.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.btnAGotoProfile.setColorFilter(Color.argb(100, 255, 150, 0));
                 Intent intent = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(intent);
             }
@@ -81,6 +82,7 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
         binding.btnALogout.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setBackgroundColor(Color.parseColor("#aaaaaa"));
                 if (!Session.getCurrentSession().isClosed()) {
                     UserManagement.requestLogout(new LogoutResponseCallback() {
                         @Override
@@ -152,6 +154,7 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
         binding.btnAAlliance.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setBackgroundColor(Color.parseColor("#aaaaaa"));
                 //팝업창을 보여주는 함수
                 ImageView btnSend;
                 ImageView btnAlertCancel;
@@ -171,16 +174,14 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
 //set the spinners adapter to the previously created one.
-                Spinner dropdown =(Spinner)popupDialogView.findViewById(R.id.spinner1);
+                Spinner dropdown = (Spinner) popupDialogView.findViewById(R.id.spinner1);
                 dropdown.setAdapter(adapter);
-                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-                {
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-                    {
-                       partnerCategory=parent.getItemAtPosition(position).toString();
+                dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        partnerCategory = parent.getItemAtPosition(position).toString();
                     } // to close the onItemSelected
-                    public void onNothingSelected(AdapterView<?> parent)
-                    {
+
+                    public void onNothingSelected(AdapterView<?> parent) {
 
                     }
                 });
@@ -231,6 +232,8 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
                             }
                         });
                         dialog.dismiss();
+                        onResume();
+
                     }
                 });
 
@@ -238,6 +241,8 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        onResume();
+
                     }
                 });
 
@@ -260,12 +265,11 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
         binding.btnAHowtouse.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context,Tutorial.class));
+                v.setBackgroundColor(Color.parseColor("#aaaaaa"));
+                startActivity(new Intent(context, Tutorial.class));
                 getActivity().overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
             }
         });
-
-
 
 
     }
@@ -273,6 +277,14 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
     @Override
     public void onResume() {
         super.onResume();
+        binding.btnAGotoProfile.setColorFilter(null);
+        binding.btnAAlliance.setBackgroundResource(0);
+        binding.btnABasket.setBackgroundResource(0);
+        binding.btnAHowtouse.setBackgroundResource(0);
+        binding.btnALogout.setBackgroundResource(0);
+        binding.btnALike.setBackgroundResource(0);
+        binding.btnAWriting.setBackgroundResource(0);
+        binding.btnAComment.setBackgroundResource(0);
         SharedPreferences prefLogin = this.getActivity().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
         binding.tvAName.setText(prefLogin.getString("name", "로그인 실패"));
     }
@@ -281,6 +293,7 @@ public class AccountFragment extends BaseFragment<FragmentAccount2Binding> {
     Button.OnClickListener traceClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View v) {
+            v.setBackgroundColor(Color.parseColor("#aaaaaa"));
             Intent intent = new Intent(getActivity(), TraceActivity.class);
             switch (v.getId()) {
                 case R.id.btnA_like:

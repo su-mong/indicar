@@ -42,7 +42,6 @@ public class BoardListViewModel {
     private BoardDao boardDao;
     private BoardFileDao fileDao;
     private UserDao userDao;
-
     private Boolean isListEnd = false;
 
     private int currentPage = 1;
@@ -108,6 +107,8 @@ private String userId;
         }
         params.put("pageIndex", String.valueOf(currentPage));
         params.put("pageUnit", PAGE_UNIT_COUNT);
+        params.put("branch_id", "kor");
+
 
         boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
             @Override
@@ -224,23 +225,23 @@ private String userId;
             final int position = i;
             final BoardDetailVO board = list.get(i);
 
-            // 유저 프로필 사진
-            RequestParams param = new RequestParams();
-            param.put("_id", board.getUserId());
-
-            userDao.getData(param, new BaseDao.LoadDataCallBack() {
-                @Override
-                public void onDataLoaded(Object data) {
-                    UserVO vo = (UserVO) data;
-                    list.get(position).setUserProfileUrl(vo.getProfileImageUrl());
-
-                }
-
-                @Override
-                public void onDataNotAvailable() {
-
-                }
-            });
+//            // 유저 프로필 사진
+//            RequestParams param = new RequestParams();
+//            param.put("_id", board.getUserId());
+//
+//            userDao.getData(param, new BaseDao.LoadDataCallBack() {
+//                @Override
+//                public void onDataLoaded(Object data) {
+//                    UserVO vo = (UserVO) data;
+//                    list.get(position).setUserProfileUrl(vo.getProfileImageUrl());
+//
+//                }
+//
+//                @Override
+//                public void onDataNotAvailable() {
+//
+//                }
+//            });
 
             // 메인 사진
             String[] atchFileId = board.getAtchFileId();
@@ -251,7 +252,6 @@ private String userId;
 
             } else {
                 params.put("atch_file_id", atchFileId[0]);
-
                 fileDao.getData(params, new BaseDao.LoadDataCallBack() {
                     @Override
                     public void onDataLoaded(Object data) {

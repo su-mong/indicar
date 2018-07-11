@@ -26,11 +26,10 @@ import java.util.List;
 public class BoardWriteEditViewModel {
 
     public static final int MAX_PAGE = 15;
-
+    public int currentPageNum = 0;
     public final ObservableField<String> boardType = new ObservableField<>();
     public final ObservableInt currentPage = new ObservableInt();
     public final ObservableInt totalPage = new ObservableInt();
-
     private BoardDao boardDao;
     private BoardFileDao fileDao;
 
@@ -44,13 +43,13 @@ public class BoardWriteEditViewModel {
 
     public List<Boolean> DONE_FILE_UPLOAD_COUNT = new ArrayList<>();
 
-    public BoardWriteEditViewModel(){
+    public BoardWriteEditViewModel() {
         boardDao = new BoardDao();
         fileDao = new BoardFileDao();
     }
 
     // this will be called only writing a New Board
-    public void start(String userId, String userName){
+    public void start(String userId, String userName) {
         isNewBoard = true;
 
         this.boardVO = new WriteBoardVO();
@@ -65,14 +64,13 @@ public class BoardWriteEditViewModel {
         });
     }
 
-    public void setCarName(String carName){
+    public void setCarName(String carName) {
         this.boardVO.setCarName(carName);
     }
 
     // this will be called only Editing Exist Board
     public void start(WriteBoardVO boardVO, List<WriteFileVO> boardItems) {
         isNewBoard = false;
-
         this.boardVO = boardVO;
         this.boardItems = boardItems;
         totalPage.set(boardItems.size());
@@ -91,35 +89,41 @@ public class BoardWriteEditViewModel {
     }
 
     // board type 라디오 버튼 커스텀
-    public void setBoardTypeFiltering(View view){
+    public void setBoardTypeFiltering(View view) {
         String tag = view.getTag().toString();
 
-        if(Constant.BoardType.DAY_LIFE.equals(tag)){
+        if (Constant.BoardType.DAY_LIFE.equals(tag)) {
             boardType.set(Constant.BoardType.DAY_LIFE);
 
-        } else if(Constant.BoardType.MARKET.equals(tag)){
+        } else if (Constant.BoardType.MARKET.equals(tag)) {
             boardType.set(Constant.BoardType.MARKET);
 
-        } else if(Constant.BoardType.DIY.equals(tag)) {
+        } else if (Constant.BoardType.DIY.equals(tag)) {
             boardType.set(Constant.BoardType.DIY);
         }
     }
 
-    public void onPrevPageButtonClicked(){
-        pageNavigator.pageChangeToPosition(currentPage.get() - 1);
+    public void onPrevPageButtonClicked() {
+        if (currentPageNum < 1)
+            return;
+        currentPageNum--;
+        pageNavigator.pageChangeToPosition(currentPageNum);
     }
 
-    public void onNextPageButtonClicked(){
-        pageNavigator.pageChangeToPosition(currentPage.get() + 1);
+    public void onNextPageButtonClicked() {
+        if (currentPageNum == totalPage.get() - 1)
+            return;
+        currentPageNum++;
+        pageNavigator.pageChangeToPosition(currentPageNum);
     }
 
-    public void onSubmitClicked(){
+    public void onSubmitClicked() {
 
         // 사진을 등록하지 않은 페이지 체크
-        for (int i = 0 ; i < boardItems.size() ; i++){
+        for (int i = 0; i < boardItems.size(); i++) {
             WriteFileVO vo = boardItems.get(i);
 
-            if(vo.getFilePath() == null || vo.getFilePath().equals("")){
+            if (vo.getFilePath() == null || vo.getFilePath().equals("")) {
                 navigator.showSnackBar("사진을 등록해주세요.");
                 pageNavigator.pageChangeToPosition(i);
                 return;
@@ -127,9 +131,9 @@ public class BoardWriteEditViewModel {
         }
 
         // 파일을 서버에 업로드한다.
-        for(WriteFileVO vo : boardItems){
+        for (WriteFileVO vo : boardItems) {
             // index (atch_file_id) 없는 경우 - new file
-            if(vo.getFileIndex() == null || vo.getFileIndex().equals("")) {
+            if (vo.getFileIndex() == null || vo.getFileIndex().equals("")) {
                 insertNewFile(vo);
             } else {
                 updateExistingFile(vo.getImageUrl() != null, vo);
@@ -137,23 +141,25 @@ public class BoardWriteEditViewModel {
         }
     }
 
-    public void pageAddClick(){
-        if(totalPage.get() == MAX_PAGE){
+    public void pageAddClick() {
+        if (totalPage.get() == MAX_PAGE) {
             navigator.showSnackBar("페이지를 더이상 추가할 수 없습니다.");
             return;
         }
-        pageNavigator.addPage(currentPage.get() + 1);
+        currentPageNum++;
+        pageNavigator.addPage(currentPageNum);
     }
 
-    public void pageRemoveClick(){
-        if(totalPage.get() == 1){
+    public void pageRemoveClick() {
+        if (totalPage.get() == 1) {
             navigator.showSnackBar("페이지를 더이상 삭제할 수 없습니다.");
             return;
         }
         pageNavigator.removePage(currentPage.get());
+
     }
 
-    private void insertNewFile(final WriteFileVO vo){
+    private void insertNewFile(final WriteFileVO vo) {
 
         RequestParams params = new RequestParams();
         try {
@@ -168,9 +174,8 @@ public class BoardWriteEditViewModel {
             public void onDataLoaded(Object data) {
 
                 vo.setFileIndex((String) data); // atch_file_id 추가
-
                 DONE_FILE_UPLOAD_COUNT.add(true); // 완료 목록 추가
-                if(DONE_FILE_UPLOAD_COUNT.size() == boardItems.size()){
+                if (DONE_FILE_UPLOAD_COUNT.size() == boardItems.size()) {
                     startUploadBoard();
                 }
             }
@@ -183,13 +188,13 @@ public class BoardWriteEditViewModel {
         });
     }
 
-    private void updateExistingFile(boolean isFileUpdated, final WriteFileVO vo){
+    private void updateExistingFile(boolean isFileUpdated, final WriteFileVO vo) {
 
         RequestParams params = new RequestParams();
         params.put("atch_file_id", vo.getFileIndex());
         params.put("file_cn", vo.getWriteText());
 
-        if(isFileUpdated){ // 사진이 수정 된 경우
+        if (isFileUpdated) { // 사진이 수정 된 경우
             try {
                 params.put("file", new File(vo.getFilePath()));
             } catch (FileNotFoundException e) {
@@ -201,10 +206,11 @@ public class BoardWriteEditViewModel {
             @Override
             public void onDataLoaded(Object data) {
                 DONE_FILE_UPLOAD_COUNT.add(true); // 완료 목록에 추가
-                if(DONE_FILE_UPLOAD_COUNT.size() == boardItems.size()){
+                if (DONE_FILE_UPLOAD_COUNT.size() == boardItems.size()) {
                     startUploadBoard();
                 }
             }
+
             @Override
             public void onDataNotAvailable() {
                 navigator.showSnackBar("게시물 등록에 실패하였습니다. 다시 시도해주세요.");
@@ -213,11 +219,11 @@ public class BoardWriteEditViewModel {
         });
     }
 
-    private void startUploadBoard(){
+    private void startUploadBoard() {
 
         getFileIndexArray();
 
-        if(isNewBoard){ // 게시물 등록
+        if (isNewBoard) { // 게시물 등록
             insertNewBoard();
         } else { // 게시물 수정
             updateExistingBoard();
@@ -225,14 +231,23 @@ public class BoardWriteEditViewModel {
     }
 
     // 해당 게시물을 서버에 업로드한다.
-    private void insertNewBoard(){
+    private void insertNewBoard() {
 
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardVO.getBoardType());
         params.put("ntcr_nm", boardVO.getUserName());
+        params.put("ntt_sj", "title");
         params.put("ntcr_id", boardVO.getUserId());
         params.put("atch_file_id", boardVO.getFileIndex());
         params.put("carSpecName", boardVO.getCarName());
+        params.put("branch_id", "kor");
+        Log.d("bbs_id", boardVO.getBoardType());
+        Log.d("ntcr_nm", boardVO.getUserName());
+        Log.d("ntcr_id", boardVO.getUserId());
+        Log.d("atch_file_id", boardVO.getFileIndex()[0]);
+        Log.d("carSpecName", ""+boardVO.getCarName());
+        Log.d("branch_id", "kor");
+
 
         boardDao.insertData(params, new BaseDao.LoadDataCallBack() {
             @Override
@@ -249,7 +264,7 @@ public class BoardWriteEditViewModel {
     }
 
     // 해당 게시물을 수정한다.
-    private void updateExistingBoard(){
+    private void updateExistingBoard() {
 
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardVO.getBoardType());
@@ -272,7 +287,7 @@ public class BoardWriteEditViewModel {
 
     private void getFileIndexArray() {
         String[] fileIndexArray = new String[boardItems.size()];
-        for(int i = 0 ; i < boardItems.size() ; i++){
+        for (int i = 0; i < boardItems.size(); i++) {
             fileIndexArray[i] = boardItems.get(i).getFileIndex();
         }
         boardVO.setFileIndex(fileIndexArray);

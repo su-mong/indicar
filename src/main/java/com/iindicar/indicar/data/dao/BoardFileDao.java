@@ -3,6 +3,10 @@ package com.iindicar.indicar.data.dao;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.vo.BoardFileVO;
@@ -60,18 +64,22 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
 
     @Override
     public void getData(RequestParams params, final LoadDataCallBack callBack){
-        final String URL = "/selectFileInfs";
+        final String URL = "/community/selectFileInfs";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
                 try {
                     Type listType = new TypeToken<List<BoardFileVO>>() {}.getType();
-                    List<BoardFileVO> array = new Gson().fromJson(new String(bytes), listType);
+                    JsonElement jsonElement = new JsonParser().parse(new String(bytes)).getAsJsonObject();
+                    JsonObject rootObj = jsonElement.getAsJsonObject();
+                    JsonArray result= (JsonArray) rootObj.get("content");
+
+                    List<BoardFileVO> array = new Gson().fromJson(result, listType);
                     callBack.onDataLoaded(array.get(0));
                 } catch (Exception e){
 
-                    Log.e(TAG, "getData() with URL: " + URL + " " + R.string.data_not_available);
+                    Log.e(TAG, "getData() with URL: " + URL + " " + e.toString());
                     e.printStackTrace();
 
                     callBack.onDataNotAvailable();
@@ -90,7 +98,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
 
     @Override
     public void insertData(RequestParams params, final LoadDataCallBack callBack) {
-        final String URL = "/insertFiles";
+        final String URL = "/community/insertFiles";
 
         HttpClient.uploadFiles(URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -99,6 +107,10 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
 
                 try {
                     response = new String(responseBody);
+                    JsonParser parser = new JsonParser();
+                    JsonElement rootObejct = parser.parse(response)
+                            .getAsJsonObject().get("content");
+                    response=rootObejct.getAsString();
                 } catch (Exception e){
 
                     Log.e(TAG, "getData() with URL: " + URL + " " + R.string.data_not_available);

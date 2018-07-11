@@ -1,13 +1,14 @@
 package com.iindicar.indicar.a1_main;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.databinding.ObservableInt;
+import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -46,14 +48,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
 import com.iindicar.indicar.utils.ConstClass;
-import com.iindicar.indicar.utils.KakaoSignupActivity;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -67,7 +65,6 @@ import com.kakao.util.exception.KakaoException;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import okhttp3.FormBody;
@@ -104,10 +101,8 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-
         //hasActionBar.set(false);
-// Initialize SDK before setContentView(Layout ID)
+        // Initialize SDK before setContentView(Layout ID)
         //앱 설치 후 첫 실행인지를 체크한다.
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
         SharedPreferences pref = getSharedPreferences("firstexe", MODE_PRIVATE);
@@ -161,30 +156,53 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
 
         //구글 로그인 버튼
-        binding.btnLoginGoogle.setOnClickListener(new Button.OnClickListener() {
+        binding.btnLoginGoogle.setOnTouchListener(new Button.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = GoogleClient.getSignInIntent();
-                startActivityForResult(intent, 9001);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
+                    binding.btnLoginGoogle.getBackground().setColorFilter(new PorterDuffColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY));
+                }
+                if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+                    binding.btnLoginGoogle.getBackground().setColorFilter(null);
+                    Intent intent = GoogleClient.getSignInIntent();
+                    startActivityForResult(intent, 9001);
+                }
+                return false;
             }
+
+
         });
 
-        binding.btnLoginFacebook.setOnClickListener(new Button.OnClickListener() {
+        binding.btnLoginFacebook.setOnTouchListener(new Button.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                fbLogin();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
+                    binding.btnLoginFacebook.getBackground().setColorFilter(new PorterDuffColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY));
+                }
+                if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+                    binding.btnLoginFacebook.getBackground().setColorFilter(null);
+                    fbLogin();
+                }
+                return false;
             }
+
+
         });
-
-
-        //카카오 로그인 버튼
-        binding.btnLoginKakao.setOnClickListener(new Button.OnClickListener() {
+        binding.btnLoginKakao.setOnTouchListener(new Button.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
+                    binding.btnLoginKakao.getBackground().setColorFilter(new PorterDuffColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY));
+                }
+                if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
+                    binding.btnLoginKakao.getBackground().setColorFilter(null);
+                    Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, LoginActivity.this);
+                }
+                return false;
             }
-        });
 
+
+        });
 
     }
 
@@ -398,7 +416,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
-                    Log.d("ddf Login checkUser", id);
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
@@ -447,8 +464,8 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         .add("login_method", login_method);
                 formBuilder.add("name", name)
                         .add("email", email);
-                if(profile_img_url!=null && !profile_img_url.equals("null"))
-                        formBuilder.add("profile_img_url", profile_img_url);
+                if (profile_img_url != null && !profile_img_url.equals("null"))
+                    formBuilder.add("profile_img_url", profile_img_url);
 
                 RequestBody body = formBuilder.build();
 
@@ -516,7 +533,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
-                    Log.d("ddf Login checkUser", id);
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");

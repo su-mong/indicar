@@ -19,7 +19,6 @@ public class Constant {
         public static final int NEW = 0;
         public static final int UPDATE = 0;
     }
-
     public static final ObservableField<String> TUNING = new ObservableField<>("tuning");
     public static final ObservableField<String> COMMUNITY = new ObservableField<>("community");
     public static final ObservableField<String> SHOPPING = new ObservableField<>("shopping");

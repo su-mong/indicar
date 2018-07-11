@@ -9,6 +9,10 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 import com.iindicar.indicar.BR;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by yeseul on 2018-04-13.
  *
@@ -58,6 +62,7 @@ public class BoardVO extends BaseObservable implements Parcelable {
         boardTitle = in.readString();
         boardContent = in.readString();
         firstDate = in.readString();
+
         lastUpdateDate = in.readString();
         readCount = in.readString();
         commentCount = in.readString();
@@ -208,6 +213,7 @@ public class BoardVO extends BaseObservable implements Parcelable {
 
     @Bindable
     public String getFirstDate() {
+
         return firstDate;
     }
 

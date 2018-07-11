@@ -4,15 +4,14 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.iindicar.indicar.BR;
 
 /**
  * Created by yeseul on 2018-04-13.
- *
- *  TODO. (2018.05.02) 제목, 내용 필드는 없애야됨!!
+ * <p>
+ * TODO. (2018.05.02) 제목, 내용 필드는 없애야됨!!
  */
 
 public class BoardDetailVO extends BaseObservable implements Parcelable {
@@ -21,25 +20,39 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
     private String mainImageUrl = "";
     private String mainImageWidth = "";
     private String mainImageHeight = "";
-    @SerializedName("atch_file_id") private String[] atchFileId;
-    @SerializedName("bbs_id") private String boardType = "";
-    @SerializedName("ntt_id") private String boardId = "";
-    @SerializedName("ntcr_nm") private String userName = "";
-    @SerializedName("ntcr_id") private String userId = "";
-    @SerializedName("like") private String likeCount = "";
-    @SerializedName("ntt_sj") private String boardTitle = "";
-    @SerializedName("ntt_cn") private String boardContent = "";
-    @SerializedName("frst_time") private String firstDate = "";
-    @SerializedName("last_updt_time") private String lastUpdateDate = "";
-    @SerializedName("rdcnt") private String readCount = "";
-    @SerializedName("CntCOMMENT") private String commentCount = "0";
+    @SerializedName("atch_file_id")
+    private String[] atchFileId;
+    @SerializedName("bbs_id")
+    private String boardType = "";
+    @SerializedName("ntt_id")
+    private String boardId = "";
+    @SerializedName("name")
+    private String userName = "";
+    @SerializedName("ntcr_id")
+    private String userId = "";
+    @SerializedName("like")
+    private String likeCount = "";
+    @SerializedName("ntt_sj")
+    private String boardTitle = "";
+    @SerializedName("ntt_cn")
+    private String boardContent = "";
+    @SerializedName("frst_time")
+    private String firstDate = "";
+    @SerializedName("last_updt_time")
+    private String lastUpdateDate = "";
+    @SerializedName("rdcnt")
+    private String readCount = "";
+    @SerializedName("CntCOMMENT")
+    private String commentCount = "0";
+    @SerializedName("profile_img_url")
+    private String profileImageUrl = "";
 
     @Override
     public String toString() {
         return "userProfileUrl" + userProfileUrl;
     }
 
-    public BoardDetailVO(){
+    public BoardDetailVO() {
 
     }
 
@@ -190,20 +203,26 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
 
     public void setBoardContent(String boardContent) {
         String temp;
-        if(boardContent.equals("NaN"))
-            temp="";
+        if (boardContent.equals("NaN"))
+            temp = "";
         else
-            temp=boardContent;
+            temp = boardContent;
         this.boardContent = temp;
         notifyPropertyChanged(BR.boardContent);
     }
 
     @Bindable
     public String getFirstDate() {
+        if (firstDate != null) {
+            firstDate = firstDate.replace("T", " ");
+            firstDate = firstDate.substring(0, 19);
+        }
         return firstDate;
     }
 
     public void setFirstDate(String firstDate) {
+        firstDate = firstDate.replace("T", " ");
+        firstDate = firstDate.substring(0, 19);
         this.firstDate = firstDate;
         notifyPropertyChanged(BR.firstDate);
     }
@@ -238,6 +257,18 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
         this.commentCount = commentCount;
         notifyPropertyChanged(BR.commentCount);
     }
+
+    @Bindable
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+        notifyPropertyChanged(BR.profileImageUrl);
+    }
+
+
 
     @Override
     public int describeContents() {

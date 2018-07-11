@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,18 +14,13 @@ import android.support.v4.view.ScrollingView;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.commit451.teleprinter.Teleprinter;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
-import com.iindicar.indicar.a1_main.LoginActivity;
 import com.iindicar.indicar.a1_main.MainActivity;
 import com.iindicar.indicar.b2_community.BoardFilterActivity;
 import com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity;
@@ -158,9 +153,13 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-
+//                    binding.buttonBoardWrite.setColorFilter(Color.parseColor("#A500FFFF"), PorterDuff.Mode.SRC_ATOP);
+                    binding.buttonBoardWrite.setColorFilter(Color.argb(100, 255, 150, 0));
                     Intent intent = new Intent(getContext(), BoardWriteEditActivity.class);
                     startActivityForResult(intent, 13);
+                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    binding.buttonBoardWrite.setColorFilter(null);
                 }
                 return true;
             }
@@ -176,7 +175,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             }
         });
 
-        ((MainActivity)getActivity()).getActionBarBinding().buttonLeft.setOnClickListener(new View.OnClickListener() {
+        ((MainActivity) getActivity()).getActionBarBinding().buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, BoardFilterActivity.class);
@@ -191,7 +190,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
 
         SharedPreferences prefLogin = context.getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
         String loginId = prefLogin.getString("_id", "0");
-        Log.d("ddf list loginId",loginId);
         String loginName = prefLogin.getString("name", "fail");
         Intent intent = new Intent(context, BoardDetailActivity.class);
 
@@ -254,7 +252,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                 viewModel.onRefresh(binding.recyclerViewBoardContainer);
         }
 
-        if(requestCode == REQUEST_BOARD_FILTER){ // 검색
+        if (requestCode == REQUEST_BOARD_FILTER) { // 검색
             onSearch(data.getStringExtra("searchKey"));
         }
     }

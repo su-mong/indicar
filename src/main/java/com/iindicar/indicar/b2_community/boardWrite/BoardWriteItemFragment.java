@@ -1,12 +1,10 @@
 package com.iindicar.indicar.b2_community.boardWrite;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +23,6 @@ import com.iindicar.indicar.utils.PickPhotoHelper;
 import com.iindicar.indicar.utils.RealPathUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +41,10 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     private BoardWriteAdapter adapter;
     private ViewPagerLayoutManager layoutManager;
     private PickPhotoHelper pickPhotoHelper;
+
     private Teleprinter keyboard;
-private int wantWidth=10;
+    private int wantWidth = 10;
+
     @Override
     protected int getLayoutId() {
         return R.layout.board_write_item_fragment;
@@ -131,7 +130,7 @@ private int wantWidth=10;
             @Override
             public void onChildViewDetachedFromWindow(View view) {
 
-                viewModel.currentPage.set(layoutManager.findFirstVisibleItemPosition());
+
             }
         });
     }
@@ -139,7 +138,6 @@ private int wantWidth=10;
     @Override
     public void pageChangeToPosition(int position) {
         binding.pageContainer.smoothScrollToPosition(position);
-        viewModel.currentPage.set(position);
     }
 
     @Override
@@ -153,8 +151,8 @@ private int wantWidth=10;
     public void removePage(final int position) {
         WriteFileVO vo = adapter.getItem(position);
 
-        if((vo.getFilePath() == null || vo.getFilePath().equals("")) // 사진 없음
-                && (vo.getWriteText() == null || vo.getWriteText().equals(""))){ // 글도 없음
+        if ((vo.getFilePath() == null || vo.getFilePath().equals("")) // 사진 없음
+                && (vo.getWriteText() == null || vo.getWriteText().equals(""))) { // 글도 없음
 
             // 페이지 바로 삭제
             adapter.removeItem(position);
@@ -169,24 +167,29 @@ private int wantWidth=10;
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (viewModel.currentPageNum > 0)
+                            viewModel.currentPageNum--;
+                        pageChangeToPosition(viewModel.currentPageNum);
+                        viewModel.currentPage.set(viewModel.currentPageNum);
                         adapter.removeItem(position);
                         adapter.notifyDataSetChanged();
                         viewModel.totalPage.set(adapter.getItemCount());
+                        viewModel.currentPage.set(viewModel.currentPageNum);
                     }
                 });
     }
 
     // 카메라로 사진을 찍는다.
-    private void pickFromCamera(final int position){
+    private void pickFromCamera(final int position) {
 
         pickPhotoHelper.pickFromCamera(new IPickPhotoHelper.loadPhotoCallBack<Uri>() {
             @Override
-            public void onPhotoLoaded(Uri photoUri,String imagePath) {
-                Bitmap b= BitmapFactory.decodeFile(imagePath);
+            public void onPhotoLoaded(Uri photoUri, String imagePath) {
+                Bitmap b = BitmapFactory.decodeFile(imagePath);
                 float originalWidth = b.getWidth();
                 float originalHeight = b.getHeight();
 
-                int wantHeight= (int) ((int)wantWidth*(originalHeight/originalWidth));
+                int wantHeight = (int) ((int) wantWidth * (originalHeight / originalWidth));
                 Bitmap out = Bitmap.createScaledBitmap(b, wantWidth, wantHeight, false);
 
                 File file = new File(imagePath);
@@ -198,7 +201,8 @@ private int wantWidth=10;
                     fOut.close();
                     b.recycle();
                     out.recycle();
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                }
                 adapter.getItemList().get(viewModel.currentPage.get()).setImageUrl(photoUri);
                 adapter.getItemList().get(viewModel.currentPage.get()).setFilePath(imagePath);
                 adapter.notifyItemChanged(viewModel.currentPage.get());
@@ -217,7 +221,7 @@ private int wantWidth=10;
     }
 
     // 앨범에서 사진을 가져온다.
-    private void pickFromAlbum(final int position){
+    private void pickFromAlbum(final int position) {
 
         pickPhotoHelper.pickFromAlbum(MAX_PAGE - viewModel.totalPage.get() + 1, new IPickPhotoHelper.loadPhotoListCallBack<Uri>() {
             @Override
@@ -227,18 +231,18 @@ private int wantWidth=10;
 
                 ArrayList<WriteFileVO> listFromAlbum = new ArrayList<>();
 
-                for(int i = 0 ; i < IMAGE_COUNT ; i++){
+                for (int i = 0; i < IMAGE_COUNT; i++) {
 
                     WriteFileVO vo = new WriteFileVO();
                     vo.setImageUrl(photoUriList.get(i));
-                    Bitmap b= BitmapFactory.decodeFile(RealPathUtil.getRealPath(context,photoUriList.get(i)));
+                    Bitmap b = BitmapFactory.decodeFile(RealPathUtil.getRealPath(context, photoUriList.get(i)));
                     float originalWidth = b.getWidth();
                     float originalHeight = b.getHeight();
 
-                    int wantHeight= (int) ((int)wantWidth*(originalHeight/originalWidth));
+                    int wantHeight = (int) ((int) wantWidth * (originalHeight / originalWidth));
                     Bitmap out = Bitmap.createScaledBitmap(b, wantWidth, wantHeight, false);
 
-                    File file = new File(RealPathUtil.getRealPath(context,photoUriList.get(i)));
+                    File file = new File(RealPathUtil.getRealPath(context, photoUriList.get(i)));
                     FileOutputStream fOut;
                     try {
                         fOut = new FileOutputStream(file);
@@ -247,8 +251,9 @@ private int wantWidth=10;
                         fOut.close();
                         b.recycle();
                         out.recycle();
-                    } catch (Exception e) {}
-                    vo.setFilePath(RealPathUtil.getRealPath(context,photoUriList.get(i)));
+                    } catch (Exception e) {
+                    }
+                    vo.setFilePath(RealPathUtil.getRealPath(context, photoUriList.get(i)));
                     listFromAlbum.add(vo);
                 }
 
@@ -260,6 +265,7 @@ private int wantWidth=10;
 
                 // 나머지 사진은 현재 페이지 뒤에 추가
                 adapter.addItems(position + 1, listFromAlbum);
+                viewModel.currentPageNum = viewModel.currentPage.get();
             }
 
             @Override
@@ -271,7 +277,7 @@ private int wantWidth=10;
 
     // 파일의 절대경로를 얻는다.
     private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
@@ -281,7 +287,7 @@ private int wantWidth=10;
     }
 
     // 사진 삭제 경고창을 띄운다.
-    public void showPhotoDeleteDialog(final int position){
+    public void showPhotoDeleteDialog(final int position) {
 
         DialogUtil.showDialog(context,
                 "사진을 정말로 삭제하시겠습니까?",

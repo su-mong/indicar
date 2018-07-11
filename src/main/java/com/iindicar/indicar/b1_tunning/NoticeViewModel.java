@@ -93,6 +93,7 @@ public class NoticeViewModel {
         params.put("searchCnd", "");
         params.put("pageIndex", String.valueOf(currentPage));
         params.put("pageUnit", PAGE_UNIT_COUNT);
+        params.put("branch_id", "kor");
 
         boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
             @Override

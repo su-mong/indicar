@@ -129,7 +129,8 @@ public class SplashActivity extends AppCompatActivity {
                 PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
                 version = Integer.toString(info.versionCode);
 
-                if (!version.equals(versionOnline)) {
+//                if (!version.equals(versionOnline)) { 버전체크 꺼둠..
+                if (version.equals(versionOnline)) {
                     String marketuri = "market://details?id=" + info.packageName;
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(marketuri));
@@ -257,7 +258,6 @@ public class SplashActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
-                    Log.d("ddf Login checkUser", id);
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");

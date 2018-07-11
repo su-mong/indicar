@@ -73,7 +73,6 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
             ((BoardPopularViewHolder) holder).binding.imageMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     if (onItemClickListener != null) {
                         onItemClickListener.onItemClick(view, pos);
                     }
