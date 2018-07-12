@@ -48,7 +48,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     private PickPhotoHelper pickPhotoHelper;
 
     private Teleprinter keyboard;
-    private int wantWidth = 10;
+    private int wantWidth = 600;
 
     Resources resources;
 

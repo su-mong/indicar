@@ -20,8 +20,8 @@ public class BoardFileVO extends BaseObservable {
     @SerializedName("orignl_file_nm") private String originalFileName = "";
     @SerializedName("file_extsn") private String fileExtension = "";
     @SerializedName("file_cn") private String fileContent = "";
-    @SerializedName("file_width") private String fileWidth;
-    @SerializedName("file_height") private String fileHeight;
+    @SerializedName("img_width") private String fileWidth;
+    @SerializedName("img_height") private String fileHeight;
     @SerializedName("file_size") private int fileSize;
 
     public BoardFileVO(){
@@ -30,10 +30,14 @@ public class BoardFileVO extends BaseObservable {
 
     @Bindable
     public String getFileContent() {
+        if(fileContent==null)
+            fileContent="";
+
         return fileContent;
     }
 
     public void setFileContent(String fileContent) {
+        if(fileContent!=null)
         this.fileContent = fileContent;
         notifyPropertyChanged(BR.fileContent);
     }

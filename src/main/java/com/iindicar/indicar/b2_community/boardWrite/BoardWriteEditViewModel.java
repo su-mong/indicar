@@ -147,6 +147,7 @@ public class BoardWriteEditViewModel {
         for(WriteFileVO vo : boardItems){
             // index (atch_file_id) 없는 경우 - new file
             if(vo.getFileIndex() == null || vo.getFileIndex().equals("")) {
+
                 insertNewFile(vo);
             } else {
                 updateExistingFile(vo.getImageUrl() != null, vo);
@@ -174,6 +175,7 @@ public class BoardWriteEditViewModel {
     private void insertNewFile(final WriteFileVO vo){
 
         RequestParams params = new RequestParams();
+        navigator.pbOn();
         try {
             params.put("file", new File(vo.getFilePath()));
             params.put("file_cn1", vo.getWriteText());
@@ -188,6 +190,7 @@ public class BoardWriteEditViewModel {
                 vo.setFileIndex((String) data); // atch_file_id 추가
 
                 DONE_FILE_UPLOAD_COUNT.add(true); // 완료 목록 추가
+                Log.d("ddf","done list"+DONE_FILE_UPLOAD_COUNT.size()+"/"+boardItems.size());
                 if(DONE_FILE_UPLOAD_COUNT.size() == boardItems.size()){
                     startUploadBoard();
                 }
@@ -196,13 +199,14 @@ public class BoardWriteEditViewModel {
             @Override
             public void onDataNotAvailable() {
                 navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
+                navigator.pbOff();
                 navigator.onActivityFinish();
             }
         });
     }
 
     private void updateExistingFile(boolean isFileUpdated, final WriteFileVO vo){
-
+navigator.pbOn();
         RequestParams params = new RequestParams();
         params.put("atch_file_id", vo.getFileIndex());
         params.put("file_cn", vo.getWriteText());
@@ -226,6 +230,7 @@ public class BoardWriteEditViewModel {
             @Override
             public void onDataNotAvailable() {
                 navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
+                navigator.pbOff();
                 navigator.onActivityFinish();
             }
         });
@@ -264,11 +269,13 @@ public class BoardWriteEditViewModel {
         boardDao.insertData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
+                navigator.pbOff();
                 navigator.onBoardUploaded();
             }
 
             @Override
             public void onDataNotAvailable() {
+                navigator.pbOff();
                 navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
                 navigator.onActivityFinish();
             }
@@ -286,11 +293,13 @@ public class BoardWriteEditViewModel {
         boardDao.updateData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
+                navigator.pbOff();
                 navigator.onBoardUpdated();
             }
 
             @Override
             public void onDataNotAvailable() {
+                navigator.pbOff();
                 navigator.showSnackBar(resources.getString(R.string.failedModifyPost));
                 navigator.onActivityFinish();
             }

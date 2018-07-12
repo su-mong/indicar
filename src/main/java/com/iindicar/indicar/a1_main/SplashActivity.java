@@ -104,8 +104,10 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         } else {//로그인 여부 확인
             try {
-                new versionCheck().execute();
+//                new versionCheck().execute();
+                loginCheck();//임시
             } catch (Exception e) {
+
                 Log.e("Indicar Tuning Error",e.toString());
                 Toast.makeText(getApplicationContext(), getString(R.string.strServerCheck), Toast.LENGTH_SHORT).show();
                 finish();
@@ -145,8 +147,8 @@ public class SplashActivity extends AppCompatActivity {
                 PackageInfo info = getApplicationContext().getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
                 version = Integer.toString(info.versionCode);
 
-//                if (!version.equals(versionOnline)) { 버전체크 꺼둠..
-                if (version.equals(versionOnline)) {
+                if (!version.equals(versionOnline)) {
+//                if (version.equals(versionOnline)) {
                     String marketuri = "market://details?id=" + info.packageName;
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(marketuri));

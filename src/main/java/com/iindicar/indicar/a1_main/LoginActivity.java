@@ -5,11 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +17,6 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -56,7 +52,6 @@ import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
 import com.iindicar.indicar.utils.LocaleHelper;
-import com.iindicar.indicar.utils.ConstClass;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -112,7 +107,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this,new Crashlytics());
+        Fabric.with(this, new Crashlytics());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         binding.setActivity(this);
 
@@ -178,7 +173,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         //국가별 뷰 초기화
         binding.btnLoginGoogle.setBackground(resources.getDrawable(R.drawable.btn_googlelogin_light));
         binding.btnLoginFacebook.setBackground(resources.getDrawable(R.drawable.btn_facebooklogin));
-        if(!LocaleHelper.getLanguage(getApplicationContext()).equals("ko")) {
+        if (!LocaleHelper.getLanguage(getApplicationContext()).equals("ko")) {
             binding.btnLoginKakao.setVisibility(View.GONE);
             binding.btnLoginLine.setVisibility(View.VISIBLE);
         } else {
@@ -223,7 +218,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                             new CheckUser().execute();
                         } catch (Exception e) {
                             //Toast.makeText(getApplicationContext(), getString(R.string.strErrwithCode)+e.toString(), Toast.LENGTH_SHORT).show();
-                            showSnackBar(resources.getString(R.string.strErrwithCode)+e.toString());
+                            showSnackBar(resources.getString(R.string.strErrwithCode) + e.toString());
                         }
                     }
 
@@ -242,7 +237,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             @Override
             public void onError(FacebookException error) {
                 //Toast.makeText(getApplicationContext(), getString(R.string.strErrwithCode) + error.toString(), Toast.LENGTH_SHORT).show();
-                showSnackBar(resources.getString(R.string.strErrwithCode)+error.toString());
+                showSnackBar(resources.getString(R.string.strErrwithCode) + error.toString());
             }
         });
     }
@@ -250,10 +245,10 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     //라인 로그인 버튼
     public void lineLogin() {
         try {
-            Intent lineIntent = LineLoginApi.getLoginIntent(getApplicationContext(),getString(R.string.line_channel_id));
-            startActivityForResult(lineIntent,7000);
+            Intent lineIntent = LineLoginApi.getLoginIntent(getApplicationContext(), getString(R.string.line_channel_id));
+            startActivityForResult(lineIntent, 7000);
         } catch (Exception e) {
-            showSnackBar(resources.getString(R.string.strErrwithCode)+e.toString());
+            showSnackBar(resources.getString(R.string.strErrwithCode) + e.toString());
         }
     }
 
@@ -295,13 +290,13 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             super.onActivityResult(requestCode, resultCode, data);
             FBcallBackManager.onActivityResult(requestCode, resultCode, data);
             return;
-        } else if(requestCode == 7000) {
+        } else if (requestCode == 7000) {
             super.onActivityResult(requestCode, resultCode, data);
             LineLoginResult result = LineLoginApi.getLoginResultFromIntent(data);
 
-            switch(result.getResponseCode()) {
+            switch (result.getResponseCode()) {
                 case SUCCESS:
-                    Toast.makeText(getApplicationContext(),result.getLineProfile().getDisplayName(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), result.getLineProfile().getDisplayName(), Toast.LENGTH_SHORT).show();
                     break;
                 case CANCEL:
                     break;
@@ -374,7 +369,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     try {
                         new CheckUser().execute();
                     } catch (Exception e) {
-                        showSnackBar(resources.getString(R.string.strgetUserInfoError)+e.toString());
+                        showSnackBar(resources.getString(R.string.strgetUserInfoError) + e.toString());
                     }
                 }
             });
@@ -383,7 +378,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         @Override
         public void onSessionOpenFailed(KakaoException e) {
             if (e != null) {
-                Toast.makeText(LoginActivity.this, getString(R.string.strKakaoLoginStop)+e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.strKakaoLoginStop) + e.toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
@@ -430,7 +425,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
-                    Log.d("ddf Login checkUser", id);
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
@@ -446,7 +440,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     editor.putInt("EventAlarm", 1);
                     editor.putInt("OtherAlarm", 0);
                     Locale systemLocale = getApplicationContext().getResources().getConfiguration().locale;
-                    editor.putString("locale",systemLocale.getLanguage());
+                    editor.putString("locale", systemLocale.getLanguage());
                     editor.commit();
                     binding.pbLogin.setVisibility(View.GONE);
 
@@ -483,7 +477,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         .add("login_method", login_method);
                 formBuilder.add("name", name)
                         .add("email", email);
-                if(profile_img_url!=null && !profile_img_url.equals("null"))
+                if (profile_img_url != null && !profile_img_url.equals("null"))
                     formBuilder.add("profile_img_url", profile_img_url);
 
                 RequestBody body = formBuilder.build();
@@ -552,7 +546,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     id = jsonObject.getString("_id");
-                    Log.d("ddf Login checkUser", id);
+                    Log.d("ddf Logn checkUser", id);
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
@@ -568,7 +562,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     editor.putInt("EventAlarm", 1);
                     editor.putInt("OtherAlarm", 0);
                     Locale systemLocale = getApplicationContext().getResources().getConfiguration().locale;
-                    editor.putString("locale",systemLocale.getLanguage());
+                    editor.putString("locale", systemLocale.getLanguage());
                     editor.commit();
                     binding.pbLogin.setVisibility(View.GONE);
 
@@ -590,7 +584,8 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     private void initiatePopupWindow() {
         LayoutInflater inflater = (LayoutInflater) LoginActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         try {
-            ImageView nickTitle; ImageView emailTitle;
+            ImageView nickTitle;
+            ImageView emailTitle;
             int popupWidth = (int) Math.round(screenWidth * 0.88);
             int popupHeight = (int) Math.round(screenHeight * 0.406);
 
@@ -618,7 +613,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             emailTitle.setImageDrawable(resources.getDrawable(R.drawable.alert_login_email));
 
             //회원가입하려는 정보에 이메일이 존재하면 이메일은 수정이 불가능하게 만든다.
-            if(email.length() != 0) {
+            if (email.length() != 0) {
                 etEmail1.setClickable(false);
                 etEmail1.setFocusable(false);
                 etEmail2.setClickable(false);
@@ -726,6 +721,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
     public void showSnackBar(String text) {
         Snackbar.make(binding.getRoot(), "" + text, Snackbar.LENGTH_SHORT).show();
     }
+}
 
     /*protected void requestMe() {
         UserManagement.requestMe(new MeResponseCallback() {
@@ -765,4 +761,4 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             }
         });
     }
-}
+*/

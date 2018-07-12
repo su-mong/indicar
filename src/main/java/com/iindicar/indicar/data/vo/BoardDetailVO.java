@@ -16,7 +16,7 @@ import com.iindicar.indicar.BR;
 
 public class BoardDetailVO extends BaseObservable implements Parcelable {
 
-    private String userProfileUrl = "";
+
     private String mainImageUrl = "";
     private String mainImageWidth = "";
     private String mainImageHeight = "";
@@ -45,7 +45,7 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
     @SerializedName("CntCOMMENT")
     private String commentCount = "0";
     @SerializedName("profile_img_url")
-    private String profileImageUrl = "";
+    private String userProfileUrl = "";
 
     @Override
     public String toString() {
@@ -202,27 +202,17 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
     }
 
     public void setBoardContent(String boardContent) {
-        String temp;
-        if (boardContent.equals("NaN"))
-            temp = "";
-        else
-            temp = boardContent;
-        this.boardContent = temp;
+
+        this.boardContent = boardContent;
         notifyPropertyChanged(BR.boardContent);
     }
 
     @Bindable
     public String getFirstDate() {
-        if (firstDate != null) {
-            firstDate = firstDate.replace("T", " ");
-            firstDate = firstDate.substring(0, 19);
-        }
         return firstDate;
     }
 
     public void setFirstDate(String firstDate) {
-        firstDate = firstDate.replace("T", " ");
-        firstDate = firstDate.substring(0, 19);
         this.firstDate = firstDate;
         notifyPropertyChanged(BR.firstDate);
     }
@@ -260,14 +250,13 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
 
     @Bindable
     public String getProfileImageUrl() {
-        return profileImageUrl;
+        return userProfileUrl;
     }
 
     public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
+        this.userProfileUrl = profileImageUrl;
         notifyPropertyChanged(BR.profileImageUrl);
     }
-
 
 
     @Override

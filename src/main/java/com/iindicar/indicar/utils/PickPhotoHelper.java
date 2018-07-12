@@ -125,20 +125,20 @@ public class PickPhotoHelper implements IPickPhotoHelper<Uri> {
             case PICK_FROM_ALBUM:
 
                 List<Uri> selectedPhotoList = Matisse.obtainResult(data); // 앨범에서 받아온 uri 리스트
-                for (Uri i : selectedPhotoList) {
-                    try {
-                        Uri imageUri = i;
-                        InputStream imageStream = context.getContentResolver().openInputStream(imageUri);
-                        Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-
-                        selectedImage = getResizedBitmap(selectedImage, 400);// 400 is for example, replace with desired size
-
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-
-                }
+//                for (Uri i : selectedPhotoList) {
+//                    try {
+//                        Uri imageUri = i;
+//                        InputStream imageStream = context.getContentResolver().openInputStream(imageUri);
+//                        Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+//
+//                        selectedImage = getResizedBitmap(selectedImage, 400);// 400 is for example, replace with desired size
+//
+//
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
 
                 albumCallBack.onPhotoListLoaded(selectedPhotoList);
 

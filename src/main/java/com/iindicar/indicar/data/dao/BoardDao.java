@@ -1,6 +1,5 @@
 package com.iindicar.indicar.data.dao;
 
-import android.os.Debug;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -13,6 +12,8 @@ import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.utils.HttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +35,18 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
                 try {
+                    Log.d("ddf",new String(bytes));
                     JsonElement jsonElement = new JsonParser().parse(new String(bytes)).getAsJsonObject();
                     JsonObject rootObj = jsonElement.getAsJsonObject();
-                    JsonArray result= (JsonArray) rootObj.get("content");
-                    JsonArray array = result;
+                    JsonArray result = (JsonArray) rootObj.get("content");
 
                     List<BoardDetailVO> boardList = new ArrayList<>();
 
-                    for (int i = 0; i < array.size(); i++) {
-                        if (!array.get(i).isJsonObject()) { // 게시물 끝
+                    for (int i = 0; i < result.size(); i++) {
+                        if (!result.get(i).isJsonObject()) { // 게시물 끝
                             break;
                         }
-                        BoardDetailVO vo = new Gson().fromJson(array.get(i), BoardDetailVO.class);
+                        BoardDetailVO vo = new Gson().fromJson(result.get(i), BoardDetailVO.class);
                         boardList.add(vo);
                     }
 
@@ -63,10 +64,8 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
                 Log.e(TAG, "getDataList() with URL: " + URL + " " + bytes.toString());
                 throwable.printStackTrace();
-
                 callBack.onDataNotAvailable();
             }
         });
@@ -220,24 +219,25 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
 
                 try {
                     response = new String(responseBody);
+                    JSONObject jsonObject = new JSONObject(response);
+                    String jsonResult = jsonObject.getString("result");
+                    if (jsonResult.equals("S")) {
+                        callBack.onDataLoaded("success");
+                    } else {
+                        Log.e(TAG, "insertData() with URL: " + URL + " " + "Fail_upload");
+                        callBack.onDataNotAvailable();
+                    }
                 } catch (Exception e) {
-
                     callBack.onDataNotAvailable();
-
                     Log.e(TAG, "insertData() with URL: " + URL + " " + e.toString());
                     e.printStackTrace();
                     return;
                 }
 
                 // 게시글 등록 정상적으로 처리
-                if (response != null && response.equals("\"S\"")) {
-                    callBack.onDataLoaded("success");
-                } else {
+                Log.d("ddf", response);
 
-                    Log.e(TAG, "insertData() with URL: " + URL + " " + "Fail_upload");
 
-                    callBack.onDataNotAvailable();
-                }
             }
 
             @Override

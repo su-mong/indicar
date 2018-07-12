@@ -226,23 +226,23 @@ public class BoardListViewModel {
             final int position = i;
             final BoardDetailVO board = list.get(i);
 
-//            // 유저 프로필 사진
-//            RequestParams param = new RequestParams();
-//            param.put("_id", board.getUserId());
-//
-//            userDao.getData(param, new BaseDao.LoadDataCallBack() {
-//                @Override
-//                public void onDataLoaded(Object data) {
-//                    UserVO vo = (UserVO) data;
-//                    list.get(position).setUserProfileUrl(vo.getProfileImageUrl());
-//
-//                }
-//
-//                @Override
-//                public void onDataNotAvailable() {
-//
-//                }
-//            });
+            // 유저 프로필 사진
+            RequestParams param = new RequestParams();
+            param.put("_id", board.getUserId());
+
+            userDao.getData(param, new BaseDao.LoadDataCallBack() {
+                @Override
+                public void onDataLoaded(Object data) {
+                    UserVO vo = (UserVO) data;
+                    list.get(position).setUserProfileUrl(vo.getProfileImageUrl());
+
+                }
+
+                @Override
+                public void onDataNotAvailable() {
+
+                }
+            });
 
             // 메인 사진
             String[] atchFileId = board.getAtchFileId();

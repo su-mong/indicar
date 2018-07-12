@@ -9,12 +9,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.iindicar.indicar.R;
+import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.utils.HttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -70,12 +72,16 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
                 try {
-                    Type listType = new TypeToken<List<BoardFileVO>>() {}.getType();
+//                    Type listType = new TypeToken<List<BoardFileVO>>() {}.getType();
                     JsonElement jsonElement = new JsonParser().parse(new String(bytes)).getAsJsonObject();
                     JsonObject rootObj = jsonElement.getAsJsonObject();
-                    JsonArray result= (JsonArray) rootObj.get("content");
+                    JsonArray result = (JsonArray) rootObj.get("content");
 
-                    List<BoardFileVO> array = new Gson().fromJson(result, listType);
+
+                    List<BoardFileVO> array = new ArrayList<>();
+                    BoardFileVO vo = new Gson().fromJson(result.get(0), BoardFileVO.class);
+                    array.add(vo);
+
                     callBack.onDataLoaded(array.get(0));
                 } catch (Exception e){
 

@@ -258,6 +258,16 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     }
 
     @Override
+    public void pbOn() {
+        binding.pbWrite.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void pbOff() {
+        binding.pbWrite.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_next:

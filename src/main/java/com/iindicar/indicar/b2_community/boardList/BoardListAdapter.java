@@ -3,7 +3,6 @@ package com.iindicar.indicar.b2_community.boardList;
 import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -62,15 +61,23 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
 
     public void setBoardFile(int position, BoardFileVO vo) {
         itemList.get(position).setBoardContent(vo.getFileContent());
-        itemList.get(position).setMainImageUrl(vo.getFileUrl());
+        String temp = vo.getFileUrl();
+       temp=temp.replace("8080", "9000");
+        Log.d("ddf",temp);
+        itemList.get(position).setMainImageUrl("http://" + temp);
         itemList.get(position).setMainImageWidth(vo.getFileWidth());
         itemList.get(position).setMainImageHeight(vo.getFileHeight());
+Log.d("ddf detailImageUrl:",itemList.get(position).getMainImageUrl());
+//        Log.d("ddf",vo.getFileWidth());
+//        Log.d("ddf",vo.getFileHeight());
         notifyItemChanged(position);
     }
 
 
     public void setUserProfile(int position, String url) {
-        itemList.get(position).setUserProfileUrl(url);
+        String temp = url;
+        temp.replace("8080", "9000");
+        itemList.get(position).setUserProfileUrl(temp);
         notifyItemChanged(position);
     }
 
@@ -80,6 +87,7 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
         BoardDetailVO vo = itemList.get(position);
 
         if (holder instanceof BoardPopularViewHolder) {
+
             ((BoardPopularViewHolder) holder).binding.setItem(vo);
             ((BoardPopularViewHolder) holder).binding.imageMain.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -19,4 +19,8 @@ public interface BoardWriteEditNavigator {
     void onActivityFinish();
 
     void showSnackBar(String text);
+
+    void pbOn();
+
+    void pbOff();
 }
