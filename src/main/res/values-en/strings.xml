@@ -110,15 +110,15 @@
     <string name="strThereisNoEmail">Please enter your email.</string>
     <string name="strWarningData">"NOTICE\n\nThe 3D Car Modeling will be downloaded. A data calls will be incurred. We recommend you proceed in your WIFI environment. Once you have downloaded the modeling, you can use it without loading. (Except if there is an update.)\n\nAll images and contents are not available for commercial use, and the rights are reserved for our company. If you want to use it, please contact us. Personal use is permitted except for commercial use. Thank you."</string>
 
-    <string name="versionLink">http://13.125.173.118:8080/version/version</string>
-    <string name="check_User">http://13.125.173.118:8080/user/search_user2</string>
-    <string name="add_User">http://13.125.173.118:8080/user/add_user2</string>
-    <string name="update_User">http://13.125.173.118:8080/user/updt_user</string>
-    <string name="delete_User">http://13.125.173.118:8080/user/remove</string>
-    <string name="getCarLink">http://13.125.173.118:8080/car/get_car</string>
+    <string name="versionLink">http://13.125.173.118:9000/version/version</string>
+    <string name="check_User">http://13.125.173.118:9000/user/search_user</string>
+    <string name="add_User">http://13.125.173.118:9000/user/add_user</string>
+    <string name="update_User">http://13.125.173.118:9000/user/updt_user</string>
+    <string name="delete_User">http://13.125.173.118:9000/user/remove_user</string>
+    <string name="getCarLink">http://13.125.173.118:9000/car/get_car</string>
     <string name="carDBLink">http://13.125.173.118:9000/carSpec/list</string>
-    <string name="traceLikeResult">http://13.125.173.118:8080/selectUserLikeBoardArticle</string>
-    <string name="traceWritingResult">http://13.125.173.118:8080/selectUserBoardArticles</string>
+    <string name="traceLikeResult">http://13.125.173.118:9000/selectUserLikeBoardArticle</string>
+    <string name="traceWritingResult">http://13.125.173.118:9000/selectUserBoardArticles</string>
     <string name="clause">https://m.cafe.naver.com/ArticleRead.nhn?clubid=29055312&amp;articleid=7&amp;page=1&amp;boardtype=L&amp;menuid=15</string>
     <string name="opinion">https://m.cafe.naver.com/SimpleArticleList.nhn?search.clubid=29055312&amp;search.menuid=23&amp;search.moreDirection=next</string>
 

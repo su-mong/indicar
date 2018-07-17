@@ -79,10 +79,5 @@ public class UserDao implements BaseDao<UserVO> {
 
     }
 
-    @Override
-    public void getDataListLike(RequestParams params, LoadDataListCallBack callBack) {
-
-    }
-
 
 }

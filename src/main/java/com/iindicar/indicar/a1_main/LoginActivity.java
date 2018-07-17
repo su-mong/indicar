@@ -49,6 +49,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.iindicar.indicar.BaseActivity2;
+import com.iindicar.indicar.Constant;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
 import com.iindicar.indicar.utils.LocaleHelper;
@@ -65,6 +66,7 @@ import com.kakao.util.exception.KakaoException;
 import com.linecorp.linesdk.auth.LineLoginApi;
 import com.linecorp.linesdk.auth.LineLoginResult;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -180,6 +182,9 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
             binding.btnLoginKakao.setVisibility(View.VISIBLE);
             binding.btnLoginLine.setVisibility(View.GONE);
         }
+        Constant.locale=LocaleHelper.getLanguage(getApplicationContext());
+
+
     }
 
     //구글 로그인 버튼
@@ -411,6 +416,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 Response response = client.newCall(request).execute();
                 strcheckUser = response.body().string();
                 response.body().close();
+                Log.d("ddf login_url", getString(R.string.check_User) + email + " " + strcheckUser);
                 return strcheckUser;
             } catch (Exception e) {
                 strcheckUser = "AsyncTask Fail: " + e.toString();
@@ -420,11 +426,22 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("onPostExecuteIn", result);
-            if (!result.equals("no result")) {//유저 존재
+            Log.d("ddf check2Login", result);
+
+            String jsonResult = "";
+            String jsonContent= "";
+            try {
+                JSONObject jsonObject2 = null;
+                jsonObject2 = new JSONObject(result);
+                jsonResult = jsonObject2.getString("result");
+                jsonContent= jsonObject2.getString("content");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (jsonResult.equals("S")) {
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    id = jsonObject.getString("_id");
+                    JSONObject jsonObject = new JSONObject(jsonContent);
+                    id = jsonObject.getString("id");
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
@@ -432,7 +449,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefLogin.edit();
                     editor.putLong("profileEditDate", 0);
-                    editor.putString("_id", id);
+                    editor.putString("id", id);
                     editor.putString("login_method", login_method);
                     editor.putString("name", name);
                     editor.putString("profile_img_url", profile_img_url);
@@ -480,6 +497,10 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 if (profile_img_url != null && !profile_img_url.equals("null"))
                     formBuilder.add("profile_img_url", profile_img_url);
 
+
+                Log.d("profile_img_url", profile_img_url);
+                Log.d("email", email);
+                Log.d("login_method", login_method);
                 RequestBody body = formBuilder.build();
 
 
@@ -500,9 +521,10 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         @Override
         protected void onPostExecute(String result) {
             pWindow.dismiss();
+            Log.d("ddf addUser", result);
+
             showSnackBar(resources.getString(R.string.strAddUserSuccess));
             binding.pbLogin.setVisibility(View.GONE);
-
             new CheckUser2().execute();
         }
     }
@@ -520,7 +542,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         protected String doInBackground(String... params) {
             try {
                 OkHttpClient client = new OkHttpClient();
-
                 RequestBody body = new FormBody.Builder()
                         .add("email", email)
                         .build();
@@ -528,7 +549,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         .url(getString(R.string.check_User))
                         .post(body)
                         .build();
-
                 Response response = client.newCall(request).execute();
                 strcheckUser = response.body().string();
                 response.body().close();
@@ -541,20 +561,29 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("onPostExecuteIn", result);
-            if (!result.equals("no result")) {//유저 존재
+            Log.d("ddf check2Login", result);
+
+            String jsonResult = "";
+            String jsonContent= "";
+            try {
+                JSONObject jsonObject2 = null;
+                jsonObject2 = new JSONObject(result);
+                jsonResult = jsonObject2.getString("result");
+                jsonContent= jsonObject2.getString("content");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (jsonResult.equals("S")) {
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    id = jsonObject.getString("_id");
-                    Log.d("ddf Logn checkUser", id);
+                    JSONObject jsonObject = new JSONObject(jsonContent);
+                    id = jsonObject.getString("id");
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
-
                     SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefLogin.edit();
                     editor.putLong("profileEditDate", 0);
-                    editor.putString("_id", id);
+                    editor.putString("id", id);
                     editor.putString("login_method", login_method);
                     editor.putString("name", name);
                     editor.putString("profile_img_url", profile_img_url);
@@ -565,7 +594,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     editor.putString("locale", systemLocale.getLanguage());
                     editor.commit();
                     binding.pbLogin.setVisibility(View.GONE);
-
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     LoginActivity.this.finish();
@@ -671,7 +699,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                         FirebaseAuth.getInstance().signOut();
                         SharedPreferences.Editor editor = prefLogin.edit();
                         editor.putLong("profileEditDate", 0);
-                        editor.putString("_id", "0");
+                        editor.putString("id", "0");
                         editor.putString("login_method", "0");
                         editor.putString("name", "0");
                         editor.putString("profile_img_url", "0");
@@ -680,7 +708,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                     } else if (AccessToken.getCurrentAccessToken() != null) {
                         SharedPreferences.Editor editor = prefLogin.edit();
                         editor.putLong("profileEditDate", 0);
-                        editor.putString("_id", "0");
+                        editor.putString("id", "0");
                         editor.putString("login_method", "0");
                         editor.putString("name", "0");
                         editor.putString("profile_img_url", "0");
@@ -693,7 +721,7 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                                 SharedPreferences prefLogin = getApplicationContext().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefLogin.edit();
                                 editor.putLong("profileEditDate", 0);
-                                editor.putString("_id", "0");
+                                editor.putString("id", "0");
                                 editor.putString("login_method", "0");
                                 editor.putString("name", "0");
                                 editor.putString("profile_img_url", "0");

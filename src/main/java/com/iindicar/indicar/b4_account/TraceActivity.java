@@ -69,7 +69,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         ((SimpleItemAnimator) binding.recyclerViewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
 
         SharedPreferences prefLogin = getApplicationContext().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        id = prefLogin.getString("_id", null);
+        id = prefLogin.getString("id", null);
 
         Intent intent = getIntent();
         int trace = intent.getIntExtra("trace", 1);
@@ -178,7 +178,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
     public void openBoardDetail(int position) {
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
         Intent intent = new Intent(this, BoardDetailActivity.class);
-        String loginId = prefLogin.getString("_id", "admin");
+        String loginId = prefLogin.getString("id", "admin");
         String loginName = prefLogin.getString("name", "이예슬");
         BoardDetailVO vo = adapter.getItem(position);
         Bundle bundle = new Bundle();

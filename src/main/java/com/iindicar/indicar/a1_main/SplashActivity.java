@@ -20,6 +20,11 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.iindicar.indicar.Constant;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.utils.CarDB;
 import com.iindicar.indicar.utils.LocaleHelper;
@@ -27,6 +32,7 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
@@ -70,6 +76,7 @@ public class SplashActivity extends AppCompatActivity {
             editor2.putInt("EventAlarm", 1);
             editor2.putInt("OtherAlarm", 0);
             editor2.putString("locale",systemLocale.getLanguage()); //ko이거나 아니거나.
+            Constant.locale=systemLocale.getLanguage();
             editor2.commit();
         }
 
@@ -180,7 +187,7 @@ public class SplashActivity extends AppCompatActivity {
             try {
                 OkHttpClient clientEng = new OkHttpClient();
                 RequestBody bodyEng = new FormBody.Builder()
-                        .add("branch_id", "eng")
+                        .add("branch_id", "en")
                         .build();
                 Request requestEng = new Request.Builder()
                         .url("http://13.125.173.118:9000/carSpec/list")
@@ -192,7 +199,7 @@ public class SplashActivity extends AppCompatActivity {
 
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
-                        .add("branch_id", "kor")
+                        .add("branch_id", "ko")
                         .build();
                 Request request = new Request.Builder()
                         .url(getString(R.string.carDBLink))
@@ -327,11 +334,22 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("onPostExecuteIn", result);
-            if (!result.equals("no result")) {//유저 존재
+            Log.d("ddf check2Login", result);
+
+            String jsonResult = "";
+            String jsonContent= "";
+            try {
+                JSONObject jsonObject2 = null;
+                jsonObject2 = new JSONObject(result);
+                jsonResult = jsonObject2.getString("result");
+                jsonContent= jsonObject2.getString("content");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (jsonResult.equals("S")) {
                 try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    id = jsonObject.getString("_id");
+                    JSONObject jsonObject = new JSONObject(jsonContent);
+                    id = jsonObject.getString("id");
                     name = jsonObject.getString("name");
                     profile_img_url = jsonObject.getString("profile_img_url");
                     email = jsonObject.getString("email");
@@ -339,7 +357,7 @@ public class SplashActivity extends AppCompatActivity {
                     SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefLogin.edit();
                     editor.putLong("profileEditDate", 0);
-                    editor.putString("_id", id);
+                    editor.putString("id", id);
                     editor.putString("login_method", login_method);
                     editor.putString("name", name);
                     editor.putString("profile_img_url", profile_img_url);

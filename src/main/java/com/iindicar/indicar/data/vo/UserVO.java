@@ -13,7 +13,7 @@ import com.iindicar.indicar.BR;
 
 public class UserVO extends BaseObservable{
 
-    @SerializedName("_id") private String userId = "";
+    @SerializedName("id") private String userId = "";
     @SerializedName("name") private String userName = "";
     @SerializedName("email") private String userEmail = "";
     @SerializedName("profile_img_url") private String profileImageUrl = "";

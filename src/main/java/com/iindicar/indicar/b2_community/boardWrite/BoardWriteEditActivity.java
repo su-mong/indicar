@@ -126,7 +126,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
         if (bundle == null) { // write new board
             // get login user id, name from sharedPreferences
             SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-            String loginId = prefLogin.getString("_id", "");
+            String loginId = prefLogin.getString("id", "");
             String loginName = prefLogin.getString("name", "");
             viewModel.start(loginId, loginName);
 

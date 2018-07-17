@@ -5,6 +5,7 @@ import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.iindicar.indicar.Constant;
 import com.iindicar.indicar.b2_community.boardList.BoardListAdapter;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardDao;
@@ -97,9 +98,17 @@ public class TraceViewModel {
 
         /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
 
-        params.put("_id", user_id);
-        params.put("pageIndex", String.valueOf(1));
-        params.put("pageUnit", "" + 100);
+        params.put("id", user_id);
+        params.put("ntcr_id", user_id);
+        params.put("pageIndex", "1");
+        params.put("pageUnit", "100");
+        params.put("bbs_id", "all");
+        if (boardTab.get() == BOARD_POPULAR) {
+            params.put("searchCnd", "pop");
+        } else {
+            params.put("searchCnd", "");
+        }
+        params.put("branch_id", Constant.locale);
 
         boardDao.getDataListTrace(category, params, new BaseDao.LoadDataListCallBack() {
             @Override
@@ -173,7 +182,7 @@ public class TraceViewModel {
 
             // 유저 프로필 사진
             RequestParams param = new RequestParams();
-            param.put("_id", board.getUserId());
+            param.put("id", board.getUserId());
 
             userDao.getData(param, new BaseDao.LoadDataCallBack() {
                 @Override

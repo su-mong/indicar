@@ -243,7 +243,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     public void openBoardDetail(int position) {
 
         SharedPreferences prefLogin = context.getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        String loginId = prefLogin.getString("_id", "0");
+        String loginId = prefLogin.getString("id", "0");
         String loginName = prefLogin.getString("name", "fail");
         Intent intent = new Intent(context, BoardDetailActivity.class);
 

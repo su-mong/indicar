@@ -69,7 +69,7 @@ public class ProfileSuggest extends BaseActivity2<ProfileSuggestBinding> {
 
     private void sendReport() {
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        String loginId = prefLogin.getString("_id", "");
+        String loginId = prefLogin.getString("id", "");
         RequestParams params = new RequestParams();
         params.put("writer_id", loginId);
         params.put("content", binding.editProfileSuggest.getText().toString());

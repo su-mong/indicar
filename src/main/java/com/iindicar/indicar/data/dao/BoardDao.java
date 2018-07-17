@@ -35,7 +35,6 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
                 try {
-                    Log.d("ddf",new String(bytes));
                     JsonElement jsonElement = new JsonParser().parse(new String(bytes)).getAsJsonObject();
                     JsonObject rootObj = jsonElement.getAsJsonObject();
                     JsonArray result = (JsonArray) rootObj.get("content");
@@ -83,87 +82,30 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
-                JsonElement result;
                 try {
-                    result = new JsonParser().parse(new String(bytes));
-                } catch (Exception e) {
-                    callBack.onDataNotAvailable();
-                    Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.data_not_available);
-                    e.printStackTrace();
-                    return;
-                }
-                // 게시물 리스트 존재
-                if (result != null && result.isJsonArray()) {
-                    JsonArray array = result.getAsJsonArray();
+                    Log.d("ddf trace",new String (bytes));
+                    JsonElement jsonElement = new JsonParser().parse(new String(bytes)).getAsJsonObject();
+                    JsonObject rootObj = jsonElement.getAsJsonObject();
+                    JsonArray result = (JsonArray) rootObj.get("content");
 
                     List<BoardDetailVO> boardList = new ArrayList<>();
-                    for (int i = 0; i < array.size(); i++) {
-                        if (!array.get(i).isJsonObject()) { // 게시물 끝
+
+                    for (int i = 0; i < result.size(); i++) {
+                        if (!result.get(i).isJsonObject()) { // 게시물 끝
                             break;
                         }
-                        BoardDetailVO vo = new Gson().fromJson(array.get(i), BoardDetailVO.class);
+                        BoardDetailVO vo = new Gson().fromJson(result.get(i), BoardDetailVO.class);
                         boardList.add(vo);
                     }
 
                     callBack.onDataListLoaded(boardList);
-                } else {
-
-                    Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.data_not_available);
-
-                    callBack.onDataNotAvailable();
-                }
-            }
-
-            @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
-                Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.server_not_available);
-                throwable.printStackTrace();
-
-                callBack.onDataNotAvailable();
-            }
-        });
-    }
-
-    @Override
-    public void getDataListLike(RequestParams params, final LoadDataListCallBack callBack) {
-        final String URL = "/community/selectUserLikeBoardArticles";
-        HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int index, Header[] headers, byte[] bytes) {
-                JsonElement result;
-
-                try {
-                    result = new JsonParser().parse(new String(bytes));
                 } catch (Exception e) {
 
                     callBack.onDataNotAvailable();
 
-                    Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.data_not_available);
+                    Log.e(TAG, "getDataList() with URL: " + URL + " " + e.toString());
                     e.printStackTrace();
                     return;
-                }
-
-                // 게시물 리스트 존재
-                if (result != null && result.isJsonArray()) {
-                    JsonArray array = result.getAsJsonArray();
-
-                    List<BoardDetailVO> boardList = new ArrayList<>();
-
-                    for (int i = 0; i < array.size(); i++) {
-                        if (!array.get(i).isJsonObject()) { // 게시물 끝
-                            break;
-                        }
-                        BoardDetailVO vo = new Gson().fromJson(array.get(i), BoardDetailVO.class);
-                        boardList.add(vo);
-                    }
-
-                    callBack.onDataListLoaded(boardList);
-                } else {
-
-                    Log.e(TAG, "getDataList() with URL: " + URL + " " + R.string.data_not_available);
-
-                    callBack.onDataNotAvailable();
                 }
             }
 
@@ -181,7 +123,7 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
     @Override
     public void getData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/community/selectBoardArticle";
-
+Log.d("ddf","selectBoardArticle");
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
@@ -235,7 +177,6 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
                 }
 
                 // 게시글 등록 정상적으로 처리
-                Log.d("ddf", response);
 
 
             }

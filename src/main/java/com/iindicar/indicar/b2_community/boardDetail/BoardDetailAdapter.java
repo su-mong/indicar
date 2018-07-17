@@ -43,6 +43,7 @@ public class BoardDetailAdapter extends BaseRecyclerViewAdapter<BoardFileVO, Rec
 
     public void setHeader(BoardDetailVO header) {
         this.header = header;
+
         notifyItemChanged(BOARD_HEADER);
     }
 
@@ -50,7 +51,6 @@ public class BoardDetailAdapter extends BaseRecyclerViewAdapter<BoardFileVO, Rec
     public int getItemViewType(int position) {
         if(position == 0)
             return BOARD_HEADER;
-
         else
             return BOARD_ITEM;
     }

@@ -7,6 +7,7 @@ import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.iindicar.indicar.Constant;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardDao;
 import com.iindicar.indicar.data.dao.BoardFileDao;
@@ -14,6 +15,7 @@ import com.iindicar.indicar.data.dao.UserDao;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.data.vo.UserVO;
+import com.iindicar.indicar.utils.LocaleHelper;
 import com.loopj.android.http.RequestParams;
 
 import java.util.List;
@@ -108,7 +110,7 @@ public class BoardListViewModel {
         }
         params.put("pageIndex", String.valueOf(currentPage));
         params.put("pageUnit", PAGE_UNIT_COUNT);
-        params.put("branch_id", "kor");
+        params.put("branch_id", Constant.locale);
 
 
         boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
@@ -136,50 +138,7 @@ public class BoardListViewModel {
             }
         });
     }
-  public void getBoardListLike(String userId) {
-        // 마지막 페이지
-        if (isListEnd) {
-            isDataLoading.set(false);
-            navigator.showPageEndMessage();
-            return;
-        }
 
-        isDataLoading.set(true);
-
-        RequestParams params = new RequestParams();
-
-        /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
-        params.put("bbs_id", "all");
-
-        params.put("_id", userId);
-        params.put("pageIndex", String.valueOf(1));
-        params.put("pageUnit", 100);
-
-        boardDao.getDataListLike(params, new BaseDao.LoadDataListCallBack() {
-            @Override
-            public void onDataListLoaded(List list) {
-                int size = list.size();
-
-                // end of board list
-                if (size != PAGE_UNIT_COUNT) {
-                    isListEnd = true;
-                }
-                currentPage++;
-
-                navigator.onListAdded(list);
-                isDataLoading.set(false);
-
-                // 메인 사진을 받아온다
-                getImageFile(list);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                isDataLoading.set(false);
-                isListEnd = true;
-            }
-        });
-    }
 
 
     public void getBoardListOnSearch(String searchWord) {
@@ -228,7 +187,7 @@ public class BoardListViewModel {
 
             // 유저 프로필 사진
             RequestParams param = new RequestParams();
-            param.put("_id", board.getUserId());
+            param.put("id", board.getUserId());
 
             userDao.getData(param, new BaseDao.LoadDataCallBack() {
                 @Override

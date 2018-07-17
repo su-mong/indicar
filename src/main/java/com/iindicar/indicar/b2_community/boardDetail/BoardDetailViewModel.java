@@ -83,7 +83,7 @@ public class BoardDetailViewModel {
 
     private void checkIsLikeBoard() {
         RequestParams params = new RequestParams();
-        params.put("_id", loginId);
+        params.put("id", loginId);
         boardDao.getLikeModel().getLikeList(params, new BaseDao.LoadDataListCallBack() {
             @Override
             public void onDataListLoaded(List list) {
@@ -113,8 +113,8 @@ public class BoardDetailViewModel {
 
         isBoardDataLoading.set(true);
         currentPage = 1;
-        isListEnd=false;
-        getBoardData();
+        isListEnd = false;
+//        getBoardData();
         getFileData();
         getCommentList();
     }
@@ -130,6 +130,7 @@ public class BoardDetailViewModel {
 
                 getUser();
             }
+
             @Override
             public void onDataNotAvailable() {
                 navigator.onBoardNotAvailable();
@@ -139,7 +140,7 @@ public class BoardDetailViewModel {
 
     private void getUser() {
         RequestParams params = new RequestParams();
-        params.put("_id", boardHeader.getUserId());
+        params.put("id", boardHeader.getUserId());
 
         userDao.getData(params, new BaseDao.LoadDataCallBack() {
             @Override
@@ -174,11 +175,15 @@ public class BoardDetailViewModel {
             final int position = i;
             RequestParams params = new RequestParams();
             params.put("atch_file_id", fileIndexArray[i]);
-
+            Log.d("ddf atch_file_id", fileIndexArray[i]);
             fileDao.getData(params, new BaseDao.LoadDataCallBack() {
                 @Override
                 public void onDataLoaded(Object data) {
                     BoardFileVO vo = (BoardFileVO) data;
+                    String temp = vo.getFileUrl();
+                    temp = "http://" + temp.replace("8080", "9000");
+                    vo.setFileUrl(temp);
+                    Log.d("ddf file", vo.getFileUrl());
                     doneFile.put(position, vo);
 
                     if (doneFile.size() == fileIndexArray.length) {
@@ -257,7 +262,7 @@ public class BoardDetailViewModel {
             }
 
             RequestParams params = new RequestParams();
-            params.put("_id", comment.getUserKey());
+            params.put("id", comment.getUserKey());
 
             userDao.getData(params, new BaseDao.LoadDataCallBack() {
                 @Override
@@ -303,9 +308,10 @@ public class BoardDetailViewModel {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             RequestParams params = new RequestParams();
-            params.put("_id", loginId);
-            params.put("bbs_id", boardHeader.getBoardType());
+            params.put("id", loginId);
             params.put("ntt_id", boardHeader.getBoardId());
+            Log.d("id", loginId);
+            Log.d("ntt_id", boardHeader.getBoardId());
 
             boardDao.getLikeModel().toggleLike(params, new BaseDao.LoadDataCallBack() {
                 @Override
@@ -351,7 +357,7 @@ public class BoardDetailViewModel {
     public void updateComment() {
 
         RequestParams params = new RequestParams();
-        params.put("ntt_id", boardHeader.getBoardId());
+        Log.d("ntt_id", boardHeader.getBoardId());
         params.put("answer_no", answerNo);
         params.put("answer", commentWrite.get());
 
@@ -372,11 +378,12 @@ public class BoardDetailViewModel {
 
     public void insertComment() {
         RequestParams params = new RequestParams();
-        params.put("bbs_id", boardHeader.getBoardType());
         params.put("ntt_id", boardHeader.getBoardId());
-        params.put("answer", commentWrite.get());
-        params.put("writer_nm", loginName);
+        params.put("comment_cn", commentWrite.get());
         params.put("writer_id", loginId);
+        Log.d("ntt_id", boardHeader.getBoardId());
+        Log.d("answer", commentWrite.get());
+        Log.d("writer_id", loginId);
 
 
         commentDao.insertData(params, new BaseDao.LoadDataCallBack() {
@@ -384,7 +391,7 @@ public class BoardDetailViewModel {
             public void onDataLoaded(Object data) {
 
                 commentWrite.set("");
-                boardHeader.setCommentCount(String.valueOf(Integer.parseInt(boardHeader.getCommentCount())+1));
+                boardHeader.setCommentCount(String.valueOf(Integer.parseInt(boardHeader.getCommentCount()) + 1));
 //                if(isListEnd)
 //                    isListEnd=false;
 //               getCommentList();
@@ -417,7 +424,7 @@ public class BoardDetailViewModel {
         commentDao.deleteData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-                boardHeader.setCommentCount(String.valueOf(Integer.parseInt(boardHeader.getCommentCount())-1));
+                boardHeader.setCommentCount(String.valueOf(Integer.parseInt(boardHeader.getCommentCount()) - 1));
 
                 navigator.onLikeBoard();
 

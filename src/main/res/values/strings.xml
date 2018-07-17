@@ -110,15 +110,15 @@
     <string name="strThereisNoEmail">사용자의 이메일을 입력해주세요.</string>
     <string name="strWarningData">"NOTICE\n\n차량을 내려받습니다. 소량의 데이터 통화료가 발생합니다. WIFI 환경에서 진행하는 것을 권장합니다. 한 번 차량을 다운받으시면, 다음부터는 로딩 없이 이용 가능합니다.\n(단, 업데이트가 있을 경우 제외)\n\n앞으로 나오는 모든 이미지와 기타 결과물은 상업적 용도로 사용하실 수 없으며, 그 권리는 자사와 기타 업체들에게 있습니다. 이용을 원하시는 경우, 문의 주시기 바랍니다. 상업적 용도 외에 개인적인 사용은 허가합니다. 감사합니다."</string>
 
-    <string name="versionLink">http://13.125.173.118:8080/version/version</string>
-    <string name="check_User">http://13.125.173.118:8080/user/search_user2</string>
-    <string name="add_User">http://13.125.173.118:8080/user/add_user2</string>
-    <string name="update_User">http://13.125.173.118:8080/user/updt_user</string>
-    <string name="delete_User">http://13.125.173.118:8080/user/remove</string>
-    <string name="getCarLink">http://13.125.173.118:8080/car/get_car</string>
+    <string name="versionLink">http://13.125.173.118:9000/version/version</string>
+    <string name="check_User">http://13.125.173.118:9000/user/search_user</string>
+    <string name="add_User">http://13.125.173.118:9000/user/add_user</string>
+    <string name="update_User">http://13.125.173.118:9000/user/updt_user</string>
+    <string name="delete_User">http://13.125.173.118:9000/user/remove_user</string>
+    <string name="getCarLink">http://13.125.173.118:9000/car/get_car</string>
     <string name="carDBLink">http://13.125.173.118:9000/carSpec/list</string>
-    <string name="traceLikeResult">http://13.125.173.118:8080/selectUserLikeBoardArticle</string>
-    <string name="traceWritingResult">http://13.125.173.118:8080/selectUserBoardArticles</string>
+    <string name="traceLikeResult">http://13.125.173.118:9000/selectUserLikeBoardArticle</string>
+    <string name="traceWritingResult">http://13.125.173.118:9000/selectUserBoardArticles</string>
     <string name="clause">https://m.cafe.naver.com/ArticleRead.nhn?clubid=29055312&amp;articleid=7&amp;page=1&amp;boardtype=L&amp;menuid=15</string>
     <string name="opinion">https://m.cafe.naver.com/SimpleArticleList.nhn?search.clubid=29055312&amp;search.menuid=23&amp;search.moreDirection=next</string>
 

@@ -25,7 +25,7 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
 
     @Override
     public void getDataList(RequestParams params, final LoadDataListCallBack callBack){
-        final String URL = "/selectCommentList";
+        final String URL = "/community/selectCommentList";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -59,10 +59,7 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
         });
     }
 
-    @Override
-    public void getDataListLike(RequestParams params, LoadDataListCallBack callBack) {
 
-    }
 
     @Override
     public void getData(RequestParams params, LoadDataCallBack callBack) {
@@ -71,7 +68,7 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
 
     @Override
     public void updateData(RequestParams params, final LoadDataCallBack callBack) {
-        final String URL = "/updateComment";
+        final String URL = "/community/updateComment";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -88,14 +85,13 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
 
     @Override
     public void deleteData(RequestParams params, final LoadDataCallBack callBack) {
-        final String URL = "/deleteComment";
+        final String URL = "/community/deleteComment";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 callBack.onDataLoaded("success");
             }
-
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 callBack.onDataNotAvailable();
@@ -110,10 +106,11 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
 
     @Override
     public void insertData(RequestParams params, final LoadDataCallBack callBack){
-        final String URL = "/insertComment";
+        final String URL = "/community/insertComment";
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Log.d("ddf insertComment",new String (responseBody) );
                 callBack.onDataLoaded("success");
             }
 

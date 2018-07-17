@@ -63,13 +63,9 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
         itemList.get(position).setBoardContent(vo.getFileContent());
         String temp = vo.getFileUrl();
        temp=temp.replace("8080", "9000");
-        Log.d("ddf",temp);
         itemList.get(position).setMainImageUrl("http://" + temp);
         itemList.get(position).setMainImageWidth(vo.getFileWidth());
         itemList.get(position).setMainImageHeight(vo.getFileHeight());
-Log.d("ddf detailImageUrl:",itemList.get(position).getMainImageUrl());
-//        Log.d("ddf",vo.getFileWidth());
-//        Log.d("ddf",vo.getFileHeight());
         notifyItemChanged(position);
     }
 

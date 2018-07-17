@@ -116,7 +116,7 @@ public class RealPathUtil {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
 
-                final String selection = "_id=?";
+                final String selection = "id=?";
                 final String[] selectionArgs = new String[]{
                         split[1]
                 };

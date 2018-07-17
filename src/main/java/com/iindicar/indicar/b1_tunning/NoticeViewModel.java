@@ -6,6 +6,7 @@ import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
 
 import com.iindicar.indicar.BaseViewModel;
+import com.iindicar.indicar.Constant;
 import com.iindicar.indicar.b2_community.boardList.BoardListAdapter;
 import com.iindicar.indicar.b2_community.boardList.BoardListNavigator;
 import com.iindicar.indicar.b2_community.boardList.BoardListViewModel;
@@ -94,7 +95,7 @@ public class NoticeViewModel {
         params.put("searchCnd", "");
         params.put("pageIndex", String.valueOf(currentPage));
         params.put("pageUnit", PAGE_UNIT_COUNT);
-        params.put("branch_id", "kor");
+        params.put("branch_id", Constant.locale);
 
         boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
             @Override
@@ -131,7 +132,7 @@ public class NoticeViewModel {
 
             // 유저 프로필 사진
             RequestParams param = new RequestParams();
-            param.put("_id", board.getUserId());
+            param.put("id", board.getUserId());
 
             userDao.getData(param, new BaseDao.LoadDataCallBack() {
                 @Override

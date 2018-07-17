@@ -20,7 +20,7 @@ public class ImageUtil {
 
     public static void loadImage(ImageView imageView, String url, int width, int height) {
 
-        if(url != null && url.contains("13.125.173.118:8080")){
+        if(url != null && url.contains("13.125.173.118:9000")){
             if(!url.startsWith("http://")){
                 url = "http://".concat(url);
             }
@@ -35,7 +35,7 @@ public class ImageUtil {
     
     public static void loadImage(ImageView imageView, String url){
 
-        if(url != null && url.contains("13.125.173.118:8080")){
+        if(url != null && url.contains("13.125.173.118:9000")){
             if(!url.startsWith("http://")){
                 url = "http://".concat(url);
             }
@@ -103,7 +103,7 @@ public class ImageUtil {
 
     public static void loadCircleImage(ImageView imageView, String url, Drawable errorDrawable) {
 
-        if(url != null && url.contains("13.125.173.118:8080")){
+        if(url != null && url.contains("13.125.173.118:9000")){
             if(!url.startsWith("http://")){
                 url = "http://".concat(url);
             }

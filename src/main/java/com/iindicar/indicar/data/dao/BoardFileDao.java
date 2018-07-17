@@ -31,7 +31,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
 
     @Override
     public void getDataList(RequestParams params, final LoadDataListCallBack callBack) {
-        final String URL = "/selectFileInfs";
+        final String URL = "/community/selectFileInfs";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -59,10 +59,6 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
         });
     }
 
-    @Override
-    public void getDataListLike(RequestParams params, LoadDataListCallBack callBack) {
-
-    }
 
     @Override
     public void getData(RequestParams params, final LoadDataCallBack callBack){
@@ -143,7 +139,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
 
     @Override
     public void updateData(RequestParams params, final LoadDataCallBack callBack) {
-        final String URL = "/updateFile";
+        final String URL = "/community/updateFile";
 
         HttpClient.uploadFiles(URL, params, new AsyncHttpResponseHandler() {
             @Override
@@ -160,7 +156,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
 
     @Override
     public void deleteData(RequestParams params, final LoadDataCallBack callBack) {
-        final String URL = "/deleteFile";
+        final String URL = "/community/deleteFile";
 
         HttpClient.uploadFiles(URL, params, new AsyncHttpResponseHandler() {
             @Override

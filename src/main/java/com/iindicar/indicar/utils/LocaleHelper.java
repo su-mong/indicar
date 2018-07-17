@@ -8,6 +8,8 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
+import com.iindicar.indicar.Constant;
+
 import java.util.Locale;
 
 /**
@@ -54,6 +56,7 @@ public class LocaleHelper {
     @TargetApi(Build.VERSION_CODES.N)
     private static Context updateResources(Context context) {
         String lang = getPersistedData(context);
+        Constant.locale=lang;
         if(!lang.equals("ko")) {
             lang = new String("en");
         }

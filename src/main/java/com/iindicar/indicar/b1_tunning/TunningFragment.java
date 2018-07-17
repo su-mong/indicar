@@ -104,7 +104,7 @@ public class TunningFragment extends BaseFragment<TunningFragmentBinding> implem
     public void openBoardDetail(int position) {
 
         SharedPreferences prefLogin = context.getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        String loginId = prefLogin.getString("_id", "admin");
+        String loginId = prefLogin.getString("id", "admin");
         String loginName = prefLogin.getString("name", "admin");
 
         Intent intent = new Intent(context, BoardDetailActivity.class);

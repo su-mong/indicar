@@ -9,6 +9,7 @@ import android.databinding.ObservableBoolean;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -83,11 +84,16 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
 
     private void getUserPreference() {
         prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        userVO.setUserId(prefLogin.getString("_id", ""));
+        userVO.setUserId(prefLogin.getString("id", ""));
         userVO.setUserName(prefLogin.getString("name", ""));
         userVO.setUserEmail(prefLogin.getString("email", ""));
         userVO.setUserAddress(prefLogin.getString("address", ""));
         userVO.setProfileImageUrl(prefLogin.getString("profile_img_url",""));
+        Log.d("ddf",prefLogin.getString("id", ""));
+        Log.d("ddf",prefLogin.getString("name", ""));
+        Log.d("ddf",prefLogin.getString("email", ""));
+        Log.d("ddf",prefLogin.getString("address", ""));
+        Log.d("ddf",prefLogin.getString("profile_img_url",""));
     }
 
     private void getAlarmPreference() {
@@ -267,7 +273,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefLogin.edit();
             editor.putString("profileEditDate",null);
-            editor.putString("_id","0");
+            editor.putString("id","0");
             editor.putString("login_method","0");
             editor.putString("name","0");
             editor.putString("profile_img_url","0");
@@ -287,7 +293,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
                 public void onCompleteLogout() {
                     SharedPreferences.Editor editor = prefLogin.edit();
                     editor.putString("profileEditDate",null);
-                    editor.putString("_id","0");
+                    editor.putString("id","0");
                     editor.putString("login_method","0");
                     editor.putString("name","0");
                     editor.putString("profile_img_url","0");
@@ -300,7 +306,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         } else if(FirebaseAuth.getInstance().getCurrentUser() != null) {
             SharedPreferences.Editor editor = prefLogin.edit();
             editor.putString("profileEditDate",null);
-            editor.putString("_id","0");
+            editor.putString("id","0");
             editor.putString("login_method","0");
             editor.putString("name","0");
             editor.putString("profile_img_url","0");
@@ -312,7 +318,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         } else if(AccessToken.getCurrentAccessToken() != null) {
             SharedPreferences.Editor editor = prefLogin.edit();
             editor.putString("profileEditDate",null);
-            editor.putString("_id","0");
+            editor.putString("id","0");
             editor.putString("login_method","0");
             editor.putString("name","0");
             editor.putString("profile_img_url","0");
@@ -325,7 +331,7 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             Toast.makeText(getApplicationContext(),getString(R.string.strLoginedErr),Toast.LENGTH_SHORT).show();
             SharedPreferences.Editor editor = prefLogin.edit();
             editor.putString("profileEditDate",null);
-            editor.putString("_id","0");
+            editor.putString("id","0");
             editor.putString("login_method","0");
             editor.putString("name","0");
             editor.putString("profile_img_url","0");
@@ -344,20 +350,21 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             try {
                 OkHttpClient client = new OkHttpClient();
                 RequestBody body = new FormBody.Builder()
-                        .add("_id", userVO.getUserId())
+                        .add("id", userVO.getUserId())
                         .build();
                 Request request = new Request.Builder()
                         .url(getString(R.string.delete_User))
                         .post(body)
                         .build();
                 Response response = client.newCall(request).execute();
-                //result = response.body().string();
+                result = response.body().string();
+                Log.d("ddf delUser", userVO.getUserId()+result);
                 response.body().close();
 
                 SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefLogin.edit();
                 editor.putString("profileEditDate",null);
-                editor.putString("_id","0");
+                editor.putString("id","0");
                 editor.putString("login_method","0");
                 editor.putString("name","0");
                 editor.putString("profile_img_url","0");

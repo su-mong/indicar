@@ -73,7 +73,7 @@ public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding
 
     private void getUserPreference() {
         prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        userId = prefLogin.getString("_id","");
+        userId = prefLogin.getString("id","");
         userName = prefLogin.getString("name","");
 
         binding.inputName.setText(userName);
@@ -131,7 +131,7 @@ public class EditProfileActivity extends BaseActivity<ActivityEditProfileBinding
         isLoading.set(true);
 
         RequestParams params = new RequestParams();
-        params.put("_id", userId);
+        params.put("id", userId);
         params.put("name", inputUserName.get());
         userDao.updateData(params, new BaseDao.LoadDataCallBack() {
             @Override

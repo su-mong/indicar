@@ -231,7 +231,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                     public void onCompleteLogout() {
                         SharedPreferences.Editor editor = prefLogin.edit();
                         editor.putLong("profileEditDate", 0);
-                        editor.putString("_id", "0");
+                        editor.putString("id", "0");
                         editor.putString("login_method", "0");
                         editor.putString("name", "0");
                         editor.putString("profile_img_url", "0");
@@ -250,7 +250,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                 FirebaseAuth.getInstance().signOut();
                 SharedPreferences.Editor editor = prefLogin.edit();
                 editor.putLong("profileEditDate", 0);
-                editor.putString("_id", "0");
+                editor.putString("id", "0");
                 editor.putString("login_method", "0");
                 editor.putString("name", "0");
                 editor.putString("profile_img_url", "0");
@@ -266,7 +266,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
             } else if (AccessToken.getCurrentAccessToken() != null) {
                 SharedPreferences.Editor editor = prefLogin.edit();
                 editor.putLong("profileEditDate", 0);
-                editor.putString("_id", "0");
+                editor.putString("id", "0");
                 editor.putString("login_method", "0");
                 editor.putString("name", "0");
                 editor.putString("profile_img_url", "0");
@@ -284,7 +284,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                 Toast.makeText(getActivity(), getString(R.string.strLoginedErr), Toast.LENGTH_SHORT).show();
                 SharedPreferences.Editor editor = prefLogin.edit();
                 editor.putLong("profileEditDate", 0);
-                editor.putString("_id", "0");
+                editor.putString("id", "0");
                 editor.putString("login_method", "0");
                 editor.putString("name", "0");
                 editor.putString("profile_img_url", "0");

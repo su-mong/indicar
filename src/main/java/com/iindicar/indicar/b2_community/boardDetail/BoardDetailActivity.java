@@ -68,17 +68,12 @@ import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_UPDATE;
 public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding> implements BoardDetailNavigator {
 
     private final String TAG = this.getClass().getSimpleName();
-
     private BoardDetailViewModel viewModel = new BoardDetailViewModel();
-
     private BoardDetailAdapter boardAdapter;
     private BoardCommentAdapter commentAdapter;
     private boolean isUpdated = false;
-
     private Teleprinter keyboard;
-
     private Boolean canUpdate;
-
     Resources resources;
 
     @Override
@@ -118,8 +113,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                 onFinishActivity();
             }
         });
-
-
         binding.setViewModel(viewModel);
         viewModel.setNavigator(this);
 
@@ -164,12 +157,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         binding.scrollViewContainer.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
                 boolean isPageDown = (oldScrollY - scrollY) > 20; // scroll up
                 boolean isPageUp = (scrollY - oldScrollY) > 20; // scroll down
-
                 Handler handler = new Handler();
-
                 if (isPageUp) {
                     viewModel.isPageUpScrolling.set(true);
                     viewModel.isScrolling.set(true);
@@ -186,7 +176,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                         }
                     }, 500);
                 }
-
                 if (isPageDown) {
                     viewModel.isScrolling.set(true);
                     handler.postDelayed(new Runnable() {
@@ -196,10 +185,8 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                         }
                     }, 500);
                 }
-
             }
         });
-
         binding.scrollViewContainer.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -210,7 +197,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
             }
         });
         ((SimpleItemAnimator) binding.boardContent.recyclerviewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
-
         new ScrollBottomAction()
                 .with(binding.scrollViewContainer)
                 .setOnScrollBottomListener(new ScrollBottomAction.onScrollEndListener() {
@@ -221,7 +207,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                     }
                 });
     }
-
     @Override
     public void showPageEndMessage() {
         showSnackBar(resources.getString(R.string.lastPage));
@@ -321,11 +306,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         LayoutInflater factory = LayoutInflater.from(this);
         final View popupDialogView = factory.inflate(R.layout.alert_reason, null);
         final AlertDialog dialog = new AlertDialog.Builder(this).create();
-
         Display display = (BoardDetailActivity.this).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-
         dialog.setView(popupDialogView);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -430,19 +413,15 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
 
     @Override
     public void onStartBoardUpdated() {
-
         Intent intent = new Intent(getApplicationContext(), BoardWriteEditActivity.class);
         Bundle bundle = new Bundle();
-
         WriteBoardVO updateBoard = new WriteBoardVO();
         updateBoard.setUserId(viewModel.loginId);
         updateBoard.setUserName(viewModel.loginName);
         updateBoard.setBoardType(viewModel.boardHeader.getBoardType());
         updateBoard.setBoardId(viewModel.boardHeader.getBoardId());
         updateBoard.setFileIndex(viewModel.boardHeader.getAtchFileId());
-
         bundle.putParcelable(BoardWriteEditActivity.EXTRA_BOARD_DETAIL, updateBoard);
-
         List<BoardFileVO> boardItems = boardAdapter.getItemList();
         ArrayList<WriteFileVO> updateItems = new ArrayList<>();
         if (boardItems != null) {
@@ -455,7 +434,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
             }
         }
         bundle.putParcelableArrayList(BoardWriteEditActivity.EXTRA_BOARD_FILE_LIST, updateItems);
-
         intent.putExtra(BoardWriteEditActivity.BUNDLE_EXTRA_BOARD, bundle);
         startActivityForResult(intent, REQUEST_BOARD_UPDATE);
     }
@@ -463,8 +441,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         if (requestCode == REQUEST_BOARD_UPDATE) {
             if (resultCode == BoardWriteEditActivity.RESULT_UPDATE_SUCCESS) {
                 isUpdated = true;
@@ -472,7 +448,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                 commentAdapter.clearItems();
                 viewModel.onRefreshBoard();
             }
-
         }
     }
 
@@ -490,7 +465,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         boardAdapter.clearItems();
         commentAdapter.clearItems();
         viewModel.onRefreshBoard();
-
     }
 
     @Override
