@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.iindicar.indicar.Constant;
 import com.iindicar.indicar.data.dao.BaseDao;
 import com.iindicar.indicar.data.dao.BoardCommentDao;
 import com.iindicar.indicar.data.dao.BoardDao;
@@ -76,9 +77,8 @@ public class BoardDetailViewModel {
         this.loginName = intent.getStringExtra("loginName");
 
         checkIsLikeBoard();
-
-
         onRefreshBoard();
+        getCommentList();
     }
 
     private void checkIsLikeBoard() {
@@ -114,15 +114,17 @@ public class BoardDetailViewModel {
         isBoardDataLoading.set(true);
         currentPage = 1;
         isListEnd = false;
-//        getBoardData();
+        getBoardData();
         getFileData();
-        getCommentList();
+//        getCommentList();
     }
 
     public void getBoardData() {
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardHeader.getBoardType());
         params.put("ntt_id", boardHeader.getBoardId());
+        params.put("branch_id", Constant.locale);
+
         boardDao.getData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
@@ -202,45 +204,6 @@ public class BoardDetailViewModel {
                 }
             });
         }
-    }
-
-    public void getCommentList() {
-        // 마지막 페이지
-        if (isListEnd) {
-            isCommentDataLoading.set(false);
-            navigator.showPageEndMessage();
-            return;
-        }
-        isCommentDataLoading.set(true);
-
-        RequestParams params = new RequestParams();
-        params.put("bbs_id", boardHeader.getBoardType());
-        params.put("ntt_id", boardHeader.getBoardId());
-        params.put("pageIndex", String.valueOf(currentPage));
-        params.put("pageUnit", PAGE_UNIT_COUNT);
-
-        commentDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
-            @Override
-            public void onDataListLoaded(List list) {
-                int size = list.size();
-
-                // end of board list
-                if (size != PAGE_UNIT_COUNT) {
-                    isListEnd = true;
-                }
-                currentPage++;
-
-                navigator.onCommentUpdated(list);
-                isCommentDataLoading.set(false);
-                getUserProfile(list);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                navigator.onCommentUpdated_emtpy();
-                isCommentDataLoading.set(false);
-            }
-        });
     }
 
 
@@ -323,7 +286,7 @@ public class BoardDetailViewModel {
                         boardHeader.setLikeCount(String.valueOf(likeCount + 1));
                     }
                     isLikeBoard.set(!isLikeBoard.get());
-                    navigator.onLikeBoard();
+                    navigator.onUpdatedBoard();
                 }
 
                 @Override
@@ -365,7 +328,8 @@ public class BoardDetailViewModel {
             @Override
             public void onDataLoaded(Object data) {
                 commentWrite.set("");
-                navigator.onLikeBoard();
+                getCommentList();
+//                navigator.onLikeBoard();
 
             }
 
@@ -392,15 +356,51 @@ public class BoardDetailViewModel {
 
                 commentWrite.set("");
                 boardHeader.setCommentCount(String.valueOf(Integer.parseInt(boardHeader.getCommentCount()) + 1));
-//                if(isListEnd)
-//                    isListEnd=false;
-//               getCommentList();
-                navigator.onLikeBoard();
+                if (isListEnd)
+                    isListEnd = false;
+                getCommentList();
+//                navigator.onLikeBoard();
             }
 
             @Override
             public void onDataNotAvailable() {
 
+            }
+        });
+    }
+
+    public void getCommentList() {
+        // 마지막 페이지
+        if (isListEnd) {
+            isCommentDataLoading.set(false);
+            navigator.showPageEndMessage();
+            return;
+        }
+        isCommentDataLoading.set(true);
+
+        RequestParams params = new RequestParams();
+        params.put("ntt_id", boardHeader.getBoardId());
+
+        commentDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
+            @Override
+            public void onDataListLoaded(List list) {
+                int size = list.size();
+
+                // end of board list
+                if (size != PAGE_UNIT_COUNT) {
+                    isListEnd = true;
+                }
+                currentPage++;
+
+                navigator.onCommentUpdated(list);
+                isCommentDataLoading.set(false);
+                getUserProfile(list);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                navigator.onCommentUpdated_emtpy();
+                isCommentDataLoading.set(false);
             }
         });
     }
@@ -425,8 +425,7 @@ public class BoardDetailViewModel {
             @Override
             public void onDataLoaded(Object data) {
                 boardHeader.setCommentCount(String.valueOf(Integer.parseInt(boardHeader.getCommentCount()) - 1));
-
-                navigator.onLikeBoard();
+                getCommentList();
 
             }
 

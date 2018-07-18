@@ -16,8 +16,8 @@ public class BoardCommentVO extends BaseObservable {
     private String userProfileUrl = "";
     @SerializedName("bbs_id") private String boardType = "";
     @SerializedName("ntt_id") private String boardId = "";
-    @SerializedName("answer") private String content = "";
-    @SerializedName("writer_nm") private String userName = "";
+    @SerializedName("comment_cn") private String content = "";
+    @SerializedName("name") private String userName = "";
     @SerializedName("writer_id") private String userKey = "";
     @SerializedName("frst_time") private String firstTime = "";
     @SerializedName("last_updt_time") private String lastUpdateTime = "";

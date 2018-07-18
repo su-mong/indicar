@@ -460,10 +460,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         showSnackBar(resources.getString(R.string.reportSuccess));
     }
 
-    public void onLikeBoard() {
+    public void onUpdatedBoard() {
         isUpdated = true;
         boardAdapter.clearItems();
-        commentAdapter.clearItems();
         viewModel.onRefreshBoard();
     }
 
@@ -513,7 +512,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     public void onCommentUpdated(List<BoardCommentVO> list) {
         LinearLayout lin_alert_empty = (LinearLayout) findViewById(R.id.lin_alert_reply_empty);
         lin_alert_empty.setVisibility(View.GONE);
+        commentAdapter.clearItems();
         commentAdapter.addItems(list);
+        viewModel.boardHeader.setCommentCount(list.size()+"");
     }
 
     @Override

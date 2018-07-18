@@ -33,7 +33,7 @@ public interface BoardDetailNavigator {
 
     Intent getActivityIntent();
 
-    void onLikeBoard();
+    void onUpdatedBoard();
 
     void showKeyboard();
 
