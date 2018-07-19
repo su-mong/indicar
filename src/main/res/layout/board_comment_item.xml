@@ -64,12 +64,11 @@
 
                     <TextView
                         style="@style/textViewCommentInfoStyle"
-                        android:id="@+id/text_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/colorFontLight"
-                        app:date="@{comment.firstTime}"/>
+                        android:text="@{comment.firstTime}"/>
 
                 </LinearLayout>
 

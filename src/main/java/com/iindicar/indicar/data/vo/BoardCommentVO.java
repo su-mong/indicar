@@ -21,7 +21,7 @@ public class BoardCommentVO extends BaseObservable {
     @SerializedName("writer_id") private String userKey = "";
     @SerializedName("frst_time") private String firstTime = "";
     @SerializedName("last_updt_time") private String lastUpdateTime = "";
-    @SerializedName("answer_no") private int commentIndex;
+    @SerializedName("id") private int commentIndex;
 
     @Bindable
     public String getUserProfileUrl() {
@@ -42,6 +42,8 @@ public class BoardCommentVO extends BaseObservable {
         this.boardType = boardType;
         notifyPropertyChanged(BR.boardType);
     }
+
+
 
     @Bindable
     public String getBoardId() {

@@ -41,7 +41,7 @@ public interface BoardDetailNavigator {
 
     void onBoardNotAvailable();
 
-    void onCommentUpdated(List<BoardCommentVO> list);
+    void onCommentUpdated(List<BoardCommentVO> list,boolean checkFirst);
 
     void onCommentUpdated_emtpy();
 

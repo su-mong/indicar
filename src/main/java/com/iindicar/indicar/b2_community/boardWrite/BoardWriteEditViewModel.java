@@ -284,7 +284,17 @@ public class BoardWriteEditViewModel {
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardVO.getBoardType());
         params.put("ntt_id", boardVO.getBoardId());
-        params.put("atch_file_id", boardVO.getFileIndex());
+        params.put("ntt_sj", "title");
+        String fileIndexString = "";
+        for (int i = 0; i < boardVO.getFileIndex().length; i++) {
+            if (i == 0)
+                fileIndexString = boardVO.getFileIndex()[i];
+            else
+                fileIndexString += "," + boardVO.getFileIndex()[i];
+        }
+        params.put("atch_file_id", fileIndexString);
+        params.put("branch_id", Constant.locale);
+
         boardDao.updateData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {

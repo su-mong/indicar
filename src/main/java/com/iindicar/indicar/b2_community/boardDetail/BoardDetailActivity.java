@@ -203,7 +203,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                     @Override
                     public void onScrollBottom(ScrollingView view) {
                         // request more list when scroll is bottom
-                        viewModel.getCommentList();
+                        viewModel.getCommentList(true);
                     }
                 });
     }
@@ -232,6 +232,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
             @Override
             public void onItemClick(View view, int position) {
                 showCommentDialog(position);
+
             }
         });
 
@@ -373,6 +374,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     }
 
     public void showCommentDialog(final int position) {
+        Log.d("ddf show comment",""+position);
         BoardCommentVO vo = commentAdapter.getItem(position);
 
         if (viewModel.loginName.equals(vo.getUserName())) {
@@ -509,13 +511,24 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     }
 
     @Override
-    public void onCommentUpdated(List<BoardCommentVO> list) {
+    public void onCommentUpdated(List<BoardCommentVO> list,boolean checkFirst) {
+        if(!checkFirst){
+            isUpdated=true;
+            Intent intent = new Intent();
+            intent.putExtra("isUpdated", isUpdated);
+            setResult(RESULT_OK, intent);
+        }
+
         LinearLayout lin_alert_empty = (LinearLayout) findViewById(R.id.lin_alert_reply_empty);
         lin_alert_empty.setVisibility(View.GONE);
         commentAdapter.clearItems();
         commentAdapter.addItems(list);
+        commentAdapter.notifyDataSetChanged();
         viewModel.boardHeader.setCommentCount(list.size()+"");
+        boardAdapter.setHeader(viewModel.boardHeader);
     }
+
+
 
     @Override
     public void onCommentUpdated_emtpy() {

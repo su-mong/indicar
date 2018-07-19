@@ -16,7 +16,6 @@ import com.loopj.android.http.RequestParams;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -28,7 +27,7 @@ import cz.msebera.android.httpclient.Header;
 public class BoardCommentDao implements BaseDao<BoardCommentVO> {
 
     @Override
-    public void getDataList(RequestParams params, final LoadDataListCallBack callBack){
+    public void getDataList(RequestParams params, final LoadDataListCallBack callBack) {
         final String URL = "/community/selectCommentList";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
@@ -36,14 +35,16 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 JsonElement jsonElement = new JsonParser().parse(new String(responseBody)).getAsJsonObject();
                 JsonObject rootObj = jsonElement.getAsJsonObject();
-                JsonArray result = (JsonArray) rootObj.get("content");
                 JsonElement result2 = (JsonElement) rootObj.get("result");
                 List<BoardDetailVO> boardList = new ArrayList<>();
 
 
                 // 댓글 존재
-                if(result2.getAsString().equals("S")){
-                    Type listType = new TypeToken<List<BoardCommentVO>>(){}.getType();
+                if (result2.getAsString().equals("S")) {
+                    JsonArray result = (JsonArray) rootObj.get("content");
+                    Log.d("ddf getCommentList",new String(responseBody));
+                    Type listType = new TypeToken<List<BoardCommentVO>>() {
+                    }.getType();
 
                     List<BoardCommentVO> commentList = new Gson().fromJson(result, listType);
 
@@ -59,7 +60,6 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
             }
         });
     }
-
 
 
     @Override
@@ -93,6 +93,7 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 callBack.onDataLoaded("success");
             }
+
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 callBack.onDataNotAvailable();
@@ -106,12 +107,12 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
     }
 
     @Override
-    public void insertData(RequestParams params, final LoadDataCallBack callBack){
+    public void insertData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/community/insertComment";
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.d("ddf insertComment",new String (responseBody) );
+                Log.d("ddf insertComment", new String(responseBody));
                 callBack.onDataLoaded("success");
             }
 

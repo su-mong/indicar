@@ -31,6 +31,8 @@ public class BoardDetailViewModel {
 
     public final ObservableBoolean isBoardDataLoading = new ObservableBoolean(true);
     public final ObservableBoolean isCommentDataLoading = new ObservableBoolean(true);
+    private boolean ISFIRST = true;
+    private boolean NOTFIRST = false;
 
     private BoardDao boardDao;
     private BoardFileDao fileDao;
@@ -78,7 +80,7 @@ public class BoardDetailViewModel {
 
         checkIsLikeBoard();
         onRefreshBoard();
-        getCommentList();
+        getCommentList(ISFIRST);
     }
 
     private void checkIsLikeBoard() {
@@ -320,15 +322,14 @@ public class BoardDetailViewModel {
     public void updateComment() {
 
         RequestParams params = new RequestParams();
-        Log.d("ntt_id", boardHeader.getBoardId());
-        params.put("answer_no", answerNo);
-        params.put("answer", commentWrite.get());
+        params.put("id", answerNo);
+        params.put("comment_cn", commentWrite.get());
 
         commentDao.updateData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
                 commentWrite.set("");
-                getCommentList();
+                getCommentList(NOTFIRST);
 //                navigator.onLikeBoard();
 
             }
@@ -355,10 +356,9 @@ public class BoardDetailViewModel {
             public void onDataLoaded(Object data) {
 
                 commentWrite.set("");
-                boardHeader.setCommentCount(String.valueOf(Integer.parseInt(boardHeader.getCommentCount()) + 1));
                 if (isListEnd)
                     isListEnd = false;
-                getCommentList();
+                getCommentList(NOTFIRST);
 //                navigator.onLikeBoard();
             }
 
@@ -369,13 +369,13 @@ public class BoardDetailViewModel {
         });
     }
 
-    public void getCommentList() {
+    public void getCommentList(final boolean checkFirst) {
         // 마지막 페이지
-        if (isListEnd) {
-            isCommentDataLoading.set(false);
-            navigator.showPageEndMessage();
-            return;
-        }
+//        if (isListEnd) {
+//            isCommentDataLoading.set(false);
+//            navigator.showPageEndMessage();
+//            return;
+//        }
         isCommentDataLoading.set(true);
 
         RequestParams params = new RequestParams();
@@ -385,16 +385,15 @@ public class BoardDetailViewModel {
             @Override
             public void onDataListLoaded(List list) {
                 int size = list.size();
-
                 // end of board list
                 if (size != PAGE_UNIT_COUNT) {
                     isListEnd = true;
                 }
                 currentPage++;
 
-                navigator.onCommentUpdated(list);
+                navigator.onCommentUpdated(list, checkFirst);
                 isCommentDataLoading.set(false);
-                getUserProfile(list);
+//                getUserProfile(list);
             }
 
             @Override
@@ -418,14 +417,12 @@ public class BoardDetailViewModel {
 
     public void deleteComment(int index) {
         RequestParams params = new RequestParams();
-        params.put("ntt_id", boardHeader.getBoardId());
-        params.put("answer_no", index);
+        params.put("id", index);
 
         commentDao.deleteData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-                boardHeader.setCommentCount(String.valueOf(Integer.parseInt(boardHeader.getCommentCount()) - 1));
-                getCommentList();
+                getCommentList(NOTFIRST);
 
             }
 
