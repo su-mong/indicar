@@ -46,6 +46,12 @@ public class BoardDetailVO extends BaseObservable implements Parcelable {
     private String commentCount = "0";
     @SerializedName("profile_img_url")
     private String userProfileUrl = "";
+    @SerializedName("use_secret_at")
+    private String use_secret;
+    @SerializedName("use_notice_at")
+    private String use_notice;
+    @SerializedName("pop_point")
+    private float pop_point;
 
     @Override
     public String toString() {

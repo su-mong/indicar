@@ -42,7 +42,6 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
                 // 댓글 존재
                 if (result2.getAsString().equals("S")) {
                     JsonArray result = (JsonArray) rootObj.get("content");
-                    Log.d("ddf getCommentList",new String(responseBody));
                     Type listType = new TypeToken<List<BoardCommentVO>>() {
                     }.getType();
 
@@ -112,7 +111,6 @@ public class BoardCommentDao implements BaseDao<BoardCommentVO> {
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.d("ddf insertComment", new String(responseBody));
                 callBack.onDataLoaded("success");
             }
 

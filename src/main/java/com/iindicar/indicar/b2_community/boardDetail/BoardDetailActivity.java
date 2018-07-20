@@ -55,6 +55,7 @@ import java.util.List;
 import io.fabric.sdk.android.Fabric;
 
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_UPDATE;
+import static com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditActivity.RESULT_UPDATE_SUCCESS;
 
 /**
  * 게시물 조회 화면
@@ -99,7 +100,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this,new Crashlytics());
+        Fabric.with(this, new Crashlytics());
 
         Context boardDetailContext = LocaleHelper.setLocale(getApplicationContext());
         resources = boardDetailContext.getResources();
@@ -207,6 +208,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
                     }
                 });
     }
+
     @Override
     public void showPageEndMessage() {
         showSnackBar(resources.getString(R.string.lastPage));
@@ -270,9 +272,9 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         PopupMenu popupMenu = new PopupMenu(this, view);
 
         if (canUpdate) { // 수정 가능한 게시물인 경우
-            getMenuInflater().inflate(resources.getIdentifier("@menu/board_menu_canupdate","menu","com.iindicar.indicar"), popupMenu.getMenu());
+            getMenuInflater().inflate(resources.getIdentifier("@menu/board_menu_canupdate", "menu", "com.iindicar.indicar"), popupMenu.getMenu());
         } else {
-            getMenuInflater().inflate(resources.getIdentifier("@menu/board_menu","menu","com.iindicar.indicar"), popupMenu.getMenu());
+            getMenuInflater().inflate(resources.getIdentifier("@menu/board_menu", "menu", "com.iindicar.indicar"), popupMenu.getMenu());
         }
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -374,7 +376,6 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     }
 
     public void showCommentDialog(final int position) {
-        Log.d("ddf show comment",""+position);
         BoardCommentVO vo = commentAdapter.getItem(position);
 
         if (viewModel.loginName.equals(vo.getUserName())) {
@@ -444,7 +445,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_BOARD_UPDATE) {
-            if (resultCode == BoardWriteEditActivity.RESULT_UPDATE_SUCCESS) {
+            if (resultCode == RESULT_UPDATE_SUCCESS) {
                 isUpdated = true;
                 boardAdapter.clearItems();
                 commentAdapter.clearItems();
@@ -511,23 +512,29 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     }
 
     @Override
-    public void onCommentUpdated(List<BoardCommentVO> list,boolean checkFirst) {
-        if(!checkFirst){
-            isUpdated=true;
-            Intent intent = new Intent();
-            intent.putExtra("isUpdated", isUpdated);
-            setResult(RESULT_OK, intent);
-        }
+    public void onCommentUpdated(List<BoardCommentVO> list) {
+        //댓글 수정시
+        isUpdated = true;
+        Intent intent = new Intent();
+        intent.putExtra("isUpdated", isUpdated);
+        setResult(RESULT_OK, intent);
 
         LinearLayout lin_alert_empty = (LinearLayout) findViewById(R.id.lin_alert_reply_empty);
         lin_alert_empty.setVisibility(View.GONE);
         commentAdapter.clearItems();
         commentAdapter.addItems(list);
         commentAdapter.notifyDataSetChanged();
-        viewModel.boardHeader.setCommentCount(list.size()+"");
+        viewModel.boardHeader.setCommentCount(list.size() + "");
         boardAdapter.setHeader(viewModel.boardHeader);
     }
 
+    @Override
+    public void onCommentAdded(List<BoardCommentVO> list) {
+        //단순조회시
+        LinearLayout lin_alert_empty = (LinearLayout) findViewById(R.id.lin_alert_reply_empty);
+        lin_alert_empty.setVisibility(View.GONE);
+        commentAdapter.addItems(list);
+    }
 
 
     @Override

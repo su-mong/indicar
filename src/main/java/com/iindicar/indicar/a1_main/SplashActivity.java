@@ -334,8 +334,6 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("ddf check2Login", result);
-
             String jsonResult = "";
             String jsonContent= "";
             try {

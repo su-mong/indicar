@@ -8,20 +8,28 @@ import com.iindicar.indicar.BR;
 
 /**
  * Created by yeseul on 2018-04-12.
- *
  */
 
 public class BoardCommentVO extends BaseObservable {
 
+    @SerializedName("profile_img_url")
     private String userProfileUrl = "";
-    @SerializedName("bbs_id") private String boardType = "";
-    @SerializedName("ntt_id") private String boardId = "";
-    @SerializedName("comment_cn") private String content = "";
-    @SerializedName("name") private String userName = "";
-    @SerializedName("writer_id") private String userKey = "";
-    @SerializedName("frst_time") private String firstTime = "";
-    @SerializedName("last_updt_time") private String lastUpdateTime = "";
-    @SerializedName("id") private int commentIndex;
+    @SerializedName("bbs_id")
+    private String boardType = "";
+    @SerializedName("ntt_id")
+    private String boardId = "";
+    @SerializedName("comment_cn")
+    private String content = "";
+    @SerializedName("name")
+    private String userName = "";
+    @SerializedName("writer_id")
+    private String userKey = "";
+    @SerializedName("frst_time")
+    private String firstTime = "";
+    @SerializedName("last_updt_time")
+    private String lastUpdateTime = "";
+    @SerializedName("id")
+    private int commentIndex;
 
     @Bindable
     public String getUserProfileUrl() {
@@ -42,7 +50,6 @@ public class BoardCommentVO extends BaseObservable {
         this.boardType = boardType;
         notifyPropertyChanged(BR.boardType);
     }
-
 
 
     @Bindable

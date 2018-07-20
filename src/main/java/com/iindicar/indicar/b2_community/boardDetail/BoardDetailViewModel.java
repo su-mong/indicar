@@ -31,8 +31,8 @@ public class BoardDetailViewModel {
 
     public final ObservableBoolean isBoardDataLoading = new ObservableBoolean(true);
     public final ObservableBoolean isCommentDataLoading = new ObservableBoolean(true);
-    private boolean ISFIRST = true;
-    private boolean NOTFIRST = false;
+    private boolean COMMENT_ADDED = true;
+    private boolean COMMENT_UPDATED = false;
 
     private BoardDao boardDao;
     private BoardFileDao fileDao;
@@ -77,10 +77,8 @@ public class BoardDetailViewModel {
         boardHeader = bundle.getParcelable("boardVO");
         this.loginId = intent.getStringExtra("loginId");
         this.loginName = intent.getStringExtra("loginName");
-
-        checkIsLikeBoard();
-        onRefreshBoard();
-        getCommentList(ISFIRST);
+        getFileData();
+        getCommentList(COMMENT_ADDED);
     }
 
     private void checkIsLikeBoard() {
@@ -89,10 +87,7 @@ public class BoardDetailViewModel {
         boardDao.getLikeModel().getLikeList(params, new BaseDao.LoadDataListCallBack() {
             @Override
             public void onDataListLoaded(List list) {
-                if (list == null) {
-                    isLikeBoard.set(false);
-                    return;
-                }
+                isLikeBoard.set(false);
 
                 for (int i = 0; i < list.size(); i++) {
                     BoardDetailVO vo = (BoardDetailVO) list.get(i);
@@ -117,7 +112,6 @@ public class BoardDetailViewModel {
         currentPage = 1;
         isListEnd = false;
         getBoardData();
-        getFileData();
 //        getCommentList();
     }
 
@@ -130,9 +124,12 @@ public class BoardDetailViewModel {
         boardDao.getData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-//                boardHeader = ((BoardDetailVO) data);
+                boardHeader = ((BoardDetailVO) data);
+                getFileData();
+                navigator.onHeaderAdded(boardHeader);
+                checkIsLikeBoard();
 
-                getUser();
+
             }
 
             @Override
@@ -179,7 +176,6 @@ public class BoardDetailViewModel {
             final int position = i;
             RequestParams params = new RequestParams();
             params.put("atch_file_id", fileIndexArray[i]);
-            Log.d("ddf atch_file_id", fileIndexArray[i]);
             fileDao.getData(params, new BaseDao.LoadDataCallBack() {
                 @Override
                 public void onDataLoaded(Object data) {
@@ -187,9 +183,7 @@ public class BoardDetailViewModel {
                     String temp = vo.getFileUrl();
                     temp = "http://" + temp.replace("8080", "9000");
                     vo.setFileUrl(temp);
-                    Log.d("ddf file", vo.getFileUrl());
                     doneFile.put(position, vo);
-
                     if (doneFile.size() == fileIndexArray.length) {
                         isBoardDataLoading.set(false);
                         for (BoardFileVO file : doneFile.values()) {
@@ -250,9 +244,7 @@ public class BoardDetailViewModel {
         params.put("bbs_id", boardHeader.getBoardType());
         params.put("ntt_id", boardHeader.getBoardId());
         params.put("writer_id", loginId);
-        params.put("reason", reason);
-
-
+        params.put("report_content", reason);
         boardDao.sendReport(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
@@ -275,19 +267,10 @@ public class BoardDetailViewModel {
             RequestParams params = new RequestParams();
             params.put("id", loginId);
             params.put("ntt_id", boardHeader.getBoardId());
-            Log.d("id", loginId);
-            Log.d("ntt_id", boardHeader.getBoardId());
 
             boardDao.getLikeModel().toggleLike(params, new BaseDao.LoadDataCallBack() {
                 @Override
                 public void onDataLoaded(Object data) {
-                    int likeCount = Integer.parseInt(boardHeader.getLikeCount());
-                    if (isLikeBoard.get()) { // 좋아요 였는데 취소함
-                        boardHeader.setLikeCount(String.valueOf(likeCount - 1));
-                    } else {
-                        boardHeader.setLikeCount(String.valueOf(likeCount + 1));
-                    }
-                    isLikeBoard.set(!isLikeBoard.get());
                     navigator.onUpdatedBoard();
                 }
 
@@ -329,9 +312,9 @@ public class BoardDetailViewModel {
             @Override
             public void onDataLoaded(Object data) {
                 commentWrite.set("");
-                getCommentList(NOTFIRST);
-//                navigator.onLikeBoard();
-
+                isListEnd = false;
+                currentPage = 1;
+                getCommentList(COMMENT_UPDATED);
             }
 
             @Override
@@ -346,20 +329,15 @@ public class BoardDetailViewModel {
         params.put("ntt_id", boardHeader.getBoardId());
         params.put("comment_cn", commentWrite.get());
         params.put("writer_id", loginId);
-        Log.d("ntt_id", boardHeader.getBoardId());
-        Log.d("answer", commentWrite.get());
-        Log.d("writer_id", loginId);
-
 
         commentDao.insertData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
 
                 commentWrite.set("");
-                if (isListEnd)
-                    isListEnd = false;
-                getCommentList(NOTFIRST);
-//                navigator.onLikeBoard();
+                isListEnd = false;
+                currentPage = 1;
+                getCommentList(COMMENT_UPDATED);
             }
 
             @Override
@@ -369,17 +347,19 @@ public class BoardDetailViewModel {
         });
     }
 
-    public void getCommentList(final boolean checkFirst) {
-        // 마지막 페이지
-//        if (isListEnd) {
-//            isCommentDataLoading.set(false);
-//            navigator.showPageEndMessage();
-//            return;
-//        }
+    public void getCommentList(final boolean ISADDED) {
+//         마지막 페이지
+        if (isListEnd) {
+            isCommentDataLoading.set(false);
+            navigator.showPageEndMessage();
+            return;
+        }
         isCommentDataLoading.set(true);
 
         RequestParams params = new RequestParams();
         params.put("ntt_id", boardHeader.getBoardId());
+        params.put("pageIndex", String.valueOf(currentPage));
+        params.put("pageUnit", PAGE_UNIT_COUNT);
 
         commentDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
             @Override
@@ -391,9 +371,11 @@ public class BoardDetailViewModel {
                 }
                 currentPage++;
 
-                navigator.onCommentUpdated(list, checkFirst);
+                if (ISADDED)
+                    navigator.onCommentAdded(list);
+                else
+                    navigator.onCommentUpdated(list);
                 isCommentDataLoading.set(false);
-//                getUserProfile(list);
             }
 
             @Override
@@ -416,14 +398,16 @@ public class BoardDetailViewModel {
     }
 
     public void deleteComment(int index) {
+
         RequestParams params = new RequestParams();
         params.put("id", index);
 
         commentDao.deleteData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-                getCommentList(NOTFIRST);
-
+                isListEnd = false;
+                currentPage = 1;
+                getCommentList(COMMENT_UPDATED);
             }
 
             @Override

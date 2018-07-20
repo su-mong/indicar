@@ -71,10 +71,10 @@ public class ProfileSuggest extends BaseActivity2<ProfileSuggestBinding> {
         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
         String loginId = prefLogin.getString("id", "");
         RequestParams params = new RequestParams();
-        params.put("writer_id", loginId);
-        params.put("content", binding.editProfileSuggest.getText().toString());
+        params.put("ntcr_id", loginId);
+        params.put("report_cn", binding.editProfileSuggest.getText().toString());
 
-        final String URL = "/insertReport";
+        final String URL = "/community/insertReport";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override

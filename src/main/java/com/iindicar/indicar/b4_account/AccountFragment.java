@@ -178,13 +178,14 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
                     String textName = editName.getText().toString();
                     String textEmail = editEmail.getText().toString();
                     RequestParams params = new RequestParams();
+                    params.put("ntcr_id",prefLogin.getString("id","0"));
                     params.put("alliance_name", textName);
                     params.put("alliance_email", textEmail);
-                    params.put("alliance_cn", textReason);
+                    params.put("alliance_content", textReason);
                     params.put("alliance_type", partnerCategory);
 
 
-                    final String URL = "/insertAlliance";
+                    final String URL = "/community/insertAlliance";
 
                     HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
                         @Override

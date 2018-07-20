@@ -89,11 +89,6 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
         userVO.setUserEmail(prefLogin.getString("email", ""));
         userVO.setUserAddress(prefLogin.getString("address", ""));
         userVO.setProfileImageUrl(prefLogin.getString("profile_img_url",""));
-        Log.d("ddf",prefLogin.getString("id", ""));
-        Log.d("ddf",prefLogin.getString("name", ""));
-        Log.d("ddf",prefLogin.getString("email", ""));
-        Log.d("ddf",prefLogin.getString("address", ""));
-        Log.d("ddf",prefLogin.getString("profile_img_url",""));
     }
 
     private void getAlarmPreference() {
@@ -160,15 +155,11 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             showSnackBar(getString(R.string.strNotAllowUpdateUser));
             return;
         }
-
-//        Intent intent = new Intent(getApplicationContext(), DaumAddressActivity.class);
-//        startActivityForResult(intent, REQUEST_UPDATE_ADDRESS);
     }
 
     // 이벤트 알람 클릭 리스너
     public void onEventAlarmClicked(){
         isEventAlarmOn.set(!isEventAlarmOn.get()); // toggle button
-
         SharedPreferences.Editor editor = prefLogin.edit();
         editor.putBoolean("eventAlarm", isEventAlarmOn.get());
         editor.apply();
@@ -177,7 +168,6 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
     // 기본 알람 클릭 리스너
     public void onOtherAlarmClicked(){
         isOtherAlarmOn.set(!isOtherAlarmOn.get()); // toggle button
-
         SharedPreferences.Editor editor = prefLogin.edit();
         editor.putBoolean("otherAlarm", isOtherAlarmOn.get());
         editor.apply();
@@ -193,12 +183,6 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
             showSnackBar(getString(R.string.strUserInfoChanged));
             getUserPreference();
         }
-//        else if(requestCode == REQUEST_UPDATE_ADDRESS
-//                && resultCode == DaumAddressActivity.RESULT_UPDATED){ // 유저 주소 수정됨
-//
-//            showSnackBar(ConstClass.strUserInfoChanged);
-//            getUserPreference();
-//        }
     }
 
     // 회원 탈퇴 혹은 로그아웃 시
@@ -358,7 +342,6 @@ public class ProfileActivity extends BaseActivity<ActivityProfileBinding> {
                         .build();
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
-                Log.d("ddf delUser", userVO.getUserId()+result);
                 response.body().close();
 
                 SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);

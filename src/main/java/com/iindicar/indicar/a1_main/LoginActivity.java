@@ -416,7 +416,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
                 Response response = client.newCall(request).execute();
                 strcheckUser = response.body().string();
                 response.body().close();
-                Log.d("ddf login_url", getString(R.string.check_User) + email + " " + strcheckUser);
                 return strcheckUser;
             } catch (Exception e) {
                 strcheckUser = "AsyncTask Fail: " + e.toString();
@@ -426,8 +425,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("ddf check2Login", result);
-
             String jsonResult = "";
             String jsonContent= "";
             try {
@@ -521,7 +518,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
         @Override
         protected void onPostExecute(String result) {
             pWindow.dismiss();
-            Log.d("ddf addUser", result);
 
             showSnackBar(resources.getString(R.string.strAddUserSuccess));
             binding.pbLogin.setVisibility(View.GONE);
@@ -561,7 +557,6 @@ public class LoginActivity extends BaseActivity2<ActivityLoginBinding> {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("ddf check2Login", result);
 
             String jsonResult = "";
             String jsonContent= "";

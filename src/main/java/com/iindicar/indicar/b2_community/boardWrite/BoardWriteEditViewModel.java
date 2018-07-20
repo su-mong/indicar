@@ -182,7 +182,6 @@ public class BoardWriteEditViewModel {
             public void onDataLoaded(Object data) {
 
                 vo.setFileIndex((String) data); // atch_file_id 추가
-                Log.d("ddf getFileIndex", vo.getFileIndex());
                 DONE_FILE_UPLOAD_COUNT.add(true); // 완료 목록 추가
                 if (DONE_FILE_UPLOAD_COUNT.size() == boardItems.size()) {
                     startUploadBoard();

@@ -83,7 +83,6 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
                 try {
-                    Log.d("ddf trace",new String (bytes));
                     JsonElement jsonElement = new JsonParser().parse(new String(bytes)).getAsJsonObject();
                     JsonObject rootObj = jsonElement.getAsJsonObject();
                     JsonArray result = (JsonArray) rootObj.get("content");
@@ -123,16 +122,20 @@ public class BoardDao implements BaseDao<BoardDetailVO> {
     @Override
     public void getData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/community/selectBoardArticle";
-Log.d("ddf","selectBoardArticle");
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
                 try {
-                    BoardDetailVO board = new Gson().fromJson(new String(bytes), BoardDetailVO.class);
+
+                    JsonElement jsonElement = new JsonParser().parse(new String(bytes)).getAsJsonObject();
+                    JsonObject rootObj = jsonElement.getAsJsonObject();
+                    JsonArray result = (JsonArray) rootObj.get("content");
+
+                    BoardDetailVO board = new Gson().fromJson(result.get(0), BoardDetailVO.class);
                     callBack.onDataLoaded(board);
                 } catch (Exception e) {
 
-                    Log.e(TAG, "getData() with URL: " + URL + " " + R.string.data_not_available);
+                    Log.e(TAG, "getData() with URL: " + URL + " " + e.toString() + R.string.data_not_available);
                     e.printStackTrace();
 
                     callBack.onDataNotAvailable();
@@ -294,7 +297,7 @@ Log.d("ddf","selectBoardArticle");
                     @Override
                     public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                        Log.e(TAG, "toggleLike() with URL: " + URL + " " + R.string.server_not_available);
+                        Log.e(TAG, "toggleLike() with URL: " + URL + " " + new String(responseBody) + R.string.server_not_available);
                         error.printStackTrace();
 
                         callBack.onDataNotAvailable();
@@ -309,26 +312,19 @@ Log.d("ddf","selectBoardArticle");
                 HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        JsonElement result;
 
-                        try {
-                            result = new JsonParser().parse(new String(responseBody));
-                        } catch (Exception e) {
+                        JsonElement jsonElement = new JsonParser().parse(new String(responseBody)).getAsJsonObject();
+                        JsonObject rootObj = jsonElement.getAsJsonObject();
+                        JsonElement result2 = (JsonElement) rootObj.get("result");
 
-                            callBack.onDataNotAvailable();
-
-                            Log.e(TAG, "getLikeList() with URL: " + URL + " " + R.string.data_not_available);
-                            e.printStackTrace();
-                            return;
-                        }
-
-                        // 결과 존재
-                        if (result != null && result.isJsonArray()) {
-
-                            JsonArray array = result.getAsJsonArray();
-                            List<BoardDetailVO> boardList = new ArrayList<>();
-                            for (int i = 0; i < array.size(); i++) {
-                                BoardDetailVO vo = new Gson().fromJson(array.get(i), BoardDetailVO.class);
+                        List<BoardDetailVO> boardList = new ArrayList<>();
+                        if (result2.getAsString().equals("S")) {
+                            JsonArray result = (JsonArray) rootObj.get("content");
+                            for (int i = 0; i < result.size(); i++) {
+                                if (!result.get(i).isJsonObject()) { // 게시물 끝
+                                    break;
+                                }
+                                BoardDetailVO vo = new Gson().fromJson(result.get(i), BoardDetailVO.class);
                                 boardList.add(vo);
                             }
                             callBack.onDataListLoaded(boardList);
