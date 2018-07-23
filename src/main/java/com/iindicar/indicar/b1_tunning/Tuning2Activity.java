@@ -218,13 +218,11 @@ public class Tuning2Activity extends BaseActivity<ActivityTuning2Binding> {
                     @Override
                     public void onClick(View view) {
                         SharedPreferences prefLogin = getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-
                         Intent intent = new Intent(Tuning2Activity.this, UnityPlayerActivity.class);
                         intent.putExtra("scene","new_scene");
                         intent.putExtra("login_method",prefLogin.getString("login_method",null));
                         intent.putExtra("email",prefLogin.getString("email",null));
                         intent.putExtra("car_name", adapter.getItemList().get(position).getCarDataName());
-//                        startActivity(intent);
                     }
                 });
     }
@@ -256,7 +254,6 @@ public class Tuning2Activity extends BaseActivity<ActivityTuning2Binding> {
             @Override
             public void onDataListLoaded(List list) {
                 List<CarDataVO> carList = list;
-
                 for(int i = 0 ; i < list.size() ; i++){
                     String company = carList.get(i).getCarDataCompany();
                     if(!carListMap.containsKey(company)){
@@ -264,7 +261,6 @@ public class Tuning2Activity extends BaseActivity<ActivityTuning2Binding> {
                     }
                     carListMap.get(carList.get(i).getCarDataCompany()).add(carList.get(i));
                 }
-
                 getSelectedCarList(CAR_LOGO_NAME_LIST[0]);
             }
 

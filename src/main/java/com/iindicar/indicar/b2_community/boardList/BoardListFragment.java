@@ -186,11 +186,12 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 //                    binding.buttonBoardWrite.setColorFilter(Color.parseColor("#A500FFFF"), PorterDuff.Mode.SRC_ATOP);
                     binding.buttonBoardWrite.setColorFilter(Color.argb(100, 255, 150, 0));
-                    Intent intent = new Intent(getContext(), BoardWriteEditActivity.class);
-                    startActivityForResult(intent, 13);
+
                 }
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     binding.buttonBoardWrite.setColorFilter(null);
+                    Intent intent = new Intent(getContext(), BoardWriteEditActivity.class);
+                    startActivityForResult(intent, 13);
                 }
                 return true;
             }
@@ -315,7 +316,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     @Override
     public void onResume() {
         super.onResume();
-
 
     }
 }

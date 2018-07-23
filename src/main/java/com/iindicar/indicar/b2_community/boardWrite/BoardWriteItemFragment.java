@@ -73,7 +73,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(getActivity(),new Crashlytics());
+        Fabric.with(getActivity(), new Crashlytics());
     }
 
     @Override
@@ -129,12 +129,13 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     viewModel.currentPage.set(layoutManager.findFirstVisibleItemPosition());
+                    viewModel.currentPageNum = layoutManager.findFirstVisibleItemPosition();
                 }
             }
         });
+
 
         // 페이지 삭제시 currentPage 바꾼다
         binding.pageContainer.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
@@ -159,6 +160,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     @Override
     public void addPage(int position) {
         adapter.addItem(position, new WriteFileVO());
+        viewModel.currentPage.set(position);
         viewModel.totalPage.set(adapter.getItemCount());
         pageChangeToPosition(position);
     }
@@ -185,8 +187,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                     public void onClick(View view) {
                         if (viewModel.currentPageNum > 0)
                             viewModel.currentPageNum--;
-                        pageChangeToPosition(viewModel.currentPageNum);
-                        viewModel.currentPage.set(viewModel.currentPageNum);
                         adapter.removeItem(position);
                         adapter.notifyDataSetChanged();
                         viewModel.totalPage.set(adapter.getItemCount());

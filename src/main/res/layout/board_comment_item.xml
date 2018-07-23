@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/colorFontLight"
-                        android:text="@{comment.firstTime}"/>
+                        app:date="@{comment.firstTime}"/>
 
                 </LinearLayout>
 

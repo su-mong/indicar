@@ -78,6 +78,7 @@ public class BoardDetailViewModel {
         this.loginId = intent.getStringExtra("loginId");
         this.loginName = intent.getStringExtra("loginName");
         getFileData();
+        checkIsLikeBoard();
         getCommentList(COMMENT_ADDED);
     }
 

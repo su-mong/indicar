@@ -15,20 +15,21 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="300dp"
+            android:background="@drawable/bkg"
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/image_main"
                 style="@style/popularImageCustomStyle"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="match_parent"
                 app:imageUrl="@{item.mainImageUrl}"/>
 
             <LinearLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/popularTextFrame"
                 android:orientation="vertical"
                 android:padding="15dp"
                 android:gravity="left">

@@ -30,7 +30,7 @@ import java.util.List;
 public class BoardWriteEditViewModel {
 
     public static final int MAX_PAGE = 15;
-    public int currentPageNum = 0;
+    public int currentPageNum = 0; //삭제시 currentPage 세트를 할 수 있도록 변수 추가
     public final ObservableField<String> boardType = new ObservableField<>();
     public final ObservableInt currentPage = new ObservableInt();
     public final ObservableInt totalPage = new ObservableInt();
@@ -45,6 +45,7 @@ public class BoardWriteEditViewModel {
     public boolean isNewBoard;
     public List<Boolean> DONE_FILE_UPLOAD_COUNT = new ArrayList<>();
     Resources resources;
+
     public BoardWriteEditViewModel(Context context) {
         boardDao = new BoardDao();
         fileDao = new BoardFileDao();
@@ -55,11 +56,9 @@ public class BoardWriteEditViewModel {
     // this will be called only writing a New Board
     public void start(String userId, String userName) {
         isNewBoard = true;
-
         this.boardVO = new WriteBoardVO();
         this.boardVO.setUserId(userId);
         this.boardVO.setUserName(userName);
-
         boardType.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
             @Override
             public void onPropertyChanged(Observable observable, int i) {
@@ -112,6 +111,7 @@ public class BoardWriteEditViewModel {
         if (currentPageNum < 1)
             return;
         currentPageNum--;
+        currentPage.set(currentPageNum);
         pageNavigator.pageChangeToPosition(currentPageNum);
     }
 
@@ -119,6 +119,7 @@ public class BoardWriteEditViewModel {
         if (currentPageNum == totalPage.get() - 1)
             return;
         currentPageNum++;
+        currentPage.set(currentPageNum);
         pageNavigator.pageChangeToPosition(currentPageNum);
     }
 
@@ -127,7 +128,6 @@ public class BoardWriteEditViewModel {
         // 사진을 등록하지 않은 페이지 체크
         for (int i = 0; i < boardItems.size(); i++) {
             WriteFileVO vo = boardItems.get(i);
-
             if (vo.getFilePath() == null || vo.getFilePath().equals("")) {
                 navigator.showSnackBar(resources.getString(R.string.needPhoto));
                 pageNavigator.pageChangeToPosition(i);
@@ -137,9 +137,9 @@ public class BoardWriteEditViewModel {
 
         // 파일을 서버에 업로드한다.
         for (WriteFileVO vo : boardItems) {
+
             // index (atch_file_id) 없는 경우 - new file
             if (vo.getFileIndex() == null || vo.getFileIndex().equals("")) {
-
                 insertNewFile(vo);
             } else {
                 updateExistingFile(vo.getImageUrl() != null, vo);
@@ -152,7 +152,6 @@ public class BoardWriteEditViewModel {
             navigator.showSnackBar(resources.getString(R.string.cannotAddPage));
             return;
         }
-        currentPageNum++;
         pageNavigator.addPage(currentPageNum);
     }
 
@@ -202,6 +201,8 @@ public class BoardWriteEditViewModel {
         RequestParams params = new RequestParams();
         params.put("atch_file_id", vo.getFileIndex());
         params.put("file_cn", vo.getWriteText());
+        Log.d("ddf update_atch_file_id", vo.getFileIndex());
+        Log.d("ddf updatefile_cn", vo.getWriteText());
 
         if (isFileUpdated) { // 사진이 수정 된 경우
             try {
@@ -270,6 +271,7 @@ public class BoardWriteEditViewModel {
                 navigator.pbOff();
                 navigator.onBoardUploaded();
             }
+
             @Override
             public void onDataNotAvailable() {
                 navigator.pbOff();
@@ -278,12 +280,16 @@ public class BoardWriteEditViewModel {
             }
         });
     }
+
     // 해당 게시물을 수정한다.
     private void updateExistingBoard() {
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardVO.getBoardType());
         params.put("ntt_id", boardVO.getBoardId());
         params.put("ntt_sj", "title");
+        Log.d("ddf update bbs_id", boardVO.getBoardType());
+        Log.d("ddf update ntt_id", boardVO.getBoardId());
+        Log.d("ddf update ntt_sj", "title");
         String fileIndexString = "";
         for (int i = 0; i < boardVO.getFileIndex().length; i++) {
             if (i == 0)
@@ -293,6 +299,8 @@ public class BoardWriteEditViewModel {
         }
         params.put("atch_file_id", fileIndexString);
         params.put("branch_id", Constant.locale);
+        Log.d("ddf update atch_file_id", fileIndexString);
+        Log.d("ddf update branch_id", Constant.locale);
 
         boardDao.updateData(params, new BaseDao.LoadDataCallBack() {
             @Override
@@ -300,6 +308,7 @@ public class BoardWriteEditViewModel {
                 navigator.pbOff();
                 navigator.onBoardUpdated();
             }
+
             @Override
             public void onDataNotAvailable() {
                 navigator.pbOff();
@@ -308,6 +317,7 @@ public class BoardWriteEditViewModel {
             }
         });
     }
+
     private void getFileIndexArray() {
         String[] fileIndexArray = new String[boardItems.size()];
         for (int i = 0; i < boardItems.size(); i++) {

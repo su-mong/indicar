@@ -49,8 +49,6 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/img_search_bar" />
 
-
-
             <TextView
                 android:layout_marginTop="15dp"
                 android:textAlignment="center"

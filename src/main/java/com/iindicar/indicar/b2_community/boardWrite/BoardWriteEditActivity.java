@@ -67,7 +67,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
 
     @Override
     public void onBackPressed() {
-        if (currFrag == FRAG_WRITE_ITEM&&!isUpdate)
+        if (currFrag == FRAG_WRITE_ITEM && !isUpdate)
             changeToWriteFilter();
         else
             onCancelWrite();
@@ -76,7 +76,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this,new Crashlytics());
+        Fabric.with(this, new Crashlytics());
 
         Context boardWriteEditContext = LocaleHelper.setLocale(getApplicationContext());
         resources = boardWriteEditContext.getResources();
@@ -151,7 +151,8 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
             return;
         }
         currFrag = FRAG_WRITE_ITEM;
-
+        viewModel.currentPageNum = 0;
+        viewModel.currentPage.set(0);
         BoardWriteItemFragment fragment = new BoardWriteItemFragment();
         fragment.setViewModel(viewModel);
         fragment.setPickPhotoHelper(pickPhotoHelper);
@@ -260,10 +261,12 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
     @Override
     public void pbOn() {
         binding.pbWrite.setVisibility(View.VISIBLE);
+        binding.buttonSubmit.setEnabled(false);
     }
 
     @Override
     public void pbOff() {
+        binding.buttonSubmit.setEnabled(true);
         binding.pbWrite.setVisibility(View.INVISIBLE);
     }
 
@@ -274,7 +277,7 @@ public class BoardWriteEditActivity extends BaseActivity<BoardWriteEditActivityB
                 changeToWriteItem();
                 break;
             case R.id.button_cancel:
-                if (currFrag == FRAG_WRITE_ITEM&&!isUpdate)
+                if (currFrag == FRAG_WRITE_ITEM && !isUpdate)
                     changeToWriteFilter();
                 else
                     onCancelWrite();

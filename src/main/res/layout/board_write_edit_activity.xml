@@ -1,65 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditViewModel"/>
+            type="com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditViewModel" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-            <ProgressBar
-                android:id="@+id/pbWrite"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="invisible"/>
-        </FrameLayout>
-
-        <!-- intro 페이지 일때 visible -->
-        <ImageButton
-            style="@style/imageButtonCustomStyle"
-            android:id="@+id/button_next"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_next"/>
-
-        <!-- deatil 페이지 일때 visible -->
         <LinearLayout
-            android:id="@+id/button_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageButton
-                style="@style/imageButtonCustomStyle"
-                android:id="@+id/button_cancel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/btn_quit"/>
 
+            <FrameLayout
+                android:id="@+id/frame_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            </FrameLayout>
+
+            <!-- intro 페이지 일때 visible -->
             <ImageButton
+                android:id="@+id/button_next"
                 style="@style/imageButtonCustomStyle"
-                android:id="@+id/button_submit"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{(v) -> viewModel.onSubmitClicked()}"
-                android:src="@drawable/btn_upload_board"/>
+                android:src="@drawable/btn_next" />
+
+            <!-- deatil 페이지 일때 visible -->
+            <LinearLayout
+                android:id="@+id/button_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/button_cancel"
+                    style="@style/imageButtonCustomStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/btn_quit" />
+
+                <ImageButton
+                    android:id="@+id/button_submit"
+                    style="@style/imageButtonCustomStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="@{(v) -> viewModel.onSubmitClicked()}"
+                    android:src="@drawable/btn_upload_board" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/pbWrite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+    </FrameLayout>
 
 </layout>

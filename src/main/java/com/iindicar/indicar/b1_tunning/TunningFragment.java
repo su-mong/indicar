@@ -75,9 +75,9 @@ public class TunningFragment extends BaseFragment<TunningFragmentBinding> implem
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (MotionEvent.ACTION_DOWN == motionEvent.getAction()){
                     binding.btnTToTuning2.setColorFilter(Color.argb(100, 255, 150, 0));
+                }else{
                 Intent intent = new Intent(getActivity(), Tuning2Activity.class);
                 startActivity(intent);
-                }else{
                     binding.btnTToTuning2.setColorFilter(null);
                 }
 

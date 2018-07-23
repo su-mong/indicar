@@ -1,5 +1,7 @@
 package com.iindicar.indicar.data.dao;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -27,7 +29,7 @@ public class CarDataDao implements BaseDao<CarDataVO>{
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 JsonElement result;
-
+Log.d("ddf get car",new String(responseBody));
                 try {
                     result = new JsonParser().parse(new String(responseBody));
                 } catch (Exception e) {
@@ -39,9 +41,7 @@ public class CarDataDao implements BaseDao<CarDataVO>{
                 // 차량 리스트 존재
                 if (result != null && result.isJsonArray()) {
                     JsonArray array = result.getAsJsonArray();
-
                     List<CarDataVO> carList = new ArrayList<>();
-
                     for (int i = 0; i < array.size(); i++) {
                         CarDataVO vo = new Gson().fromJson(array.get(i), CarDataVO.class);
                         carList.add(vo);

@@ -23,4 +23,5 @@ public interface BoardWriteEditNavigator {
     void pbOn();
 
     void pbOff();
+
 }

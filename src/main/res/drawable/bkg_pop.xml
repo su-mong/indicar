@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true"
-        android:drawable="@drawable/pressed_font1" />
+        android:drawable="@drawable/pressed_pop" />
     <item  android:state_focused="false"
-        android:drawable="@drawable/pressed_font2" />
+        android:drawable="@drawable/pressed_not_pop" />
 </selector>

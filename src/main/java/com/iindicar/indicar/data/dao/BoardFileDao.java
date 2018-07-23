@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.iindicar.indicar.R;
-import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.utils.HttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -37,10 +36,11 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
             @Override
             public void onSuccess(int index, Header[] headers, byte[] bytes) {
                 try {
-                    Type listType = new TypeToken<List<BoardFileVO>>() {}.getType();
+                    Type listType = new TypeToken<List<BoardFileVO>>() {
+                    }.getType();
                     List<BoardFileVO> fileList = new Gson().fromJson(new String(bytes), listType);
                     callBack.onDataListLoaded(fileList);
-                } catch (Exception e){
+                } catch (Exception e) {
 
                     callBack.onDataNotAvailable();
 
@@ -48,6 +48,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
 
@@ -61,7 +62,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
 
 
     @Override
-    public void getData(RequestParams params, final LoadDataCallBack callBack){
+    public void getData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/community/selectFileInfs";
 
         HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
@@ -79,7 +80,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
                     array.add(vo);
 
                     callBack.onDataLoaded(array.get(0));
-                } catch (Exception e){
+                } catch (Exception e) {
 
                     Log.e(TAG, "getData() with URL: " + URL + " " + e.toString());
                     e.printStackTrace();
@@ -87,6 +88,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
                     callBack.onDataNotAvailable();
                 }
             }
+
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
 
@@ -112,8 +114,8 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
                     JsonParser parser = new JsonParser();
                     JsonElement rootObejct = parser.parse(response)
                             .getAsJsonObject().get("content");
-                    response=rootObejct.getAsString();
-                } catch (Exception e){
+                    response = rootObejct.getAsString();
+                } catch (Exception e) {
 
                     Log.e(TAG, "getData() with URL: " + URL + " " + R.string.data_not_available);
                     e.printStackTrace();
@@ -140,7 +142,7 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
     @Override
     public void updateData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/community/updateFile";
-
+        Log.d("ddf updateData", "dd");
         HttpClient.uploadFiles(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
