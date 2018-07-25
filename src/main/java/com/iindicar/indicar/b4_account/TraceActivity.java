@@ -9,7 +9,6 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.support.v7.widget.SimpleItemAnimator;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -21,7 +20,6 @@ import com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity;
 import com.iindicar.indicar.b2_community.boardList.BoardListAdapter;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
-import com.iindicar.indicar.data.vo.UserVO;
 import com.iindicar.indicar.databinding.ActivityTraceBinding;
 import com.iindicar.indicar.utils.LocaleHelper;
 
@@ -43,7 +41,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this,new Crashlytics());
+        Fabric.with(this, new Crashlytics());
 
         Context traceContext = LocaleHelper.setLocale(getApplicationContext());
         resources = traceContext.getResources();
@@ -134,6 +132,10 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         leftImageId.set(R.drawable.btn_back);
     }
 
+    private void resetList() {
+        adapter.clearItems();
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onBackPressed() {
@@ -142,6 +144,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
     }
 
     private void setLikeActivity() {
+        resetList();
         binding.ivALikeOn.setImageResource(R.drawable.btna_on);
         binding.ivAWritingOn.setImageResource(0);
         binding.ivACommentOn.setImageResource(0);
@@ -156,6 +159,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
     }
 
     private void setWritingActivity() {
+        resetList();
         binding.ivALikeOn.setImageResource(0);
         binding.ivAWritingOn.setImageResource(R.drawable.btna_on);
         binding.ivACommentOn.setImageResource(0);
@@ -168,6 +172,7 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
     }
 
     private void setCommentActivity() {
+        resetList();
         binding.ivALikeOn.setImageResource(0);
         binding.ivAWritingOn.setImageResource(0);
         binding.ivACommentOn.setImageResource(R.drawable.btna_on);
@@ -209,17 +214,6 @@ public class TraceActivity extends BaseActivity<ActivityTraceBinding> implements
         adapter.setBoardFile(position, vo);
     }
 
-    @Override
-    public void onSearch(String searchWord) {
-        viewModel.onSearch(binding.recyclerViewBoardContainer, searchWord);
-    }
-
-
-    @Override
-    public void onProfileAttached(BoardDetailVO board, UserVO vo) {
-        int position = adapter.getItemList().indexOf(board);
-        adapter.setUserProfile(position, vo.getProfileImageUrl());
-    }
 
     @Override
     public void onListAdded(List<BoardDetailVO> list) {

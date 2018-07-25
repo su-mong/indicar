@@ -1,24 +1,17 @@
 package com.iindicar.indicar.b2_community.boardList;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
-import com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditActivity;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.databinding.BoardAllItemBinding;
@@ -68,7 +61,7 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
     public void setBoardFile(int position, BoardFileVO vo) {
         itemList.get(position).setBoardContent(vo.getFileContent());
         String temp = vo.getFileUrl();
-       temp=temp.replace("8080", "9000");
+        temp = temp.replace("8080", "9000");
         itemList.get(position).setMainImageUrl("http://" + temp);
         itemList.get(position).setMainImageWidth(vo.getFileWidth());
         itemList.get(position).setMainImageHeight(vo.getFileHeight());
@@ -91,18 +84,12 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
         if (holder instanceof BoardPopularViewHolder) {
 
             ((BoardPopularViewHolder) holder).binding.setItem(vo);
-            ((BoardPopularViewHolder) holder).binding.imageMain.setOnTouchListener(new View.OnTouchListener() {
+            ((BoardPopularViewHolder) holder).binding.container.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        ((BoardPopularViewHolder) holder).binding.imageMain.setColorFilter(Color.argb(50, 155, 150, 0));
-
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onItemClick(view, pos);
                     }
-                    if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                        ((BoardPopularViewHolder) holder).binding.imageMain.setColorFilter(null);
-                        onItemClickListener.onItemClick(view,pos);
-                    }
-                    return true;
                 }
             });
 

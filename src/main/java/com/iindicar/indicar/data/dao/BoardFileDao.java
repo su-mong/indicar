@@ -142,7 +142,6 @@ public class BoardFileDao implements BaseDao<BoardFileVO> {
     @Override
     public void updateData(RequestParams params, final LoadDataCallBack callBack) {
         final String URL = "/community/updateFile";
-        Log.d("ddf updateData", "dd");
         HttpClient.uploadFiles(URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

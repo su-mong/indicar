@@ -201,8 +201,6 @@ public class BoardWriteEditViewModel {
         RequestParams params = new RequestParams();
         params.put("atch_file_id", vo.getFileIndex());
         params.put("file_cn", vo.getWriteText());
-        Log.d("ddf update_atch_file_id", vo.getFileIndex());
-        Log.d("ddf updatefile_cn", vo.getWriteText());
 
         if (isFileUpdated) { // 사진이 수정 된 경우
             try {
@@ -287,9 +285,6 @@ public class BoardWriteEditViewModel {
         params.put("bbs_id", boardVO.getBoardType());
         params.put("ntt_id", boardVO.getBoardId());
         params.put("ntt_sj", "title");
-        Log.d("ddf update bbs_id", boardVO.getBoardType());
-        Log.d("ddf update ntt_id", boardVO.getBoardId());
-        Log.d("ddf update ntt_sj", "title");
         String fileIndexString = "";
         for (int i = 0; i < boardVO.getFileIndex().length; i++) {
             if (i == 0)
@@ -299,8 +294,6 @@ public class BoardWriteEditViewModel {
         }
         params.put("atch_file_id", fileIndexString);
         params.put("branch_id", Constant.locale);
-        Log.d("ddf update atch_file_id", fileIndexString);
-        Log.d("ddf update branch_id", Constant.locale);
 
         boardDao.updateData(params, new BaseDao.LoadDataCallBack() {
             @Override

@@ -48,7 +48,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     private PickPhotoHelper pickPhotoHelper;
 
     private Teleprinter keyboard;
-    private int wantWidth = 600;
+    private int wantWidth = 600; //업로드 이미지 크기 줄이고자하는 가로 px
 
     Resources resources;
 
@@ -162,7 +162,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
         adapter.addItem(position, new WriteFileVO());
         viewModel.currentPage.set(position);
         viewModel.totalPage.set(adapter.getItemCount());
-        pageChangeToPosition(position);
+        binding.pageContainer.scrollToPosition(position);
     }
 
     @Override
@@ -171,10 +171,13 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
 
         if ((vo.getFilePath() == null || vo.getFilePath().equals("")) // 사진 없음
                 && (vo.getWriteText() == null || vo.getWriteText().equals(""))) { // 글도 없음
-
             // 페이지 바로 삭제
+            if (viewModel.currentPageNum > 0)
+                viewModel.currentPageNum--;
             adapter.removeItem(position);
             viewModel.totalPage.set(adapter.getItemCount());
+            adapter.notifyDataSetChanged();
+            viewModel.currentPage.set(viewModel.currentPageNum);
             return;
         }
 
@@ -197,7 +200,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
 
     // 카메라로 사진을 찍는다.
     private void pickFromCamera(final int position) {
-
         pickPhotoHelper.pickFromCamera(new IPickPhotoHelper.loadPhotoCallBack<Uri>() {
             @Override
             public void onPhotoLoaded(Uri photoUri, String imagePath) {

@@ -18,10 +18,6 @@ public interface TraceNavigator {
 
     void onImageAttached(BoardDetailVO board, BoardFileVO vo);
 
-    void onSearch(String searchWord);
-
-    void onProfileAttached(BoardDetailVO board, UserVO vo);
-
     void onListAdded(List<BoardDetailVO> list);
 
 

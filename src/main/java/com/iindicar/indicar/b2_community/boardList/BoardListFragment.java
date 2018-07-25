@@ -123,8 +123,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                 });
 
         adapter = new BoardListAdapter(context, boardTab);
-
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BoardListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 viewModel.openBoardDetail(position);

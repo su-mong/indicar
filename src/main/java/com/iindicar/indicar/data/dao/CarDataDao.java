@@ -29,7 +29,6 @@ public class CarDataDao implements BaseDao<CarDataVO>{
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 JsonElement result;
-Log.d("ddf get car",new String(responseBody));
                 try {
                     result = new JsonParser().parse(new String(responseBody));
                 } catch (Exception e) {

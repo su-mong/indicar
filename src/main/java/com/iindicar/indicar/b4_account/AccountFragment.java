@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -14,12 +15,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -50,7 +53,8 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
 
     String partnerCategory;
     Resources resources;
-    String locale; SharedPreferences prefLogin;
+    String locale;
+    SharedPreferences prefLogin;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -64,7 +68,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(getActivity(),new Crashlytics());
+        Fabric.with(getActivity(), new Crashlytics());
     }
 
     @Override
@@ -102,10 +106,24 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         binding.tvAName.setText(prefLogin.getString("name", "로그인 실패"));
         binding.tvAEmail.setText(prefLogin.getString("email", "로그인 실패"));
         String profile_img_url = prefLogin.getString("profile_img_url", "0");
-        locale = prefLogin.getString("locale",getActivity().getResources().getConfiguration().locale.getLanguage());
+        locale = prefLogin.getString("locale", getActivity().getResources().getConfiguration().locale.getLanguage());
         if (!profile_img_url.equals("0")) {
             Glide.with(getActivity()).load(profile_img_url).into(binding.ivAProfileImage);
         }
+        binding.btnAGotoProfile.setOnTouchListener(new ImageButton.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (MotionEvent.ACTION_DOWN == motionEvent.getAction()) {
+                    binding.btnAGotoProfile.setColorFilter(Color.argb(100, 255, 150, 0));
+                } else {
+                    btnAGotoProfile();
+                    binding.btnAGotoProfile.setColorFilter(null);
+                }
+
+                return false;
+            }
+
+        });
     }
 
     //아래쪽은 모두 버튼 리스너
@@ -113,13 +131,17 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         Intent intent = new Intent(getActivity(), ProfileActivity.class);
         startActivity(intent);
     }
+
+
     public void btnABasket() {
         showSnackBar(resources.getString(R.string.strNotPrepare));
     }
+
     public void btnAHowtouse() {
-        startActivity(new Intent(context,Tutorial.class));
+        startActivity(new Intent(context, Tutorial.class));
         //getActivity().overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
     }
+
     public void btnAAlliance() {
         //팝업창을 보여주는 함수
         ImageView popupTitle;
@@ -141,16 +163,14 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, resources.getStringArray(R.array.partnerCategory));
-        Spinner dropdown =(Spinner)popupDialogView.findViewById(R.id.spinner1);
+        Spinner dropdown = (Spinner) popupDialogView.findViewById(R.id.spinner1);
         dropdown.setAdapter(adapter);
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                partnerCategory=parent.getItemAtPosition(position).toString();
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                partnerCategory = parent.getItemAtPosition(position).toString();
             } // to close the onItemSelected
-            public void onNothingSelected(AdapterView<?> parent)
-            {
+
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -172,134 +192,136 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         editReason = (EditText) popupDialogView.findViewById(R.id.edit_reason);
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         btnSend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String textReason = editReason.getText().toString();
-                    String textName = editName.getText().toString();
-                    String textEmail = editEmail.getText().toString();
-                    RequestParams params = new RequestParams();
-                    params.put("ntcr_id",prefLogin.getString("id","0"));
-                    params.put("alliance_name", textName);
-                    params.put("alliance_email", textEmail);
-                    params.put("alliance_content", textReason);
-                    params.put("alliance_type", partnerCategory);
+            @Override
+            public void onClick(View v) {
+                String textReason = editReason.getText().toString();
+                String textName = editName.getText().toString();
+                String textEmail = editEmail.getText().toString();
+                RequestParams params = new RequestParams();
+                params.put("ntcr_id", prefLogin.getString("id", "0"));
+                params.put("alliance_name", textName);
+                params.put("alliance_email", textEmail);
+                params.put("alliance_content", textReason);
+                params.put("alliance_type", partnerCategory);
 
 
-                    final String URL = "/community/insertAlliance";
+                final String URL = "/community/insertAlliance";
 
-                    HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                            String response;
+                HttpClient.post(URL, params, new AsyncHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                        String response;
 
-                            try {
-                                response = new String(responseBody);
-                                showSnackBar(resources.getString(R.string.AllianceSuccess));
-                                return;
+                        try {
+                            response = new String(responseBody);
+                            showSnackBar(resources.getString(R.string.AllianceSuccess));
+                            return;
 
-                            } catch (Exception e) {
-                                Log.e("Error", "insertData() with URL: " + URL + " " + R.string.data_not_available);
-                                showSnackBar(resources.getString(R.string.strErrwithCode)+e.toString());
-                                e.printStackTrace();
-                                return;
-                            }
+                        } catch (Exception e) {
+                            Log.e("Error", "insertData() with URL: " + URL + " " + R.string.data_not_available);
+                            showSnackBar(resources.getString(R.string.strErrwithCode) + e.toString());
+                            e.printStackTrace();
+                            return;
                         }
+                    }
 
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            Log.e("Error", "insertData() with URL: " + URL + " " + R.string.server_not_available);
-                            showSnackBar(resources.getString(R.string.strErrwithCode)+error.toString());
-                            error.printStackTrace();
-                        }
-                    });
-                    dialog.dismiss();
-                }
-            });
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                        Log.e("Error", "insertData() with URL: " + URL + " " + R.string.server_not_available);
+                        showSnackBar(resources.getString(R.string.strErrwithCode) + error.toString());
+                        error.printStackTrace();
+                    }
+                });
+                dialog.dismiss();
+            }
+        });
 
         btnAlertCancel.setOnClickListener(new Button.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
         dialog.show();
     }
+
     public void btnALogout() {
-            if (!Session.getCurrentSession().isClosed()) {
-                UserManagement.requestLogout(new LogoutResponseCallback() {
-                    @Override
-                    public void onCompleteLogout() {
-                        SharedPreferences.Editor editor = prefLogin.edit();
-                        editor.putLong("profileEditDate", 0);
-                        editor.putString("id", "0");
-                        editor.putString("login_method", "0");
-                        editor.putString("name", "0");
-                        editor.putString("profile_img_url", "0");
-                        editor.putString("email", "fail");
-                        editor.putInt("EventAlarm", 1);
-                        editor.putInt("OtherAlarm", 0);
-                        editor.apply();
+        if (!Session.getCurrentSession().isClosed()) {
+            UserManagement.requestLogout(new LogoutResponseCallback() {
+                @Override
+                public void onCompleteLogout() {
+                    SharedPreferences.Editor editor = prefLogin.edit();
+                    editor.putLong("profileEditDate", 0);
+                    editor.putString("id", "0");
+                    editor.putString("login_method", "0");
+                    editor.putString("name", "0");
+                    editor.putString("profile_img_url", "0");
+                    editor.putString("email", "fail");
+                    editor.putInt("EventAlarm", 1);
+                    editor.putInt("OtherAlarm", 0);
+                    editor.apply();
 
-                        Intent i = new Intent(getActivity(), LoginActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
-                        getActivity().finish();
-                    }
-                });
-            } else if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                FirebaseAuth.getInstance().signOut();
-                SharedPreferences.Editor editor = prefLogin.edit();
-                editor.putLong("profileEditDate", 0);
-                editor.putString("id", "0");
-                editor.putString("login_method", "0");
-                editor.putString("name", "0");
-                editor.putString("profile_img_url", "0");
-                editor.putString("email", "fail");
-                editor.putInt("EventAlarm", 1);
-                editor.putInt("OtherAlarm", 0);
-                editor.apply();
+                    Intent i = new Intent(getActivity(), LoginActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    getActivity().finish();
+                }
+            });
+        } else if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            FirebaseAuth.getInstance().signOut();
+            SharedPreferences.Editor editor = prefLogin.edit();
+            editor.putLong("profileEditDate", 0);
+            editor.putString("id", "0");
+            editor.putString("login_method", "0");
+            editor.putString("name", "0");
+            editor.putString("profile_img_url", "0");
+            editor.putString("email", "fail");
+            editor.putInt("EventAlarm", 1);
+            editor.putInt("OtherAlarm", 0);
+            editor.apply();
 
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                getActivity().finish();
-            } else if (AccessToken.getCurrentAccessToken() != null) {
-                SharedPreferences.Editor editor = prefLogin.edit();
-                editor.putLong("profileEditDate", 0);
-                editor.putString("id", "0");
-                editor.putString("login_method", "0");
-                editor.putString("name", "0");
-                editor.putString("profile_img_url", "0");
-                editor.putString("email", "fail");
-                editor.putInt("EventAlarm", 1);
-                editor.putInt("OtherAlarm", 0);
-                editor.apply();
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            getActivity().finish();
+        } else if (AccessToken.getCurrentAccessToken() != null) {
+            SharedPreferences.Editor editor = prefLogin.edit();
+            editor.putLong("profileEditDate", 0);
+            editor.putString("id", "0");
+            editor.putString("login_method", "0");
+            editor.putString("name", "0");
+            editor.putString("profile_img_url", "0");
+            editor.putString("email", "fail");
+            editor.putInt("EventAlarm", 1);
+            editor.putInt("OtherAlarm", 0);
+            editor.apply();
 
-                LoginManager.getInstance().logOut();
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                getActivity().finish();
-            } else {
-                Toast.makeText(getActivity(), getString(R.string.strLoginedErr), Toast.LENGTH_SHORT).show();
-                SharedPreferences.Editor editor = prefLogin.edit();
-                editor.putLong("profileEditDate", 0);
-                editor.putString("id", "0");
-                editor.putString("login_method", "0");
-                editor.putString("name", "0");
-                editor.putString("profile_img_url", "0");
-                editor.putString("email", "fail");
-                editor.putInt("EventAlarm", 1);
-                editor.putInt("OtherAlarm", 0);
-                editor.apply();
+            LoginManager.getInstance().logOut();
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            getActivity().finish();
+        } else {
+            Toast.makeText(getActivity(), getString(R.string.strLoginedErr), Toast.LENGTH_SHORT).show();
+            SharedPreferences.Editor editor = prefLogin.edit();
+            editor.putLong("profileEditDate", 0);
+            editor.putString("id", "0");
+            editor.putString("login_method", "0");
+            editor.putString("name", "0");
+            editor.putString("profile_img_url", "0");
+            editor.putString("email", "fail");
+            editor.putInt("EventAlarm", 1);
+            editor.putInt("OtherAlarm", 0);
+            editor.apply();
 
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                getActivity().finish();
-            }
+            Intent i = new Intent(getActivity(), LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            getActivity().finish();
+        }
     }
+
     public void traceClickListener(View v) {
         Intent intent = new Intent(getActivity(), TraceActivity.class);
         switch (v.getId()) {

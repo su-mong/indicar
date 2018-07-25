@@ -3,7 +3,6 @@ package com.iindicar.indicar.b4_account;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.iindicar.indicar.Constant;
 import com.iindicar.indicar.b2_community.boardList.BoardListAdapter;
@@ -17,8 +16,6 @@ import com.iindicar.indicar.data.vo.UserVO;
 import com.loopj.android.http.RequestParams;
 
 import java.util.List;
-
-import static com.iindicar.indicar.Constant.BoardTab.BOARD_POPULAR;
 
 
 /**
@@ -66,31 +63,13 @@ public class TraceViewModel {
         isListEnd = false;
     }
 
-    public void onSearch(RecyclerView recyclerView, String searchWord) {
-        RecyclerView.Adapter adapter = recyclerView.getAdapter();
-        if (adapter != null && adapter instanceof BoardListAdapter) {
-            ((BoardListAdapter) adapter).clearItems();
-        }
-        currentPage = 1;
-        isListEnd = false;
-        getBoardListOnSearch(searchWord);
-    }
-
-
     public void openBoardDetail(int position) {
 
         navigator.openBoardDetail(position);
     }
 
 
-
     public void getBoardListTrace(String user_id, String category) {
-//        // 마지막 페이지
-//        if (isListEnd) {
-//            isDataLoading.set(false);
-//            navigator.showPageEndMessage();
-//            return;
-//        }
 
         isDataLoading.set(true);
 
@@ -103,11 +82,7 @@ public class TraceViewModel {
         params.put("pageIndex", "1");
         params.put("pageUnit", "100");
         params.put("bbs_id", "all");
-        if (boardTab.get() == BOARD_POPULAR) {
-            params.put("searchCnd", "pop");
-        } else {
-            params.put("searchCnd", "");
-        }
+        params.put("searchCnd", "");
         params.put("branch_id", Constant.locale);
 
         boardDao.getDataListTrace(category, params, new BaseDao.LoadDataListCallBack() {
@@ -119,43 +94,6 @@ public class TraceViewModel {
                 if (size != PAGE_UNIT_COUNT) {
                     isListEnd = true;
                 }
-                currentPage++;
-
-                navigator.onListAdded(list);
-                isDataLoading.set(false);
-
-                // 메인 사진을 받아온다
-                getImageFile(list);
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                isDataLoading.set(false);
-                isListEnd = true;
-            }
-        });
-    }
-
-    public void getBoardListOnSearch(String searchWord) {
-        isDataLoading.set(true);
-
-        RequestParams params = new RequestParams();
-        /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
-        params.put("bbs_id", "all");
-        params.put("searchCnd", "search");
-        params.put("searchWord", searchWord);
-        params.put("pageIndex", String.valueOf(currentPage));
-        params.put("pageUnit", PAGE_UNIT_COUNT);
-        boardDao.getDataList(params, new BaseDao.LoadDataListCallBack() {
-            @Override
-            public void onDataListLoaded(List list) {
-                int size = list.size();
-
-                // end of board list
-                if (size != PAGE_UNIT_COUNT) {
-                    isListEnd = true;
-                }
-
                 currentPage++;
 
                 navigator.onListAdded(list);

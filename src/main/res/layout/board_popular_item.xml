@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@drawable/bkg"
-            android:padding="5dp">
+            >
 
             <ImageView
                 android:id="@+id/image_main"
@@ -28,6 +28,7 @@
 
             <LinearLayout
                 android:id="@+id/container"
+                android:background="@drawable/bkg_pop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
