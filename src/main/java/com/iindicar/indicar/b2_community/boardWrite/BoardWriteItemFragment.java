@@ -178,6 +178,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
             viewModel.totalPage.set(adapter.getItemCount());
             adapter.notifyDataSetChanged();
             viewModel.currentPage.set(viewModel.currentPageNum);
+            binding.pageContainer.scrollToPosition(viewModel.currentPageNum);
             return;
         }
 
@@ -194,6 +195,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                         adapter.notifyDataSetChanged();
                         viewModel.totalPage.set(adapter.getItemCount());
                         viewModel.currentPage.set(viewModel.currentPageNum);
+                        binding.pageContainer.scrollToPosition(viewModel.currentPageNum);
                     }
                 });
     }

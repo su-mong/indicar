@@ -180,7 +180,7 @@
 
         <LinearLayout
             android:id="@+id/btnA_basket"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/bkg_profile"
@@ -188,7 +188,6 @@
             android:onClick="@{() -> fragment.btnABasket()}"
             android:orientation="vertical"
             app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
-            app:layout_constraintRight_toRightOf="@+id/guidelineAccount2"
             app:layout_constraintTop_toBottomOf="@+id/tvA_subtc">
 
             <TextView
@@ -210,7 +209,7 @@
 
         <LinearLayout
             android:id="@+id/btnA_howtouse"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:background="@drawable/bkg_profile"
@@ -218,7 +217,6 @@
             android:onClick="@{() -> fragment.btnAHowtouse()}"
             android:orientation="vertical"
             app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
-            app:layout_constraintRight_toRightOf="@+id/guidelineAccount2"
             app:layout_constraintTop_toBottomOf="@+id/btnA_basket">
 
             <TextView
@@ -240,7 +238,7 @@
 
         <LinearLayout
             android:id="@+id/btnA_alliance"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:background="@drawable/bkg_profile"
@@ -248,7 +246,6 @@
             android:onClick="@{() -> fragment.btnAAlliance()}"
             android:orientation="vertical"
             app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
-            app:layout_constraintRight_toRightOf="@+id/guidelineAccount2"
             app:layout_constraintTop_toBottomOf="@+id/btnA_howtouse">
 
             <TextView
@@ -270,7 +267,7 @@
 
         <LinearLayout
             android:id="@+id/btnA_logout"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:background="@drawable/bkg_profile"
@@ -278,7 +275,6 @@
             android:onClick="@{() -> fragment.btnALogout()}"
             android:orientation="vertical"
             app:layout_constraintLeft_toRightOf="@+id/guidelineAccount1"
-            app:layout_constraintRight_toRightOf="@+id/guidelineAccount2"
             app:layout_constraintTop_toBottomOf="@+id/btnA_alliance">
 
             <TextView
@@ -300,14 +296,13 @@
 
         <LinearLayout
             android:id="@+id/btnA_like"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/bkg_profile"
             android:onClick="@{(v) -> fragment.traceClickListener(v)}"
             android:orientation="vertical"
             app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvA_subtt">
 
             <TextView
@@ -329,7 +324,7 @@
 
         <LinearLayout
             android:id="@+id/btnA_writing"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:background="@drawable/bkg_profile"
@@ -337,7 +332,6 @@
             android:onClick="@{(v) -> fragment.traceClickListener(v)}"
             android:orientation="vertical"
             app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnA_like">
 
             <TextView
@@ -359,7 +353,7 @@
 
         <LinearLayout
             android:id="@+id/btnA_comment"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
 
@@ -367,7 +361,6 @@
             android:onClick="@{(v) -> fragment.traceClickListener(v)}"
             android:orientation="vertical"
             app:layout_constraintLeft_toRightOf="@+id/guidelineAccount2"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnA_writing">
 
             <TextView
