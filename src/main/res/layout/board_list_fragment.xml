@@ -61,7 +61,7 @@
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
             android:src="@drawable/btn_hide_up"
-            android:visibility="@{viewModel.isPageUpScrolling &amp;&amp; !viewModel.isDataLoading ? View.VISIBLE : View.GONE}" />
+            android:visibility="@{viewModel.isPageUpScrolling &amp;&amp; !viewModel.isDataLoading &amp;&amp; viewModel.isScrolling? View.VISIBLE : View.GONE}" />
 
         <ImageButton
             android:id="@+id/button_board_write"
@@ -72,7 +72,7 @@
             android:layout_alignParentRight="true"
             android:layout_margin="26dp"
             android:src="@drawable/btn_write_board"
-            android:visibility="@{viewModel.isScrolling || viewModel.isVerticalScrolling ? View.GONE : View.VISIBLE}" />
+            android:visibility="@{viewModel.isScrolling ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>
 </layout>

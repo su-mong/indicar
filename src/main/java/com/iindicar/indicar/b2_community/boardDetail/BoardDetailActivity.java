@@ -75,6 +75,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
     private boolean isUpdated = false;
     private Teleprinter keyboard;
     private Boolean canUpdate;
+    int scrollVel=0;
     Resources resources;
 
     @Override
@@ -158,34 +159,32 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         binding.scrollViewContainer.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                boolean isPageDown = (oldScrollY - scrollY) > 20; // scroll up
-                boolean isPageUp = (scrollY - oldScrollY) > 20; // scroll down
+                scrollVel = Math.abs(oldScrollY - scrollY); //스크롤 속도 위아래 상관없이
+
                 Handler handler = new Handler();
-                if (isPageUp) {
-                    viewModel.isPageUpScrolling.set(true);
+
+                if (scrollVel > 100) { // 100이상일때 버튼 숨김
                     viewModel.isScrolling.set(true);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            viewModel.isScrolling.set(false);
-                        }
-                    }, 500);
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            viewModel.isPageUpScrolling.set(false);
+                            if (scrollVel < 10)
+                                viewModel.isScrolling.set(false);
                         }
                     }, 500);
                 }
-                if (isPageDown) {
-                    viewModel.isScrolling.set(true);
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            viewModel.isScrolling.set(false);
-                        }
-                    }, 500);
+
+                if (scrollVel < 10) // 10 이하일때 버튼 표시
+                    viewModel.isScrolling.set(false);
+
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) { //바닥에 닿으면 버튼 표시
+                    viewModel.isScrolling.set(false);
                 }
+
+                if (scrollY == 0) //최상단 가면 버튼 표시 / 위로 버튼 숨김
+                    viewModel.isScrolling.set(false);
+
             }
         });
         binding.scrollViewContainer.setOnTouchListener(new View.OnTouchListener() {

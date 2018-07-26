@@ -9,7 +9,6 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -17,20 +16,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.SimpleItemAnimator;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.commit451.teleprinter.Teleprinter;
 import com.crashlytics.android.Crashlytics;
 import com.iindicar.indicar.BaseFragment;
-import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
-import com.iindicar.indicar.a1_main.LoginActivity;
 import com.iindicar.indicar.a1_main.MainActivity;
 import com.iindicar.indicar.b2_community.BoardFilterActivity;
 import com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity;
@@ -63,6 +55,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     private BoardListAdapter adapter;
     private int isUpdate;
     private Teleprinter keyboard;
+    int scrollVel = 0;
 
     public final ObservableField<String> textSearch = new ObservableField<>();
     public final ObservableBoolean isSearchBarOpen = new ObservableBoolean(false);
@@ -84,11 +77,10 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(getActivity(),new Crashlytics());
+        Fabric.with(getActivity(), new Crashlytics());
 
         boardTab = getArguments().getInt("boardTab");
         tabId.set(boardTab);
-
         Context boardListContext = LocaleHelper.setLocale(getActivity());
         resources = boardListContext.getResources();
 
@@ -134,52 +126,47 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         binding.recyclerViewBoardContainer.setNestedScrollingEnabled(false);
         ((SimpleItemAnimator) binding.recyclerViewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
 
-        // bind scroll listener to show/hide buttons
+//        // bind scroll listener to show/hide buttons
         binding.scrollview.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-
-                boolean isPageUp = (oldScrollY - scrollY) > 20; // scroll up
-                boolean isPageDown = (scrollY - oldScrollY) > 20; // scroll down
-                boolean isVerticalScrolling = (oldScrollX - scrollX) > 20 || (scrollX - oldScrollX) > 20;
+                scrollVel = Math.abs(oldScrollY - scrollY); //스크롤 속도 위아래 상관없이
 
                 Handler handler = new Handler();
 
-                if (isPageUp) {
-                    viewModel.isPageUpScrolling.set(true);
+                if (oldScrollY > scrollY)
+                    viewModel.isPageUpScrolling.set(true);//스크롤 위로
+
+                if (scrollVel > 100) { // 100이상일때 버튼 숨김
                     viewModel.isScrolling.set(true);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            viewModel.isPageUpScrolling.set(false);
-                            viewModel.isScrolling.set(false);
+                            if (scrollVel < 10)
+                                viewModel.isScrolling.set(false);
                         }
                     }, 500);
                 }
 
-                if (isPageDown) {
-                    viewModel.isScrolling.set(true);
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            viewModel.isScrolling.set(false);
-                        }
-                    }, 500);
+                if (scrollVel < 10) // 10 이하일때 버튼 표시
+                    viewModel.isScrolling.set(false);
+
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) { //바닥에 닿으면 버튼 표시
+                    viewModel.isScrolling.set(false);
                 }
 
-                if (isVerticalScrolling) {
-                    viewModel.isVerticalScrolling.set(true);
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            viewModel.isVerticalScrolling.set(false);
-                        }
-                    }, 500);
+                if (scrollY == 0){ //최상단 가면 버튼 표시 / 위로 버튼 숨김
+                    viewModel.isScrolling.set(false);
+                    viewModel.isPageUpScrolling.set(false);
                 }
             }
         });
 
-        binding.buttonBoardWrite.setOnTouchListener(new View.OnTouchListener() {
+
+        binding.buttonBoardWrite.setOnTouchListener(new View.OnTouchListener()
+
+        {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -196,7 +183,9 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             }
         });
 
-        binding.buttonFastUp.setOnTouchListener(new View.OnTouchListener() {
+        binding.buttonFastUp.setOnTouchListener(new View.OnTouchListener()
+
+        {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -206,7 +195,13 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             }
         });
 
-        ((MainActivity)getActivity()).getActionBarBinding().buttonLeft.setOnClickListener(new View.OnClickListener() {
+        ((MainActivity)
+
+                getActivity()).
+
+                getActionBarBinding().buttonLeft.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, BoardFilterActivity.class);
@@ -307,7 +302,7 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                 viewModel.onRefresh(binding.recyclerViewBoardContainer);
         }
 
-        if(requestCode == REQUEST_BOARD_FILTER){ // 검색
+        if (requestCode == REQUEST_BOARD_FILTER) { // 검색
             onSearch(data.getStringExtra("searchKey"));
         }
     }
