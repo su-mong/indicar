@@ -133,7 +133,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                     viewModel.currentPage.set(layoutManager.findFirstVisibleItemPosition());
                     viewModel.currentPageNum = layoutManager.findFirstVisibleItemPosition();
                     for (int i = 0; i < adapter.getItemCount(); i++) {
-                        Log.d("ddf adapter", "getText" + adapter.getItem(i).getWriteText());
+                        Log.d("ddf adapter", "file_cn"+i+":" + adapter.getItem(i).getWriteText());
                     }
                 }
             }
@@ -163,6 +163,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     @Override
     public void addPage(int position) {
         adapter.addItem(position, new WriteFileVO());
+        adapter.notifyDataSetChanged();
         viewModel.currentPage.set(position);
         viewModel.totalPage.set(adapter.getItemCount());
         binding.pageContainer.scrollToPosition(position);
@@ -288,6 +289,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
 
                 // 나머지 사진은 현재 페이지 뒤에 추가
                 adapter.addItems(position + 1, listFromAlbum);
+                adapter.notifyDataSetChanged();
                 viewModel.currentPageNum = viewModel.currentPage.get();
             }
 

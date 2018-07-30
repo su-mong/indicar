@@ -21,9 +21,9 @@ import java.util.List;
 
 /**
  * Created by yeseul on 2018-03-25.
- *
+ * <p>
  * TODO (2018.05.03) BoardFileDao 뷰모델로 옮기기
- *                   + PhotoPicker 도 같이 밖으로 빼야될듯.
+ * + PhotoPicker 도 같이 밖으로 빼야될듯.
  */
 
 public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, BoardWriteAdapter.BoardWriteViewHolder> {
@@ -78,7 +78,7 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
         holder.binding.buttonFromCamera.setImageDrawable(resources.getDrawable(R.drawable.img_write_camera));
 
         // 앨범에서 사진 선택 콜백
-        if(albumButtonClickListener != null) {
+        if (albumButtonClickListener != null) {
             holder.binding.buttonFromAlbum.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -88,7 +88,7 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
         }
 
         // 카메라 사진 찍기 콜백
-        if(cameraButtonClickListener != null) {
+        if (cameraButtonClickListener != null) {
             holder.binding.buttonFromCamera.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -98,7 +98,7 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
         }
 
         // 선택된 사진 클릭 콜백
-        if(imageButtonClickListener != null) {
+        if (imageButtonClickListener != null) {
             holder.binding.imageWrite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -106,7 +106,8 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
                 }
             });
         }
-holder.binding.textWrite.setText("pos"+pos);
+        holder.binding.textWrite.setText(item.getWriteText());
+        Log.d("ddf adapter", "file_cn" + pos + ":" + item.getWriteText());
 
         // 텍스트 입력 콜백
         holder.binding.textWrite.addTextChangedListener(new TextWatcher() {
@@ -156,7 +157,6 @@ holder.binding.textWrite.setText("pos"+pos);
 
         void onClick(View view, int position);
     }
-
 
 
 }
