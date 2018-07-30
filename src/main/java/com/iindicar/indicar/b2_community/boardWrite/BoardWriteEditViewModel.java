@@ -151,6 +151,7 @@ public class BoardWriteEditViewModel {
             navigator.showSnackBar(resources.getString(R.string.cannotAddPage));
             return;
         }
+
         pageNavigator.addPage(currentPageNum);
     }
 

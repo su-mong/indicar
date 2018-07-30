@@ -107,7 +107,6 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
             });
         }
         holder.binding.textWrite.setText(item.getWriteText());
-        Log.d("ddf adapter", "file_cn" + pos + ":" + item.getWriteText());
 
         // 텍스트 입력 콜백
         holder.binding.textWrite.addTextChangedListener(new TextWatcher() {
