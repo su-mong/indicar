@@ -37,6 +37,7 @@ public class BoardWriteEditViewModel {
 
     private BoardDao boardDao;
     private BoardFileDao fileDao;
+    private boolean uploadingProblem = false;
 
     private BoardWriteEditNavigator navigator;
     private BoardWriteItemPageNavigator pageNavigator;
@@ -134,11 +135,9 @@ public class BoardWriteEditViewModel {
                 return;
             }
         }
-
+        int temp = 0;
         // 파일을 서버에 업로드한다.
         for (WriteFileVO vo : boardItems) {
-
-            // index (atch_file_id) 없는 경우 - new file
             if (vo.getFileIndex() == null || vo.getFileIndex().equals("")) {
                 insertNewFile(vo);
             } else {
@@ -165,13 +164,18 @@ public class BoardWriteEditViewModel {
 
     private void insertNewFile(final WriteFileVO vo) {
 
+        if (uploadingProblem) {
+            navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
+            navigator.pbOff();
+            navigator.onActivityFinish();
+            return;
+        }
+
         RequestParams params = new RequestParams();
         navigator.pbOn();
         try {
             params.put("file", new File(vo.getFilePath()));
             params.put("file_cn", vo.getWriteText());
-            Log.d("file", new File(vo.getFilePath()).toString());
-            Log.d("file_cn", vo.getWriteText());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -179,7 +183,6 @@ public class BoardWriteEditViewModel {
         fileDao.insertData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
-
                 vo.setFileIndex((String) data); // atch_file_id 추가
                 DONE_FILE_UPLOAD_COUNT.add(true); // 완료 목록 추가
                 if (DONE_FILE_UPLOAD_COUNT.size() == boardItems.size()) {
@@ -189,6 +192,7 @@ public class BoardWriteEditViewModel {
 
             @Override
             public void onDataNotAvailable() {
+                uploadingProblem = true;
                 navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
                 navigator.pbOff();
                 navigator.onActivityFinish();
@@ -197,6 +201,12 @@ public class BoardWriteEditViewModel {
     }
 
     private void updateExistingFile(boolean isFileUpdated, final WriteFileVO vo) {
+        if (uploadingProblem) {
+            navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
+            navigator.pbOff();
+            navigator.onActivityFinish();
+            return;
+        }
         navigator.pbOn();
         RequestParams params = new RequestParams();
         params.put("atch_file_id", vo.getFileIndex());
@@ -213,6 +223,12 @@ public class BoardWriteEditViewModel {
         fileDao.updateData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
+                if (uploadingProblem) {
+                    navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
+                    navigator.pbOff();
+                    navigator.onActivityFinish();
+                    return;
+                }
                 DONE_FILE_UPLOAD_COUNT.add(true); // 완료 목록에 추가
                 if (DONE_FILE_UPLOAD_COUNT.size() == boardItems.size()) {
                     startUploadBoard();
@@ -221,6 +237,7 @@ public class BoardWriteEditViewModel {
 
             @Override
             public void onDataNotAvailable() {
+                uploadingProblem = true;
                 navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
                 navigator.pbOff();
                 navigator.onActivityFinish();
@@ -229,7 +246,12 @@ public class BoardWriteEditViewModel {
     }
 
     private void startUploadBoard() {
-
+        if (uploadingProblem) {
+            navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
+            navigator.pbOff();
+            navigator.onActivityFinish();
+            return;
+        }
         getFileIndexArray();
 
         if (isNewBoard) { // 게시물 등록
@@ -241,7 +263,12 @@ public class BoardWriteEditViewModel {
 
     // 해당 게시물을 서버에 업로드한다.
     private void insertNewBoard() {
-
+        if (uploadingProblem) {
+            navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
+            navigator.pbOff();
+            navigator.onActivityFinish();
+            return;
+        }
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardVO.getBoardType());
         params.put("ntcr_nm", boardVO.getUserName());
@@ -257,12 +284,6 @@ public class BoardWriteEditViewModel {
         params.put("atch_file_id", fileIndexString);
         params.put("carSpecName", boardVO.getCarName());
         params.put("branch_id", Constant.locale);
-        Log.d("bbs_id", boardVO.getBoardType());
-        Log.d("ntcr_nm", boardVO.getUserName());
-        Log.d("ntcr_id", boardVO.getUserId());
-        Log.d("atch_file_id", boardVO.getFileIndex()[0]);
-        Log.d("carSpecName", "" + boardVO.getCarName());
-        Log.d("branch_id", Constant.locale);
         boardDao.insertData(params, new BaseDao.LoadDataCallBack() {
             @Override
             public void onDataLoaded(Object data) {
@@ -281,6 +302,12 @@ public class BoardWriteEditViewModel {
 
     // 해당 게시물을 수정한다.
     private void updateExistingBoard() {
+        if (uploadingProblem) {
+            navigator.showSnackBar(resources.getString(R.string.failedRegisterPost));
+            navigator.pbOff();
+            navigator.onActivityFinish();
+            return;
+        }
         RequestParams params = new RequestParams();
         params.put("bbs_id", boardVO.getBoardType());
         params.put("ntt_id", boardVO.getBoardId());

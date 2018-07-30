@@ -132,6 +132,9 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     viewModel.currentPage.set(layoutManager.findFirstVisibleItemPosition());
                     viewModel.currentPageNum = layoutManager.findFirstVisibleItemPosition();
+                    for (int i = 0; i < adapter.getItemCount(); i++) {
+                        Log.d("ddf adapter", "getText" + adapter.getItem(i).getWriteText());
+                    }
                 }
             }
         });
@@ -163,6 +166,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
         viewModel.currentPage.set(position);
         viewModel.totalPage.set(adapter.getItemCount());
         binding.pageContainer.scrollToPosition(position);
+
     }
 
     @Override
@@ -276,7 +280,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                     vo.setFilePath(RealPathUtil.getRealPath(context, photoUriList.get(i)));
                     listFromAlbum.add(vo);
                 }
-
                 // 첫번째 사진은 리스트에서 빼고 현재 페이지에 붙인다.
                 WriteFileVO firstPhoto = listFromAlbum.remove(0);
                 adapter.getItemList().get(viewModel.currentPage.get()).setImageUrl(firstPhoto.getImageUrl());

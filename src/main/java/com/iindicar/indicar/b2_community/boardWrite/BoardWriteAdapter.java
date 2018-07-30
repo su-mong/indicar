@@ -106,6 +106,7 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
                 }
             });
         }
+holder.binding.textWrite.setText("pos"+pos);
 
         // 텍스트 입력 콜백
         holder.binding.textWrite.addTextChangedListener(new TextWatcher() {
@@ -116,7 +117,6 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override

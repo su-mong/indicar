@@ -78,24 +78,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         Context fragmentContext = LocaleHelper.setLocale(getActivity());
         resources = fragmentContext.getResources();
 
-        binding.textAccountTitle.setText(resources.getString(R.string.AccountTitle));
-        binding.buttontxAlliacne.setText(resources.getString(R.string.AllianceTitle));
-        binding.buttontxBasket.setText(resources.getString(R.string.BasketTitle));
-        binding.buttontxComment.setText(resources.getString(R.string.MycommentTitle));
-        binding.buttontxHowtouse.setText(resources.getString(R.string.HowtouseTitle));
-        binding.buttontxLike.setText(resources.getString(R.string.LikeTitle));
-        binding.buttontxLogout.setText(resources.getString(R.string.LogoutTitle));
-        binding.buttontxWriting.setText(resources.getString(R.string.MywritingTitle));
-        binding.tvAAddress.setText(resources.getString(R.string.AccountNoAddress));
-
-        binding.textSubtitle.setText(resources.getString(R.string.AccountSub));
-        binding.subbuttonAlliance.setText(resources.getString(R.string.AllianceSub));
-        binding.subbuttonBasket.setText(resources.getString(R.string.BasketSub));
-        binding.subbuttonComment.setText(resources.getString(R.string.MycommentSub));
-        binding.subbuttonHowtouse.setText(resources.getString(R.string.HowtouseSub));
-        binding.subbuttonLike.setText(resources.getString(R.string.LikeSub));
-        binding.subbuttonLogout.setText(resources.getString(R.string.LogoutSub));
-        binding.subbuttonWriting.setText(resources.getString(R.string.MywritingSub));
+        setLocaleRes();
 
         binding.ivAProfileImage.setBackground(new ShapeDrawable(new OvalShape()));
         if (Build.VERSION.SDK_INT >= 21) {
@@ -338,15 +321,7 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         startActivity(intent);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        SharedPreferences prefLogin = this.getActivity().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
-        binding.tvAName.setText(prefLogin.getString("name", "로그인 실패"));
-
-        Context context2 = LocaleHelper.setLocale(getActivity());
-        resources = context2.getResources();
-
+    public void setLocaleRes() {
         binding.textAccountTitle.setText(resources.getString(R.string.AccountTitle));
         binding.buttontxAlliacne.setText(resources.getString(R.string.AllianceTitle));
         binding.buttontxBasket.setText(resources.getString(R.string.BasketTitle));
@@ -365,5 +340,18 @@ public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
         binding.subbuttonLike.setText(resources.getString(R.string.LikeSub));
         binding.subbuttonLogout.setText(resources.getString(R.string.LogoutSub));
         binding.subbuttonWriting.setText(resources.getString(R.string.MywritingSub));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences prefLogin = this.getActivity().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
+        binding.tvAName.setText(prefLogin.getString("name", "로그인 실패"));
+
+        Context context2 = LocaleHelper.setLocale(getActivity());
+        resources = context2.getResources();
+        setLocaleRes();
+
+
     }
 }

@@ -9,13 +9,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
@@ -37,7 +34,6 @@ import com.iindicar.indicar.b2_community.CommunityFragment;
 import com.iindicar.indicar.b3_shopping.ShoppingFragment;
 import com.iindicar.indicar.b4_account.AccountFragment;
 import com.iindicar.indicar.databinding.MainActivityBinding;
-import com.iindicar.indicar.utils.CarDB;
 import com.iindicar.indicar.utils.LocaleHelper;
 
 import java.security.MessageDigest;
@@ -60,7 +56,9 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
 
     public final ObservableField<String> currentTab = new ObservableField<>(TUNING.get());
 
-    Context mainContext; Resources resources; Fragment fragment = null;
+    Context mainContext;
+    Resources resources;
+    Fragment fragment = null;
 
     @Override
     protected int getLayoutId() {
@@ -76,7 +74,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this,new Crashlytics());
+        Fabric.with(this, new Crashlytics());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mainContext = LocaleHelper.setLocale(getApplicationContext());
@@ -111,14 +109,8 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
 
         binding.setActivity(this);
 
-        Drawable aDrawable = resources.getDrawable(R.drawable.tab_account_selector);
-        Drawable cDrawable = resources.getDrawable(R.drawable.tab_community_selector);
-        Drawable sDrawable = resources.getDrawable(R.drawable.tab_shopping_selector);
-        Drawable tDrawable = resources.getDrawable(R.drawable.tab_tuning_selector);
-        binding.btnMAccount.setImageDrawable(aDrawable);
-        binding.btnMCommunity.setImageDrawable(cDrawable);
-        binding.btnMShopping.setImageDrawable(sDrawable);
-        binding.btnMTuning.setImageDrawable(tDrawable);
+        setLocaleRes();
+
 
         changeTab();
 
@@ -127,9 +119,9 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
             public void onPermissionGranted() {
                 SharedPreferences prefLogin = getApplication().getSharedPreferences("prefLogin", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefLogin.edit();
-                boolean isFirst = prefLogin.getBoolean("isFirst",true);
-                if(isFirst){
-                    startActivity(new Intent(MainActivity.this,Tutorial.class));
+                boolean isFirst = prefLogin.getBoolean("isFirst", true);
+                if (isFirst) {
+                    startActivity(new Intent(MainActivity.this, Tutorial.class));
                     editor.putBoolean("isFirst", false);
                     editor.commit();
                 }
@@ -210,14 +202,8 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         Context mainContext = LocaleHelper.setLocale(getApplicationContext());
         resources = mainContext.getResources();
 
-        Drawable aDrawable = resources.getDrawable(R.drawable.tab_account_selector);
-        Drawable cDrawable = resources.getDrawable(R.drawable.tab_community_selector);
-        Drawable sDrawable = resources.getDrawable(R.drawable.tab_shopping_selector);
-        Drawable tDrawable = resources.getDrawable(R.drawable.tab_tuning_selector);
-        binding.btnMAccount.setImageDrawable(aDrawable);
-        binding.btnMCommunity.setImageDrawable(cDrawable);
-        binding.btnMShopping.setImageDrawable(sDrawable);
-        binding.btnMTuning.setImageDrawable(tDrawable);
+        setLocaleRes();
+
     }
 
     @Override
@@ -245,39 +231,38 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
 
                 switch (id) {
                     case R.id.korean:
-                        LocaleHelper.setLanguage(getApplicationContext(),"ko");
+                        LocaleHelper.setLanguage(getApplicationContext(), "ko");
                         mainContext = LocaleHelper.setLocale(getApplicationContext());
                         resources = mainContext.getResources();
                         fragment.onResume();
 
-                        Drawable aDrawable1 = resources.getDrawable(R.drawable.tab_account_selector);
-                        Drawable cDrawable1 = resources.getDrawable(R.drawable.tab_community_selector);
-                        Drawable sDrawable1 = resources.getDrawable(R.drawable.tab_shopping_selector);
-                        Drawable tDrawable1 = resources.getDrawable(R.drawable.tab_tuning_selector);
-                        binding.btnMAccount.setImageDrawable(aDrawable1);
-                        binding.btnMCommunity.setImageDrawable(cDrawable1);
-                        binding.btnMShopping.setImageDrawable(sDrawable1);
-                        binding.btnMTuning.setImageDrawable(tDrawable1);
+                        setLocaleRes();
+
                         break;
                     case R.id.english:
-                        LocaleHelper.setLanguage(getApplicationContext(),"en");
+                        LocaleHelper.setLanguage(getApplicationContext(), "en");
                         mainContext = LocaleHelper.setLocale(getApplicationContext());
                         resources = mainContext.getResources();
                         fragment.onResume();
+                        setLocaleRes();
 
-                        Drawable aDrawable2 = resources.getDrawable(R.drawable.tab_account_selector);
-                        Drawable cDrawable2 = resources.getDrawable(R.drawable.tab_community_selector);
-                        Drawable sDrawable2 = resources.getDrawable(R.drawable.tab_shopping_selector);
-                        Drawable tDrawable2 = resources.getDrawable(R.drawable.tab_tuning_selector);
-                        binding.btnMAccount.setImageDrawable(aDrawable2);
-                        binding.btnMCommunity.setImageDrawable(cDrawable2);
-                        binding.btnMShopping.setImageDrawable(sDrawable2);
-                        binding.btnMTuning.setImageDrawable(tDrawable2);
+
                         break;
                 }
                 return false;
             }
         });
         popupMenu.show();
+    }
+
+    public void setLocaleRes() {
+        Drawable aDrawable2 = resources.getDrawable(R.drawable.tab_account_selector);
+        Drawable cDrawable2 = resources.getDrawable(R.drawable.tab_community_selector);
+        Drawable sDrawable2 = resources.getDrawable(R.drawable.tab_shopping_selector);
+        Drawable tDrawable2 = resources.getDrawable(R.drawable.tab_tuning_selector);
+        binding.btnMAccount.setImageDrawable(aDrawable2);
+        binding.btnMCommunity.setImageDrawable(cDrawable2);
+        binding.btnMShopping.setImageDrawable(sDrawable2);
+        binding.btnMTuning.setImageDrawable(tDrawable2);
     }
 }
