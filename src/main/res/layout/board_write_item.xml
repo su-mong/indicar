@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="item"
-            type="com.iindicar.indicar.data.vo.WriteFileVO"/>
+            type="com.iindicar.indicar.data.vo.WriteFileVO" />
     </data>
 
     <android.support.v7.widget.CardView
@@ -26,27 +29,27 @@
 
                 <LinearLayout
                     android:id="@+id/ll_write_btn_container"
-                    android:background="@color/colorWhite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
                     android:orientation="horizontal"
                     app:pickerVisible="@{item}">
 
                     <ImageButton
-                        style="@style/imageButtonCustomStyle"
                         android:id="@+id/button_from_album"
+                        style="@style/imageButtonCustomStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/img_write_album"/>
+                        android:src="@drawable/img_write_album" />
 
                     <ImageButton
-                        style="@style/imageButtonCustomStyle"
                         android:id="@+id/button_from_camera"
+                        style="@style/imageButtonCustomStyle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:src="@drawable/img_write_camera"/>
+                        android:src="@drawable/img_write_camera" />
                 </LinearLayout>
 
                 <ImageView
@@ -54,17 +57,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:imageUrl="@{item.imageUrl}"
-                    app:imageVisible="@{item}"/>
+                    app:imageVisible="@{item}" />
+
+                <TextView
+                    android:id="@+id/slide_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <EditText
-                    style="@style/textViewBoardContentStyle"
-                    android:gravity="start"
                     android:id="@+id/text_write"
-                    android:background="@color/colorWhite"
+                    style="@style/textViewBoardContentStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:gravity="start"
                     android:minHeight="250dp"
-                    />
+                    android:text="@{item.writeText}" />
 
             </LinearLayout>
         </ScrollView>

@@ -46,7 +46,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
     private BoardWriteAdapter adapter;
     private ViewPagerLayoutManager layoutManager;
     private PickPhotoHelper pickPhotoHelper;
-    private List<String> file_cns = new ArrayList<>();
+
     private Teleprinter keyboard;
     private int wantWidth = 600; //업로드 이미지 크기 줄이고자하는 가로 px
 
@@ -132,9 +132,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     viewModel.currentPage.set(layoutManager.findFirstVisibleItemPosition());
                     viewModel.currentPageNum = layoutManager.findFirstVisibleItemPosition();
-                    for (int i = 0; i < adapter.getItemCount(); i++) {
-                        Log.d("ddf adapter", "file_cn" + i + ":" + adapter.getItem(i).getWriteText());
-                    }
                 }
             }
         });
@@ -162,21 +159,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
 
     @Override
     public void addPage(int position) {
-        file_cns.clear();
-        for (int i = 0; i < adapter.getItemCount(); i++) {
-            Log.d("ddf adapter", "file_cn" + i + ":" + adapter.getItem(i).getWriteText());
-            file_cns.add(adapter.getItem(i).getWriteText());
-        }
-
         adapter.addItem(position, new WriteFileVO());
-        Log.d("ddf", "adapter size" + adapter.getItemCount());
-        file_cns.add(position, "");
-        Log.d("ddf", "file_cns size" + file_cns.size());
-        for (int j = 0; j < adapter.getItemCount(); j++) {
-            Log.d("ddf adapter", "file_cn" + j + ":" + file_cns.get(j));
-            adapter.getItem(j).setWriteText(file_cns.get(j));
-        }
-        adapter.notifyDataSetChanged();
         viewModel.currentPage.set(position);
         viewModel.totalPage.set(adapter.getItemCount());
         binding.pageContainer.scrollToPosition(position);
@@ -260,11 +243,7 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
 
     // 앨범에서 사진을 가져온다.
     private void pickFromAlbum(final int position) {
-        file_cns.clear();
-        for (int i = 0; i < adapter.getItemCount(); i++) {
-            Log.d("ddf adapter", "file_cn" + i + ":" + adapter.getItem(i).getWriteText());
-            file_cns.add(adapter.getItem(i).getWriteText());
-        }
+
         pickPhotoHelper.pickFromAlbum(MAX_PAGE - viewModel.totalPage.get() + 1, new IPickPhotoHelper.loadPhotoListCallBack<Uri>() {
             @Override
             public void onPhotoListLoaded(List<Uri> photoUriList) {
@@ -306,13 +285,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
 
                 // 나머지 사진은 현재 페이지 뒤에 추가
                 adapter.addItems(position + 1, listFromAlbum);
-                for (int i = 0; i < IMAGE_COUNT; i++) {
-                    file_cns.add(position, "");
-                }
-                for (int j = 0; j < adapter.getItemCount(); j++) {
-                    Log.d("ddf adapter", "file_cn" + j + ":" + file_cns.get(j));
-                    adapter.getItem(j).setWriteText(file_cns.get(j));
-                }
                 viewModel.currentPageNum = viewModel.currentPage.get();
             }
 
