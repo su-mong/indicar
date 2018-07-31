@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="activity"
-            type="com.iindicar.indicar.a1_main.MainActivity"/>
-        <variable
-            name="constant"
-            type="com.iindicar.indicar.Constant"/>
-    </data>
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,57 +13,17 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <LinearLayout
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_main"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:background="@color/colorTabMenu">
-
-            <ImageButton
-                style="@style/imageButtonCustomStyle"
-                android:tag="@{constant.TUNING}"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/btnM_Tuning"
-                android:onClick="@{(v) -> activity.setTab(v)}"
-                app:setSelected="@{activity.currentTab == constant.TUNING}"
-                android:src="@drawable/tab_tuning_selector" />
-
-            <ImageButton
-                style="@style/imageButtonCustomStyle"
-                android:tag="@{constant.COMMUNITY}"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/btnM_Community"
-                android:onClick="@{(v) -> activity.setTab(v)}"
-                app:setSelected="@{activity.currentTab == constant.COMMUNITY}"
-                android:src="@drawable/tab_community_selector" />
-
-            <ImageButton
-                style="@style/imageButtonCustomStyle"
-                android:tag="@{constant.SHOPPING}"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/btnM_Shopping"
-                android:onClick="@{(v) -> activity.setTab(v)}"
-                app:setSelected="@{activity.currentTab == constant.SHOPPING}"
-                android:src="@drawable/tab_shopping_selector" />
-
-            <ImageButton
-                style="@style/imageButtonCustomStyle"
-                android:tag="@{constant.ACCOUNT}"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:id="@+id/btnM_Account"
-                android:onClick="@{(v) -> activity.setTab(v)}"
-                app:setSelected="@{activity.currentTab == constant.ACCOUNT}"
-                android:src="@drawable/tab_account_selector" />
-
-        </LinearLayout>
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:scaleY="-1"
+            android:animateLayoutChanges="false"
+            app:tabGravity="center"
+            app:tabBackground="@color/colorPrimary"
+            app:tabIndicatorHeight="2dp"/>
 
     </LinearLayout>
 </layout>
+

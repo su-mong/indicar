@@ -2,13 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="viewModel"
             type="com.iindicar.indicar.b2_community.boardList.BoardListViewModel" />
-
         <variable
             name="fragment"
             type="com.iindicar.indicar.b2_community.boardList.BoardListFragment" />
@@ -24,6 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <include
+                android:id="@+id/layout_filter"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                layout="@layout/layout_board_filter"
+                android:visibility="@{viewModel.boardTab == 1 ? View.VISIBLE : View.GONE}"/>
 
             <!--app:onRefreshListener="@{viewModel::onRefresh}"-->
             <android.support.v4.widget.SwipeRefreshLayout
@@ -55,24 +59,13 @@
         <ImageButton
             android:id="@+id/button_fast_up"
             style="@style/imageButtonCustomStyle"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
             android:src="@drawable/btn_hide_up"
             android:visibility="@{viewModel.isPageUpScrolling &amp;&amp; !viewModel.isDataLoading ? View.VISIBLE : View.GONE}" />
-
-        <ImageButton
-            android:id="@+id/button_board_write"
-            style="@style/imageButtonCustomStyle"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="26dp"
-            android:src="@drawable/btn_write_board"
-            android:visibility="@{viewModel.isScrolling || viewModel.isVerticalScrolling ? View.GONE : View.VISIBLE}" />
 
     </RelativeLayout>
 </layout>

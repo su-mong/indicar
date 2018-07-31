@@ -46,12 +46,12 @@ public class BoardListViewModel {
     private Boolean isListEnd = false;
 
     private int currentPage = 1;
-private String userId;
+    private String userId;
+
     public BoardListViewModel() {
         boardDao = new BoardDao();
         fileDao = new BoardFileDao();
         userDao = new UserDao();
-
     }
 
     public void setNavigator(BoardListNavigator navigator) {
@@ -99,7 +99,6 @@ private String userId;
 
         RequestParams params = new RequestParams();
 
-        /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
         params.put("bbs_id", "all");
         if (boardTab.get() == BOARD_POPULAR) {
             params.put("searchCnd", "pop");
@@ -134,7 +133,8 @@ private String userId;
             }
         });
     }
-  public void getBoardListLike(String userId) {
+
+    public void getBoardListLike(String userId) {
         // 마지막 페이지
         if (isListEnd) {
             isDataLoading.set(false);
@@ -179,12 +179,10 @@ private String userId;
         });
     }
 
-
     public void getBoardListOnSearch(String searchWord) {
         isDataLoading.set(true);
 
         RequestParams params = new RequestParams();
-        /** TODO (2018.05.03) vo로 바꾸고 Gson 사용 */
         params.put("bbs_id", "all");
         params.put("searchCnd", "search");
         params.put("searchWord", searchWord);

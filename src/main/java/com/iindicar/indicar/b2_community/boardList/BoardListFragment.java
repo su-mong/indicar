@@ -4,41 +4,38 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
+import android.databinding.BindingAdapter;
 import android.databinding.ObservableInt;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ScrollingView;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.commit451.teleprinter.Teleprinter;
 import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.BaseRecyclerViewAdapter;
 import com.iindicar.indicar.R;
-import com.iindicar.indicar.a1_main.LoginActivity;
 import com.iindicar.indicar.a1_main.MainActivity;
-import com.iindicar.indicar.b2_community.BoardFilterActivity;
 import com.iindicar.indicar.b2_community.boardDetail.BoardDetailActivity;
-import com.iindicar.indicar.b2_community.boardWrite.BoardWriteEditActivity;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
 import com.iindicar.indicar.data.vo.BoardFileVO;
 import com.iindicar.indicar.data.vo.UserVO;
 import com.iindicar.indicar.databinding.BoardListFragmentBinding;
+import com.iindicar.indicar.utils.RecyclerViewDecoration;
 import com.iindicar.indicar.utils.ScrollBottomAction;
 
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.iindicar.indicar.Constant.BoardTab.BOARD_ALL;
+import static com.iindicar.indicar.Constant.BoardTab.BOARD_POPULAR;
 import static com.iindicar.indicar.Constant.RequestCode.REQUEST_BOARD_DETAIL;
 
 
@@ -75,6 +72,11 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
         viewModel.start();
     }
 
+    @BindingAdapter(value = {"binding"})
+    public static void setLayoutManager(RecyclerView recyclerView, final BoardListViewModel viewModel){
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.addItemDecoration(new RecyclerViewDecoration(5, 0, 0, 0));
+    }
 
     /**
      * call after view created
@@ -97,7 +99,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
                 });
 
         adapter = new BoardListAdapter(context, boardTab);
-
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -105,6 +106,8 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             }
         });
 
+        binding.recyclerViewBoardContainer.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        binding.recyclerViewBoardContainer.addItemDecoration(new RecyclerViewDecoration(5, 0, 0, 0));
         binding.recyclerViewBoardContainer.setAdapter(adapter);
         binding.recyclerViewBoardContainer.setNestedScrollingEnabled(false);
         ((SimpleItemAnimator) binding.recyclerViewBoardContainer.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -154,18 +157,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             }
         });
 
-        binding.buttonBoardWrite.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-
-                    Intent intent = new Intent(getContext(), BoardWriteEditActivity.class);
-                    startActivityForResult(intent, 13);
-                }
-                return true;
-            }
-        });
-
         binding.buttonFastUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -176,14 +167,6 @@ public class BoardListFragment extends BaseFragment<BoardListFragmentBinding> im
             }
         });
 
-        ((MainActivity)getActivity()).getActionBarBinding().buttonLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, BoardFilterActivity.class);
-                startActivityForResult(intent, REQUEST_BOARD_FILTER);
-                getActivity().overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
-            }
-        });
     }
 
     @Override

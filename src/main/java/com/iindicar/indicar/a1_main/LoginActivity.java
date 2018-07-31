@@ -1,12 +1,10 @@
 package com.iindicar.indicar.a1_main;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.databinding.ObservableInt;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -46,14 +44,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.BaseActivity2;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.databinding.ActivityLoginBinding;
 import com.iindicar.indicar.utils.ConstClass;
-import com.iindicar.indicar.utils.KakaoSignupActivity;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ErrorCode;
 import com.kakao.auth.ISessionCallback;
@@ -67,7 +61,6 @@ import com.kakao.util.exception.KakaoException;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import okhttp3.FormBody;

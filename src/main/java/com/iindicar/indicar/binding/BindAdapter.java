@@ -17,27 +17,6 @@ import com.iindicar.indicar.b2_community.boardList.BoardListPagerAdapter;
 
 public class BindAdapter {
 
-    public static final int NUM_OF_BOARD_BUTTONS = 2; // 게시판 탭 버튼 개수
-
-    @BindingAdapter(value = {"fragment", "tabLayout"}, requireAll = false)
-    public static void bindBoardTab(ViewPager viewPager,
-                                   CommunityFragment fragment,
-                                   TabLayout tabLayout){
-
-        viewPager.setAdapter(new BoardListPagerAdapter(viewPager.getContext(), fragment.getChildFragmentManager()));
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setupWithViewPager(viewPager);
-
-        String[] TAB_NAME = {
-                "인기순",
-                "최신순"
-        };
-
-        for(int i = 0 ; i < NUM_OF_BOARD_BUTTONS ; i++){
-            tabLayout.getTabAt(i).setText(TAB_NAME[i]);
-        }
-
-    }
 
     @BindingAdapter({"onTouch"})
     public static void bindOnTouch(ImageButton imageButton,

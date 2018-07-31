@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="activity"
-            type="com.iindicar.indicar.b2_community.BoardFilterActivity"/>
+            name="fragment"
+            type="com.iindicar.indicar.b2_community.boardList.BoardSearchFragment"/>
     </data>
 
     <LinearLayout
@@ -16,37 +16,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@drawable/border_underline">
 
-            <ImageButton
-                android:id="@+id/button_back"
-                style="@style/imageButtonCustomStyle"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/btn_back"/>
-
             <EditText
                 android:id="@+id/search_text"
                 android:singleLine="true"
+                android:paddingLeft="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="30dp"
+
                 android:textColor="@color/colorFont"
                 android:textSize="15sp"
                 android:imeOptions="actionSearch"
-                android:text="@{activity.searchInputText}"
                 android:background="@android:color/transparent"
                 android:hint="검색어를 입력하세요."/>
 
             <ImageButton
                 style="@style/imageButtonCustomStyle"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:src="@mipmap/icon_search"/>
@@ -57,13 +49,13 @@
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:orientation="vertical">
 
             <TextView
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/filter_board_type_label"
@@ -82,8 +74,6 @@
                     android:layout_height="25dp"
                     android:text="전체"
                     android:textSize="11.5sp"
-                    app:setSelected="@{activity.isBoardFilterSelected[0]}"
-                    android:onClick="@{(v) -> activity.onBoardFilterSelected(0)}"
                     android:background="@drawable/filter_selector"/>
                 <Button
                     android:layout_margin="5dp"
@@ -92,8 +82,6 @@
                     android:layout_height="25dp"
                     android:text="자유, 일상"
                     android:textSize="11.5sp"
-                    app:setSelected="@{activity.isBoardFilterSelected[1]}"
-                    android:onClick="@{(v) -> activity.onBoardFilterSelected(1)}"
                     android:background="@drawable/filter_selector"/>
                 <Button
                     android:layout_margin="5dp"
@@ -102,8 +90,6 @@
                     android:layout_height="25dp"
                     android:text="중고, 판매"
                     android:textSize="11.5sp"
-                    app:setSelected="@{activity.isBoardFilterSelected[2]}"
-                    android:onClick="@{(v) -> activity.onBoardFilterSelected(2)}"
                     android:background="@drawable/filter_selector"/>
                 <Button
                     android:layout_margin="5dp"
@@ -112,8 +98,6 @@
                     android:layout_height="25dp"
                     android:text="시공, DIY"
                     android:textSize="11.5sp"
-                    app:setSelected="@{activity.isBoardFilterSelected[3]}"
-                    android:onClick="@{(v) -> activity.onBoardFilterSelected(3)}"
                     android:background="@drawable/filter_selector"/>
                 <Space
                     android:layout_width="0dp"
@@ -122,8 +106,8 @@
             </LinearLayout>
 
             <TextView
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/filter_car_type_label"
@@ -131,13 +115,12 @@
                 android:textColor="@color/colorFont"/>
 
             <FrameLayout
-                android:padding="5dp"
-                android:layout_margin="5dp"
+                android:padding="4dp"
+                android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:onClick="@{(v) -> activity.onCarSearchClicked()}"
                 android:background="@drawable/border_box_shadow">
 
                 <TextView
@@ -148,7 +131,6 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/colorFont"
                     android:textSize="14sp"
-                    android:onClick="@{(v) -> activity.onCarSearchClicked()}"
                     android:text="차량 또는 브랜드를 검색하세요."/>
 
                 <ImageView
@@ -157,13 +139,11 @@
                     android:padding="3dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:onClick="@{(v) -> activity.onCarSearchClicked()}"
                     android:src="@drawable/btn_search"/>
-
             </FrameLayout>
 
             <LinearLayout
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -180,8 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:textColor="@color/colorFont"
-                    android:text="@{activity.selectedCarFilter}"/>
+                    android:textColor="@color/colorFont"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

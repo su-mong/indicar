@@ -8,14 +8,15 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -25,29 +26,26 @@ import com.gun0912.tedpermission.TedPermission;
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.b1_tunning.TunningFragment;
-import com.iindicar.indicar.b2_community.BoardFilterActivity;
 import com.iindicar.indicar.b2_community.CommunityFragment;
 import com.iindicar.indicar.b3_shopping.ShoppingFragment;
 import com.iindicar.indicar.b4_account.AccountFragment;
 import com.iindicar.indicar.databinding.MainActivityBinding;
-import com.iindicar.indicar.utils.KakaoSignupActivity;
 
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
-import static com.iindicar.indicar.Constant.ACCOUNT;
-import static com.iindicar.indicar.Constant.COMMUNITY;
-import static com.iindicar.indicar.Constant.SHOPPING;
-import static com.iindicar.indicar.Constant.TUNING;
-
 public class MainActivity extends BaseActivity<MainActivityBinding> {
-
+    private final int NUM_OF_TAB_BUTTONS = 4;
+    private final int tabImageIds[] = {
+            R.drawable.tab_t,
+            R.drawable.tab_c,
+            R.drawable.tab_s,
+            R.drawable.tab_a
+    };
 
     //뒤로가기 버튼을 두 번 클릭시 종료. 이를 구현하기 위한 변수를 선언한다.
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressTime = 0;
-
-    public final ObservableField<String> currentTab = new ObservableField<>(TUNING.get());
 
     @Override
     protected int getLayoutId() {
@@ -91,9 +89,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
         }
         SharedPreferences.Editor editor = prefLogin.edit();
 
-        binding.setActivity(this);
-
-        changeTab();
+        initTab();
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
@@ -114,10 +110,7 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
                 Toast.makeText(MainActivity.this, "권한 거부\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
                 finish();
             }
-
-
         };
-
 
         TedPermission.with(this)
                 .setPermissionListener(permissionlistener)
@@ -128,43 +121,63 @@ public class MainActivity extends BaseActivity<MainActivityBinding> {
                         , Manifest.permission.CAMERA
                         , Manifest.permission.ACCESS_FINE_LOCATION)
                 .check();
-
     }
 
-    public void setTab(View view) {
-        String tag = view.getTag().toString();
-        currentTab.set(tag);
-        changeTab();
-    }
+    private void initTab() {
 
-    private void changeTab() {
-        Fragment fragment = null;
+        binding.tabMain.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment = null;
 
-        if (TUNING.get().equals(currentTab.get())) {
-            fragment = new TunningFragment();
-            centerImageId.set(R.drawable.logo_tuning);
-            leftImageId.set(0);
+                switch ((int) tab.getTag()) {
+                    case 0:
+                        fragment = new TunningFragment();
+                        centerImageId.set(R.drawable.logo_tuning);
+                        leftImageId.set(0);
+                        break;
+                    case 1:
+                        fragment = new CommunityFragment();
+                        centerImageId.set(R.drawable.logo_community);
+                        leftImageId.set(R.drawable.top_language);
+                        break;
+                    case 2:
+                        fragment = new ShoppingFragment();
+                        centerImageId.set(R.drawable.logo_shopping);
+                        leftImageId.set(0);
+                        break;
+                    case 3:
+                        fragment = new AccountFragment();
+                        centerImageId.set(R.drawable.logo_account);
+                        leftImageId.set(0);
+                        break;
+                }
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.view_pager_main, fragment);
+                fragmentTransaction.commit();
+            }
 
-        } else if (COMMUNITY.get().equals(currentTab.get())) {
-            fragment = new CommunityFragment();
-            centerImageId.set(R.drawable.logo_community);
-            leftImageId.set(R.drawable.btn_search);
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-        } else if (SHOPPING.get().equals(currentTab.get())) {
-            fragment = new ShoppingFragment();
-            centerImageId.set(R.drawable.logo_shopping);
-            leftImageId.set(0);
+            }
 
-        } else if (ACCOUNT.get().equals(currentTab.get())) {
-            fragment = new AccountFragment();
-            centerImageId.set(R.drawable.logo_account);
-            leftImageId.set(0);
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        for(int i = 0 ; i < NUM_OF_TAB_BUTTONS ; i++){
+            View view = View.inflate(this, R.layout.main_tab_layout, null);
+            ImageView imageView = view.findViewById(R.id.image);
+            imageView.setScaleY(-1);
+            imageView.setImageResource(tabImageIds[i]);
+            TabLayout.Tab tab = binding.tabMain.newTab();
+            tab.setCustomView(view);
+            tab.setTag(i);
+            binding.tabMain.addTab(tab);
         }
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.view_pager_main, fragment);
-        fragmentTransaction.commit();
-
     }
 
     @Override

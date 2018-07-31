@@ -10,15 +10,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:paddingBottom="5dp"
         android:background="@color/colorActionBar">
 
         <ImageButton
             style="@style/imageButtonCustomStyle"
             android:id="@+id/button_left"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
@@ -29,9 +29,9 @@
             style="@style/imageButtonCustomStyle"
             android:id="@+id/image_center"
             android:layout_width="wrap_content"
-            android:layout_marginTop="7dp"
-            android:paddingBottom="3dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="2dp"
             android:layout_centerHorizontal="true"
             app:imageUrl="@{activity.centerImageId}"/>
 

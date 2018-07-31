@@ -91,6 +91,7 @@
                         android:hint="브랜드 및 차량을 검색하세요."
                         android:textSize="14sp"
                         android:singleLine="true"
+                        android:imeOptions="actionSearch"
                         android:text="@{activity.searchInput}"
                         android:textColor="@color/colorFont"
                         android:background="@android:color/transparent"/>

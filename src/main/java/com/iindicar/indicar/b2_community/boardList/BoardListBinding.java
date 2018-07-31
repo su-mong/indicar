@@ -2,17 +2,13 @@ package com.iindicar.indicar.b2_community.boardList;
 
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.ImageView;
 
 import com.iindicar.indicar.R;
 import com.iindicar.indicar.data.vo.BoardDetailVO;
-import com.iindicar.indicar.utils.RecyclerViewDecoration;
 
 import java.util.List;
 
-import static com.iindicar.indicar.Constant.BoardTab.BOARD_ALL;
-import static com.iindicar.indicar.Constant.BoardTab.BOARD_POPULAR;
 import static com.iindicar.indicar.Constant.BoardType.DAY_LIFE;
 import static com.iindicar.indicar.Constant.BoardType.MARKET;
 
@@ -29,18 +25,6 @@ public class BoardListBinding {
         BoardListAdapter adapter = (BoardListAdapter) recyclerView.getAdapter();
         if(adapter != null){
             adapter.updateItems(list);
-        }
-    }
-
-    @BindingAdapter(value = {"binding"})
-    public static void setLayoutManager(RecyclerView recyclerView, final BoardListViewModel viewModel){
-        int boardTab = viewModel.boardTab.get();
-
-        if(boardTab == BOARD_POPULAR) { // 인기 게시물 뷰
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-        } else if(boardTab == BOARD_ALL){ // 전체 게시물 뷰
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-            recyclerView.addItemDecoration(new RecyclerViewDecoration(5, 0, 0, 0));
         }
     }
 

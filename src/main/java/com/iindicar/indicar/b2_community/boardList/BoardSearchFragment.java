@@ -1,20 +1,24 @@
-package com.iindicar.indicar.b2_community;
+package com.iindicar.indicar.b2_community.boardList;
 
 import android.content.Intent;
 import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.iindicar.indicar.BaseActivity2;
+import com.iindicar.indicar.BaseFragment;
 import com.iindicar.indicar.R;
+import com.iindicar.indicar.b2_community.CarFilterActivity;
 import com.iindicar.indicar.databinding.ActivityBoardFilterBinding;
 
-public class BoardFilterActivity extends BaseActivity2<ActivityBoardFilterBinding> {
+import static android.app.Activity.RESULT_OK;
+
+public class BoardSearchFragment extends BaseFragment<ActivityBoardFilterBinding> {
     public final static int REQUEST_CAR_FILTER = 11;
     public final ObservableField<String> searchInputText = new ObservableField<>();
     public final ObservableField<String> selectedCarFilter = new ObservableField<>();
@@ -27,28 +31,15 @@ public class BoardFilterActivity extends BaseActivity2<ActivityBoardFilterBindin
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        binding.setActivity(this);
+        binding.setFragment(this);
         initView();
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-        overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
-    }
-
     private void initView() {
-        binding.buttonBack.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                finish();
-                overridePendingTransition(R.anim.enter_no_anim, R.anim.exit_no_anim);
-            }
-        });
-
+/*
         binding.searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -62,11 +53,11 @@ public class BoardFilterActivity extends BaseActivity2<ActivityBoardFilterBindin
                 }
                 return false;
             }
-        });
+        });*/
     }
 
     public void onCarSearchClicked(){
-        Intent intent = new Intent(getApplicationContext(), CarFilterActivity.class);
+        Intent intent = new Intent(getContext(), CarFilterActivity.class);
         startActivityForResult(intent, REQUEST_CAR_FILTER);
     }
 

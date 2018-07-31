@@ -16,14 +16,17 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.iindicar.indicar.BaseActivity;
 import com.iindicar.indicar.R;
@@ -172,6 +175,7 @@ public class CarListActivity extends BaseActivity<ActivityCarListBinding> {
         binding.gridViewCarList.setAdapter(adapter);
         binding.gridViewCarList.setEmptyView(binding.textEmpty);
 
+        // 차량 검색
         binding.searchText.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -191,6 +195,18 @@ public class CarListActivity extends BaseActivity<ActivityCarListBinding> {
                 if(filterText.length() == 0){
                     binding.searchText.clearFocus();
                 }
+            }
+        });
+
+        binding.searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    ((CarListAdapter) binding.gridViewCarList.getAdapter()).getFilter().filter(binding.searchText.getText());
+                    binding.searchText.clearFocus();
+                    return true;
+                }
+                return false;
             }
         });
     }

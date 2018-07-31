@@ -107,10 +107,6 @@
             android:name=".b4_account.EditProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible" />
-        <activity android:name=".b2_community.BoardFilterActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible"
-            android:theme="@style/noActionTheme"/>
         <activity
             android:name=".b4_account.ProfileTerm"
             android:screenOrientation="portrait"

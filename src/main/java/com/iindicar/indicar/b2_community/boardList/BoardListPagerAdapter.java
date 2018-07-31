@@ -9,17 +9,15 @@ import android.util.SparseArray;
 
 import com.iindicar.indicar.BaseViewPagerAdapter;
 
-import static com.iindicar.indicar.b2_community.boardList.BoardListAdapter.BOARD_ALL;
-import static com.iindicar.indicar.b2_community.boardList.BoardListAdapter.BOARD_POPULAR;
-
-
 /**
  * Created by yeseul on 2018-04-16.
  */
 
 public class BoardListPagerAdapter extends BaseViewPagerAdapter {
     SparseArray<Fragment> registeredFragments = new SparseArray<>();
-    private final int TAB_COUNT = 2;
+    private final int TAB_COUNT = 3;
+    public final int BOARD_POPULAR = 0;
+    public final int BOARD_ALL = 1;
 
     public BoardListPagerAdapter(Context context, FragmentManager fm) {
         super(context, fm);
@@ -28,12 +26,29 @@ public class BoardListPagerAdapter extends BaseViewPagerAdapter {
     public Fragment getRegisteredFragment(int position) {
         return registeredFragments.get(position);
     }
+
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
         Bundle args = new Bundle();
 
         switch (position){
+            case 0: // BEST
+                fragment = new BoardListFragment();
+                args.putInt("boardTab", BOARD_POPULAR);
+                fragment.setArguments(args);
+                break;
+            case 1:
+                fragment = new BoardListFragment();
+                args.putInt("boardTab", BOARD_ALL);
+                fragment.setArguments(args);
+                break;
+            case 2:
+                fragment = new BoardSearchFragment();
+                break;
+        }
+
+        /*switch (position){
             case BOARD_POPULAR:
                 fragment = new BoardListFragment();
                 args.putInt("boardTab", BOARD_POPULAR);
@@ -44,7 +59,7 @@ public class BoardListPagerAdapter extends BaseViewPagerAdapter {
                 args.putInt("boardTab", BOARD_ALL);
                 fragment.setArguments(args);
                 break;
-        }
+        }*/
         return fragment;
     }
 
