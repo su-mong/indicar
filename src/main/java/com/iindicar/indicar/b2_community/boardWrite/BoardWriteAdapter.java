@@ -122,7 +122,7 @@ public class BoardWriteAdapter extends BaseRecyclerViewAdapter<WriteFileVO, Boar
         public BoardWriteViewHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
-            binding.textWrite.addTextChangedListener(new TextWatcher() {
+            binding.textWrite.addTextChangedListener(new TextWatcher() { //한 아이템에 한번만 실행
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 }

@@ -31,6 +31,8 @@ public class BoardDetailViewModel {
 
     public final ObservableBoolean isBoardDataLoading = new ObservableBoolean(true);
     public final ObservableBoolean isCommentDataLoading = new ObservableBoolean(true);
+
+    //보드 리스트로 나갈때 리프레시 여부 결정
     private boolean COMMENT_ADDED = true;
     private boolean COMMENT_UPDATED = false;
 
@@ -53,7 +55,7 @@ public class BoardDetailViewModel {
     private final int PAGE_UNIT_COUNT = 15;
 
     public final ObservableBoolean isKeyboardOpen = new ObservableBoolean(false);
-    public final ObservableBoolean isPageUpScrolling = new ObservableBoolean(false);
+    public final ObservableBoolean isPageUpScrolling = new ObservableBoolean(false); //삭제
     public final ObservableBoolean isScrolling = new ObservableBoolean(false);
     public final ObservableBoolean isLikeBoard = new ObservableBoolean();
     public final ObservableField<String> commentWrite = new ObservableField<>();
@@ -77,6 +79,9 @@ public class BoardDetailViewModel {
         boardHeader = bundle.getParcelable("boardVO");
         this.loginId = intent.getStringExtra("loginId");
         this.loginName = intent.getStringExtra("loginName");
+        // 게시글 수정시에는 게시글만
+        // 댓글 수정,작성시는 댓글만 요청하기 위해 함수 분리
+        //getBoardData(); 이미 boardDetailVo에 기본 내용들어 있으므로 삭제
         getFileData();
         checkIsLikeBoard();
         getCommentList(COMMENT_ADDED);
@@ -140,7 +145,7 @@ public class BoardDetailViewModel {
         });
     }
 
-    private void getUser() {
+    private void getUser() { //삭제
         RequestParams params = new RequestParams();
         params.put("id", boardHeader.getUserId());
 
@@ -181,7 +186,7 @@ public class BoardDetailViewModel {
                 @Override
                 public void onDataLoaded(Object data) {
                     BoardFileVO vo = (BoardFileVO) data;
-                    String temp = vo.getFileUrl();
+                    String temp = vo.getFileUrl(); //데이터에 8080 남아있는 부분 처리
                     temp = "http://" + temp.replace("8080", "9000");
                     vo.setFileUrl(temp);
                     doneFile.put(position, vo);
@@ -204,7 +209,7 @@ public class BoardDetailViewModel {
     }
 
 
-    private void getUserProfile(List list) {
+    private void getUserProfile(List list) { //삭제
 
         if (list == null) {
             return;

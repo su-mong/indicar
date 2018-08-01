@@ -177,7 +177,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                 viewModel.currentPageNum--;
             adapter.removeItem(position);
             viewModel.totalPage.set(adapter.getItemCount());
-            adapter.notifyDataSetChanged();
             viewModel.currentPage.set(viewModel.currentPageNum);
             binding.pageContainer.scrollToPosition(viewModel.currentPageNum);
             return;
@@ -193,7 +192,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
                         if (viewModel.currentPageNum > 0)
                             viewModel.currentPageNum--;
                         adapter.removeItem(position);
-                        adapter.notifyDataSetChanged();
                         viewModel.totalPage.set(adapter.getItemCount());
                         viewModel.currentPage.set(viewModel.currentPageNum);
                         binding.pageContainer.scrollToPosition(viewModel.currentPageNum);
@@ -295,16 +293,6 @@ public class BoardWriteItemFragment extends BaseFragment<BoardWriteItemFragmentB
         });
     }
 
-    // 파일의 절대경로를 얻는다.
-    private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-        cursor.moveToFirst();
-
-        return cursor.getString(column_index);
-    }
 
     // 사진 삭제 경고창을 띄운다.
     public void showPhotoDeleteDialog(final int position) {

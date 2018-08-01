@@ -49,6 +49,9 @@ import com.loopj.android.http.RequestParams;
 import cz.msebera.android.httpclient.Header;
 import io.fabric.sdk.android.Fabric;
 
+
+// 버튼들 이벤트 처리는 모두 <selector> 이용해서 처리했어요. bkg_profile.xml
+
 public class AccountFragment extends BaseFragment<FragmentAccountBinding> {
 
     String partnerCategory;

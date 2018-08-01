@@ -60,6 +60,7 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
 
     public void setBoardFile(int position, BoardFileVO vo) {
         itemList.get(position).setBoardContent(vo.getFileContent());
+        // 불량 데이터 처리용 차후에 정리 필요
         String temp = vo.getFileUrl();
         temp = temp.replace("8080", "9000");
         itemList.get(position).setMainImageUrl("http://" + temp);
@@ -70,6 +71,7 @@ public class BoardListAdapter extends BaseRecyclerViewAdapter<BoardDetailVO, Rec
 
 
     public void setUserProfile(int position, String url) {
+        // 불량 데이터 처리용 차후에 정리 필요
         String temp = url;
         temp.replace("8080", "9000");
         itemList.get(position).setUserProfileUrl(temp);

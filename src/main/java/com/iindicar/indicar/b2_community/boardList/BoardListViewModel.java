@@ -37,7 +37,7 @@ public class BoardListViewModel {
 
     public final ObservableBoolean isPageUpScrolling = new ObservableBoolean(false);
     public final ObservableBoolean isScrolling = new ObservableBoolean(false);
-    public final ObservableBoolean isVerticalScrolling = new ObservableBoolean(false);
+    public final ObservableBoolean isVerticalScrolling = new ObservableBoolean(false); //삭제
 
     private BoardListNavigator navigator;
 

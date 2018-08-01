@@ -523,7 +523,7 @@ public class BoardDetailActivity extends BaseActivity<BoardDetailActivityBinding
         commentAdapter.clearItems();
         commentAdapter.addItems(list);
         commentAdapter.notifyDataSetChanged();
-        viewModel.boardHeader.setCommentCount(list.size() + "");
+        viewModel.boardHeader.setCommentCount(list.size() + ""); //댓글 수 현행화
         boardAdapter.setHeader(viewModel.boardHeader);
     }
 
